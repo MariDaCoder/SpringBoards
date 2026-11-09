@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#171410">
+  <title>Training &amp; WIOA Eligibility Check | Springboards East AL</title>
+  <meta name="description" content="Check your eligibility for tuition-free construction trade training, WIOA Transitional Jobs, and Career Center placement support in East Alabama.">
+  <link rel="canonical" href="https://springboardsfcd.org/eligibility">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Springboards for Community Development">
+  <meta property="og:url" content="https://springboardsfcd.org/eligibility">
+  <meta property="og:title" content="Training &amp; WIOA Eligibility Check | Springboards East AL">
+  <meta property="og:description" content="Check your eligibility for tuition-free construction trade training, WIOA Transitional Jobs, and Career Center placement support in East Alabama.">
+  <meta property="og:image" content="https://springboardsfcd.org/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Training &amp; WIOA Eligibility Check | Springboards East AL">
+  <meta name="twitter:description" content="Check your eligibility for tuition-free construction trade training, WIOA Transitional Jobs, and Career Center placement support in East Alabama.">
+  <meta name="twitter:image" content="https://springboardsfcd.org/og-image.jpg">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Springboards Trade Training & WIOA Eligibility Check",
+    "url": "https://springboardsfcd.org/eligibility",
+    "description": "Interactive pre-qualification and Alabama Career Center routing for free construction trade training and Transitional Jobs.",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Springboards for Community Development",
+      "url": "https://springboardsfcd.org"
+    }
+  }
+  </script>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --wizard-ink: #1d1b18;
+      --wizard-muted: #6b6760;
+      --wizard-paper: #fbf8f1;
+      --wizard-card: #fffefa;
+      --wizard-orange: #e05b32;
+      --wizard-gold: #f1bf52;
+      --wizard-green: #27664f;
+      --wizard-line: #dcd4c5;
+      --wizard-shadow: 0 2px 5px rgba(24, 20, 16, 0.05), 0 1px 2px rgba(24, 20, 16, 0.04);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: var(--wizard-paper);
+      color: var(--wizard-ink);
+      font-family: "Plus Jakarta Sans", sans-serif;
+    }
+
+    button, a { font: inherit; }
+    button:focus-visible, a:focus-visible { outline: 3px solid #bd4c29; outline-offset: 3px; }
+    [hidden] { display: none !important; }
+
+    .wizard-page { min-height: 100vh; padding: 1rem clamp(1rem, 4vw, 3.5rem) 3rem; }
+    .wizard-topbar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; max-width: 1200px; margin: 0 auto 1.25rem; }
+    .wizard-logo { display: block; width: min(210px, 43vw); height: auto; }
+    .wizard-home-link { color: var(--wizard-ink); font-weight: 750; text-decoration: none; }
+    .wizard-home-link:hover { color: var(--wizard-orange); }
+
+    .wizard-hero {
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      max-width: 1200px;
+      min-height: 340px;
+      margin: 0 auto 1.5rem;
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid #363027;
+      background: #201d18;
+      color: #fffaf0;
+      box-shadow: 0 2px 6px rgba(24, 20, 16, 0.06);
+    }
+    .wizard-hero-copy { align-self: center; padding: clamp(1.75rem, 5vw, 4rem); }
+    .wizard-eyebrow { display: block; margin: 0 0 0.9rem; color: var(--wizard-gold); font-size: 0.78rem; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; }
+    .wizard-hero h1 { max-width: 12ch; margin: 0; font-size: clamp(2.3rem, 5vw, 4.3rem); line-height: 1.02; letter-spacing: -0.055em; }
+    .wizard-hero-copy > p:last-child { max-width: 42ch; margin: 1.1rem 0 0; color: #e5dfd4; font-size: 1.05rem; line-height: 1.7; }
+    .wizard-hero-image { position: relative; min-height: 280px; }
+    .wizard-hero-image::after { position: absolute; inset: 0; background: linear-gradient(90deg, #201d18 0%, rgba(32,29,24,0.06) 42%, rgba(32,29,24,0.06) 100%); content: ""; }
+    .wizard-hero-image img { display: block; width: 100%; height: 100%; min-height: 280px; object-fit: cover; object-position: 53% 40%; }
+    .wizard-hero-caption { position: absolute; z-index: 1; right: 1.1rem; bottom: 1.1rem; padding: 0.55rem 0.85rem; border: 1px solid rgba(255,255,255,0.32); border-radius: 999px; background: rgba(24,22,19,0.78); color: #fffaf0; font-size: 0.78rem; font-weight: 700; }
+
+    .wizard-main { max-width: 900px; margin: 0 auto; }
+    .wizard-panel { padding: clamp(1.3rem, 4vw, 2.6rem); border: 1.5px solid var(--wizard-line); border-radius: 12px; background: var(--wizard-card); box-shadow: var(--wizard-shadow); }
+    .wizard-progress-row { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: 0.65rem; color: var(--wizard-muted); font-size: 0.85rem; font-weight: 750; }
+    .wizard-progress-track { height: 0.55rem; overflow: hidden; border-radius: 999px; background: #eee8dd; }
+    .wizard-progress-value { width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--wizard-orange), #f0a64d); transition: width 260ms ease; }
+    .wizard-question { margin: 1.5rem 0 0.55rem; font-size: clamp(1.55rem, 3.5vw, 2.25rem); line-height: 1.18; letter-spacing: -0.035em; }
+    .wizard-help { margin: 0 0 1.3rem; color: var(--wizard-muted); line-height: 1.65; }
+    .wizard-fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+    .wizard-fieldset legend { width: 100%; }
+
+    .wizard-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.8rem; }
+    .wizard-options.is-compact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .wizard-choice {
+      position: relative;
+      display: flex;
+      min-height: 88px;
+      align-items: flex-start;
+      gap: 0.8rem;
+      padding: 1rem;
+      border: 1.5px solid var(--wizard-line);
+      border-radius: 0.95rem;
+      background: #fffefa;
+      color: var(--wizard-ink);
+      cursor: pointer;
+      transition: border-color 150ms ease, background 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+    }
+    .wizard-choice:hover { transform: translateY(-2px); border-color: #c5aa7c; box-shadow: 0 8px 18px rgba(47,34,19,0.07); }
+    .wizard-choice:has(input:checked) { border-color: var(--wizard-orange); background: #fff4eb; box-shadow: 0 0 0 2px rgba(224,91,50,0.12); }
+    .wizard-choice input { flex: 0 0 auto; width: 1.1rem; height: 1.1rem; margin: 0.15rem 0 0; accent-color: var(--wizard-orange); }
+    .wizard-choice-copy { display: grid; gap: 0.3rem; }
+    .wizard-choice-copy strong { font-size: 0.98rem; line-height: 1.4; }
+    .wizard-choice-copy span { color: var(--wizard-muted); font-size: 0.85rem; line-height: 1.5; }
+    .wizard-choice-icon { display: grid; width: 2.15rem; height: 2.15rem; flex: 0 0 auto; place-items: center; border-radius: 0.7rem; background: #f5ead5; font-size: 1.15rem; }
+
+    .wizard-scenarios { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.85rem; }
+    .wizard-scenario {
+      position: relative;
+      display: flex;
+      min-height: 228px;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 0;
+      border: 1.5px solid var(--wizard-line);
+      border-radius: 1rem;
+      background: #fffefa;
+      color: var(--wizard-ink);
+      text-align: left;
+      cursor: pointer;
+      transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+    }
+    .wizard-scenario:hover { transform: translateY(-2px); border-color: #c5aa7c; box-shadow: 0 10px 25px rgba(47,34,19,0.1); }
+    .wizard-scenario:has(input:checked) { border-color: var(--wizard-orange); box-shadow: 0 0 0 2px rgba(224,91,50,0.15); }
+    .wizard-scenario input { position: absolute; z-index: 2; top: 0.8rem; right: 0.8rem; width: 1.25rem; height: 1.25rem; accent-color: var(--wizard-orange); }
+    .wizard-scenario-photo { position: relative; height: 112px; overflow: hidden; background: #2b3a31; }
+    .wizard-scenario-photo::after { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(21,23,20,0.52), transparent 75%); content: ""; }
+    .wizard-scenario-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .wizard-scenario-mark { position: absolute; z-index: 1; bottom: 0.6rem; left: 0.75rem; color: white; font-size: 1.3rem; }
+    .wizard-scenario-copy { display: grid; gap: 0.3rem; padding: 0.8rem 0.9rem 1rem; }
+    .wizard-scenario-copy strong { padding-right: 1.5rem; font-size: 0.95rem; line-height: 1.4; }
+    .wizard-scenario-copy span { color: var(--wizard-muted); font-size: 0.82rem; line-height: 1.45; }
+    .wizard-options.is-chips { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.55rem; }
+    .wizard-options.is-chips .wizard-choice { min-height: 0; padding: 0.8rem; border-radius: 0.75rem; }
+    .wizard-options.is-chips .wizard-choice-copy strong { font-size: 0.87rem; }
+    .wizard-options.is-chips .wizard-choice-copy span { font-size: 0.78rem; }
+    .wizard-options.is-chips .wizard-choice-icon { width: 1.75rem; height: 1.75rem; font-size: 0.95rem; }
+
+    .wizard-error { min-height: 1.5rem; margin: 0.7rem 0 0; color: #a83222; font-size: 0.88rem; font-weight: 700; }
+    .wizard-actions { display: flex; justify-content: space-between; gap: 0.75rem; margin-top: 1rem; }
+    .wizard-button { display: inline-flex; min-height: 3.1rem; align-items: center; justify-content: center; padding: 0.8rem 1.3rem; border: 1px solid var(--wizard-ink); border-radius: 0.8rem; background: var(--wizard-ink); color: #fff; font-weight: 800; cursor: pointer; transition: background 150ms ease, transform 150ms ease; }
+    .wizard-button:hover { transform: translateY(-1px); background: #3b342a; }
+    .wizard-button.secondary { border-color: var(--wizard-line); background: transparent; color: var(--wizard-ink); }
+    .wizard-button.secondary:hover { background: #f3eee4; }
+    .wizard-button:disabled { cursor: wait; opacity: 0.65; }
+
+    .wizard-result { max-width: 900px; margin: 0 auto; }
+    .wizard-result-card { overflow: hidden; border: 1.5px solid var(--wizard-line); border-radius: 12px; background: var(--wizard-card); box-shadow: var(--wizard-shadow); }
+    .wizard-result-top { padding: clamp(1.5rem, 4vw, 2.75rem); background: #211e19; color: #fffaf0; }
+    .wizard-result-top[data-outcome="not-eligible"] { background: #342620; }
+    .wizard-result-top[data-outcome="review"] { background: #302b21; }
+    .wizard-result-top .wizard-eyebrow { margin-bottom: 0.7rem; }
+    .wizard-result-top h2 { margin: 0; font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.12; letter-spacing: -0.04em; }
+    .wizard-result-top p { max-width: 68ch; margin: 0.8rem 0 0; color: #e7dfd3; line-height: 1.7; }
+    .wizard-profile { padding: clamp(1.5rem, 4vw, 2.4rem); }
+    .wizard-code { display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.1rem; padding: 0.55rem 0.8rem; border-radius: 999px; background: #f7ead2; color: #4e3518; font-size: 0.8rem; font-weight: 850; letter-spacing: 0.04em; }
+    .wizard-profile h3 { margin: 0 0 0.35rem; font-size: 1.25rem; }
+    .wizard-profile-intro { margin: 0 0 1rem; color: var(--wizard-muted); line-height: 1.6; }
+    .wizard-tag-list { display: flex; flex-wrap: wrap; gap: 0.55rem; margin: 0; padding: 0; list-style: none; }
+    .wizard-tag { padding: 0.5rem 0.75rem; border: 1px solid #dfd5c5; border-radius: 999px; background: #f8f3e9; color: #40382e; font-size: 0.8rem; font-weight: 750; }
+    .wizard-documents-check { margin-top: 1.5rem; padding: 1.1rem; border: 1px solid var(--wizard-line); border-radius: 0.9rem; background: #fbf8f1; }
+    .wizard-documents-check h4 { margin: 0 0 0.35rem; font-size: 1rem; }
+    .wizard-documents-status { margin: 0; color: var(--wizard-muted); line-height: 1.6; }
+    .wizard-missing-documents { margin: 0.65rem 0 0; padding-left: 1.25rem; color: var(--wizard-ink); line-height: 1.7; }
+    .wizard-documents-note { margin: 0.7rem 0 0; color: var(--wizard-muted); font-size: 0.85rem; line-height: 1.6; }
+    .wizard-review-note { margin: 1.4rem 0 0; padding: 1rem; border-left: 4px solid var(--wizard-gold); border-radius: 0.35rem; background: #faf4e6; color: #554b3e; line-height: 1.65; }
+    .wizard-result-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.5rem; }
+    .wizard-result-actions a { text-decoration: none; }
+    .wizard-centers { max-width: 1080px; margin: 0 auto; }
+    .wizard-center-heading { margin: 0.5rem 0; font-size: clamp(1.8rem, 4vw, 2.7rem); line-height: 1.15; letter-spacing: -0.04em; }
+    .wizard-center-intro { max-width: 65ch; margin: 0 0 1.25rem; color: var(--wizard-muted); line-height: 1.65; }
+    .wizard-center-search { margin-bottom: 1.2rem; padding: 1.2rem; border: 1px solid var(--wizard-line); border-radius: 1rem; background: var(--wizard-card); }
+    .wizard-center-search label { display: block; margin-bottom: 0.5rem; font-weight: 800; }
+    .wizard-address-row { display: flex; gap: 0.65rem; }
+    .wizard-address-row input { min-width: 0; flex: 1; min-height: 3.1rem; padding: 0.75rem 0.9rem; border: 1px solid #cfc5b5; border-radius: 0.75rem; background: #fff; color: var(--wizard-ink); font: inherit; }
+    .wizard-address-row input:focus-visible { outline: 3px solid #bd4c29; outline-offset: 2px; }
+    .wizard-address-status { min-height: 1.4rem; margin: 0.65rem 0 0; color: var(--wizard-muted); font-size: 0.88rem; line-height: 1.5; }
+    .wizard-address-privacy { margin: 0.5rem 0 0; color: var(--wizard-muted); font-size: 0.8rem; line-height: 1.5; }
+    .wizard-center-layout { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 1rem; align-items: start; }
+    .wizard-center-list { display: grid; gap: 0.75rem; }
+    .wizard-center-card { padding: 1.1rem; border: 1px solid var(--wizard-line); border-radius: 0.95rem; background: var(--wizard-card); }
+    .wizard-center-card[data-selected="true"] { border-color: var(--wizard-orange); box-shadow: 0 0 0 2px rgba(224,91,50,0.12); }
+    .wizard-center-card h3 { margin: 0 0 0.35rem; font-size: 1.08rem; }
+    .wizard-center-card p { margin: 0.35rem 0; color: var(--wizard-muted); font-size: 0.88rem; line-height: 1.5; }
+    .wizard-center-actions { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 0.8rem; }
+    .wizard-center-actions .wizard-button { min-height: 2.65rem; padding: 0.6rem 0.8rem; font-size: 0.85rem; }
+    .wizard-map-card { overflow: hidden; border: 1px solid var(--wizard-line); border-radius: 1rem; background: #fff; box-shadow: var(--wizard-shadow); }
+    .wizard-map-card iframe { display: block; width: 100%; min-height: 420px; border: 0; }
+    .wizard-map-caption { margin: 0; padding: 0.8rem 1rem; color: var(--wizard-muted); font-size: 0.82rem; line-height: 1.5; }
+    .wizard-center-back { margin-bottom: 1rem; }
+    .wizard-calendar { margin-top: 1.25rem; padding: clamp(1rem, 3vw, 1.5rem); border: 1px solid var(--wizard-line); border-radius: 1rem; background: var(--wizard-card); }
+    .wizard-calendar h3 { margin: 0; font-size: 1.3rem; }
+    .wizard-calendar-intro { margin: 0.4rem 0 1rem; color: var(--wizard-muted); line-height: 1.6; }
+    .wizard-calendar-days, .wizard-appointment-times { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+    .wizard-calendar-date, .wizard-time-option { min-width: 5.6rem; padding: 0.7rem 0.8rem; border: 1px solid var(--wizard-line); border-radius: 0.75rem; background: #fff; color: var(--wizard-ink); font: inherit; font-weight: 750; cursor: pointer; }
+    .wizard-calendar-date span { display: block; color: var(--wizard-muted); font-size: 0.75rem; font-weight: 600; }
+    .wizard-calendar-date[aria-pressed="true"], .wizard-time-option[aria-pressed="true"] { border-color: var(--wizard-orange); background: #fff4eb; box-shadow: 0 0 0 2px rgba(224,91,50,0.12); }
+    .wizard-calendar-date:hover, .wizard-time-option:hover { border-color: #c5aa7c; }
+    .wizard-calendar-subheading { margin: 1.15rem 0 0.6rem; font-size: 0.95rem; }
+    .wizard-calendar-status { min-height: 1.5rem; margin: 0.8rem 0 0; color: var(--wizard-muted); line-height: 1.5; }
+    .wizard-calendar-confirm { margin-top: 0.35rem; }
+    .wizard-calendar-disclaimer { margin: 0.9rem 0 0; padding-top: 0.8rem; border-top: 1px solid var(--wizard-line); color: var(--wizard-muted); font-size: 0.82rem; line-height: 1.55; }
+    .wizard-footer { max-width: 900px; margin: 1rem auto 0; color: var(--wizard-muted); font-size: 0.85rem; line-height: 1.6; }
+    .wizard-footer p { margin: 0; }
+
+    @media (max-width: 700px) {
+      .wizard-hero { grid-template-columns: 1fr; }
+      .wizard-hero-copy { padding-bottom: 1.5rem; }
+      .wizard-hero-image { min-height: 210px; }
+      .wizard-hero-image img { min-height: 210px; max-height: 270px; }
+      .wizard-hero-image::after { background: linear-gradient(180deg, #201d18 0%, rgba(32,29,24,0.04) 55%); }
+      .wizard-scenarios { grid-template-columns: 1fr 1fr; }
+      .wizard-scenario { min-height: 220px; }
+      .wizard-center-layout { grid-template-columns: 1fr; }
+      .wizard-map-card iframe { min-height: 340px; }
+    }
+    @media (max-width: 480px) {
+      .wizard-page { padding-inline: 0.8rem; }
+      .wizard-options, .wizard-options.is-compact, .wizard-options.is-chips { grid-template-columns: 1fr; }
+      .wizard-scenarios { grid-template-columns: 1fr; }
+      .wizard-scenario { min-height: 205px; }
+      .wizard-scenario-photo { height: 130px; }
+      .wizard-actions { position: sticky; bottom: 0; z-index: 3; padding-top: 0.6rem; background: var(--wizard-card); }
+      .wizard-actions .wizard-button { flex: 1; }
+      .wizard-address-row { flex-direction: column; }
+      .wizard-address-row .wizard-button { width: 100%; }
+      .wizard-map-card iframe { min-height: 300px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    }
+  </style>
+  <script src="/eligibility.js" defer></script>
+  <script src="/analytics.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#wizardContent">Skip to eligibility questions</a>
+  <div class="wizard-page">
+    <header class="wizard-topbar">
+      <a href="/" aria-label="Springboards home"><img class="wizard-logo" src="/springboards_logo.webp" alt="Springboards for Community Development"></a>
+      <a class="wizard-home-link" href="/#our-programs">← Back to programs</a>
+    </header>
+
+    <section class="wizard-hero" aria-labelledby="wizardTitle">
+      <div class="wizard-hero-copy">
+        <span class="wizard-eyebrow">Transitional Jobs · Your next move</span>
+        <h1 id="wizardTitle">Your skills are real. Let’s build on them.</h1>
+        <p>Answer a few quick questions to see if paid work experience and hands-on skill-building could be a fit. No judgment—just a clear next step.</p>
+      </div>
+      <div class="wizard-hero-image">
+        <img src="/04_hero_photo_clean.webp" alt="A Springboards trainee learning hands-on carpentry with a team" fetchpriority="high">
+        <span class="wizard-hero-caption">Real skills. Real work. Your next chapter.</span>
+      </div>
+    </section>
+
+    <main class="wizard-main" id="wizardContent" tabindex="-1">
+      <section class="wizard-panel" id="questionScreen" aria-labelledby="questionTitle">
+        <div class="wizard-progress-row"><span id="stepCount" aria-live="polite"></span><span>One question at a time</span></div>
+        <div class="wizard-progress-track" role="progressbar" aria-label="Eligibility check progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="wizard-progress-value" id="progressValue"></div></div>
+        <form id="questionForm" novalidate>
+          <div id="questionMount"></div>
+          <p class="wizard-error" id="questionError" role="alert"></p>
+          <div class="wizard-actions">
+            <button class="wizard-button secondary" id="backButton" type="button">← Back</button>
+            <button class="wizard-button" id="nextButton" type="submit">Continue →</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="wizard-result" id="resultScreen" aria-labelledby="resultTitle" hidden>
+        <div class="wizard-result-card">
+          <div class="wizard-result-top" id="resultTop" data-outcome="review">
+            <span class="wizard-eyebrow" id="resultEyebrow">Your next step</span>
+            <h2 id="resultTitle" tabindex="-1"></h2>
+            <p id="resultMessage"></p>
+          </div>
+          <div class="wizard-profile">
+            <div id="activityCode" class="wizard-code" hidden>SPRINGBOARDS TRANSITIONAL JOBS · ACTIVITY CODE 220</div>
+            <h3>Your quick profile</h3>
+            <p class="wizard-profile-intro" id="profileIntro"></p>
+            <ul class="wizard-tag-list" id="profileTags"></ul>
+            <section class="wizard-documents-check" id="documentReadiness" aria-labelledby="documentReadinessTitle" hidden>
+              <h4 id="documentReadinessTitle">Document check</h4>
+              <p class="wizard-documents-status" id="documentReadinessStatus"></p>
+              <ul class="wizard-missing-documents" id="missingDocuments"></ul>
+              <p class="wizard-documents-note">No need to upload or share document numbers here. Career Center staff can help with registration, referrals, and the employment assessment if you don’t have those yet.</p>
+            </section>
+            <p class="wizard-review-note">This quick check helps point you in the right direction. A local Career Center team will confirm your details and talk through next steps with you. You can still connect with Springboards about other ways to build skills and get support.</p>
+            <div class="wizard-result-actions">
+              <button class="wizard-button" id="seeNextStepButton" type="button" hidden>See next step →</button>
+              <a class="wizard-button" href="/train" data-track-cta="eligibility_apply_train">Apply for Training →</a>
+              <a class="wizard-button secondary" id="contactButton" href="mailto:info@springboardsfcd.org?subject=Transitional%20Jobs%20next%20step">Talk with our team →</a>
+              <button class="wizard-button secondary" id="restartButton" type="button">Start again</button>
+              <a class="wizard-button secondary" href="/#our-programs">Explore other programs</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="wizard-centers" id="centerScreen" aria-labelledby="centerHeading" hidden>
+        <button class="wizard-button secondary wizard-center-back" id="centerBackButton" type="button">← Back to my profile</button>
+        <span class="wizard-eyebrow">YOUR NEXT STEP</span>
+        <h2 class="wizard-center-heading" id="centerHeading" tabindex="-1">Let’s find your career center</h2>
+        <p class="wizard-center-intro">Enter your address to estimate the closest center, then choose a sample visit time. You can also compare all locations on the map.</p>
+        <form class="wizard-center-search" id="addressSearchForm" novalidate>
+          <label for="startingAddress">Enter your address</label>
+          <div class="wizard-address-row">
+            <input id="startingAddress" name="startingAddress" type="text" autocomplete="street-address" placeholder="Street address, city, or ZIP code">
+            <button class="wizard-button" type="submit">Find nearest center →</button>
+          </div>
+          <p class="wizard-address-status" id="addressSearchStatus" role="status" aria-live="polite"></p>
+          <p class="wizard-address-privacy">To estimate the closest center, your address is looked up through OpenStreetMap. It isn’t saved by this preview. Opening directions shares it with Google Maps.</p>
+        </form>
+        <div class="wizard-center-layout">
+          <div class="wizard-center-list" id="centerList" aria-label="Career Center locations"></div>
+          <div class="wizard-map-card">
+            <iframe id="centerMap" title="Interactive map showing Valley Career Center" src="https://www.google.com/maps?q=Valley+Career+Center,+3300+23rd+Drive,+Valley,+AL+36854&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+            <p class="wizard-map-caption" id="centerMapCaption">Select a center to update the map. Use the map controls to zoom or explore nearby streets.</p>
+          </div>
+        </div>
+        <section class="wizard-calendar" aria-labelledby="appointmentCalendarTitle">
+          <h3 id="appointmentCalendarTitle">Choose a visit time</h3>
+          <p class="wizard-calendar-intro">Select a day and a sample time that works for you.</p>
+          <div class="wizard-calendar-days" id="calendarDays" role="group" aria-label="Choose an appointment date"></div>
+          <h4 class="wizard-calendar-subheading" id="timeOptionsTitle">Sample times</h4>
+          <div class="wizard-appointment-times" id="appointmentTimes" role="group" aria-labelledby="timeOptionsTitle"></div>
+          <p class="wizard-calendar-status" id="calendarStatus" role="status" aria-live="polite">Choose a day to see sample appointment times.</p>
+          <div class="wizard-result-actions">
+            <button class="wizard-button wizard-calendar-confirm" id="previewAppointmentButton" type="button" disabled>Continue with this time →</button>
+            <a class="wizard-button secondary wizard-calendar-confirm" href="/train" data-track-cta="eligibility_center_apply_train">Submit Online Application →</a>
+          </div>
+          <p class="wizard-calendar-disclaimer">These are sample times for preview only—not live availability. Choosing a time here does not book or reserve an appointment. Call the selected center to confirm a visit.</p>
+        </section>
+      </section>
+      <footer class="wizard-footer"><p>Your answers and address are not saved by this preview. An address is shared with OpenStreetMap for the closest-center estimate, and with Google Maps only if you choose directions. This eligibility check is a quick first look—not a final decision.</p></footer>
+    </main>
+  </div>
+</body>
+</html>

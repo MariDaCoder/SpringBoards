@@ -1,0 +1,8 @@
+{
+  "livePreview.defaultPreviewPath": "/",
+  "livePreview.openPreviewTarget": "embeddedBrowser",
+  "livePreview.enableAutoRefresh": true,
+  "gitlens.ai.model": "",
+  "firebase.dataConnect.enabled": false,
+  "firebase.emulators.autoStart": false
+}

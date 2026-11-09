@@ -1,0 +1,16 @@
+{
+	"mcpServers": {
+		"io.github.ChromeDevTools/chrome-devtools-mcp": {
+			"type": "local",
+			"command": "npx",
+			"args": [
+				"--registry",
+				"https://registry.npmjs.org",
+				"chrome-devtools-mcp@1.10.1"
+			],
+			"tools": [
+				"*"
+			]
+		}
+	}
+}

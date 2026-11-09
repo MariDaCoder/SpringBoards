@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "springboards-community-dev"
+  },
+  "targets": {
+    "springboards-community-dev": {
+      "hosting": {
+        "landing": [
+          "springboards-community-dev"
+        ]
+      }
+    }
+  }
+}

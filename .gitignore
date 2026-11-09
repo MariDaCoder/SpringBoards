@@ -1,0 +1,9 @@
+# .gitignore
+service-account.json
+.env
+.env.*
+!.env.example
+node_modules/
+bun.lock
+.DS_Store
+

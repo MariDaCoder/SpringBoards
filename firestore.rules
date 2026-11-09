@@ -1,0 +1,106 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() &&
+        request.auth.token.email_verified == true &&
+        (request.auth.token.email == 'marilynnlward@gmail.com' ||
+         request.auth.token.email == 'springboardforcommunitydev@gmail.com' ||
+         request.auth.token.email == 'info@springboardsfcd.org');
+    }
+
+    function isValidInquiry(data) {
+      return data.keys().hasAll(['name', 'program', 'createdAt']) &&
+             data.name is string && data.name.size() >= 2 && data.name.size() <= 100 &&
+             data.program is string && data.program.size() >= 1 && data.program.size() <= 100 &&
+             data.createdAt is string && data.createdAt.size() <= 64;
+    }
+
+    function isValidCandidate(data) {
+      return data.keys().hasAll(['name', 'trade', 'createdAt']) &&
+             data.name is string && data.name.size() >= 2 && data.name.size() <= 100 &&
+             data.trade is string && data.trade.size() >= 2 && data.trade.size() <= 120 &&
+             data.createdAt is string && data.createdAt.size() <= 64;
+    }
+
+    function isValidVolunteer(data) {
+      return data.keys().hasAll(['name', 'availability', 'interest', 'createdAt']) &&
+             data.name is string && data.name.size() >= 2 && data.name.size() <= 100 &&
+             data.availability is string && data.availability.size() <= 60 &&
+             data.interest is string && data.interest.size() <= 80 &&
+             data.createdAt is string && data.createdAt.size() <= 64;
+    }
+
+    function isValidPartnership(data) {
+      return data.keys().hasAll(['companyName', 'contactName', 'createdAt']) &&
+             data.companyName is string && data.companyName.size() >= 2 && data.companyName.size() <= 120 &&
+             data.contactName is string && data.contactName.size() >= 2 && data.contactName.size() <= 100 &&
+             data.createdAt is string && data.createdAt.size() <= 64;
+    }
+
+    function isValidDonation(data) {
+      return data.keys().hasAll(['donorName', 'createdAt']) &&
+             data.donorName is string && data.donorName.size() >= 2 && data.donorName.size() <= 120 &&
+             data.createdAt is string && data.createdAt.size() <= 64;
+    }
+
+    function isValidRoadmapProgress(data) {
+      return data.keys().hasAll(['currentStep', 'updatedAt']) &&
+             data.currentStep is int && data.currentStep >= 0 && data.currentStep <= 10 &&
+             data.updatedAt is string && data.updatedAt.size() <= 64 &&
+             (!('completedSteps' in data) || (data.completedSteps is list && data.completedSteps.size() <= 10));
+    }
+
+    match /programInquiries/{docId} {
+      allow create: if isValidId(docId) && isValidInquiry(incoming());
+      allow get, update, delete: if isValidId(docId) && isAdmin();
+      allow list: if isAdmin();
+    }
+
+    match /candidateApplications/{docId} {
+      allow create: if isValidId(docId) && isValidCandidate(incoming());
+      allow get, update, delete: if isValidId(docId) && isAdmin();
+      allow list: if isAdmin();
+    }
+
+    match /volunteerSignups/{docId} {
+      allow create: if isValidId(docId) && isValidVolunteer(incoming());
+      allow get, update, delete: if isValidId(docId) && isAdmin();
+      allow list: if isAdmin();
+    }
+
+    match /employerPartnerships/{docId} {
+      allow create: if isValidId(docId) && isValidPartnership(incoming());
+      allow get, update, delete: if isValidId(docId) && isAdmin();
+      allow list: if isAdmin();
+    }
+
+    match /donationPledges/{docId} {
+      allow create: if isValidId(docId) && isValidDonation(incoming());
+      allow get, update, delete: if isValidId(docId) && isAdmin();
+      allow list: if isAdmin();
+    }
+
+    match /roadmapProgress/{userId} {
+      allow get: if isSignedIn() && isValidId(userId) && (request.auth.uid == userId || isAdmin());
+      allow create, update: if isSignedIn() && isValidId(userId) && request.auth.uid == userId && isValidRoadmapProgress(incoming());
+      allow delete: if isSignedIn() && isValidId(userId) && (request.auth.uid == userId || isAdmin());
+    }
+  }
+}

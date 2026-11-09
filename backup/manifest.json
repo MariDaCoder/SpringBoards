@@ -1,0 +1,21 @@
+{
+  "archive": "springboards_site_archive_20260927_215755Z.tar.gz",
+  "latest": "springboards_offline_archive_latest.tar.gz",
+  "createdAt": "2026-09-27T21:57:56Z",
+  "gitCommit": "76c59bcca941d0927347347c30b0dad24ea31963",
+  "fileSize": "12M",
+  "sha256": "19dbe8de422b15856f7e72fae0d5030ff5610959e2410711c54c177a761968ba",
+  "contents": [
+    "index.html",
+    "404.html",
+    "styles.css",
+    "main.js",
+    "analytics.js",
+    "sitemap.xml",
+    "robots.txt",
+    "package.json",
+    "metadata.json",
+    "server.js",
+    "all webp and visual assets"
+  ]
+}

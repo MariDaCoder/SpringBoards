@@ -1,0 +1,120 @@
+{
+  "entities": {
+    "ProgramInquiry": {
+      "title": "ProgramInquiry",
+      "description": "Public inquiry about Springboards training pathways",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "program": { "type": "string" },
+        "deliveredTo": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "program", "createdAt"]
+    },
+    "CandidateApplication": {
+      "title": "CandidateApplication",
+      "description": "Candidate intake application for trade training and transitional jobs",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "trade": { "type": "string" },
+        "backgroundStatus": { "type": "string" },
+        "transportation": { "type": "string" },
+        "careerCenter": { "type": "string" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "trade", "createdAt"]
+    },
+    "VolunteerSignup": {
+      "title": "VolunteerSignup",
+      "description": "Community volunteer interest registration",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "availability": { "type": "string" },
+        "interest": { "type": "string" },
+        "location": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "availability", "interest", "createdAt"]
+    },
+    "RoadmapProgress": {
+      "title": "RoadmapProgress",
+      "description": "Participant journey roadmap milestone tracking and Classroom course sync",
+      "type": "object",
+      "properties": {
+        "completedSteps": { "type": "array", "items": { "type": "number" } },
+        "currentStep": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["currentStep", "updatedAt"]
+    },
+    "EmployerPartnership": {
+      "title": "EmployerPartnership",
+      "description": "Employer worksite and trade resource partnership submission",
+      "type": "object",
+      "properties": {
+        "companyName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "contactName": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 40 },
+        "email": { "type": "string", "maxLength": 120 },
+        "partnershipType": { "type": "string", "maxLength": 120 },
+        "tradeSpecialty": { "type": "string", "maxLength": 120 },
+        "message": { "type": "string", "maxLength": 1500 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["companyName", "contactName", "createdAt"]
+    },
+    "DonationPledge": {
+      "title": "DonationPledge",
+      "description": "Community donor sponsorship or equipment pledge record",
+      "type": "object",
+      "properties": {
+        "donorName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "phone": { "type": "string", "maxLength": 40 },
+        "email": { "type": "string", "maxLength": 120 },
+        "donationType": { "type": "string", "maxLength": 100 },
+        "pledgeAmount": { "type": "string", "maxLength": 150 },
+        "taxReceiptRequested": { "type": "boolean" },
+        "message": { "type": "string", "maxLength": 1500 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["donorName", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/programInquiries/{docId}": {
+      "schema": { "$ref": "#/entities/ProgramInquiry" },
+      "description": "Public program inquiries"
+    },
+    "/candidateApplications/{docId}": {
+      "schema": { "$ref": "#/entities/CandidateApplication" },
+      "description": "Candidate training applications"
+    },
+    "/volunteerSignups/{docId}": {
+      "schema": { "$ref": "#/entities/VolunteerSignup" },
+      "description": "Volunteer signups"
+    },
+    "/employerPartnerships/{docId}": {
+      "schema": { "$ref": "#/entities/EmployerPartnership" },
+      "description": "Employer and resource partnership inquiries"
+    },
+    "/donationPledges/{docId}": {
+      "schema": { "$ref": "#/entities/DonationPledge" },
+      "description": "Community donation pledges and receipt requests"
+    },
+    "/roadmapProgress/{userId}": {
+      "schema": { "$ref": "#/entities/RoadmapProgress" },
+      "description": "User progress along the custom participant journey roadmap"
+    }
+  }
+}
+
