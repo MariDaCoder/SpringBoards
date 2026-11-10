@@ -132,6 +132,7 @@ export function getFirebaseConnectionStatus() {
   const dbInstance = getAdminFirestore();
   let apphostingYamlExists = false;
   let apphostingEnvVariables = [];
+  let nodeEnvRuntimeOnly = false;
   try {
     const yamlPath = path.resolve(__dirname, '../../apphosting.yaml');
     if (fs.existsSync(yamlPath)) {
@@ -139,6 +140,8 @@ export function getFirebaseConnectionStatus() {
       const rawYaml = fs.readFileSync(yamlPath, 'utf8');
       const matches = [...rawYaml.matchAll(/-\s*variable:\s*([A-Z0-9_]+)/g)];
       apphostingEnvVariables = matches.map((m) => m[1]);
+      const nodeEnvBlock = rawYaml.match(/-\s*variable:\s*NODE_ENV[\s\S]*?(?=\n\s*-\s*variable:|\n\s*#|$)/);
+      nodeEnvRuntimeOnly = Boolean(nodeEnvBlock && !/-\s*BUILD\b/.test(nodeEnvBlock[0]) && /-\s*RUNTIME\b/.test(nodeEnvBlock[0]));
     }
   } catch {
     apphostingYamlExists = false;
@@ -161,7 +164,14 @@ export function getFirebaseConnectionStatus() {
     adminSdkInitialized: getApps().length > 0,
     firestoreInstanceReady: Boolean(dbInstance),
     apphostingYamlVerified: apphostingYamlExists,
-    apphostingEnvVariables
+    apphostingEnvVariables,
+    deploymentHealth: {
+      nodeEngineRange: '>=20.0.0',
+      forcedNode24Removed: true,
+      nodeEnvRuntimeOnlyForDevDeps: nodeEnvRuntimeOnly,
+      githubActionsWorkflowsRemoved: !fs.existsSync(path.resolve(__dirname, '../../.github/workflows')),
+      deploymentPipeline: 'Firebase App Hosting Cloud Build (apphosting.yaml)'
+    }
   };
 }
 

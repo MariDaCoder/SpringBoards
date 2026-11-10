@@ -125,11 +125,25 @@ if (!fs.existsSync(apphostingPath)) {
     console.error('[APPHOSTING AUDIT FAIL] apphosting.yaml is missing valid runConfig settings.');
     hasErrors = true;
   }
+  // Ensure NODE_ENV=production is NOT set at BUILD time (which causes npm ci to skip devDependencies)
+  const nodeEnvBlockMatch = yamlContent.match(/-\s*variable:\s*NODE_ENV[\s\S]*?(?=\n\s*-\s*variable:|\n\s*#|$)/);
+  if (nodeEnvBlockMatch && /-\s*BUILD\b/.test(nodeEnvBlockMatch[0])) {
+    console.error('[APPHOSTING AUDIT FAIL] NODE_ENV must only be set for RUNTIME in apphosting.yaml so npm ci installs devDependencies during BUILD.');
+    hasErrors = true;
+  }
 }
 
 const pkgJson = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
 if (!pkgJson.scripts?.build || !pkgJson.scripts?.start) {
   console.error('[PACKAGE AUDIT FAIL] package.json must define both "build" and "start" scripts for App Hosting.');
+  hasErrors = true;
+}
+if (pkgJson.engines?.node === '24.x') {
+  console.error('[PACKAGE AUDIT FAIL] Do not force "node": "24.x" in package.json engines; use ">=20.0.0" for LTS runner compatibility.');
+  hasErrors = true;
+}
+if (fs.existsSync(path.join(ROOT, '.github', 'workflows'))) {
+  console.error('[WORKFLOW AUDIT FAIL] .github/workflows directory detected; remove GitHub Actions workflows to prevent 0s startup_failure billing blocks.');
   hasErrors = true;
 }
 
@@ -138,6 +152,6 @@ if (hasErrors) {
 }
 
 console.log('[Build Pipeline] Asset hashing complete:', manifest.assets);
-console.log('[Build Pipeline] Verified apphosting.yaml, environment variable mappings, and package.json scripts (build & start).');
+console.log('[Build Pipeline] Verified apphosting.yaml (NODE_ENV=RUNTIME only), Node >=20.0.0 LTS engine, and zero GitHub Actions startup_failure blockers.');
 console.log('[Build Pipeline] SEO, canonical, OpenGraph, H1, and backend security separation verified for all 6 intent pages.');
 
