@@ -6,6 +6,8 @@ import compression from 'compression';
 import { fileURLToPath } from 'url';
 import {
   PORT,
+  TIMEZONE,
+  TIMEZONE_LABEL,
   DESIGNATED_INBOX,
   HR_INBOX,
   ALERT_EMAIL,
@@ -622,21 +624,21 @@ app.post('/api/transitional-jobs/eligibility-submit', publicFormLimiter, async (
       'Valley Career Center': {
         name: 'Valley Career Center',
         address: '3300 23rd Drive, Valley, AL 36854 inside Growth Academy',
-        hours: 'Monday through Friday 8:00 AM to 4:30 PM Eastern Time',
+        hours: 'Monday through Friday 8:00 AM to 4:30 PM EST (Eastern Standard Time)',
         phone: '(334) 756-3065',
         callLink: 'tel:+13347563065'
       },
       'Opelika Career Center': {
         name: 'Opelika Career Center',
         address: '2300 Frederick Road, Opelika, AL 36801',
-        hours: 'Monday through Friday 8:00 AM to 4:30 PM Central Time',
+        hours: 'Monday through Friday 8:00 AM to 4:30 PM EST (Eastern Standard Time)',
         phone: '(334) 749-5065',
         callLink: 'tel:+13347495065'
       },
       'Phenix City Career Center': {
         name: 'Phenix City Career Center',
         address: '2602 College Dr CVCC campus Brassell Hall Rm 132, Phenix City, AL 36869',
-        hours: 'Monday through Friday 8:00 AM to 4:30 PM Eastern Time',
+        hours: 'Monday through Friday 8:00 AM to 4:30 PM EST (Eastern Standard Time)',
         phone: '(334) 214-4828',
         callLink: 'tel:+13342144828'
       }
@@ -647,7 +649,7 @@ app.post('/api/transitional-jobs/eligibility-submit', publicFormLimiter, async (
     const passCode = `PASS-${selectedCenterObj.name.substring(0, 3).toUpperCase()}-${Date.now().toString().slice(-4)}`;
 
     // Generate Google Calendar Link for Candidate
-    // Standard appointment: Next business morning at 9:00 AM
+    // Standard appointment: Next business morning at 9:00 AM EST (America/New_York)
     const now = new Date();
     const visitDate = new Date(now.getTime() + 24 * 60 * 60 * 1000);
     visitDate.setHours(9, 0, 0, 0);
@@ -658,12 +660,12 @@ app.post('/api/transitional-jobs/eligibility-submit', publicFormLimiter, async (
 
     const candCalTitle = `Career Center Verification Visit - ${selectedCenterObj.name}`;
     const candCalDetails = `Springboards Transitional Jobs State Verification Visit\n\nDesignated Center: ${selectedCenterObj.name}\nAddress: ${selectedCenterObj.address}\nOperating Hours: ${selectedCenterObj.hours}\nDirect Call: ${selectedCenterObj.phone}\nVerification Pass: ${passCode}\n\nTwo Essential Items to Bring:\n1. State Identification Card (Valid Alabama Driver License or Non Driver ID)\n2. Social Security Card (Original Card for Wage Enrollment)\n\nState Requirement Notice: The state requires candidates to be verified through the Career Center before worksite assignment.\n\nSpringboards Workforce Intake | info@springboardsfcd.org`;
-    const candidateCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(candCalTitle)}&dates=${gcalStart}/${gcalEnd}&details=${encodeURIComponent(candCalDetails)}&location=${encodeURIComponent(selectedCenterObj.address)}`;
+    const candidateCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(candCalTitle)}&dates=${gcalStart}/${gcalEnd}&ctz=America%2FNew_York&details=${encodeURIComponent(candCalDetails)}&location=${encodeURIComponent(selectedCenterObj.address)}`;
 
     // Generate Staff Follow-Up Alert Google Calendar Link (Duplicate in staff calendar)
     const staffCalTitle = `Follow-up: State Clearance Alert for ${trimmedName} (${selectedCenterObj.name})`;
-    const staffCalDetails = `Staff Follow-up Alert: State Clearance Verification\nCandidate: ${trimmedName}\nPhone: ${trimmedPhone}\nEmail: ${trimmedEmail}\nPass ID: ${passCode}\nCenter: ${selectedCenterObj.name}\nProgram Tag: ${programTag}\n\nAction Checklist:\n- Confirm arrival at Career Center\n- Verify State ID & SSN verified for Activity Code 220\n- Check Sirius Workforce Worksites Placement status (5-day deadline)\n\nOfficial state clearance must be logged before Day 1 worksite entry.`;
-    const staffCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(staffCalTitle)}&dates=${gcalStart}/${gcalEnd}&details=${encodeURIComponent(staffCalDetails)}&location=${encodeURIComponent(selectedCenterObj.address)}`;
+    const staffCalDetails = `Staff Follow-up Alert: State Clearance Verification\nCandidate: ${trimmedName}\nPhone: ${trimmedPhone}\nEmail: ${trimmedEmail}\nPass ID: ${passCode}\nCenter: ${selectedCenterObj.name}\nProgram Tag: ${programTag}\nTime Zone: Eastern Standard Time (EST)\n\nAction Checklist:\n- Confirm arrival at Career Center\n- Verify State ID & SSN verified for Activity Code 220\n- Check Sirius Workforce Worksites Placement status (5-day deadline)\n\nOfficial state clearance must be logged before Day 1 worksite entry.`;
+    const staffCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(staffCalTitle)}&dates=${gcalStart}/${gcalEnd}&ctz=America%2FNew_York&details=${encodeURIComponent(staffCalDetails)}&location=${encodeURIComponent(selectedCenterObj.address)}`;
 
     const newRecord = {
       id: `cand-${Date.now()}`,
@@ -1279,11 +1281,16 @@ app.get('/api/health', (req, res) => {
   res.status(200).json({
     status: 'healthy',
     domain: 'springboardsfcd.org',
+    timeZone: TIMEZONE,
+    timeZoneLabel: TIMEZONE_LABEL,
     uptimeSeconds,
     timestamp: new Date().toISOString(),
+    timestampEST: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }) + ' EST',
     service: 'Springboards for Community Development Web Platform',
     firebaseAppHosting,
     configStatus: {
+      timeZone: TIMEZONE,
+      timeZoneLabel: TIMEZONE_LABEL,
       designatedInbox: DESIGNATED_INBOX,
       hrInbox: HR_INBOX,
       alertEmail: ALERT_EMAIL,

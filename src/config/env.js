@@ -30,6 +30,11 @@ if (fs.existsSync(envFilePath)) {
 
 const ORG_PUBLIC_EMAIL = 'marilynnlward@gmail.com';
 
+// Enforce Eastern Standard Time Zone (America/New_York / EST) across server runtime
+process.env.TZ = process.env.TZ || 'America/New_York';
+export const TIMEZONE = process.env.TZ || 'America/New_York';
+export const TIMEZONE_LABEL = 'Eastern Standard Time (EST)';
+
 export const PORT = Number(process.env.PORT || 3000);
 export const NODE_ENV = process.env.NODE_ENV || 'production';
 export const APP_URL = (process.env.APP_URL || 'https://springboardsfcd.org').replace(/\/+$/, '');

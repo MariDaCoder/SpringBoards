@@ -1306,7 +1306,7 @@
 
       if (lastSyncLabel) {
         if (workspaceState.lastSyncedAt) {
-          const syncDate = new Date(workspaceState.lastSyncedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+          const syncDate = new Date(workspaceState.lastSyncedAt).toLocaleTimeString('en-US', { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' EST';
           lastSyncLabel.innerHTML = `✓ Last synced: <strong>${syncDate}</strong> (${workspaceState.lastSyncCount || appState.candidateApplications?.length || 0} candidate rows)`;
         } else {
           lastSyncLabel.textContent = 'Last synced: Never';
@@ -1531,7 +1531,7 @@
           const liveSyncEl = document.getElementById('live-sync-indicator');
           if (liveSyncEl) {
             const now = new Date();
-            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const timeStr = now.toLocaleTimeString('en-US', { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' EST';
             liveSyncEl.innerHTML = `● Live Sync (${timeStr})`;
             liveSyncEl.style.color = '#059669';
           }
@@ -1645,7 +1645,7 @@
         const curStage = c.stage || 'Prospect - Pending Reminder';
         const curQual = c.qualificationStatus || 'Pending Career Center Visit';
         const isDay1Cleared = !!c.firstDayCleared;
-        const dateStr = c.createdAt ? new Date(c.createdAt).toLocaleDateString() : 'Recent';
+        const dateStr = c.createdAt ? new Date(c.createdAt).toLocaleDateString('en-US', { timeZone: 'America/New_York' }) + ' EST' : 'Recent';
         const matchedCenterName = c.matchedCenter || 'Valley Career Center';
         const matchedCenterAddr = c.matchedCenterAddress || '3300 23rd Drive, Valley, AL 36854';
 
@@ -1896,7 +1896,7 @@
         };
 
         const typeBadge = typeLabels[m.type] || `<span class="badge badge-gray">${escapeHtml(m.type)}</span>`;
-        const dateStr = m.createdAt ? new Date(m.createdAt).toLocaleString() : 'Recent';
+        const dateStr = m.createdAt ? new Date(m.createdAt).toLocaleString('en-US', { timeZone: 'America/New_York' }) + ' EST' : 'Recent';
 
         let details = '';
         if (m.type === 'program_inquiry') {
@@ -2492,7 +2492,7 @@
         const files = await window.SpringboardsWorkspace.discoverGovernanceDriveFiles();
         const statusLabel = document.getElementById('drive-scan-status-label');
         if (statusLabel) {
-          statusLabel.innerHTML = `✓ Live synced <strong>${files.length} Google Drive files</strong> at ${new Date().toLocaleTimeString()}`;
+          statusLabel.innerHTML = `✓ Live synced <strong>${files.length} Google Drive files</strong> at ${new Date().toLocaleTimeString('en-US', { timeZone: 'America/New_York' })} EST`;
         }
         showLiveNotification(`✓ Verified ${files.length} Google Drive governance & program files!`);
         await loadGovernance();

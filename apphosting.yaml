@@ -9,11 +9,16 @@ runConfig:
   memoryMiB: 512
 
 env:
-  # 1. Runtime & Canonical Application URL
+  # 1. Runtime, Time Zone (Eastern Standard Time) & Canonical Application URL
   # CRITICAL: NODE_ENV is restricted to RUNTIME only so `npm ci` installs devDependencies during BUILD.
   - variable: NODE_ENV
     value: production
     availability:
+      - RUNTIME
+  - variable: TZ
+    value: America/New_York
+    availability:
+      - BUILD
       - RUNTIME
   - variable: APP_URL
     value: https://springboardsfcd.org

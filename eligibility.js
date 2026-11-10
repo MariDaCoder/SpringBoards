@@ -44,12 +44,14 @@
       !calendarDays || !appointmentTimes || !calendarStatus || !previewAppointmentButton ||
       !documentReadiness || !documentReadinessStatus || !missingDocuments) return;
 
+  const WEBSITE_TIMEZONE = "America/New_York";
+
   const careerCenters = [
     {
       id: "valley",
       name: "Valley Career Center",
       address: "3300 23rd Drive, Valley, AL 36854 inside Growth Academy",
-      hours: "Monday–Friday, 8:00 AM–4:30 PM Eastern Time",
+      hours: "Monday–Friday, 8:00 AM–4:30 PM EST (Eastern Standard Time)",
       phone: "(334) 756-3065",
       callLink: "tel:+13347563065",
       latitude: 32.8187,
@@ -59,7 +61,7 @@
       id: "opelika",
       name: "Opelika Career Center",
       address: "2300 Frederick Road, Opelika, AL 36801",
-      hours: "Monday–Friday, 8:00 AM–4:30 PM Central Time",
+      hours: "Monday–Friday, 8:00 AM–4:30 PM EST (Eastern Standard Time)",
       phone: "(334) 749-5065",
       callLink: "tel:+13347495065",
       latitude: 32.6454,
@@ -69,7 +71,7 @@
       id: "phenix-city",
       name: "Phenix City Career Center",
       address: "2602 College Dr, CVCC campus, Brassell Hall Room 132, Phenix City, AL 36869",
-      hours: "Monday–Friday, 8:00 AM–4:30 PM Eastern Time",
+      hours: "Monday–Friday, 8:00 AM–4:30 PM EST (Eastern Standard Time)",
       phone: "(334) 214-4828",
       callLink: "tel:+13342144828",
       latitude: 32.4709,
@@ -81,7 +83,7 @@
   let nearestCenterId = "";
   let selectedAppointmentDate = "";
   let selectedAppointmentTime = "";
-  const sampleAppointmentTimes = ["8:30 AM", "10:00 AM", "11:30 AM", "1:00 PM", "2:30 PM"];
+  const sampleAppointmentTimes = ["8:30 AM EST", "10:00 AM EST", "11:30 AM EST", "1:00 PM EST", "2:30 PM EST"];
 
   const barrierChoices = [
     { value: "displaced-homemaker", label: "I’m rebuilding after caring for home or family", detail: "Displaced homemaker", icon: "🏡" },
@@ -578,7 +580,7 @@
   const renderAppointmentCalendar = () => {
     calendarDays.replaceChildren();
     appointmentTimes.replaceChildren();
-    calendarStatus.textContent = "Choose a day to see sample appointment times.";
+    calendarStatus.textContent = "Choose a day to see sample appointment times (Eastern Standard Time - EST).";
     previewAppointmentButton.disabled = !(selectedAppointmentDate && selectedAppointmentTime);
 
     getSampleDates().forEach((date) => {
@@ -587,11 +589,11 @@
       dateButton.type = "button";
       dateButton.className = "wizard-calendar-date";
       dateButton.setAttribute("aria-pressed", String(dateValue === selectedAppointmentDate));
-      dateButton.setAttribute("aria-label", date.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" }));
+      dateButton.setAttribute("aria-label", date.toLocaleDateString("en-US", { timeZone: WEBSITE_TIMEZONE, weekday: "long", month: "long", day: "numeric" }));
       const day = document.createElement("span");
-      day.textContent = date.toLocaleDateString(undefined, { weekday: "short" });
+      day.textContent = date.toLocaleDateString("en-US", { timeZone: WEBSITE_TIMEZONE, weekday: "short" });
       const dateText = document.createElement("strong");
-      dateText.textContent = date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+      dateText.textContent = date.toLocaleDateString("en-US", { timeZone: WEBSITE_TIMEZONE, month: "short", day: "numeric" });
       dateButton.append(day, dateText);
       dateButton.addEventListener("click", () => {
         selectedAppointmentDate = dateValue;
@@ -603,7 +605,7 @@
 
     if (!selectedAppointmentDate) return;
     const chosenDate = new Date(`${selectedAppointmentDate}T12:00:00`);
-    calendarStatus.textContent = `Sample times for ${chosenDate.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" })} at ${selectedCareerCenter.name}.`;
+    calendarStatus.textContent = `Sample times (EST) for ${chosenDate.toLocaleDateString("en-US", { timeZone: WEBSITE_TIMEZONE, weekday: "long", month: "long", day: "numeric" })} at ${selectedCareerCenter.name}.`;
     sampleAppointmentTimes.forEach((time) => {
       const timeButton = document.createElement("button");
       timeButton.type = "button";
@@ -1103,7 +1105,7 @@
   previewAppointmentButton.addEventListener("click", () => {
     if (!selectedAppointmentDate || !selectedAppointmentTime) return;
     const chosenDate = new Date(`${selectedAppointmentDate}T12:00:00`);
-    const formattedDate = chosenDate.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
+    const formattedDate = chosenDate.toLocaleDateString("en-US", { timeZone: WEBSITE_TIMEZONE, weekday: "long", month: "long", day: "numeric" });
     calendarStatus.textContent = `You selected ${selectedAppointmentTime} on ${formattedDate} at ${selectedCareerCenter.name}. This preview has not booked or reserved a visit. Call ${selectedCareerCenter.phone} to confirm.`;
   });
 
