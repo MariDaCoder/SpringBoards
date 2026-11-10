@@ -19,6 +19,7 @@ export function createAdminRouter({
   saveBackofficeData,
   deliveredInboxLog,
   getDefaultLaunchGovernance,
+  getDefaultTeamRbacAndWorkflows,
   runLiveSeoAudit,
   getObservabilitySummary,
   analyticsStore
@@ -29,11 +30,42 @@ export function createAdminRouter({
   router.use('/backoffice', adminNoStore);
   router.use('/workspace', adminNoStore);
 
-  // Admin Governance Endpoints
+  function getRbacState() {
+    if (!backofficeData.teamRbacAndWorkflows && typeof getDefaultTeamRbacAndWorkflows === 'function') {
+      backofficeData.teamRbacAndWorkflows = getDefaultTeamRbacAndWorkflows();
+    }
+    return backofficeData.teamRbacAndWorkflows || {};
+  }
+
+  function resolveActorRoleAndPermissions(actorIdent = '') {
+    const rbac = getRbacState();
+    const clean = String(actorIdent || '').trim().toLowerCase();
+    const assignments = rbac.teamAssignments || [];
+    const roles = rbac.customRoles || [];
+
+    const member =
+      assignments.find(
+        (m) =>
+          m.memberId.toLowerCase() === clean ||
+          m.name.toLowerCase() === clean ||
+          (m.email && m.email.toLowerCase() === clean)
+      ) || assignments[0];
+
+    const roleObj = roles.find((r) => r.roleId === member?.roleId) || roles[0];
+    return {
+      member,
+      role: roleObj,
+      permissions: new Set(roleObj?.permissions || [])
+    };
+  }
+
+  // Admin Governance & RBAC Endpoints
   router.get('/backoffice/governance', (req, res) => {
     const gov = backofficeData.launchGovernance || getDefaultLaunchGovernance();
+    const rbac = getRbacState();
     res.status(200).json({
       governance: gov,
+      rbac,
       seoAudit: runLiveSeoAudit(),
       observability: getObservabilitySummary(),
       analytics: {
@@ -44,6 +76,179 @@ export function createAdminRouter({
         deviceBreakdown: analyticsStore.deviceBreakdown,
         formConversionFunnel: analyticsStore.formFunnel
       }
+    });
+  });
+
+  router.get('/backoffice/rbac', (req, res) => {
+    const rbac = getRbacState();
+    return res.status(200).json(rbac);
+  });
+
+  router.post('/backoffice/rbac/assign', (req, res) => {
+    const { memberId, roleId, approvalAuthority, ownedRoutes, actor } = req.body || {};
+    const { permissions } = resolveActorRoleAndPermissions(actor || 'Marilynn Ward');
+    if (!permissions.has('rbac:manage')) {
+      return res.status(403).json({
+        error: 'Granular Access Control Denied: Only roles with "rbac:manage" (Marilynn Ward — Lead Designer, Developer & Technical Publisher) can modify role assignments.'
+      });
+    }
+
+    const rbac = getRbacState();
+    const target = (rbac.teamAssignments || []).find((m) => m.memberId === memberId);
+    if (!target) {
+      return res.status(404).json({ error: 'Team member not found in RBAC assignments.' });
+    }
+
+    const validRole = (rbac.customRoles || []).find((r) => r.roleId === roleId);
+    if (roleId && validRole) {
+      target.roleId = roleId;
+    }
+    if (approvalAuthority !== undefined) {
+      target.approvalAuthority = sanitizeInput(approvalAuthority, 160);
+    }
+    if (Array.isArray(ownedRoutes)) {
+      target.ownedRoutes = ownedRoutes.map((r) => sanitizeInput(r, 40));
+    }
+
+    saveBackofficeData();
+    return res.status(200).json({
+      success: true,
+      member: target,
+      role: validRole || null,
+      teamAssignments: rbac.teamAssignments
+    });
+  });
+
+  router.post('/backoffice/publishing-workflow', (req, res) => {
+    const {
+      action,
+      workflowId,
+      title,
+      targetRoute,
+      category,
+      driveEvidenceDoc,
+      notes,
+      actorName
+    } = req.body || {};
+
+    const rbac = getRbacState();
+    if (!Array.isArray(rbac.publishingWorkflowRequests)) {
+      rbac.publishingWorkflowRequests = [];
+    }
+
+    const actorInfo = resolveActorRoleAndPermissions(actorName || 'Marilynn Ward');
+    const actorDisplay = actorInfo.member?.name || sanitizeInput(actorName || 'Marilynn Ward', 80);
+
+    if (action === 'create') {
+      if (!title || !String(title).trim()) {
+        return res.status(400).json({ error: 'Workflow title is required.' });
+      }
+      const newReq = {
+        id: `wf-${Date.now()}`,
+        title: sanitizeInput(title, 180),
+        targetRoute: sanitizeInput(targetRoute || '/', 60),
+        category: sanitizeInput(category || 'Content & Program Update', 80),
+        authorName: actorDisplay,
+        authorRole: actorInfo.role?.roleName || 'Contributor',
+        complianceReviewer: 'Giselle Campos (Education/WIOA) & Shamia Morgan (Policy)',
+        executiveApprover: 'Marvin Thompson (Executive Director)',
+        publisherName: 'Marilynn Ward (Technical Publisher)',
+        driveEvidenceDoc: sanitizeInput(driveEvidenceDoc || 'Springboards Workforce Programs Tracker', 160),
+        currentStage: 'stage_1_draft',
+        statusLabel: 'Stage 1: Draft Created — Ready for Domain & Compliance Review',
+        updatedAt: new Date().toISOString(),
+        notes: sanitizeInput(notes || 'Submitted into 4-stage review & publishing pipeline.', 400)
+      };
+      rbac.publishingWorkflowRequests.unshift(newReq);
+      saveBackofficeData();
+      return res.status(200).json({
+        success: true,
+        workflow: newReq,
+        publishingWorkflowRequests: rbac.publishingWorkflowRequests
+      });
+    }
+
+    // Advance or update existing workflow item
+    const wf = rbac.publishingWorkflowRequests.find((w) => w.id === workflowId);
+    if (!wf) {
+      return res.status(404).json({ error: 'Publishing workflow request not found.' });
+    }
+
+    const stageOrder = [
+      'stage_1_draft',
+      'stage_2_domain_compliance_review',
+      'stage_3_executive_board_approval',
+      'stage_4_published'
+    ];
+    const currentIdx = stageOrder.indexOf(wf.currentStage);
+    const nextStage = req.body.targetStage || stageOrder[Math.min(stageOrder.length - 1, currentIdx + 1)];
+
+    // Granular Access Control Gate Check per Stage
+    if (nextStage === 'stage_2_domain_compliance_review') {
+      wf.currentStage = 'stage_2_domain_compliance_review';
+      wf.statusLabel = `Stage 2: In Compliance & WIOA Review (Submitted by ${actorDisplay})`;
+    } else if (nextStage === 'stage_3_executive_board_approval') {
+      if (
+        !actorInfo.permissions.has('workflow:review_compliance') &&
+        !actorInfo.permissions.has('content:review') &&
+        !actorInfo.permissions.has('workflow:publish')
+      ) {
+        return res.status(403).json({
+          error: `Access Control Gate: Role "${actorInfo.role?.roleName}" lacks "workflow:review_compliance" permission required to complete Stage 2 Compliance Review.`
+        });
+      }
+      wf.currentStage = 'stage_3_executive_board_approval';
+      wf.complianceReviewer = actorDisplay;
+      wf.statusLabel = `Stage 3: Compliance Verified by ${actorDisplay} — Awaiting Executive Sign-Off (Marvin Thompson / Melvin M.L. Ward)`;
+    } else if (nextStage === 'stage_4_published') {
+      if (
+        !actorInfo.permissions.has('workflow:publish') &&
+        !actorInfo.permissions.has('workflow:approve_executive')
+      ) {
+        return res.status(403).json({
+          error: `Access Control Gate: Only Executive Approvers (Marvin Thompson / Melvin M.L. Ward) or Technical Publisher (Marilynn Ward) can authorize Stage 4 Production Publishing.`
+        });
+      }
+      wf.currentStage = 'stage_4_published';
+      wf.publisherName = 'Marilynn Ward';
+      wf.statusLabel = `Stage 4: Approved & Published to Production (${actorDisplay})`;
+    }
+
+    if (notes) {
+      wf.notes = sanitizeInput(notes, 400);
+    }
+    wf.updatedAt = new Date().toISOString();
+    saveBackofficeData();
+
+    return res.status(200).json({
+      success: true,
+      workflow: wf,
+      publishingWorkflowRequests: rbac.publishingWorkflowRequests
+    });
+  });
+
+  router.post('/workspace/drive-sync', (req, res) => {
+    const { files, scannedBy, timestamp } = req.body || {};
+    const rbac = getRbacState();
+    if (Array.isArray(files) && files.length > 0) {
+      rbac.driveReferenceFiles = files.map((f) => ({
+        id: sanitizeInput(f.id, 100),
+        title: sanitizeInput(f.title, 180),
+        type: sanitizeInput(f.type || 'Google Drive File', 60),
+        url: sanitizeInput(f.url, 300),
+        governanceScope: sanitizeInput(f.governanceScope || 'Synced from Google Drive', 240),
+        ownerName: sanitizeInput(f.ownerName || 'Springboards Workspace', 100),
+        modifiedTime: f.modifiedTime || null,
+        verifiedInDrive: Boolean(f.verifiedInDrive)
+      }));
+      rbac.lastDriveScanAt = timestamp || new Date().toISOString();
+      rbac.lastDriveScanBy = sanitizeInput(scannedBy || WORKSPACE_CONNECTED_EMAIL, 120);
+      saveBackofficeData();
+    }
+    return res.status(200).json({
+      success: true,
+      driveReferenceFiles: rbac.driveReferenceFiles,
+      lastDriveScanAt: rbac.lastDriveScanAt
     });
   });
 
@@ -83,11 +288,11 @@ export function createAdminRouter({
     const newEntry = {
       id: `log-${Date.now()}`,
       deploymentDate: new Date().toISOString().split('T')[0],
-      version: sanitizeInput(version || gov.currentVersion || 'v2.5.0', 40),
+      version: sanitizeInput(version || gov.currentVersion || 'v2.6.0', 40),
       category: sanitizeInput(category || 'Production Release', 80),
       summary: sanitizeInput(summary, 500),
-      owner: sanitizeInput(owner || 'Workforce Administrator', 100),
-      thresholds: sanitizeInput(thresholds || 'Uptime >= 99.9% | 5xx == 0%', 160)
+      owner: sanitizeInput(owner || 'Marilynn Ward', 100),
+      thresholds: sanitizeInput(thresholds || 'Uptime >= 99.9% | Dual Publishing Gate Verified', 160)
     };
     gov.currentVersion = newEntry.version;
     if (!Array.isArray(gov.launchLog)) gov.launchLog = [];

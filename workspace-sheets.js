@@ -1223,9 +1223,163 @@ export async function getMeetSpace(spaceName) {
   return await res.json();
 }
 
+// --- 8. Google Drive Governance & Team Responsibility File Discovery (drive.googleapis.com) ---
+export const KNOWN_GOVERNANCE_DRIVE_FILES = [
+  {
+    id: '1KZgNGpwHedOxN6oSSwdoAbXtV3bhTuLJBx65tdRbtlQ',
+    title: 'Springboards Workforce Programs Tracker',
+    type: 'Google Sheet',
+    url: 'https://docs.google.com/spreadsheets/d/1KZgNGpwHedOxN6oSSwdoAbXtV3bhTuLJBx65tdRbtlQ/edit',
+    governanceScope: 'Master program readiness, owner assignments (Marilynn / Marvin), ETPL/OJT/Transitional Jobs gates, and public website claim approvals'
+  },
+  {
+    id: '1uMFzOdeoIIrFkXK03Qydy3_8zEzoBD-l',
+    title: 'Springboards Master Execution Package.pdf',
+    type: 'Google Drive PDF',
+    url: 'https://drive.google.com/file/d/1uMFzOdeoIIrFkXK03Qydy3_8zEzoBD-l/view',
+    governanceScope: 'Organizational execution structure, board & leadership roles, operational sign-off hierarchy'
+  },
+  {
+    id: '1hRsffn1SSBwSy4sI-_l6igpqDyCgVsbE',
+    title: 'Worksite Agreement_Springboards',
+    type: 'Google Doc',
+    url: 'https://docs.google.com/document/d/1hRsffn1SSBwSy4sI-_l6igpqDyCgVsbE/edit',
+    governanceScope: 'Host employer worksite responsibilities, 32 hr/wk cap, safety supervision, and Sirius Workforce payroll rules'
+  },
+  {
+    id: '1rbPPzLyPEeCMlia-ixjSm1U0WWqig99W',
+    title: 'Job Descriptions_Springboards',
+    type: 'Google Doc',
+    url: 'https://docs.google.com/document/d/1rbPPzLyPEeCMlia-ixjSm1U0WWqig99W/edit',
+    governanceScope: 'Official staff, instructor, supervisor, and entry-level trade helper job descriptions and duty boundaries'
+  },
+  {
+    id: '1lWF5EKMNB8J96-mGaImG7-NIB8WMMNH-',
+    title: 'New-WIOA-Training-Provider-Guide Jill Grant.pdf',
+    type: 'Google Drive PDF',
+    url: 'https://drive.google.com/file/d/1lWF5EKMNB8J96-mGaImG7-NIB8WMMNH-/view',
+    governanceScope: 'ETPL / WIOA Eligible Training Provider application, licensing, and curriculum review standards'
+  },
+  {
+    id: '1OF-StQe79K1dzMBdt-Fk8NrQSLVo-5Gr',
+    title: 'Guidelines - 2025-13 Transitional Jobs Accessible GWID.pdf',
+    type: 'Google Drive PDF',
+    url: 'https://drive.google.com/file/d/1OF-StQe79K1dzMBdt-Fk8NrQSLVo-5Gr/view',
+    governanceScope: 'Activity 220 Transitional Jobs eligibility, 390-hour cap, and Career Center referral compliance'
+  },
+  {
+    id: '1M2TPY2r17YRB4rv63cejGgTr6nR4BP4X',
+    title: 'AD-Policy-PY-2025-11-ITA-Guidelines.pdf',
+    type: 'Google Drive PDF',
+    url: 'https://drive.google.com/file/d/1M2TPY2r17YRB4rv63cejGgTr6nR4BP4X/view',
+    governanceScope: 'Individual Training Account (ITA) tuition voucher rules and public marketing restrictions prior to ETPL approval'
+  },
+  {
+    id: '1fUuxMYwkY7EqFBNIhKaUNgDmnqLgZ3a-',
+    title: 'AD-Policy-PY2024-04.pdf',
+    type: 'Google Drive PDF',
+    url: 'https://drive.google.com/file/d/1fUuxMYwkY7EqFBNIhKaUNgDmnqLgZ3a-/view',
+    governanceScope: 'State of Alabama WIOA On-The-Job Training (OJT) employer reimbursement and contract approval policy'
+  },
+  {
+    id: '12vyqltnx3TOJ_jx8glCAulI6SFaN0Mw6',
+    title: 'General-Provisions-B1-B19.pdf',
+    type: 'Google Drive PDF',
+    url: 'https://drive.google.com/file/d/12vyqltnx3TOJ_jx8glCAulI6SFaN0Mw6/view',
+    governanceScope: 'General legal, civil rights, EEO, and financial audit provisions for public and internal documentation'
+  }
+];
+
+export async function discoverGovernanceDriveFiles() {
+  const token = getCachedToken();
+  if (!token) {
+    throw new Error('Please sign in with Google Workspace to scan your live Google Drive files.');
+  }
+
+  const headers = { Authorization: `Bearer ${token}` };
+
+  // 1. Search Google Drive for Springboards / Governance / Workforce / Job Descriptions / Tracker files
+  const searchQuery = encodeURIComponent(
+    "(name contains 'Springboards' or name contains 'Worksite' or name contains 'Job Description' or name contains 'WIOA' or name contains 'Transitional' or name contains 'Tracker' or name contains 'Board') and trashed = false"
+  );
+  const searchPromise = fetch(
+    `https://www.googleapis.com/drive/v3/files?q=${searchQuery}&pageSize=25&fields=files(id,name,mimeType,webViewLink,modifiedTime,owners(displayName,emailAddress),lastModifyingUser(displayName,emailAddress))`,
+    { headers }
+  ).then(r => (r.ok ? r.json() : { files: [] })).catch(() => ({ files: [] }));
+
+  // 2. Directly inspect metadata of known reference Drive IDs
+  const knownPromises = KNOWN_GOVERNANCE_DRIVE_FILES.map(async (item) => {
+    try {
+      const res = await fetch(
+        `https://www.googleapis.com/drive/v3/files/${encodeURIComponent(item.id)}?fields=id,name,mimeType,webViewLink,modifiedTime,owners(displayName,emailAddress),lastModifyingUser(displayName,emailAddress)`,
+        { headers }
+      );
+      if (res.ok) {
+        const meta = await res.json();
+        return {
+          ...item,
+          title: meta.name || item.title,
+          mimeType: meta.mimeType || item.type,
+          url: meta.webViewLink || item.url,
+          modifiedTime: meta.modifiedTime || null,
+          ownerName: meta.owners?.[0]?.displayName || meta.lastModifyingUser?.[0]?.displayName || 'Springboards Workspace',
+          ownerEmail: meta.owners?.[0]?.emailAddress || meta.lastModifyingUser?.[0]?.emailAddress || 'marilynnlward@gmail.com',
+          verifiedInDrive: true
+        };
+      }
+    } catch {
+      // Fallback to reference metadata if file is in a shared folder outside current token scope
+    }
+    return { ...item, verifiedInDrive: false };
+  });
+
+  const [searchResult, resolvedKnown] = await Promise.all([
+    searchPromise,
+    Promise.all(knownPromises)
+  ]);
+
+  const discoveredMap = new Map();
+  resolvedKnown.forEach(f => discoveredMap.set(f.id, f));
+  (searchResult.files || []).forEach(f => {
+    if (!discoveredMap.has(f.id)) {
+      discoveredMap.set(f.id, {
+        id: f.id,
+        title: f.name,
+        type: f.mimeType?.includes('spreadsheet')
+          ? 'Google Sheet'
+          : f.mimeType?.includes('document')
+          ? 'Google Doc'
+          : 'Google Drive File',
+        url: f.webViewLink || `https://drive.google.com/file/d/${f.id}/view`,
+        modifiedTime: f.modifiedTime || null,
+        ownerName: f.owners?.[0]?.displayName || 'Workspace Owner',
+        ownerEmail: f.owners?.[0]?.emailAddress || '',
+        governanceScope: 'Discovered in Google Drive Workspace scan',
+        verifiedInDrive: true
+      });
+    }
+  });
+
+  const files = Array.from(discoveredMap.values());
+
+  await fetch('/api/workspace/drive-sync', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      files,
+      scannedBy: currentUser?.email || 'marilynnlward@gmail.com',
+      timestamp: new Date().toISOString()
+    })
+  }).catch(() => {});
+
+  await logWorkspaceActivity('drive', 'discover_governance_files', 'reference_documents', `Scanned ${files.length} Drive governance files`, 'https://drive.google.com');
+  return files;
+}
+
 // Global window attachment for non-module scripts
 window.SpringboardsWorkspace = {
   SCOPES,
+  KNOWN_GOVERNANCE_DRIVE_FILES,
   signInWithGoogle,
   signOutFromGoogle,
   getCachedToken,
@@ -1261,5 +1415,7 @@ window.SpringboardsWorkspace = {
   listChatSpaces,
   sendChatCohortMessage,
   createMeetIntakeSpace,
-  getMeetSpace
+  getMeetSpace,
+  discoverGovernanceDriveFiles
 };
+

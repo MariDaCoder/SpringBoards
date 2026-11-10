@@ -67,6 +67,26 @@ service cloud.firestore {
              (!('completedSteps' in data) || (data.completedSteps is list && data.completedSteps.size() <= 10));
     }
 
+    function isValidTeamRole(data) {
+      return data.keys().hasAll(['memberId', 'name', 'roleId', 'updatedAt']) &&
+             data.memberId is string && data.memberId.size() >= 2 && data.memberId.size() <= 80 &&
+             data.name is string && data.name.size() >= 2 && data.name.size() <= 100 &&
+             data.roleId is string && data.roleId.size() >= 2 && data.roleId.size() <= 100 &&
+             data.updatedAt is string && data.updatedAt.size() <= 64;
+    }
+
+    function isValidPublishingWorkflow(data) {
+      return data.keys().hasAll(['title', 'targetRoute', 'authorName', 'currentStage', 'updatedAt']) &&
+             data.title is string && data.title.size() >= 3 && data.title.size() <= 180 &&
+             data.targetRoute is string && data.targetRoute.size() >= 1 && data.targetRoute.size() <= 80 &&
+             data.authorName is string && data.authorName.size() >= 2 && data.authorName.size() <= 100 &&
+             (data.currentStage == 'stage_1_draft' ||
+              data.currentStage == 'stage_2_domain_compliance_review' ||
+              data.currentStage == 'stage_3_executive_board_approval' ||
+              data.currentStage == 'stage_4_published') &&
+             data.updatedAt is string && data.updatedAt.size() <= 64;
+    }
+
     match /programInquiries/{docId} {
       allow create: if isValidId(docId) && isValidInquiry(incoming());
       allow get, update, delete: if isValidId(docId) && isAdmin();
@@ -101,6 +121,18 @@ service cloud.firestore {
       allow get: if isSignedIn() && isValidId(userId) && (request.auth.uid == userId || isAdmin());
       allow create, update: if isSignedIn() && isValidId(userId) && request.auth.uid == userId && isValidRoadmapProgress(incoming());
       allow delete: if isSignedIn() && isValidId(userId) && (request.auth.uid == userId || isAdmin());
+    }
+
+    match /teamRoles/{memberId} {
+      allow get, list: if isSignedIn();
+      allow create, update: if isValidId(memberId) && isAdmin() && isValidTeamRole(incoming());
+      allow delete: if isValidId(memberId) && isAdmin();
+    }
+
+    match /publishingWorkflows/{workflowId} {
+      allow get, list: if isSignedIn();
+      allow create, update: if isValidId(workflowId) && isAdmin() && isValidPublishingWorkflow(incoming());
+      allow delete: if isValidId(workflowId) && isAdmin();
     }
   }
 }

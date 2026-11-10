@@ -88,6 +88,34 @@
         "createdAt": { "type": "string", "format": "date-time" }
       },
       "required": ["donorName", "createdAt"]
+    },
+    "TeamRoleAssignment": {
+      "title": "TeamRoleAssignment",
+      "description": "Custom RBAC role assignment and granular permissions for Springboards team and board members",
+      "type": "object",
+      "properties": {
+        "memberId": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "name": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "roleId": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "approvalAuthority": { "type": "string", "maxLength": 200 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["memberId", "name", "roleId", "updatedAt"]
+    },
+    "PublishingWorkflow": {
+      "title": "PublishingWorkflow",
+      "description": "4-stage website design, content, compliance review, and production publishing workflow request",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "minLength": 3, "maxLength": 180 },
+        "targetRoute": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "category": { "type": "string", "maxLength": 100 },
+        "authorName": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "currentStage": { "type": "string", "enum": ["stage_1_draft", "stage_2_domain_compliance_review", "stage_3_executive_board_approval", "stage_4_published"] },
+        "driveEvidenceDoc": { "type": "string", "maxLength": 200 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "targetRoute", "authorName", "currentStage", "updatedAt"]
     }
   },
   "firestore": {
@@ -114,6 +142,14 @@
     "/roadmapProgress/{userId}": {
       "schema": { "$ref": "#/entities/RoadmapProgress" },
       "description": "User progress along the custom participant journey roadmap"
+    },
+    "/teamRoles/{memberId}": {
+      "schema": { "$ref": "#/entities/TeamRoleAssignment" },
+      "description": "Custom team role assignments and granular access controls"
+    },
+    "/publishingWorkflows/{workflowId}": {
+      "schema": { "$ref": "#/entities/PublishingWorkflow" },
+      "description": "4-stage website review, approval, and publishing workflow items"
     }
   }
 }

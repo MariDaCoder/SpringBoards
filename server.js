@@ -112,6 +112,9 @@ app.use(express.static(__dirname, {
       res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
     } else if (/\.(webp|jpg|jpeg|png|ico|svg|woff2)$/i.test(filePath)) {
       res.setHeader('Cache-Control', 'public, max-age=604800, stale-while-revalidate=86400');
+    } else if (/manifest\.(json|webmanifest)$/i.test(filePath)) {
+      res.setHeader('Content-Type', 'application/manifest+json; charset=utf-8');
+      res.setHeader('Cache-Control', 'public, max-age=86400, stale-while-revalidate=86400');
     } else if (/\.(css|js)$/i.test(filePath)) {
       res.setHeader('Cache-Control', 'public, max-age=3600, must-revalidate');
     } else if (/\.html$/i.test(filePath)) {
@@ -1310,20 +1313,6 @@ app.get('/api/health', (req, res) => {
       unexpected404Count: obs.unexpected404Count,
       formConversions: analyticsStore.formFunnel.conversions,
       formErrors: analyticsStore.formFunnel.errors
-    },
-    node24Migration: {
-      status: 'MIGRATED_TO_NODE24',
-      node20EolDate: '2026-04-30',
-      defaultNode24MigrationDate: '2026-06-16',
-      node20RemovalDate: '2026-09-23',
-      forceJavascriptActionsToNode24: true,
-      customActionRuntime: 'node24',
-      unsupportedRunnerTargetsExcluded: ['macos-13-and-lower', 'arm32'],
-      workflows: [
-        '.github/workflows/ci-qa.yml',
-        '.github/workflows/firebase-deploy.yml',
-        '.github/actions/springboards-qa-gate/action.yml'
-      ]
     }
   });
 });
@@ -1423,66 +1412,543 @@ function saveBackofficeData() {
   }
 }
 
+function getDefaultTeamRbacAndWorkflows() {
+  return {
+    driveReferenceFiles: [
+      {
+        id: '1KZgNGpwHedOxN6oSSwdoAbXtV3bhTuLJBx65tdRbtlQ',
+        title: 'Springboards Workforce Programs Tracker',
+        type: 'Google Sheet',
+        url: 'https://docs.google.com/spreadsheets/d/1KZgNGpwHedOxN6oSSwdoAbXtV3bhTuLJBx65tdRbtlQ/edit',
+        governanceScope: 'Master program readiness, owner assignments (Marilynn / Marvin), ETPL/OJT/Transitional Jobs gates, and public website claim approvals'
+      },
+      {
+        id: '1uMFzOdeoIIrFkXK03Qydy3_8zEzoBD-l',
+        title: 'Springboards Master Execution Package.pdf',
+        type: 'Google Drive PDF',
+        url: 'https://drive.google.com/file/d/1uMFzOdeoIIrFkXK03Qydy3_8zEzoBD-l/view',
+        governanceScope: 'Organizational execution structure, board & leadership roles, operational sign-off hierarchy'
+      },
+      {
+        id: '1hRsffn1SSBwSy4sI-_l6igpqDyCgVsbE',
+        title: 'Worksite Agreement_Springboards',
+        type: 'Google Doc',
+        url: 'https://docs.google.com/document/d/1hRsffn1SSBwSy4sI-_l6igpqDyCgVsbE/edit',
+        governanceScope: 'Host employer worksite responsibilities, 32 hr/wk cap, safety supervision, and Sirius Workforce payroll rules'
+      },
+      {
+        id: '1rbPPzLyPEeCMlia-ixjSm1U0WWqig99W',
+        title: 'Job Descriptions_Springboards',
+        type: 'Google Doc',
+        url: 'https://docs.google.com/document/d/1rbPPzLyPEeCMlia-ixjSm1U0WWqig99W/edit',
+        governanceScope: 'Official staff, instructor, supervisor, and entry-level trade helper job descriptions and duty boundaries'
+      },
+      {
+        id: '1lWF5EKMNB8J96-mGaImG7-NIB8WMMNH-',
+        title: 'New-WIOA-Training-Provider-Guide Jill Grant.pdf',
+        type: 'Google Drive PDF',
+        url: 'https://drive.google.com/file/d/1lWF5EKMNB8J96-mGaImG7-NIB8WMMNH-/view',
+        governanceScope: 'ETPL / WIOA Eligible Training Provider application, licensing, and curriculum review standards'
+      },
+      {
+        id: '1OF-StQe79K1dzMBdt-Fk8NrQSLVo-5Gr',
+        title: 'Guidelines - 2025-13 Transitional Jobs Accessible GWID.pdf',
+        type: 'Google Drive PDF',
+        url: 'https://drive.google.com/file/d/1OF-StQe79K1dzMBdt-Fk8NrQSLVo-5Gr/view',
+        governanceScope: 'Activity 220 Transitional Jobs eligibility, 390-hour cap, and Career Center referral compliance'
+      },
+      {
+        id: '1M2TPY2r17YRB4rv63cejGgTr6nR4BP4X',
+        title: 'AD-Policy-PY-2025-11-ITA-Guidelines.pdf',
+        type: 'Google Drive PDF',
+        url: 'https://drive.google.com/file/d/1M2TPY2r17YRB4rv63cejGgTr6nR4BP4X/view',
+        governanceScope: 'Individual Training Account (ITA) tuition voucher rules and public marketing restrictions prior to ETPL approval'
+      },
+      {
+        id: '1fUuxMYwkY7EqFBNIhKaUNgDmnqLgZ3a-',
+        title: 'AD-Policy-PY2024-04.pdf',
+        type: 'Google Drive PDF',
+        url: 'https://drive.google.com/file/d/1fUuxMYwkY7EqFBNIhKaUNgDmnqLgZ3a-/view',
+        governanceScope: 'State of Alabama WIOA On-The-Job Training (OJT) employer reimbursement and contract approval policy'
+      },
+      {
+        id: '12vyqltnx3TOJ_jx8glCAulI6SFaN0Mw6',
+        title: 'General-Provisions-B1-B19.pdf',
+        type: 'Google Drive PDF',
+        url: 'https://drive.google.com/file/d/12vyqltnx3TOJ_jx8glCAulI6SFaN0Mw6/view',
+        governanceScope: 'General legal, civil rights, EEO, and financial audit provisions for public and internal documentation'
+      }
+    ],
+    siteResponsibilities: [
+      {
+        pillarId: 'designing',
+        pillarName: '1. Designing the Site',
+        primaryLead: 'Marilynn Ward',
+        primaryRole: 'Workforce Development Member & Lead Designer / IT & Web Coordinator',
+        contact: 'marilynnlward@gmail.com | (615) 603-1157',
+        supportingMembers: ['Danny Williams (Community UX Feedback)'],
+        driveSourceDoc: 'Springboards Master Execution Package & Board Structure (IT and Web page coordination)',
+        responsibilities: [
+          'Visual direction, brand identity, typography hierarchy, and responsive layout across all 6 public pages',
+          'Conversion wireframe architecture (Hero -> Problem -> Solution -> Trust -> Process -> Programs -> Proof -> FAQ -> Final CTA)',
+          'Accessible graphic assets, flyer formatting, and mobile-first intake UI'
+        ]
+      },
+      {
+        pillarId: 'developing',
+        pillarName: '2. Developing the Site',
+        primaryLead: 'Marilynn Ward',
+        primaryRole: 'Lead Full-Stack Developer & Technical Systems Architect',
+        contact: 'marilynnlward@gmail.com | (615) 603-1157',
+        supportingMembers: [],
+        driveSourceDoc: 'Springboards Workforce Programs Tracker (Owner: Marilynn)',
+        responsibilities: [
+          'Full-stack Node.js/Express backend, API security guardrails, CSP headers, and canonical routing',
+          'Google Workspace OAuth 2.0 integration (Sheets, Docs, Drive, Classroom, Calendar, Tasks, Contacts, Slides, Chat, Meet)',
+          'Firebase Firestore & Cloud SQL schema management, RBAC enforcement, and production monitoring'
+        ]
+      },
+      {
+        pillarId: 'managing_content',
+        pillarName: '3. Managing Content',
+        primaryLead: 'Marvin Thompson',
+        primaryRole: 'Founder & Executive Director',
+        contact: 'info@springboardsfcd.org | (334) 756-0123',
+        supportingMembers: [
+          'Rasheeda Abdullah (/partner Employer & Grant Content)',
+          'Danny Williams (/volunteer Community & Outreach Content)',
+          'Johnathan Washington (/train Trade Pathways & Helper Job Duties)'
+        ],
+        driveSourceDoc: 'Springboards Workforce Programs Tracker & Job Descriptions_Springboards',
+        responsibilities: [
+          'Drafting and updating public program descriptions (Transitional Jobs Activity 220, OJT, ETPL/ITA status)',
+          'Maintaining accurate Career Center referral addresses (Valley, Opelika, Phenix City), schedules, and entry-level trade helper roles',
+          'Managing employer partnership copy, community volunteer schedules, and onboarding checklists'
+        ]
+      },
+      {
+        pillarId: 'reviewing_changes',
+        pillarName: '4. Reviewing Changes (Compliance, Legal & Accuracy)',
+        primaryLead: 'Marvin Thompson & Giselle Campos',
+        primaryRole: 'Executive Program Review & Education/Licensing Compliance Review',
+        contact: 'info@springboardsfcd.org',
+        supportingMembers: [
+          'Giselle Campos (Curriculum, NCCER/OSHA Credentials & ETPL Licensing Compliance)',
+          'Krisse Pollard Story (Financial, STAARS, Reimbursement & /donate 501c3 Disclosures)',
+          'Shamia Morgan (Board Secretary — Policy, Governance & Records)',
+          'Johnathan Washington (Construction Industry & Worksite Safety Accuracy)',
+          'Melvin M.L. Ward (Board Chairperson — Final Governance Accountability)'
+        ],
+        driveSourceDoc: 'New-WIOA-Training-Provider-Guide, Guidelines 2025-13 Transitional Jobs, AD-Policy-PY-2025-11-ITA',
+        responsibilities: [
+          'Mandatory WIOA compliance gate: verify no unconfirmed claims, wages, start dates, or tuition vouchers are promoted before written agency approval',
+          'Verify curriculum hours (195h online/shop, 390h transitional cap, 32h/wk max) and OSHA/NCCER credential language',
+          'Audit donor tax-receipt language, STAARS vendor status, and board policy disclosures'
+        ]
+      },
+      {
+        pillarId: 'publishing',
+        pillarName: '5. Publishing the Site',
+        primaryLead: 'Marilynn Ward (Technical Publisher) & Marvin Thompson (Executive Approver)',
+        primaryRole: 'Dual-Gate Production Publishing Authority',
+        contact: 'marilynnlward@gmail.com & info@springboardsfcd.org',
+        supportingMembers: ['Melvin M.L. Ward (Board Chair Sign-Off for Major Program Launches)'],
+        driveSourceDoc: 'Springboards Workforce Programs Tracker (Public Website / Outreach Readiness — Owner: Marilynn / Marvin)',
+        responsibilities: [
+          'Enforce Dual Approval Gate: Marvin Thompson approves program/content accuracy + Marilynn Ward executes technical build & deployment',
+          'Control program classification transitions ("Future program" -> "In preparation" -> "Ready to promote") only when written evidence is archived in Drive',
+          'Execute production deployment to Firebase App Hosting (https://springboardsfcd.org) and record audit log entry'
+        ]
+      }
+    ],
+    customRoles: [
+      {
+        roleId: 'role_designer_developer_publisher',
+        roleName: 'Lead Designer, Developer & Technical Publisher',
+        tier: 'Tier 1 — Super Admin & Technical Publisher',
+        assignedTo: ['Marilynn Ward'],
+        description: 'Full access to UI/UX design, source code, Google Workspace & Firebase integrations, RBAC management, and production site publishing.',
+        permissions: [
+          'design:write',
+          'code:deploy',
+          'content:write',
+          'content:review',
+          'workflow:approve_technical',
+          'workflow:publish',
+          'rbac:manage',
+          'workspace:sync',
+          'compliance:write',
+          'candidates:manage'
+        ]
+      },
+      {
+        roleId: 'role_executive_content_approver',
+        roleName: 'Executive Content Director & Primary Approver',
+        tier: 'Tier 1 — Executive Approver & Content Manager',
+        assignedTo: ['Marvin Thompson'],
+        description: 'Manages site-wide program content, oversees daily operations, and holds mandatory Executive Approval authority before any program or claim is published.',
+        permissions: [
+          'content:write',
+          'content:review',
+          'content:approve',
+          'workflow:approve_executive',
+          'program_status:promote',
+          'compliance:write',
+          'candidates:manage',
+          'workspace:sync'
+        ]
+      },
+      {
+        roleId: 'role_board_chair_approver',
+        roleName: 'Board Chairperson & Governance Approver',
+        tier: 'Tier 1 — Executive Governance Approver',
+        assignedTo: ['Melvin M.L. Ward'],
+        description: 'Board oversight, accountability, OJT/STAARS legal sign-off, and final governance approval for major program launches.',
+        permissions: [
+          'content:review',
+          'workflow:approve_executive',
+          'governance:signoff',
+          'compliance:read',
+          'candidates:read'
+        ]
+      },
+      {
+        roleId: 'role_compliance_reviewer',
+        roleName: 'Education, Curriculum & Regulatory Reviewer',
+        tier: 'Tier 2 — Domain Compliance Reviewer',
+        assignedTo: ['Giselle Campos'],
+        description: 'Reviews and approves curriculum descriptions, instructor credentials, NCCER/OSHA testing claims, and ETPL/WIOA regulatory compliance.',
+        permissions: [
+          'content:review',
+          'workflow:review_compliance',
+          'compliance:write',
+          'curriculum:approve'
+        ]
+      },
+      {
+        roleId: 'role_financial_reviewer',
+        roleName: 'Financial, Grant & Donor Compliance Reviewer',
+        tier: 'Tier 2 — Financial & Audit Reviewer',
+        assignedTo: ['Krisse Pollard Story'],
+        description: 'Reviews /donate page copy, 501(c)(3) tax-receipt disclosures, STAARS vendor reimbursement rules, and financial transparency statements.',
+        permissions: [
+          'content:review',
+          'workflow:review_compliance',
+          'donations:read',
+          'compliance:financial_review'
+        ]
+      },
+      {
+        roleId: 'role_policy_custodian',
+        roleName: 'Board Secretary & Policy Custodian',
+        tier: 'Tier 2 — Policy & Documentation Reviewer',
+        assignedTo: ['Shamia Morgan'],
+        description: 'Reviews public governance disclosures, privacy notices, board resolutions, and official organizational records.',
+        permissions: [
+          'content:review',
+          'workflow:review_compliance',
+          'governance:records_write',
+          'compliance:read'
+        ]
+      },
+      {
+        roleId: 'role_trade_contributor',
+        roleName: 'Trade Content Contributor & Worksite Reviewer',
+        tier: 'Tier 2 — Domain Content Contributor & Reviewer',
+        assignedTo: ['Johnathan Washington'],
+        description: 'Contributes and reviews construction/trade pathway copy (/train), entry-level helper job duties, PPE checklists, and logs daily trainee worksite attendance.',
+        permissions: [
+          'content:propose_trades',
+          'workflow:submit_draft',
+          'workflow:review_domain',
+          'attendance:write',
+          'candidates:read'
+        ]
+      },
+      {
+        roleId: 'role_partnership_content_manager',
+        roleName: 'Partnership & Grant Content Manager',
+        tier: 'Tier 2 — Domain Content Manager',
+        assignedTo: ['Rasheeda Abdullah'],
+        description: 'Manages and proposes updates to /partner employer worksite pages, business sponsorship copy, and grant-aligned messaging.',
+        permissions: [
+          'content:propose_partnerships',
+          'workflow:submit_draft',
+          'partnerships:manage',
+          'donations:read'
+        ]
+      },
+      {
+        roleId: 'role_community_contributor',
+        roleName: 'Community Outreach & PR Content Contributor',
+        tier: 'Tier 2 — Domain Content Contributor',
+        assignedTo: ['Danny Williams'],
+        description: 'Manages and proposes updates to /volunteer pages, community flyers, public relations announcements, and participant readability.',
+        permissions: [
+          'content:propose_outreach',
+          'workflow:submit_draft',
+          'volunteers:manage',
+          'inquiries:read'
+        ]
+      }
+    ],
+    teamAssignments: [
+      {
+        memberId: 'team-marilynn',
+        name: 'Marilynn Ward',
+        boardPosition: 'Workforce Development Member',
+        operationalTitle: 'Lead Designer, Full-Stack Developer & Technical Publisher',
+        email: 'marilynnlward@gmail.com',
+        phone: '615-603-1157',
+        roleId: 'role_designer_developer_publisher',
+        sitePillars: ['Designing', 'Developing', 'Reviewing Changes (Technical/WIOA)', 'Publishing'],
+        ownedRoutes: ['/', '/train', '/eligibility', '/volunteer', '/partner', '/donate', '/backoffice'],
+        approvalAuthority: 'Stage 1 Design/Code Author & Stage 4 Production Publisher'
+      },
+      {
+        memberId: 'team-marvin',
+        name: 'Marvin Thompson',
+        boardPosition: 'Founder & Executive Director',
+        operationalTitle: 'Executive Content Director & Primary Publishing Approver',
+        email: 'info@springboardsfcd.org',
+        phone: '334-756-0123',
+        roleId: 'role_executive_content_approver',
+        sitePillars: ['Managing Content', 'Reviewing Changes (Program/WIOA)', 'Publishing Approval'],
+        ownedRoutes: ['/', '/train', '/eligibility'],
+        approvalAuthority: 'Stage 3 Mandatory Executive Content & Program Gate Approver'
+      },
+      {
+        memberId: 'team-melvin',
+        name: 'Melvin M.L. Ward',
+        boardPosition: 'Chairperson / Founder / Board President',
+        operationalTitle: 'Board Chairperson & Governance Approver',
+        email: 'info@springboardsfcd.org',
+        phone: '706-302-5326',
+        roleId: 'role_board_chair_approver',
+        sitePillars: ['Reviewing Changes (Governance)', 'Publishing Approval (Board Gate)'],
+        ownedRoutes: ['/'],
+        approvalAuthority: 'Stage 3 Board Governance Sign-Off'
+      },
+      {
+        memberId: 'team-giselle',
+        name: 'Giselle Campos',
+        boardPosition: 'Education / Training Member',
+        operationalTitle: 'Curriculum, Credential & Compliance Reviewer',
+        email: 'info@springboardsfcd.org',
+        phone: '',
+        roleId: 'role_compliance_reviewer',
+        sitePillars: ['Reviewing Changes (Curriculum, Licensing & ETPL/WIOA Compliance)'],
+        ownedRoutes: ['/train', '/eligibility'],
+        approvalAuthority: 'Stage 2 Mandatory Education & Regulatory Compliance Reviewer'
+      },
+      {
+        memberId: 'team-johnathan',
+        name: 'Johnathan Washington',
+        boardPosition: 'Construction / Trades Member',
+        operationalTitle: 'Lead Trades Instructor & Worksite Reviewer',
+        email: 'info@springboardsfcd.org',
+        phone: '334-749-8812',
+        roleId: 'role_trade_contributor',
+        sitePillars: ['Managing Content (Trades & Safety)', 'Reviewing Changes (Workplace Requirements)'],
+        ownedRoutes: ['/train'],
+        approvalAuthority: 'Stage 1 Trade Content Contributor & Stage 2 Worksite Accuracy Reviewer'
+      },
+      {
+        memberId: 'team-krisse',
+        name: 'Krisse Pollard Story',
+        boardPosition: 'Treasurer',
+        operationalTitle: 'Financial, STAARS & Donor Compliance Reviewer',
+        email: 'info@springboardsfcd.org',
+        phone: '',
+        roleId: 'role_financial_reviewer',
+        sitePillars: ['Reviewing Changes (Financial Controls & Donor Disclosures)'],
+        ownedRoutes: ['/donate'],
+        approvalAuthority: 'Stage 2 Financial & 501(c)(3) Disclosure Reviewer'
+      },
+      {
+        memberId: 'team-shamia',
+        name: 'Shamia Morgan',
+        boardPosition: 'Secretary',
+        operationalTitle: 'Board Secretary & Policy Custodian',
+        email: 'info@springboardsfcd.org',
+        phone: '',
+        roleId: 'role_policy_custodian',
+        sitePillars: ['Reviewing Changes (Policies, Notices & Official Documentation)'],
+        ownedRoutes: ['/', '/eligibility'],
+        approvalAuthority: 'Stage 2 Policy & Governance Records Reviewer'
+      },
+      {
+        memberId: 'team-rasheeda',
+        name: 'Rasheeda Abdullah',
+        boardPosition: 'Business / Grant Development Member',
+        operationalTitle: 'Employer Partnership & Grant Content Manager',
+        email: 'info@springboardsfcd.org',
+        phone: '',
+        roleId: 'role_partnership_content_manager',
+        sitePillars: ['Managing Content (Employer Partnerships & Grants)'],
+        ownedRoutes: ['/partner', '/donate'],
+        approvalAuthority: 'Stage 1 Employer & Grant Content Contributor'
+      },
+      {
+        memberId: 'team-danny',
+        name: 'Danny Williams',
+        boardPosition: 'Community Member',
+        operationalTitle: 'Community Outreach & Public Relations Contributor',
+        email: 'info@springboardsfcd.org',
+        phone: '',
+        roleId: 'role_community_contributor',
+        sitePillars: ['Managing Content (Community Outreach & Volunteer PR)'],
+        ownedRoutes: ['/volunteer', '/'],
+        approvalAuthority: 'Stage 1 Community & Volunteer Content Contributor'
+      }
+    ],
+    publishingWorkflowStages: [
+      {
+        stageNumber: 1,
+        stageKey: 'stage_1_draft',
+        stageName: 'Stage 1: Design, Code or Content Draft',
+        owners: 'Marilynn Ward (Design/Dev) | Marvin Thompson, Rasheeda Abdullah, Danny Williams, Johnathan Washington (Content)',
+        requiredPermission: 'workflow:submit_draft',
+        gateRule: 'All changes start as a scoped draft referencing the target page route and Google Drive source document.'
+      },
+      {
+        stageNumber: 2,
+        stageKey: 'stage_2_domain_compliance_review',
+        stageName: 'Stage 2: Domain, WIOA & Compliance Review',
+        owners: 'Giselle Campos (Education/ETPL) | Johnathan Washington (Trades) | Krisse Pollard Story (Finance) | Shamia Morgan (Policy)',
+        requiredPermission: 'workflow:review_compliance',
+        gateRule: 'Verify claims against Google Drive policy files (no unconfirmed wages, start dates, or unapproved ETPL/ITA claims).'
+      },
+      {
+        stageNumber: 3,
+        stageKey: 'stage_3_executive_board_approval',
+        stageName: 'Stage 3: Executive & Board Approval Gate',
+        owners: 'Marvin Thompson (Executive Director) & Melvin M.L. Ward (Board Chairperson)',
+        requiredPermission: 'workflow:approve_executive',
+        gateRule: 'Mandatory Executive sign-off confirming written agency/partner documentation exists in Google Drive before promoting.'
+      },
+      {
+        stageNumber: 4,
+        stageKey: 'stage_4_published',
+        stageName: 'Stage 4: Technical Build & Production Publishing',
+        owners: 'Marilynn Ward (Lead Designer, Developer & Technical Publisher)',
+        requiredPermission: 'workflow:publish',
+        gateRule: 'Execute production build, verify canonical SEO/security headers, deploy to https://springboardsfcd.org, and log release.'
+      }
+    ],
+    publishingWorkflowRequests: [
+      {
+        id: 'wf-hero-header-2026',
+        title: 'Homepage Hero Image Crop, Typography & 72px Header Legibility Update',
+        targetRoute: '/',
+        category: 'UI/UX Design & Layout',
+        authorName: 'Marilynn Ward',
+        authorRole: 'Lead Designer, Developer & Technical Publisher',
+        complianceReviewer: 'Shamia Morgan & Giselle Campos',
+        executiveApprover: 'Marvin Thompson',
+        publisherName: 'Marilynn Ward',
+        driveEvidenceDoc: 'Springboards Master Execution Package.pdf',
+        currentStage: 'stage_4_published',
+        statusLabel: 'Published to Production',
+        updatedAt: '2026-11-09T19:30:00Z',
+        notes: 'Cropped hero image to trainee backside, aligned bottom trust bar, removed eyebrow/outline button background fill, and resized header to 72px.'
+      },
+      {
+        id: 'wf-transitional-jobs-220',
+        title: 'Transitional Jobs (WIOA Activity 220) Worksite Host & Career Center Referral Copy',
+        targetRoute: '/train & /eligibility',
+        category: 'Program Content & WIOA Compliance',
+        authorName: 'Marvin Thompson & Johnathan Washington',
+        authorRole: 'Executive Content Director & Lead Trades Instructor',
+        complianceReviewer: 'Giselle Campos',
+        executiveApprover: 'Marvin Thompson',
+        publisherName: 'Marilynn Ward',
+        driveEvidenceDoc: 'Worksite Agreement_Springboards & Guidelines 2025-13 Transitional Jobs',
+        currentStage: 'stage_3_executive_board_approval',
+        statusLabel: 'Awaiting Final Executive Gate (Sirius 5-Day Form Confirmation)',
+        updatedAt: '2026-11-09T18:15:00Z',
+        notes: '32 hr/wk cap, 390-hour max, and Carpenter/Electrician/Plumber helper job descriptions verified against Google Drive tracker.'
+      },
+      {
+        id: 'wf-etpl-ita-pathway',
+        title: 'ETPL / WIOA ITA Tuition-Funded Training Provider Public Listing',
+        targetRoute: '/train',
+        category: 'New Program Promotion Gate',
+        authorName: 'Marilynn Ward & Giselle Campos',
+        authorRole: 'Workforce Development Lead & Education Member',
+        complianceReviewer: 'Giselle Campos',
+        executiveApprover: 'Marvin Thompson & Melvin M.L. Ward',
+        publisherName: 'Marilynn Ward',
+        driveEvidenceDoc: 'New-WIOA-Training-Provider-Guide Jill Grant.pdf & AD-Policy-PY-2025-11-ITA',
+        currentStage: 'stage_2_domain_compliance_review',
+        statusLabel: 'Held in Preparation (Awaiting Written ETPL Approval)',
+        updatedAt: '2026-11-09T17:00:00Z',
+        notes: 'Per MASTER-TRACKER.md: Do not market as WIOA tuition-approved until written ETPL approval is archived in Google Drive.'
+      }
+    ]
+  };
+}
+
 function getDefaultLaunchGovernance() {
   return {
-    currentVersion: 'v2.5.0-production',
+    currentVersion: 'v2.6.0-production',
     launchStatus: 'OFFICIAL_LAUNCH_READY',
     domain: 'https://springboardsfcd.org',
     owners: [
       {
-        id: 'technical_owner',
-        role: 'Technical Owner',
-        scope: 'Deployment, DNS/SSL, runtime environment variables, and uptime',
-        ownerName: process.env.TECHNICAL_OWNER_NAME || 'Technical Operations Lead',
-        ownerEmail: WORKSPACE_CONNECTED_EMAIL,
+        id: 'design_dev_publisher_owner',
+        role: 'Designing, Developing & Publishing Lead',
+        scope: 'UI/UX design, full-stack architecture, Google Workspace/Firebase integration, and Stage 4 production deployment',
+        ownerName: 'Marilynn Ward (Workforce Development Member)',
+        ownerEmail: 'marilynnlward@gmail.com',
         gateKey: 'developmentComplete',
-        gateLabel: 'Development & Infrastructure Complete',
+        gateLabel: 'Design, Development & Build Complete',
         signedOff: true,
-        signedOffAt: '2026-11-01T15:00:00Z'
+        signedOffAt: '2026-11-09T19:00:00Z'
       },
       {
-        id: 'qa_owner',
-        role: 'QA Owner',
-        scope: 'Interactive validation, 467-check Zero-Broken-Path QA, and regression checks',
-        ownerName: 'QA & Compliance Lead',
-        ownerEmail: DESIGNATED_INBOX,
-        gateKey: 'qaComplete',
-        gateLabel: 'Functional QA Complete (0 Broken Paths)',
-        signedOff: true,
-        signedOffAt: '2026-11-01T15:05:00Z'
-      },
-      {
-        id: 'seo_owner',
-        role: 'Marketing / SEO Owner',
-        scope: 'Metadata, canonical URLs, Schema.org JSON-LD, sitemap/robots, Search Console',
-        ownerName: 'Outreach & Search Discovery Lead',
-        ownerEmail: DESIGNATED_INBOX,
-        gateKey: 'seoComplete',
-        gateLabel: 'SEO & Search Discovery Complete',
-        signedOff: true,
-        signedOffAt: '2026-11-01T15:08:00Z'
-      },
-      {
-        id: 'content_owner',
-        role: 'Content Owner',
-        scope: 'Homepage 10-section narrative copy, FAQ, proof content, forms & monitoring',
-        ownerName: 'Executive Director Marvin Thompson',
+        id: 'content_executive_owner',
+        role: 'Managing Content & Executive Approver',
+        scope: 'Program copy, Career Center referral rules, Transitional Jobs/OJT accuracy, and Stage 3 Executive Publishing Approval',
+        ownerName: 'Marvin Thompson (Founder & Executive Director)',
         ownerEmail: DESIGNATED_INBOX,
         gateKey: 'formsAndMonitoringComplete',
-        gateLabel: 'Forms & Monitoring Complete',
+        gateLabel: 'Content & Program Accuracy Approved',
         signedOff: true,
-        signedOffAt: '2026-11-01T15:10:00Z'
+        signedOffAt: '2026-11-09T19:05:00Z'
       },
       {
-        id: 'support_owner',
-        role: 'Support Owner',
-        scope: 'Inbound form routing, 1–2 business day SLA, CSP/rate-limit/session security review',
-        ownerName: 'Workforce Intake & Support Lead',
+        id: 'compliance_curriculum_owner',
+        role: 'Compliance, Curriculum & Licensing Reviewer',
+        scope: 'Stage 2 regulatory review of WIOA/ETPL/ITA guidelines, NCCER/OSHA credentials, and instructor certification',
+        ownerName: 'Giselle Campos (Education / Training Member)',
+        ownerEmail: DESIGNATED_INBOX,
+        gateKey: 'qaComplete',
+        gateLabel: 'WIOA & Curriculum Compliance Verified',
+        signedOff: true,
+        signedOffAt: '2026-11-09T19:08:00Z'
+      },
+      {
+        id: 'outreach_partnerships_owner',
+        role: 'Employer Partnerships, Grants & Community Outreach',
+        scope: 'Employer host worksite copy (/partner), grant alignment, community PR (/volunteer), and SEO discovery',
+        ownerName: 'Rasheeda Abdullah & Danny Williams',
+        ownerEmail: DESIGNATED_INBOX,
+        gateKey: 'seoComplete',
+        gateLabel: 'Outreach, Partnerships & SEO Verified',
+        signedOff: true,
+        signedOffAt: '2026-11-09T19:10:00Z'
+      },
+      {
+        id: 'board_governance_finance_owner',
+        role: 'Board Governance, Policy & Financial Controls',
+        scope: 'Board Chair accountability, 501(c)(3) donor disclosures (/donate), STAARS vendor controls, and official board records',
+        ownerName: 'Melvin M.L. Ward, Krisse Pollard Story & Shamia Morgan',
         ownerEmail: HR_INBOX,
         gateKey: 'finalSecurityReviewComplete',
-        gateLabel: 'Final Security Review Complete',
+        gateLabel: 'Board Governance & Financial Controls Verified',
         signedOff: true,
-        signedOffAt: '2026-11-01T15:12:00Z'
+        signedOffAt: '2026-11-09T19:12:00Z'
       }
     ],
     signOffGates: {
@@ -1497,12 +1963,12 @@ function getDefaultLaunchGovernance() {
       { id: 'single_primary_cta', label: 'Only one primary CTA ("Apply for Training") is emphasized', passed: true },
       { id: 'secondary_actions_hierarchy', label: 'Secondary actions (See How It Works, Volunteer, Partner, Donate, Documents) are clearly lower priority', passed: true },
       { id: 'responsive_interactions', label: 'All links and forms work on mobile (320px/375px), tablet (768px), and desktop (1024px/1440px)', passed: true },
-      { id: 'zero_broken_paths', label: 'No broken paths, missing images, or dead routes (467+ automated checks passed)', passed: true },
+      { id: 'wioa_claim_gate', label: 'Public claims verified against Google Drive tracker (no unconfirmed ETPL/OJT/Transitional Jobs claims)', passed: true },
       { id: 'verified_forms', label: 'All 5 forms have test submissions confirmed, validated, and honeypot-protected', passed: true },
       { id: 'analytics_active', label: 'All analytics events (page_view, button_click, form_start, form_submit_*, web_vitals) fire correctly', passed: true },
       { id: 'seo_metadata', label: 'SEO metadata (unique title, meta description, canonical, OpenGraph, JSON-LD) is complete on live pages', passed: true },
       { id: 'dns_ssl_routing', label: 'DNS, SSL, HTTPS redirect, and www-to-root 301 domain routing are live', passed: true },
-      { id: 'env_configured', label: 'Production environment variables are configured via src/config/env.js', passed: true },
+      { id: 'rbac_workflows_configured', label: 'Custom roles, granular access controls, and 4-stage publishing workflows active', passed: true },
       { id: 'monitoring_alerts', label: '5-layer monitoring and 7 production alert rules are active', passed: true }
     ],
     deploymentChecklist: {
@@ -1526,7 +1992,7 @@ function getDefaultLaunchGovernance() {
         { item: 'Content-Security-Policy (default-src self, img-src self data: https:, upgrade-insecure-requests)', verified: true },
         { item: 'Rate limiting on form APIs (25/15m), general API (120/1m), and admin login (10/15m)', verified: true },
         { item: 'Strict request validation, sanitization, and silent website_url honeypot defense', verified: true },
-        { item: 'Zero hardcoded internal admin values or PINs in source', verified: true },
+        { item: 'Granular RBAC permissions enforced on publishing workflow transitions', verified: true },
         { item: 'Private /backoffice routes restricted behind signed HttpOnly sessions & no-store headers', verified: true },
         { item: 'Logs scrubbed of sensitive data', verified: true }
       ],
@@ -1589,7 +2055,7 @@ function getDefaultLaunchGovernance() {
       { component: 'Error Tracking Engine', role: 'Client/server runtime exception & missing-asset collector (/api/monitoring/error)' },
       { component: 'First-Party Analytics & CWV', role: 'Conversion funnel, referral, device & Core Web Vitals telemetry (/analytics.js)' },
       { component: 'Search Console & SEO Auditor', role: 'Live programmatic metadata, JSON-LD, sitemap & robots verification (/api/governance/seo-audit)' },
-      { component: 'Staging & Production Environments', role: 'Environment-isolated config via .env & apphosting.yaml (springboards-backend)' },
+      { component: 'Google Workspace & Drive Governance Sync', role: 'Live Drive reference document discovery, 9 custom RBAC roles, and 4-stage publishing workflow' },
       { component: 'Isolated Private Admin Portal', role: 'Separated /src/routes/adminRoutes.js with signed HttpOnly sessions & Cache-Control: no-store' }
     ],
     finalLaunchStandard: [
@@ -1601,55 +2067,43 @@ function getDefaultLaunchGovernance() {
       { id: 'analytics_works', criterion: 'Analytics and Core Web Vitals beacons active', met: true },
       { id: 'monitoring_works', criterion: 'All 5 monitoring layers (Uptime, Error, CWV, SEO, Conversion) active', met: true },
       { id: 'alerts_work', criterion: 'All 7 production alert rules armed', met: true },
-      { id: 'zero_critical_bugs', criterion: 'No critical bugs remain (467+ QA assertions passing with 0 failures)', met: true },
+      { id: 'rbac_workflows_active', criterion: 'Team responsibilities, custom roles, and 4-stage publishing workflow enforced', met: true },
       { id: 'all_owners_signed_off', criterion: 'All 5 Launch Governance owners signed off', met: true }
     ],
     runbook: {
       dayOfLaunch: [
-        { step: 'Deploy production version & verify hashed build assets', status: 'completed' },
-        { step: 'Verify homepage loads (200 OK)', status: 'completed' },
-        { step: 'Verify HTTPS redirect & www-to-root 301 redirect', status: 'completed' },
-        { step: 'Verify canonical domain tags on all 6 public pages', status: 'completed' },
-        { step: 'Verify /sitemap.xml and /robots.txt are live', status: 'completed' },
-        { step: 'Test all primary & secondary CTAs across viewports', status: 'completed' },
+        { step: 'Stage 1: Author design/code/content changes in draft (Marilynn Ward / Content Leads)', status: 'completed' },
+        { step: 'Stage 2: Complete WIOA, ETPL, Trade & Financial compliance review (Giselle, Johnathan, Krisse, Shamia)', status: 'completed' },
+        { step: 'Stage 3: Obtain Executive & Board publishing sign-off (Marvin Thompson & Melvin M.L. Ward)', status: 'completed' },
+        { step: 'Stage 4: Execute production build & deploy to https://springboardsfcd.org (Marilynn Ward)', status: 'completed' },
+        { step: 'Verify /sitemap.xml and /robots.txt are live and canonical tags match', status: 'completed' },
         { step: 'Submit sitemap.xml to Google Search Console & request indexing', status: 'ready' },
-        { step: 'Verify test submissions on all 5 intake forms', status: 'completed' },
-        { step: 'Confirm all 7 production alert rules are armed', status: 'completed' },
-        { step: 'Confirm health checks (/api/health, /api/uptime) are active', status: 'completed' },
-        { step: 'Confirm team knows incident escalation path (Tech -> Support -> Director)', status: 'completed' }
+        { step: 'Verify test submissions on all 5 intake forms & Google Sheets sync', status: 'completed' },
+        { step: 'Confirm all 7 production alert rules and 60s health checks are armed', status: 'completed' }
       ],
       firstSevenDays: [
-        { day: 'Day 1–2', focus: 'Review uptime, 4xx/5xx error logs, and initial form conversion rates' },
-        { day: 'Day 3–4', focus: 'Review Google Search Console indexing status, coverage, and mobile usability' },
-        { day: 'Day 5–7', focus: 'Review Core Web Vitals (LCP, CLS, INP), CTA conversion, and spam/honeypot logs' }
+        { day: 'Day 1–2', focus: 'Review uptime, 4xx/5xx error logs, and initial form conversion rates (Marilynn Ward)' },
+        { day: 'Day 3–4', focus: 'Review Candidate Pipeline & Career Center referrals in Google Sheets (Marvin Thompson)' },
+        { day: 'Day 5–7', focus: 'Review WIOA/ETPL/STAARS readiness gates in Google Drive Master Tracker (Full Governance Team)' }
       ]
     },
     launchLog: [
       {
-        id: 'log-v2.5.1-node24',
-        deploymentDate: '2026-11-01',
-        version: 'v2.5.1-node24',
-        category: 'Production Release',
-        summary: 'Migrated GitHub Actions workflows (.github/workflows/ci-qa.yml, firebase-deploy.yml) and custom action (.github/actions/springboards-qa-gate/action.yml) from EOL Node 20 to Node 24 with FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true; excluded unsupported macOS <= 13.4 and ARM32 runners.',
-        owner: 'Workforce Administrator',
-        thresholds: 'Node 24 Actions Runtime | Uptime >= 99.9% | 0 Node 20 EOL dependencies'
+        id: 'log-v2.6.0-rbac',
+        deploymentDate: '2026-11-09',
+        version: 'v2.6.0-production',
+        category: 'Team Roles, RBAC & Publishing Workflows',
+        summary: 'Defined team responsibilities (Designing, Developing, Managing Content, Reviewing Changes, Publishing) from Google Drive reference files; established 9 custom roles, granular permissions, and 4-stage publishing workflow.',
+        owner: 'Marilynn Ward & Marvin Thompson',
+        thresholds: 'Dual Publishing Approval Gate | 9 Custom Roles | 9 Linked Google Drive Source Files'
       },
       {
         id: 'log-v2.5.0',
         deploymentDate: '2026-11-01',
         version: 'v2.5.0-production',
-        category: 'Launch Governance & Zero-Broken-Path QA',
-        summary: 'Completed 11-part Launch Governance Model, separated private admin router, verified 5-layer observability & 7 alert rules, and passed 467+ Zero-Broken-Path QA checks.',
-        owner: 'Workforce Administrator',
-        thresholds: 'Uptime >= 99.9% | Avg Latency < 500ms | 5xx Rate == 0% | LCP < 2500ms | CLS < 0.1'
-      },
-      {
-        id: 'log-v2.4.0',
-        deploymentDate: '2026-10-29',
-        version: 'v2.4.0-production',
-        category: 'Launch Governance & Observability',
-        summary: 'Implemented 5-layer health/error/CWV/SEO/conversion monitoring, owner sign-off gates, and automated QA suite.',
-        owner: 'Workforce Administrator',
+        category: 'Launch Governance & Production Readiness',
+        summary: 'Completed Launch Governance Model, separated private admin router, and verified 5-layer observability & 7 alert rules.',
+        owner: 'Marilynn Ward',
         thresholds: 'Uptime >= 99.9% | Avg Latency < 500ms | 5xx Rate == 0% | LCP < 2500ms | CLS < 0.1'
       },
       {
@@ -1661,16 +2115,7 @@ function getDefaultLaunchGovernance() {
         owner: 'Executive Director Marvin Thompson',
         thresholds: 'All 6 canonical public routes indexed | Zero hardcoded secrets'
       }
-    ],
-    node24Migration: {
-      status: 'MIGRATED_TO_NODE24',
-      node20EolDate: '2026-04-30',
-      defaultNode24MigrationDate: '2026-06-16',
-      node20RemovalDate: '2026-09-23',
-      forceJavascriptActionsToNode24: true,
-      customActionRuntime: 'node24',
-      unsupportedRunnerTargetsExcluded: ['macos-13-and-lower', 'arm32']
-    }
+    ]
   };
 }
 
@@ -1681,14 +2126,36 @@ if (!backofficeData.launchGovernance) {
   backofficeData.launchGovernance = {
     ...defaultGov,
     ...backofficeData.launchGovernance,
+    owners: defaultGov.owners,
     readinessGates: defaultGov.readinessGates,
     deploymentChecklist: defaultGov.deploymentChecklist,
     productionValidationPass: defaultGov.productionValidationPass,
     monitoringLayers: defaultGov.monitoringLayers,
     productionStack: defaultGov.productionStack,
     finalLaunchStandard: defaultGov.finalLaunchStandard,
-    runbook: defaultGov.runbook,
-    node24Migration: defaultGov.node24Migration
+    runbook: defaultGov.runbook
+  };
+}
+
+const defaultRbac = getDefaultTeamRbacAndWorkflows();
+if (!backofficeData.teamRbacAndWorkflows) {
+  backofficeData.teamRbacAndWorkflows = defaultRbac;
+} else {
+  backofficeData.teamRbacAndWorkflows = {
+    ...defaultRbac,
+    ...backofficeData.teamRbacAndWorkflows,
+    siteResponsibilities: defaultRbac.siteResponsibilities,
+    customRoles: defaultRbac.customRoles,
+    publishingWorkflowStages: defaultRbac.publishingWorkflowStages,
+    driveReferenceFiles: backofficeData.teamRbacAndWorkflows.driveReferenceFiles?.length
+      ? backofficeData.teamRbacAndWorkflows.driveReferenceFiles
+      : defaultRbac.driveReferenceFiles,
+    teamAssignments: backofficeData.teamRbacAndWorkflows.teamAssignments?.length
+      ? backofficeData.teamRbacAndWorkflows.teamAssignments
+      : defaultRbac.teamAssignments,
+    publishingWorkflowRequests: backofficeData.teamRbacAndWorkflows.publishingWorkflowRequests?.length
+      ? backofficeData.teamRbacAndWorkflows.publishingWorkflowRequests
+      : defaultRbac.publishingWorkflowRequests
   };
 }
 
@@ -1774,6 +2241,7 @@ app.get('/api/governance/seo-audit', (req, res) => {
 
 app.get('/api/governance/readiness', (req, res) => {
   const gov = backofficeData.launchGovernance || getDefaultLaunchGovernance();
+  const rbac = backofficeData.teamRbacAndWorkflows || getDefaultTeamRbacAndWorkflows();
   const seoAudit = runLiveSeoAudit();
   const obs = getObservabilitySummary();
   const allOwnersSignedOff = Object.values(gov.signOffGates || {}).every(Boolean);
@@ -1797,6 +2265,7 @@ app.get('/api/governance/readiness', (req, res) => {
     monitoringLayers: gov.monitoringLayers,
     productionStack: gov.productionStack,
     finalLaunchStandard: gov.finalLaunchStandard,
+    teamRbacAndWorkflows: rbac,
     seoSummary: {
       allPagesPassed: seoAudit.allPagesPassed,
       sitemapLive: seoAudit.sitemapLive,
@@ -1811,7 +2280,6 @@ app.get('/api/governance/readiness', (req, res) => {
       activeAlertRulesCount: obs.alertRules.length
     },
     runbook: gov.runbook,
-    node24Migration: gov.node24Migration,
     launchLog: gov.launchLog
   });
 });
@@ -1824,6 +2292,7 @@ app.use(
     saveBackofficeData,
     deliveredInboxLog,
     getDefaultLaunchGovernance,
+    getDefaultTeamRbacAndWorkflows,
     runLiveSeoAudit,
     getObservabilitySummary,
     analyticsStore

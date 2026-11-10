@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Springboards for Community Development Icon">
+  <style>
+    .badge-bg { fill: #FFFFFF; stroke: #0B2545; stroke-width: 2.5; }
+    .badge-ring { stroke: #0B2545; }
+    .navy-fill { fill: #0B2545; }
+    .navy-stroke { stroke: #0B2545; }
+    .green-fill { fill: #5B8C2A; }
+    .green-stroke { stroke: #5B8C2A; }
+    .gold-fill { fill: #E89923; }
+    .orange-fill { fill: #D96B27; }
+    .house-window { fill: #FFFFFF; }
+
+    @media (prefers-color-scheme: dark) {
+      .badge-bg { fill: #0B192C; stroke: #E89923; stroke-width: 2.5; }
+      .badge-ring { stroke: #93C5FD; }
+      .navy-fill { fill: #60A5FA; }
+      .navy-stroke { stroke: #93C5FD; }
+      .green-fill { fill: #74B836; }
+      .green-stroke { stroke: #74B836; }
+      .gold-fill { fill: #FBBF24; }
+      .orange-fill { fill: #F97316; }
+      .house-window { fill: #0B192C; }
+    }
+  </style>
+
+  <!-- Shaped Squircle/Circular Badge -->
+  <rect class="badge-bg" x="2" y="2" width="60" height="60" rx="16" ry="16" />
+
+  <!-- Outer Community Arc -->
+  <path class="badge-ring" d="M 10 42 A 23 23 0 1 1 54 42" fill="none" stroke-width="2.4" stroke-linecap="round" />
+
+  <!-- Left Community Trees & Houses -->
+  <circle class="green-fill" cx="14.5" cy="33.5" r="3.8" />
+  <circle class="green-fill" cx="17.5" cy="32" r="3" />
+  <path class="navy-fill" d="M 16 40 L 16 36.5 L 19 34 L 22 36.5 L 22 40 Z" />
+  <rect class="house-window" x="18" y="37" width="2" height="2" rx="0.3" />
+
+  <!-- Right City Buildings & Tree -->
+  <rect class="navy-fill" x="43" y="29" width="4.2" height="11" rx="0.6" />
+  <rect class="navy-fill" x="48" y="32" width="3.8" height="8" rx="0.6" />
+  <circle class="green-fill" cx="42.5" cy="37.5" r="2.5" />
+
+  <!-- Horizon Green Arcs -->
+  <path class="green-stroke" d="M 10 43 Q 20 39.5 29 41.5" fill="none" stroke-width="2.2" stroke-linecap="round" />
+  <path class="green-stroke" d="M 35 41.5 Q 44 39.5 54 43" fill="none" stroke-width="2.2" stroke-linecap="round" />
+
+  <!-- Left Figure (Green) -->
+  <circle class="green-fill" cx="23.5" cy="22.5" r="2.7" />
+  <path class="green-fill" d="M 17.5 19.5 Q 23 24 27.5 34.5 L 24.5 35.5 Q 21.5 28 16.5 21.5 Z" />
+  <path class="green-fill" d="M 23 26.5 Q 26 24 28.5 20.5 L 30 22 Q 27 26.5 25 29.5 Z" />
+
+  <!-- Center Figure (Navy / Luminous Blue in Dark Mode) -->
+  <circle class="navy-fill" cx="32" cy="15.5" r="3.2" />
+  <path class="navy-fill" d="M 24.5 11.5 Q 32 19.5 32 34 L 35 34 Q 35 20.5 40.5 12.5 L 38.5 11 Q 33.5 17.5 32 19.5 Q 29.5 16.5 26.5 10 Z" />
+
+  <!-- Right Figure (Gold/Amber with Upward Springboard Arrow Spirit) -->
+  <circle class="gold-fill" cx="40.5" cy="21.5" r="2.7" />
+  <path class="gold-fill" d="M 35.5 34.5 Q 38 25.5 46.5 18.5 L 48 20.5 Q 41 26.5 38.5 35 Z" />
+  <path class="orange-fill" d="M 43.5 17 L 48.5 16.5 L 48 21.5 L 46.2 19.8 L 41 24.5 L 39.4 22.9 L 44.6 18.2 Z" />
+
+  <!-- Springboard Platform -->
+  <polygon class="navy-fill" points="21,38.5 34,35.5 43,37.8 30,41" />
+  <polyline class="gold-fill" points="21,38.5 30,41 43,37.8 43,39.2 30,42.5 21,39.8" />
+
+  <!-- Coil Spring Underneath -->
+  <path class="navy-stroke" d="M 30 42.5 C 36 43, 36 45, 30 45.8 C 36 46.5, 36 48.5, 30 49.2 C 36 49.8, 36 51.8, 31 52.5" fill="none" stroke-width="2.2" stroke-linecap="round" />
+  <ellipse class="navy-stroke" cx="32.5" cy="53" rx="5.5" ry="1.6" fill="none" stroke-width="2" />
+</svg>

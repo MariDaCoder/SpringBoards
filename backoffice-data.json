@@ -2,11 +2,12 @@
   "staffRoster": [
     {
       "id": "staff-1",
-      "name": "Workforce Director",
-      "email": "info@springboardsfcd.org",
+      "name": "Marilynn Ward",
+      "email": "marilynnlward@gmail.com",
       "secondaryEmail": "info@springboardsfcd.org",
-      "role": "Workforce Director & Compliance Administrator",
-      "phone": "(334) 756-0100",
+      "role": "Lead Designer, Full-Stack Developer & Technical Publisher",
+      "customRoleId": "role_designer_developer_publisher",
+      "phone": "(615) 603-1157",
       "pin": "",
       "isAdmin": true,
       "status": "Active"
@@ -14,7 +15,9 @@
     {
       "id": "staff-2",
       "name": "Marvin Thompson",
-      "role": "Executive Director",
+      "email": "info@springboardsfcd.org",
+      "role": "Founder & Executive Director — Content & Program Approver",
+      "customRoleId": "role_executive_content_approver",
       "phone": "(334) 756-0123",
       "pin": "",
       "isAdmin": true,
@@ -23,26 +26,76 @@
     {
       "id": "staff-melvin",
       "name": "Melvin M.L. Ward",
-      "role": "Founder / Board President",
+      "email": "info@springboardsfcd.org",
+      "role": "Chairperson / Founder / Board President — Governance Approver",
+      "customRoleId": "role_board_chair_approver",
       "phone": "(706) 302-5326",
       "pin": "",
       "isAdmin": true,
       "status": "Active"
     },
     {
+      "id": "staff-giselle",
+      "name": "Giselle Campos",
+      "email": "info@springboardsfcd.org",
+      "role": "Education / Training Member — Curriculum & WIOA Compliance Reviewer",
+      "customRoleId": "role_compliance_reviewer",
+      "phone": "(334) 756-0100",
+      "pin": "",
+      "isAdmin": false,
+      "status": "Active"
+    },
+    {
       "id": "staff-3",
       "name": "Johnathan Washington",
-      "role": "Lead Trades Instructor / Field Supervisor",
+      "email": "info@springboardsfcd.org",
+      "role": "Lead Trades Instructor & Worksite Reviewer",
+      "customRoleId": "role_trade_contributor",
       "phone": "(334) 749-8812",
       "pin": "",
       "isAdmin": false,
       "status": "Active"
     },
     {
-      "id": "staff-4",
-      "name": "Trade Crew Member",
-      "role": "General Laborer / Trades Helper",
-      "phone": "(334) 555-0199",
+      "id": "staff-krisse",
+      "name": "Krisse Pollard Story",
+      "email": "info@springboardsfcd.org",
+      "role": "Board Treasurer — Financial & Donor Compliance Reviewer",
+      "customRoleId": "role_financial_reviewer",
+      "phone": "(334) 756-0100",
+      "pin": "",
+      "isAdmin": false,
+      "status": "Active"
+    },
+    {
+      "id": "staff-shamia",
+      "name": "Shamia Morgan",
+      "email": "info@springboardsfcd.org",
+      "role": "Board Secretary — Policy & Documentation Custodian",
+      "customRoleId": "role_policy_custodian",
+      "phone": "(334) 756-0100",
+      "pin": "",
+      "isAdmin": false,
+      "status": "Active"
+    },
+    {
+      "id": "staff-rasheeda",
+      "name": "Rasheeda Abdullah",
+      "email": "info@springboardsfcd.org",
+      "role": "Business / Grant Development — Partnership Content Manager",
+      "customRoleId": "role_partnership_content_manager",
+      "phone": "(334) 756-0100",
+      "pin": "",
+      "isAdmin": false,
+      "status": "Active"
+    },
+    {
+      "id": "staff-danny",
+      "name": "Danny Williams",
+      "email": "info@springboardsfcd.org",
+      "role": "Community Member — Outreach & PR Content Contributor",
+      "customRoleId": "role_community_contributor",
+      "phone": "(334) 756-0100",
       "pin": "",
       "isAdmin": false,
       "status": "Active"
@@ -3033,21 +3086,21 @@
     },
     "launchLog": [
       {
+        "id": "log-v2.6.0-rbac",
+        "deploymentDate": "2026-11-09",
+        "version": "v2.6.0-production",
+        "category": "Team Roles, RBAC & Publishing Workflows",
+        "summary": "Defined team responsibilities (Designing, Developing, Managing Content, Reviewing Changes, Publishing) from Google Drive reference files; established 9 custom roles, granular permissions, and 4-stage publishing workflow.",
+        "owner": "Marilynn Ward & Marvin Thompson",
+        "thresholds": "Dual Publishing Approval Gate | 9 Custom Roles | 9 Linked Google Drive Source Files"
+      },
+      {
         "id": "log-v2.5.0",
         "deploymentDate": "2026-11-01",
         "version": "v2.5.0-production",
-        "category": "Launch Governance & Zero-Broken-Path QA",
-        "summary": "Completed 11-part Launch Governance Model, separated private admin router, verified 5-layer observability & 7 alert rules, and passed 467+ Zero-Broken-Path QA checks.",
-        "owner": "Workforce Administrator",
-        "thresholds": "Uptime >= 99.9% | Avg Latency < 500ms | 5xx Rate == 0% | LCP < 2500ms | CLS < 0.1"
-      },
-      {
-        "id": "log-v2.4.0",
-        "deploymentDate": "2026-10-29",
-        "version": "v2.4.0-production",
-        "category": "Launch Governance & Observability",
-        "summary": "Implemented 5-layer health/error/CWV/SEO/conversion monitoring, owner sign-off gates, and automated QA suite.",
-        "owner": "Workforce Administrator",
+        "category": "Launch Governance & Production Readiness",
+        "summary": "Completed Launch Governance Model, separated private admin router, and verified 5-layer observability & 7 alert rules.",
+        "owner": "Marilynn Ward",
         "thresholds": "Uptime >= 99.9% | Avg Latency < 500ms | 5xx Rate == 0% | LCP < 2500ms | CLS < 0.1"
       },
       {
@@ -3059,18 +3112,6 @@
         "owner": "Executive Director Marvin Thompson",
         "thresholds": "All 6 canonical public routes indexed | Zero hardcoded secrets"
       }
-    ],
-    "node24Migration": {
-      "status": "MIGRATED_TO_NODE24",
-      "node20EolDate": "2026-04-30",
-      "defaultNode24MigrationDate": "2026-06-16",
-      "node20RemovalDate": "2026-09-23",
-      "forceJavascriptActionsToNode24": true,
-      "customActionRuntime": "node24",
-      "unsupportedRunnerTargetsExcluded": [
-        "macos-13-and-lower",
-        "arm32"
-      ]
-    }
+    ]
   }
 }
