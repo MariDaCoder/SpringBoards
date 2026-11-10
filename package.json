@@ -7,7 +7,7 @@
     "start": "node server.js",
     "genkit:hello": "node --env-file=.env hello-flow.js",
     "build": "node scripts/build.js",
-    "lint": "node --check server.js && node --check main.js && node --check eligibility.js && node --check scripts/build.js"
+    "lint": "node --check server.js && node --check main.js && node --check eligibility.js && node --check scripts/build.js && node --check src/config/env.js && node --check src/lib/firebase-admin.js && node --check src/routes/adminRoutes.js"
   },
   "dependencies": {
     "@genkit-ai/googleai": "^1.28.0",

@@ -28,13 +28,39 @@ if (fs.existsSync(envFilePath)) {
   }
 }
 
-const ORG_PUBLIC_EMAIL = 'info@springboardsfcd.org';
+const ORG_PUBLIC_EMAIL = 'marilynnlward@gmail.com';
 
 export const PORT = Number(process.env.PORT || 3000);
 export const NODE_ENV = process.env.NODE_ENV || 'production';
 export const APP_URL = (process.env.APP_URL || 'https://springboardsfcd.org').replace(/\/+$/, '');
 
-// Inbox & routing configuration (zero hardcoded personal identities in source)
+// Firebase Project, Web App & Enterprise Firestore Database Configuration
+export const FIREBASE_PROJECT_ID = process.env.FIREBASE_PROJECT_ID || 'springboards-community-dev';
+export const GCLOUD_PROJECT = process.env.GCLOUD_PROJECT || FIREBASE_PROJECT_ID;
+export const FIREBASE_PROJECT_NUMBER = process.env.FIREBASE_PROJECT_NUMBER || '651964189612';
+export const FIREBASE_MESSAGING_SENDER_ID = process.env.FIREBASE_MESSAGING_SENDER_ID || '651964189612';
+export const FIREBASE_APP_ID = process.env.FIREBASE_APP_ID || '1:651964189612:web:fc444ee616bf91da99c809';
+export const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY || 'AIzaSyCZbXdTnbIlmFc6Jm0AYt9scNYJFqGOyB8';
+export const FIREBASE_AUTH_DOMAIN = process.env.FIREBASE_AUTH_DOMAIN || 'springboards-community-dev.firebaseapp.com';
+export const FIREBASE_DATABASE_URL =
+  process.env.FIREBASE_DATABASE_URL || 'https://springboards-community-dev-default-rtdb.firebaseio.com';
+export const FIREBASE_STORAGE_BUCKET =
+  process.env.FIREBASE_STORAGE_BUCKET || 'springboards-community-dev.firebasestorage.app';
+export const FIRESTORE_DATABASE_ID =
+  process.env.FIRESTORE_DATABASE_ID || 'ai-studio-springboardsland-71046992-4c5a-4c20-bdcd-c5ee24b8cc0a';
+export const FIRESTORE_LOCATION = process.env.FIRESTORE_LOCATION || 'us-east1';
+export const GOOGLE_OAUTH_CLIENT_ID =
+  process.env.GOOGLE_OAUTH_CLIENT_ID || '651964189612-jdk3n5qnhq6s8trvrpbemnq4t3djffeo.apps.googleusercontent.com';
+export const SPRINGBOARDS_TRACKER_SHEET_ID =
+  process.env.SPRINGBOARDS_TRACKER_SHEET_ID || '1KZgNGpwHedOxN6oSSwdoAbXtV3bhTuLJBx65tdRbtlQ';
+
+// Firebase App Hosting Backend Configuration
+export const APPHOSTING_BACKEND_ID = process.env.APPHOSTING_BACKEND_ID || 'springboards-backend';
+export const APPHOSTING_REGION = process.env.APPHOSTING_REGION || 'us-east4';
+export const APPHOSTING_HOSTED_DOMAIN =
+  process.env.APPHOSTING_HOSTED_DOMAIN || 'springboards-backend--springboards-community-dev.us-east4.hosted.app';
+
+// Inbox & routing configuration
 export const DESIGNATED_INBOX = process.env.DESIGNATED_INBOX || ORG_PUBLIC_EMAIL;
 export const HR_INBOX = process.env.HR_INBOX || ORG_PUBLIC_EMAIL;
 export const ALERT_EMAIL = process.env.ALERT_EMAIL || ORG_PUBLIC_EMAIL;
@@ -49,6 +75,8 @@ export const ADMIN_SESSION_SECRET =
 
 export const ADMIN_ALLOWED_EMAILS = new Set([
   ORG_PUBLIC_EMAIL,
+  'springboardforcommunitydev@gmail.com',
+  'info@springboardsfcd.org',
   ...(process.env.ADMIN_ALLOWED_EMAILS || '')
     .split(',')
     .map((e) => e.trim().toLowerCase())
@@ -68,11 +96,20 @@ export const SMTP_CONFIG = {
   pass: process.env.SMTP_PASS || ''
 };
 
+// Cloud SQL / Drizzle ORM Connection Metadata
+export const SQL_CONFIG = {
+  host: process.env.SQL_HOST || '/cloudsql/springboards-community-dev:us-east1:ai-studio-71046992',
+  user: process.env.SQL_USER || 'ai_studio_app_user',
+  adminUser: process.env.SQL_ADMIN_USER || 'ai_studio_admin',
+  database: process.env.SQL_DB_NAME || 'cloud_sql_development_database'
+};
+
 // CORS allowed origins
 export const ALLOWED_ORIGINS = (
   process.env.ALLOWED_ORIGINS ||
-  `${APP_URL},https://www.springboardsfcd.org,https://springboards-backend--springboards-community-dev.us-east4.hosted.app,https://springboards-community-dev.web.app,http://localhost:3000`
+  `${APP_URL},https://www.springboardsfcd.org,https://springboards-backend--springboards-community-dev.us-east4.hosted.app,https://springboards-community-dev.web.app,https://springboards-community-dev.firebaseapp.com,https://ais-dev-qnd7dwpxy5lvvqlhyhakyp-11235862349.us-west2.run.app,https://ais-pre-qnd7dwpxy5lvvqlhyhakyp-11235862349.us-west2.run.app,http://localhost:3000`
 )
   .split(',')
   .map((o) => o.replace(/^\[.*\]\((.*)\)$/, '$1').trim())
   .filter(Boolean);
+

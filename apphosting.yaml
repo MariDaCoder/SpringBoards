@@ -1,5 +1,5 @@
-# Firebase App Hosting Configuration
-# https://firebase.google.com/docs/app-hosting/configure
+# Firebase App Hosting Configuration — Springboards Repository (springboards)
+# Reference: https://firebase.google.com/docs/app-hosting/configure
 
 runConfig:
   minInstances: 0
@@ -9,46 +9,197 @@ runConfig:
   memoryMiB: 512
 
 env:
+  # 1. Runtime & Canonical Application URL
   - variable: NODE_ENV
     value: production
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: APP_URL
+    value: https://springboardsfcd.org
+    availability:
+      - BUILD
+      - RUNTIME
+
+  # 2. Firebase Project, Web App & Enterprise Firestore Database Configuration
   - variable: FIREBASE_PROJECT_ID
     value: springboards-community-dev
-  - variable: FIREBASE_PROJECT_NUMBER
-    value: "651964189612"
-  - variable: FIREBASE_MESSAGING_SENDER_ID
-    value: "651964189612"
-  - variable: FIREBASE_APP_ID
-    value: "1:651964189612:web:fc444ee616bf91da99c809"
+    availability:
+      - BUILD
+      - RUNTIME
   - variable: GCLOUD_PROJECT
     value: springboards-community-dev
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: FIREBASE_PROJECT_NUMBER
+    value: "651964189612"
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: FIREBASE_MESSAGING_SENDER_ID
+    value: "651964189612"
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: FIREBASE_APP_ID
+    value: "1:651964189612:web:fc444ee616bf91da99c809"
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: FIREBASE_API_KEY
+    value: AIzaSyCZbXdTnbIlmFc6Jm0AYt9scNYJFqGOyB8
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: FIREBASE_AUTH_DOMAIN
+    value: springboards-community-dev.firebaseapp.com
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: FIREBASE_DATABASE_URL
+    value: https://springboards-community-dev-default-rtdb.firebaseio.com
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: FIREBASE_STORAGE_BUCKET
+    value: springboards-community-dev.firebasestorage.app
+    availability:
+      - BUILD
+      - RUNTIME
   - variable: FIRESTORE_DATABASE_ID
     value: ai-studio-springboardsland-71046992-4c5a-4c20-bdcd-c5ee24b8cc0a
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: FIRESTORE_LOCATION
+    value: us-east1
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: GOOGLE_OAUTH_CLIENT_ID
+    value: 651964189612-jdk3n5qnhq6s8trvrpbemnq4t3djffeo.apps.googleusercontent.com
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: SPRINGBOARDS_TRACKER_SHEET_ID
+    value: 1KZgNGpwHedOxN6oSSwdoAbXtV3bhTuLJBx65tdRbtlQ
+    availability:
+      - BUILD
+      - RUNTIME
+
+  # 3. Firebase App Hosting Backend & Allowed CORS Origins
   - variable: APPHOSTING_BACKEND_ID
     value: springboards-backend
+    availability:
+      - BUILD
+      - RUNTIME
   - variable: APPHOSTING_REGION
     value: us-east4
+    availability:
+      - BUILD
+      - RUNTIME
   - variable: APPHOSTING_HOSTED_DOMAIN
     value: springboards-backend--springboards-community-dev.us-east4.hosted.app
+    availability:
+      - BUILD
+      - RUNTIME
   - variable: ALLOWED_ORIGINS
-    value: https://springboardsfcd.org,https://www.springboardsfcd.org,https://springboards-backend--springboards-community-dev.us-east4.hosted.app,https://springboards-community-dev.web.app,https://springboards-community-dev.firebaseapp.com
+    value: https://springboardsfcd.org,https://www.springboardsfcd.org,https://springboards-backend--springboards-community-dev.us-east4.hosted.app,https://springboards-community-dev.web.app,https://springboards-community-dev.firebaseapp.com,https://ais-dev-qnd7dwpxy5lvvqlhyhakyp-11235862349.us-west2.run.app,https://ais-pre-qnd7dwpxy5lvvqlhyhakyp-11235862349.us-west2.run.app
+    availability:
+      - BUILD
+      - RUNTIME
+
+  # 4. Workforce Routing Inboxes & Governance RBAC Allowlist
   - variable: DESIGNATED_INBOX
     value: marilynnlward@gmail.com
+    availability:
+      - RUNTIME
   - variable: HR_INBOX
     value: marilynnlward@gmail.com
+    availability:
+      - RUNTIME
   - variable: ALERT_EMAIL
     value: marilynnlward@gmail.com
+    availability:
+      - RUNTIME
   - variable: BACKUP_ALERT_EMAIL
     value: marilynnlward@gmail.com
+    availability:
+      - RUNTIME
   - variable: WORKSPACE_CONNECTED_EMAIL
     value: marilynnlward@gmail.com
+    availability:
+      - RUNTIME
   - variable: ADMIN_ALLOWED_EMAILS
     value: marilynnlward@gmail.com,springboardforcommunitydev@gmail.com,info@springboardsfcd.org
+    availability:
+      - RUNTIME
+
+  # 5. Telemetry & SMTP Transport Settings
   - variable: ANALYTICS_ENABLED
     value: "true"
+    availability:
+      - BUILD
+      - RUNTIME
   - variable: SMTP_HOST
     value: smtp.gmail.com
+    availability:
+      - RUNTIME
   - variable: SMTP_PORT
     value: "587"
+    availability:
+      - RUNTIME
   - variable: SMTP_USER
     value: marilynnlward@gmail.com
+    availability:
+      - RUNTIME
 
+  # 6. Cloud SQL / Drizzle ORM Non-Secret Connection Metadata
+  - variable: SQL_HOST
+    value: /cloudsql/springboards-community-dev:us-east1:ai-studio-71046992
+    availability:
+      - RUNTIME
+  - variable: SQL_USER
+    value: ai_studio_app_user
+    availability:
+      - RUNTIME
+  - variable: SQL_ADMIN_USER
+    value: ai_studio_admin
+    availability:
+      - RUNTIME
+  - variable: SQL_DB_NAME
+    value: cloud_sql_development_database
+    availability:
+      - RUNTIME
+
+  # 7. Cloud Secret Manager Secrets (Uncomment after provisioning in Firebase Console / CLI:
+  #    `firebase apphosting:secrets:set <SECRET_NAME> --project springboards-community-dev`)
+  # - variable: ADMIN_PASSCODE
+  #   secret: ADMIN_PASSCODE
+  #   availability:
+  #     - RUNTIME
+  # - variable: STAFF_DEFAULT_PIN
+  #   secret: STAFF_DEFAULT_PIN
+  #   availability:
+  #     - RUNTIME
+  # - variable: ADMIN_SESSION_SECRET
+  #   secret: ADMIN_SESSION_SECRET
+  #   availability:
+  #     - RUNTIME
+  # - variable: SMTP_PASS
+  #   secret: SMTP_PASS
+  #   availability:
+  #     - RUNTIME
+  # - variable: ANALYTICS_WRITE_KEY
+  #   secret: ANALYTICS_WRITE_KEY
+  #   availability:
+  #     - RUNTIME
+  # - variable: SQL_PASSWORD
+  #   secret: SQL_PASSWORD
+  #   availability:
+  #     - RUNTIME
+  # - variable: SQL_ADMIN_PASSWORD
+  #   secret: SQL_ADMIN_PASSWORD
+  #   availability:
+  #     - RUNTIME

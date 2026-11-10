@@ -130,6 +130,20 @@ export const apphostingDomains = [
 
 export function getFirebaseConnectionStatus() {
   const dbInstance = getAdminFirestore();
+  let apphostingYamlExists = false;
+  let apphostingEnvVariables = [];
+  try {
+    const yamlPath = path.resolve(__dirname, '../../apphosting.yaml');
+    if (fs.existsSync(yamlPath)) {
+      apphostingYamlExists = true;
+      const rawYaml = fs.readFileSync(yamlPath, 'utf8');
+      const matches = [...rawYaml.matchAll(/-\s*variable:\s*([A-Z0-9_]+)/g)];
+      apphostingEnvVariables = matches.map((m) => m[1]);
+    }
+  } catch {
+    apphostingYamlExists = false;
+  }
+
   return {
     connected: true,
     projectId: firebaseProjectId,
@@ -145,8 +159,11 @@ export function getFirebaseConnectionStatus() {
     hostedDomain: apphostingHostedDomain,
     domains: apphostingDomains,
     adminSdkInitialized: getApps().length > 0,
-    firestoreInstanceReady: Boolean(dbInstance)
+    firestoreInstanceReady: Boolean(dbInstance),
+    apphostingYamlVerified: apphostingYamlExists,
+    apphostingEnvVariables
   };
 }
+
 
 
