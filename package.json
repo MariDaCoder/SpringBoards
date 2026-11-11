@@ -12,6 +12,7 @@
     "deploy:hosting": "npm run build && firebase deploy --only hosting --project springboards-community-dev"
   },
   "dependencies": {
+    "@fontsource-variable/plus-jakarta-sans": "^5.3.0",
     "@genkit-ai/googleai": "^1.28.0",
     "compression": "^1.8.2",
     "cors": "^2.8.6",

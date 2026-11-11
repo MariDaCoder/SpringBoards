@@ -42,17 +42,17 @@
     }
   }
   </script>
+  <!-- Self-Hosted Custom Font Preload (Plus Jakarta Sans WOFF2 Variable) -->
+  <link rel="preload" href="/assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --wizard-ink: #1d1b18;
       --wizard-muted: #6b6760;
       --wizard-paper: #fbf8f1;
       --wizard-card: #fffefa;
-      --wizard-orange: #e05b32;
+      --wizard-orange: #E05B32;
+      --wizard-orange-hover: #C54E29;
       --wizard-gold: #f1bf52;
       --wizard-green: #27664f;
       --wizard-line: #dcd4c5;
@@ -70,14 +70,14 @@
     }
 
     button, a { font: inherit; }
-    button:focus-visible, a:focus-visible { outline: 3px solid #bd4c29; outline-offset: 3px; }
+    button:focus-visible, a:focus-visible { outline: 3px solid var(--wizard-orange-hover); outline-offset: 3px; }
     [hidden] { display: none !important; }
 
     .wizard-page { min-height: 100vh; padding: 1rem clamp(1rem, 4vw, 3.5rem) 3rem; }
     .wizard-topbar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; max-width: 1200px; margin: 0 auto 1.25rem; }
     .wizard-logo { display: block; width: min(210px, 43vw); height: auto; }
     .wizard-home-link { color: var(--wizard-ink); font-weight: 750; text-decoration: none; }
-    .wizard-home-link:hover { color: var(--wizard-orange); }
+    .wizard-home-link:hover { color: var(--wizard-orange-hover); }
 
     .wizard-hero {
       display: grid;

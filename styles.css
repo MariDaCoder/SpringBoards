@@ -5,6 +5,62 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
+   0. Custom Self-Hosted Fonts (Plus Jakarta Sans Variable)
+   SIL Open Font License 1.1 | Modern WOFF2 Variable Font Format
+   Privacy-Preserving (Zero 3rd-Party Tracking / Zero Google Fonts API calls)
+   -------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('/assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2') format('woff2-variations'),
+       url('/assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: italic;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('/assets/fonts/plus-jakarta-sans-latin-wght-italic.woff2') format('woff2-variations'),
+       url('/assets/fonts/plus-jakarta-sans-latin-wght-italic.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('/assets/fonts/plus-jakarta-sans-latin-ext-wght-normal.woff2') format('woff2-variations'),
+       url('/assets/fonts/plus-jakarta-sans-latin-ext-wght-normal.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: italic;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('/assets/fonts/plus-jakarta-sans-latin-ext-wght-italic.woff2') format('woff2-variations'),
+       url('/assets/fonts/plus-jakarta-sans-latin-ext-wght-italic.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Variable font family alias */
+@font-face {
+  font-family: 'Plus Jakarta Sans Variable';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('/assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2') format('woff2-variations'),
+       url('/assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* --------------------------------------------------------------------------
    1. CSS Reset & Design Tokens
    -------------------------------------------------------------------------- */
 *,
@@ -28,8 +84,8 @@
   --navy-card: #0F233D;           /* Deep card surface on dark sections */
 
   /* 10% High-Intent Accents (Trades Amber & Renewal Emerald) */
-  --accent-orange: #E05615;       /* Warm High-Visibility Safety Amber / Terracotta */
-  --accent-orange-hover: #C2410C; /* Deep Rust Amber on hover */
+  --accent-orange: #E05B32;       /* Safety Orange — Primary Accent Button Background */
+  --accent-orange-hover: #C54E29; /* Deep Amber — Primary Accent Hover State */
   --accent-orange-light: #FFF7ED; /* Warm Luminous Tint */
   --accent-orange-border: #FDBA74;/* Subtle amber border */
 
@@ -160,7 +216,7 @@ textarea:focus-visible,
   gap: 0.5rem;
   min-height: 48px;
   padding: 0.85rem 1.75rem;
-  background-color: var(--accent-orange);
+  background-color: #E05B32;
   color: #ffffff;
   font-family: inherit;
   font-size: 1rem;
@@ -168,10 +224,10 @@ textarea:focus-visible,
   line-height: 1.2;
   text-align: center;
   text-decoration: none;
-  border: 2px solid var(--accent-orange);
+  border: 2px solid #E05B32;
   border-radius: 3px !important;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(224, 86, 21, 0.24);
+  box-shadow: 0 4px 14px rgba(224, 91, 50, 0.24);
   transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
@@ -188,17 +244,20 @@ button,
   border-radius: 3px !important;
 }
 
-.btn-cta:hover {
-  background-color: var(--accent-orange-hover);
-  border-color: var(--accent-orange-hover);
+.btn-cta:hover,
+.btn-cta:focus-visible {
+  background-color: #C54E29;
+  border-color: #C54E29;
   color: #ffffff;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(224, 86, 21, 0.32);
+  box-shadow: 0 8px 20px rgba(197, 78, 41, 0.34);
 }
 
 .btn-cta:active {
+  background-color: #C54E29;
+  border-color: #C54E29;
   transform: translateY(0);
-  box-shadow: 0 2px 6px rgba(224, 86, 21, 0.20);
+  box-shadow: 0 2px 6px rgba(197, 78, 41, 0.22);
 }
 
 /* Secondary / Outline Button Variant */
@@ -419,10 +478,11 @@ button,
 }
 
 header#navigation > nav > div:nth-of-type(3) > button,
-.nav-right .desktop-cta {
-  background-color: #e05b32 !important;
+.nav-right .desktop-cta,
+.mobile-cta {
+  background-color: #E05B32 !important;
   color: #ffffff !important;
-  border: 2px solid #e05b32 !important;
+  border: 2px solid #E05B32 !important;
   border-radius: 3px !important;
   font-weight: 700;
   font-size: 0.95rem;
@@ -440,12 +500,14 @@ header#navigation > nav > div:nth-of-type(3) > button,
 header#navigation > nav > div:nth-of-type(3) > button:hover,
 header#navigation > nav > div:nth-of-type(3) > button:focus-visible,
 .nav-right .desktop-cta:hover,
-.nav-right .desktop-cta:focus-visible {
-  background-color: #c84b24 !important;
-  border-color: #c84b24 !important;
+.nav-right .desktop-cta:focus-visible,
+.mobile-cta:hover,
+.mobile-cta:focus-visible {
+  background-color: #C54E29 !important;
+  border-color: #C54E29 !important;
   color: #ffffff !important;
   transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(224, 91, 50, 0.40);
+  box-shadow: 0 4px 14px rgba(197, 78, 41, 0.42);
 }
 
 .mobile-cta-wrapper {
@@ -667,11 +729,11 @@ header#navigation > nav > div:nth-of-type(3) > button:focus-visible,
   margin-top: 0;
 }
 
-/* Primary CTA: High-contrast warm safety orange (#e05b32) with 3px radius */
+/* Primary CTA: High-contrast warm safety orange (#E05B32) with Deep Amber (#C54E29) hover and 3px radius */
 main#main-content > section#hero > div:nth-of-type(3) > div:nth-of-type(3) > button:nth-of-type(1),
 .hero-primary-cta {
-  background-color: #e05b32 !important;
-  border: 2px solid #e05b32 !important;
+  background-color: #E05B32 !important;
+  border: 2px solid #E05B32 !important;
   color: #ffffff !important;
   font-weight: 700;
   min-height: 50px;
@@ -686,12 +748,14 @@ main#main-content > section#hero > div:nth-of-type(3) > div:nth-of-type(3) > but
   transition: all var(--transition-fast);
 }
 
+main#main-content > section#hero > div:nth-of-type(3) > div:nth-of-type(3) > button:nth-of-type(1):hover,
+main#main-content > section#hero > div:nth-of-type(3) > div:nth-of-type(3) > button:nth-of-type(1):focus-visible,
 .hero-primary-cta:hover,
 .hero-primary-cta:focus-visible {
-  background-color: #C84B24 !important;
-  border-color: #C84B24 !important;
+  background-color: #C54E29 !important;
+  border-color: #C54E29 !important;
   transform: translateY(-2px);
-  box-shadow: 0 8px 26px rgba(224, 91, 50, 0.52);
+  box-shadow: 0 8px 26px rgba(197, 78, 41, 0.52);
 }
 
 /* Secondary CTA: outline white button with transparent background and 3px radius */
@@ -1514,9 +1578,9 @@ main#main-content > section#hero > div:nth-of-type(3) > div:nth-of-type(3) > but
 }
 
 .train-card-actions .btn-cta:hover {
-  background: #c2410c;
+  background: #C54E29;
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(234, 88, 12, 0.35);
+  box-shadow: 0 6px 16px rgba(197, 78, 41, 0.35);
 }
 
 .train-not-ready-link {
@@ -5522,11 +5586,11 @@ summary:focus-visible,
 
 /* Current Active Step State */
 .journey-step-item.is-current .journey-step-node {
-  background: var(--accent-orange, #e05615);
-  border-color: var(--accent-orange, #e05615);
+  background: var(--accent-orange, #E05B32);
+  border-color: var(--accent-orange, #E05B32);
   color: #ffffff;
   transform: scale(1.1);
-  box-shadow: 0 0 0 6px rgba(224, 86, 21, 0.18), 0 8px 20px rgba(224, 86, 21, 0.3);
+  box-shadow: 0 0 0 6px rgba(224, 91, 50, 0.18), 0 8px 20px rgba(224, 91, 50, 0.3);
 }
 
 .journey-step-meta {

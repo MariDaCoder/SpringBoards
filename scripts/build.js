@@ -12,6 +12,24 @@ if (!fs.existsSync(ASSETS_DIR)) {
   fs.mkdirSync(ASSETS_DIR, { recursive: true });
 }
 
+// 0. Ensure Self-Hosted Custom Font Assets (Plus Jakarta Sans WOFF2 Variable)
+const FONTS_DIR = path.join(ASSETS_DIR, 'fonts');
+const PUBLIC_FONTS_DIR = path.join(ROOT, 'public', 'assets', 'fonts');
+if (!fs.existsSync(FONTS_DIR)) fs.mkdirSync(FONTS_DIR, { recursive: true });
+if (!fs.existsSync(PUBLIC_FONTS_DIR)) fs.mkdirSync(PUBLIC_FONTS_DIR, { recursive: true });
+
+const fontsourceDir = path.join(ROOT, 'node_modules', '@fontsource-variable', 'plus-jakarta-sans', 'files');
+if (fs.existsSync(fontsourceDir)) {
+  const fontFiles = fs.readdirSync(fontsourceDir).filter(f => f.endsWith('.woff2'));
+  for (const fontFile of fontFiles) {
+    const src = path.join(fontsourceDir, fontFile);
+    const dest = path.join(FONTS_DIR, fontFile);
+    const publicDest = path.join(PUBLIC_FONTS_DIR, fontFile);
+    if (!fs.existsSync(dest)) fs.copyFileSync(src, dest);
+    if (!fs.existsSync(publicDest)) fs.copyFileSync(src, publicDest);
+  }
+}
+
 // 1. Static Asset Hashing for 1-Year Immutable Cache-Control
 const hashTargets = ['styles.css', 'main.js', 'eligibility.js', 'analytics.js'];
 const manifest = {
