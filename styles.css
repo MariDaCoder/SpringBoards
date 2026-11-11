@@ -1,6 +1,8 @@
 /* ==========================================================================
    SPRINGBOARDS FOR COMMUNITY DEVELOPMENT
    Design System, Visual Layout, Usability & Accessibility Stylesheet
+   Architecture & Framework Strategy: Native CSS Custom Variables (Zero External
+   Framework / Utility Class Bloat) Optimized for Firebase App Hosting Performance
    WCAG 2.1 AA/AAA Compliant | Zero Horizontal Overflow | Full Device Adaptability
    ========================================================================== */
 
@@ -148,53 +150,149 @@
 :root {
   /* --------------------------------------------------------------------------
      Aesthetic Design System - Vocational Trades & Civic Foundation
-     Harmonized 60-30-10 Color Architecture
+     Centralized Semantic Brand Color Tokens (60-30-10 Color Architecture)
+     Shared Globally Across Public Landing Pages, Wizard, and Backoffice
      -------------------------------------------------------------------------- */
 
-  /* 30% Structural Depth & Authoritative Navy Anchor */
-  --primary-navy: #0B192C;        /* Deep Architectural Midnight Navy */
-  --secondary-navy: #1E3E62;      /* Maritime Slate Midtone for elevated elements */
-  --navy-surface: #06101E;        /* Ultra-deep obsidian navy for header, footer & scrims */
-  --navy-card: #0F233D;           /* Deep card surface on dark sections */
+  /* Semantic Brand & Structural Tokens (30% Anchor) */
+  --color-brand-primary: #0B192C;          /* Deep Architectural Midnight Navy */
+  --color-brand-secondary: #1E3E62;        /* Maritime Slate Midtone */
+  --color-brand-surface-dark: #06101E;     /* Ultra-deep obsidian navy for header, footer & scrims */
+  --color-brand-card-dark: #0F233D;        /* Deep card surface on dark sections */
 
-  /* 10% High-Intent Accents (Trades Amber & Renewal Emerald) */
-  --accent-orange: #E05B32;       /* Safety Orange — Primary Accent Button Background */
-  --accent-orange-hover: #C54E29; /* Deep Amber — Primary Accent Hover State */
-  --accent-orange-light: #FFF7ED; /* Warm Luminous Tint */
-  --accent-orange-border: #FDBA74;/* Subtle amber border */
+  /* Semantic High-Intent Accent Tokens (10% Accents) */
+  --color-accent-primary: #E05B32;         /* Safety Orange — Primary CTA Background */
+  --color-accent-primary-hover: #C54E29;   /* Deep Amber — Primary CTA Hover/Active State */
+  --color-accent-primary-tint: #FFF7ED;    /* Warm Luminous Tint */
+  --color-accent-primary-border: #FDBA74;  /* Subtle Amber Hairline Border */
 
-  --accent-green: #059669;        /* Vivid Spring Emerald 600 (Revival, Growth, Credentials) */
-  --accent-green-hover: #047857;  /* Deep Emerald 700 */
-  --accent-green-light: #ECFDF5;  /* Mint / Spring Clean Tint for badges */
-  --accent-green-border: #A7F3D0; /* Crisp Emerald Hairline Border */
+  --color-accent-success: #059669;         /* Vivid Spring Emerald 600 (Credentials & WIOA) */
+  --color-accent-success-hover: #047857;   /* Deep Emerald 700 */
+  --color-accent-success-tint: #ECFDF5;    /* Mint Tint for Status Badges */
+  --color-accent-success-border: #A7F3D0;  /* Crisp Emerald Hairline Border */
 
-  --accent-gold: #D97706;         /* Architectural Amber-Gold */
-  --accent-blue: #2563EB;         /* Deep Trust Royal Blue */
-  --accent-blue-light: #EFF6FF;   /* Crisp Ice Blue Tint */
+  --color-accent-warning: #D97706;         /* Architectural Amber-Gold */
+  --color-accent-info: #2563EB;            /* Deep Trust Royal Blue */
+  --color-accent-info-tint: #EFF6FF;       /* Crisp Ice Blue Tint */
 
-  /* 60% Dominant Neutral Canvas & Surfaces */
-  --bg-white: #ffffff;
-  --bg-light: #F8FAFC;            /* Clean, luminous Slate-50 off-white */
-  --bg-subtle: #F1F5F9;           /* Slate-100 neutral section alternating tone */
-  --bg-card: #ffffff;             /* Pure white elevated card surfaces */
-  --border-color: #E2E8F0;        /* Subtle 1px hairline border (Slate-200) */
-  --border-subtle: #F1F5F9;       /* Delicate Slate-100 border */
+  /* Semantic Neutral Surface & Border Tokens (60% Canvas) */
+  --color-surface-elevated: #ffffff;       /* Pure white elevated card & modal surfaces */
+  --color-surface-canvas: #F8FAFC;         /* Clean Slate-50 page background */
+  --color-surface-subtle: #F1F5F9;         /* Slate-100 alternating section surface */
+  --color-border-default: #E2E8F0;         /* Subtle 1px hairline border (Slate-200) */
+  --color-border-subtle: #F1F5F9;          /* Delicate Slate-100 divider */
 
-  /* Typographic Hierarchy & Contrast */
-  --text-dark: #0F172A;           /* Deep Slate-900 for high-contrast, commanding titles */
-  --text-body: #334155;           /* Slate-700 for effortless reading legibility (7.5:1 contrast) */
-  --text-muted: #64748B;          /* Slate-500 for secondary metadata & captions */
-  --text-light: #F8FAFC;          /* Clean light text on dark sections */
-  --text-light-muted: #94A3B8;    /* Slate-400 for secondary text on dark sections */
+  /* Semantic Typography Color Tokens */
+  --color-text-primary: #0F172A;           /* Deep Slate-900 for high-contrast headings */
+  --color-text-secondary: #334155;         /* Slate-700 for body copy legibility (7.5:1 contrast) */
+  --color-text-muted: #64748B;             /* Slate-500 for metadata & captions */
+  --color-text-inverse: #F8FAFC;           /* Crisp light text on dark navy surfaces */
+  --color-text-inverse-muted: #94A3B8;     /* Slate-400 secondary text on dark surfaces */
 
-  /* Layout & Geometry — Custom Font Family with Metric-Matched & System Fallbacks */
+  /* Legacy & Domain-Mapped Token Aliases (Public, Wizard, Prequal & Backoffice) */
+  --primary-navy: var(--color-brand-primary);
+  --secondary-navy: var(--color-brand-secondary);
+  --navy-surface: var(--color-brand-surface-dark);
+  --navy-card: var(--color-brand-card-dark);
+
+  --accent-orange: var(--color-accent-primary);
+  --accent-orange-hover: var(--color-accent-primary-hover);
+  --accent-orange-light: var(--color-accent-primary-tint);
+  --accent-orange-border: var(--color-accent-primary-border);
+
+  --accent-green: var(--color-accent-success);
+  --accent-green-hover: var(--color-accent-success-hover);
+  --accent-green-light: var(--color-accent-success-tint);
+  --accent-green-border: var(--color-accent-success-border);
+
+  --accent-gold: var(--color-accent-warning);
+  --accent-blue: var(--color-accent-info);
+  --accent-blue-light: var(--color-accent-info-tint);
+
+  --bg-white: var(--color-surface-elevated);
+  --bg-light: var(--color-surface-canvas);
+  --bg-subtle: var(--color-surface-subtle);
+  --bg-card: var(--color-surface-elevated);
+  --border-color: var(--color-border-default);
+  --border-subtle: var(--color-border-subtle);
+
+  --text-dark: var(--color-text-primary);
+  --text-body: var(--color-text-secondary);
+  --text-muted: var(--color-text-muted);
+  --text-light: var(--color-text-inverse);
+  --text-light-muted: var(--color-text-inverse-muted);
+
+  /* Backoffice Domain Semantic Tokens */
+  --admin-bg: var(--color-surface-canvas);
+  --admin-card: var(--color-surface-elevated);
+  --admin-border: var(--color-border-default);
+
+  /* Eligibility Wizard Domain Semantic Tokens */
+  --wizard-ink: #1d1b18;
+  --wizard-muted: #6b6760;
+  --wizard-paper: #fbf8f1;
+  --wizard-card: #fffefa;
+  --wizard-orange: var(--color-accent-primary);
+  --wizard-orange-hover: var(--color-accent-primary-hover);
+  --wizard-gold: #f1bf52;
+  --wizard-green: #27664f;
+  --wizard-line: #dcd4c5;
+  --wizard-shadow: 0 2px 5px rgba(24, 20, 16, 0.05), 0 1px 2px rgba(24, 20, 16, 0.04);
+
+  /* Training Prequal Domain Semantic Tokens */
+  --train-page-bg: var(--color-surface-canvas);
+  --train-page-panel: var(--color-surface-elevated);
+  --train-page-border: rgba(148, 163, 184, 0.35);
+
+  /* Global Typography — Plus Jakarta Sans Across All Headings, Body Copy & UI Elements */
   --font-family: 'Plus Jakarta Sans', 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans Fallback', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   --font-sans: var(--font-family);
+  --font-heading: var(--font-family);
+  --font-ui: var(--font-family);
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  /* Fluid Typography Scale (Mobile-to-Desktop Clamp) */
+  --text-xs: 0.75rem;                                     /* 12px — Micro labels & badges */
+  --text-sm: 0.875rem;                                    /* 14px — Captions & secondary UI */
+  --text-base: 1rem;                                      /* 16px — Primary body copy */
+  --text-lg: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);   /* 17px–19px — Lead paragraphs */
+  --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);      /* 20px–24px — Card headings (H3) */
+  --text-2xl: clamp(1.5rem, 1.25rem + 1.2vw, 2rem);       /* 24px–32px — Sub-section headings */
+  --text-3xl: clamp(1.875rem, 1.5rem + 1.8vw, 2.625rem);  /* 30px–42px — Section headings (H2) */
+  --text-display: clamp(2.25rem, 1.75rem + 2.5vw, 3.5rem);/* 36px–56px — Hero display (H1) */
+
+  /* 8px Base Spacing System (4px Sub-grid) */
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.25rem;  /* 20px */
+  --space-6: 1.5rem;   /* 24px */
+  --space-8: 2rem;     /* 32px */
+  --space-10: 2.5rem;  /* 40px */
+  --space-12: 3rem;    /* 48px */
+  --space-16: 4rem;    /* 64px */
+  --space-20: 5rem;    /* 80px */
+  --section-pad-y: clamp(3.5rem, 6vw, 5.5rem);
+  --container-max: 1240px;
+  --container-pad-x: clamp(1.25rem, 4vw, 2rem);
+
+  /* Border Radius & Elevation Scale */
+  --radius-btn: 3px;   /* Unified 3px architectural button radius */
   --radius-sm: 6px;
   --radius-md: 8px;
   --radius-lg: 14px;
   --radius-xl: 20px;
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 12px 28px rgba(15, 23, 42, 0.12), 0 4px 10px rgba(15, 23, 42, 0.06);
+
+  /* Z-Index & Motion Tokens */
+  --z-dropdown: 100;
+  --z-sticky: 500;
+  --z-navbar: 1000;
+  --z-modal: 2000;
+  --z-skip-link: 10000;
   --nav-height: 88px;
   --transition-fast: 0.18s ease;
   --transition-normal: 0.25s ease;
@@ -203,6 +301,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--nav-height);
+  font-family: var(--font-family);
   font-size: 16px;
   overflow-x: hidden;
   width: 100%;
@@ -210,13 +309,28 @@ html {
 
 body {
   font-family: var(--font-family);
-  background-color: var(--bg-light);
-  color: var(--text-body);
+  background-color: var(--color-surface-canvas);
+  color: var(--color-text-secondary);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   width: 100%;
+}
+
+/* Global Typography Enforcement: Headings, Body Copy & UI Elements use Plus Jakarta Sans */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+p, li, blockquote, dt, dd, figcaption {
+  font-family: var(--font-sans);
+}
+
+button, input, select, textarea, label, optgroup, summary, th, td, a {
+  font-family: var(--font-ui);
 }
 
 /* Ensure images and media never cause horizontal overflow */
@@ -239,9 +353,9 @@ div[id] {
 /* Container */
 .container {
   width: 100%;
-  max-width: 1240px;
+  max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 clamp(1.25rem, 4vw, 2rem);
+  padding: 0 var(--container-pad-x);
 }
 
 /* --------------------------------------------------------------------------
@@ -251,13 +365,13 @@ div[id] {
   position: absolute;
   top: -120px;
   left: 1.5rem;
-  z-index: 10000;
+  z-index: var(--z-skip-link);
   padding: 0.85rem 1.5rem;
-  background-color: var(--primary-navy);
+  background-color: var(--color-brand-primary);
   color: #ffffff;
   font-weight: 700;
   font-size: 1rem;
-  border: 2px solid var(--accent-orange);
+  border: 2px solid var(--color-accent-primary);
   border-radius: 0 0 var(--radius-md) var(--radius-md);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   text-decoration: underline;
@@ -266,7 +380,7 @@ div[id] {
 
 .skip-link:focus-visible {
   top: 0;
-  outline: 3px solid var(--accent-orange) !important;
+  outline: 3px solid var(--color-accent-primary) !important;
   outline-offset: 3px;
 }
 
@@ -277,37 +391,51 @@ input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 [tabindex]:focus-visible {
-  outline: 3px solid var(--accent-orange) !important;
+  outline: 3px solid var(--color-accent-primary) !important;
   outline-offset: 3px !important;
   border-radius: var(--radius-sm);
 }
 
 /* --------------------------------------------------------------------------
-   3. Uniform Button Design System
+   3. Uniform Button & BEM Component System ([domain]-[block]__[element]--[modifier])
    -------------------------------------------------------------------------- */
-.btn-cta {
+.btn-cta,
+.sb-btn,
+.sb-btn--primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   min-height: 48px;
   padding: 0.85rem 1.75rem;
-  background-color: #E05B32;
+  background-color: var(--color-accent-primary);
   color: #ffffff;
-  font-family: inherit;
+  font-family: var(--font-ui);
   font-size: 1rem;
   font-weight: 700;
   line-height: 1.2;
   text-align: center;
   text-decoration: none;
-  border: 2px solid #E05B32;
-  border-radius: 3px !important;
+  border: 2px solid var(--color-accent-primary);
+  border-radius: var(--radius-btn) !important;
   cursor: pointer;
   box-shadow: 0 4px 14px rgba(224, 91, 50, 0.24);
   transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
+.sb-btn__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sb-btn__label {
+  display: inline-block;
+}
+
 button,
+.sb-btn,
 .btn-cta,
 .btn-cta-secondary,
 .btn-cta-outline,
@@ -317,21 +445,24 @@ button,
 .nav-right .desktop-cta,
 .modal-btn,
 .btn-submit {
-  border-radius: 3px !important;
+  border-radius: var(--radius-btn) !important;
 }
 
 .btn-cta:hover,
-.btn-cta:focus-visible {
-  background-color: #C54E29;
-  border-color: #C54E29;
+.btn-cta:focus-visible,
+.sb-btn--primary:hover,
+.sb-btn--primary:focus-visible {
+  background-color: var(--color-accent-primary-hover);
+  border-color: var(--color-accent-primary-hover);
   color: #ffffff;
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(197, 78, 41, 0.34);
 }
 
-.btn-cta:active {
-  background-color: #C54E29;
-  border-color: #C54E29;
+.btn-cta:active,
+.sb-btn--primary:active {
+  background-color: var(--color-accent-primary-hover);
+  border-color: var(--color-accent-primary-hover);
   transform: translateY(0);
   box-shadow: 0 2px 6px rgba(197, 78, 41, 0.22);
 }
@@ -339,7 +470,9 @@ button,
 /* Secondary / Outline Button Variant */
 .btn-cta-secondary,
 .btn-cta-outline,
-.btn-secondary {
+.btn-secondary,
+.sb-btn--secondary,
+.sb-btn--outline {
   background-color: transparent;
   color: #ffffff;
   border: 2px solid #ffffff;
@@ -348,26 +481,83 @@ button,
 
 .btn-cta-secondary:hover,
 .btn-cta-outline:hover,
-.btn-secondary:hover {
+.btn-secondary:hover,
+.sb-btn--secondary:hover,
+.sb-btn--outline:hover {
   background-color: #ffffff;
-  color: var(--primary-navy);
+  color: var(--color-brand-primary);
   border-color: #ffffff;
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* Large CTA Button Variant */
-.btn-cta-large {
+.btn-cta-large,
+.sb-btn--large {
   padding: 1rem 2.25rem;
   font-size: 1.05rem;
 }
 
 /* Volunteer Action Button Variant */
-.btn-volunteer-action {
+.btn-volunteer-action,
+.sb-btn--full {
   width: 100%;
   margin-top: 1.25rem;
   font-size: 0.95rem;
   padding: 0.75rem 1.25rem;
+}
+
+/* Domain-Scoped BEM Card & Section Primitives */
+.sb-card,
+.train-card__block,
+.wizard-card__block,
+.admin-panel__block {
+  background-color: var(--color-surface-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.sb-card--dark {
+  background-color: var(--color-brand-card-dark);
+  color: var(--color-text-inverse);
+}
+
+.sb-card__header,
+.train-card__header,
+.wizard-card__header,
+.admin-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.sb-card__title,
+.train-card__title,
+.wizard-card__title,
+.admin-panel__title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.sb-card__body,
+.train-card__body,
+.wizard-card__body,
+.admin-panel__body {
+  font-family: var(--font-sans);
+  color: var(--color-text-secondary);
+}
+
+.sb-card__actions,
+.train-card__actions,
+.wizard-card__actions,
+.admin-panel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
 }
 
 /* --------------------------------------------------------------------------

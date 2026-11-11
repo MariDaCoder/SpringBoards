@@ -20,16 +20,10 @@
   <link rel="stylesheet" href="styles.css">
   <script type="module" src="/workspace-sheets.js"></script>
   <style>
-    /* Scoped styling mirroring the main website aesthetic */
-    :root {
-      --admin-bg: #F8FAFC;
-      --admin-card: #FFFFFF;
-      --admin-border: #E2E8F0;
-    }
-
+    /* Scoped backoffice styles inheriting centralized :root tokens from /styles.css */
     body {
       background-color: var(--admin-bg);
-      color: var(--text-dark);
+      color: var(--color-text-primary);
       font-family: var(--font-family);
       margin: 0;
       padding: 0;

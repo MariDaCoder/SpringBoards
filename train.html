@@ -60,17 +60,12 @@
     <link rel="preload" href="/assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="/styles.css">
     <style>
-      :root {
-        --train-page-bg: #f8fafc;
-        --train-page-panel: #ffffff;
-        --train-page-border: rgba(148, 163, 184, 0.35);
-      }
-
+      /* Scoped prequal styles inheriting centralized :root tokens from /styles.css */
       body {
         min-height: 100vh;
         margin: 0;
-        background: #f8fafc;
-        font-family: var(--font-family, "Plus Jakarta Sans", "Plus Jakarta Sans Variable", "Plus Jakarta Sans Fallback", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif);
+        background: var(--train-page-bg);
+        font-family: var(--font-family);
       }
 
       .prequal-shell {

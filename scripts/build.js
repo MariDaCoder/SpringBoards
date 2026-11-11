@@ -177,11 +177,43 @@ if (!fs.existsSync(lockfilePath)) {
   }
 }
 
+// 5. CSS Architecture & Custom Variable Audit (Zero External Framework Bloat)
+const stylesContent = fs.readFileSync(path.join(ROOT, 'styles.css'), 'utf8');
+const requiredCssVariables = [
+  '--color-brand-primary',
+  '--color-accent-primary:\\s*#E05B32',
+  '--color-accent-primary-hover:\\s*#C54E29',
+  '--primary-navy',
+  '--accent-orange',
+  '--font-family',
+  '--font-heading',
+  '--font-ui',
+  '--font-mono',
+  '--space-4',
+  '--radius-btn:\\s*3px'
+];
+for (const tokenPattern of requiredCssVariables) {
+  if (!new RegExp(tokenPattern, 'i').test(stylesContent)) {
+    console.error(`[CSS ARCHITECTURE AUDIT FAIL] styles.css is missing required brand custom variable pattern: ${tokenPattern}`);
+    hasErrors = true;
+  }
+}
+
+const forbiddenCssFrameworks = ['tailwindcss', 'bootstrap', 'bulma', 'foundation-sites', 'materialize-css'];
+const allDeps = { ...(pkgJson.dependencies || {}), ...(pkgJson.devDependencies || {}) };
+for (const fw of forbiddenCssFrameworks) {
+  if (allDeps[fw]) {
+    console.error(`[CSS ARCHITECTURE AUDIT FAIL] Heavy external CSS framework "${fw}" detected. Use native styles.css custom variables instead.`);
+    hasErrors = true;
+  }
+}
+
 if (hasErrors) {
   process.exit(1);
 }
 
 console.log('[Build Pipeline] Asset hashing complete:', manifest.assets);
+console.log('[Build Pipeline] Verified native styles.css custom variable architecture (zero external CSS framework bloat).');
 console.log('[Build Pipeline] Verified package-lock.json (lockfileVersion 3), apphosting.yaml (NODE_ENV=RUNTIME only), and Node >=20.0.0 LTS engine.');
 console.log('[Build Pipeline] SEO, canonical, OpenGraph, H1, and backend security separation verified for all 6 intent pages.');
 
