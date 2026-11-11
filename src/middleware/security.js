@@ -22,8 +22,8 @@ export const cspAndSecurityHeaders = helmet({
         'https://www.gstatic.com',
         'https://maps.googleapis.com'
       ],
-      styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
-      fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      fontSrc: ["'self'", 'data:'],
       imgSrc: ["'self'", 'data:', 'https:'],
       frameSrc: [
         "'self'",

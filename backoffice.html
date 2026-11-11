@@ -590,7 +590,7 @@
               <span id="ws-sheet-title" style="font-weight: 700; color: var(--primary-navy);">Not linked yet</span>
             </div>
             <div style="font-size: 0.78rem; color: #64748B;">
-              Spreadsheet ID: <span id="ws-sheet-id" style="font-family: monospace;">—</span>
+              Spreadsheet ID: <span id="ws-sheet-id" style="font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);">—</span>
             </div>
             <div style="font-size: 0.75rem; color: #047857; margin-top: 0.2rem;" id="ws-last-sync-label">
               Last synced: Never
@@ -2444,7 +2444,7 @@
               </td>
               <td>
                 <div style="display: flex; flex-wrap: wrap; gap: 3px;">
-                  ${perms.map(perm => `<span style="background: #F1F5F9; border: 1px solid #CBD5E1; color: #0F172A; padding: 1px 6px; border-radius: 3px; font-size: 0.68rem; font-family: monospace;">${escapeHtml(perm)}</span>`).join('')}
+                  ${perms.map(perm => `<span style="background: #F1F5F9; border: 1px solid #CBD5E1; color: #0F172A; padding: 1px 6px; border-radius: 3px; font-size: 0.68rem; font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);">${escapeHtml(perm)}</span>`).join('')}
                 </div>
               </td>
               <td style="font-size: 0.76rem; font-weight: 700; color: #1E3A8A;">
