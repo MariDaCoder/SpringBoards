@@ -147,11 +147,23 @@ if (fs.existsSync(path.join(ROOT, '.github', 'workflows'))) {
   hasErrors = true;
 }
 
+const lockfilePath = path.join(ROOT, 'package-lock.json');
+if (!fs.existsSync(lockfilePath)) {
+  console.error('[LOCKFILE AUDIT FAIL] Missing package-lock.json in repository root.');
+  hasErrors = true;
+} else {
+  const lockJson = JSON.parse(fs.readFileSync(lockfilePath, 'utf8'));
+  if (!lockJson.lockfileVersion || lockJson.lockfileVersion < 3) {
+    console.error('[LOCKFILE AUDIT FAIL] package-lock.json must use lockfileVersion >= 3 (npm v10+).');
+    hasErrors = true;
+  }
+}
+
 if (hasErrors) {
   process.exit(1);
 }
 
 console.log('[Build Pipeline] Asset hashing complete:', manifest.assets);
-console.log('[Build Pipeline] Verified apphosting.yaml (NODE_ENV=RUNTIME only), Node >=20.0.0 LTS engine, and zero GitHub Actions startup_failure blockers.');
+console.log('[Build Pipeline] Verified package-lock.json (lockfileVersion 3), apphosting.yaml (NODE_ENV=RUNTIME only), and Node >=20.0.0 LTS engine.');
 console.log('[Build Pipeline] SEO, canonical, OpenGraph, H1, and backend security separation verified for all 6 intent pages.');
 
