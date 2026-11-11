@@ -53,12 +53,20 @@ To prevent style leaks between the public landing pages, eligibility wizard, and
 
 ---
 
-## 5. Responsive Behavior & Breakpoints
-Mobile-first fluid layouts with zero horizontal overflow (`overflow-x: hidden`) and 4 standardized breakpoints:
-- **`<= 480px` (Small Mobile)**: Single-column stacks, full-width CTA buttons (`min-height: 48px` touch targets), compact header.
-- **`<= 640px` (Mobile)**: Stacked form rows, collapsible mobile navigation drawer.
-- **`<= 768px` (Tablet Portrait)**: 2-column card grids collapse to 1-column; split hero stacks vertically.
-- **`<= 1024px` (Tablet Landscape / Small Desktop)**: Desktop navigation transitions to mobile menu trigger; multi-column grids adjust via `repeat(auto-fit, minmax(280px, 1fr))`.
+## 5. Layouts & Responsive Behavior
+The design system adapts seamlessly from desktop environments down to mobile devices using four core layout rules:
+1. **Fluid Typography & Spacing (`clamp()`)**:
+   - Uses CSS `clamp()` for organic viewport scaling without excessive media queries:
+     - `--space-fluid` / `--text-2xl`: `clamp(1.5rem, 4vw, 2.4rem)`
+     - `--section-pad-y`: `clamp(3.5rem, 6vw, 5.5rem)`
+     - `--container-pad-x`: `clamp(1.25rem, 4vw, 2rem)`
+2. **Auto-Fitting Grids (`repeat(auto-fit, minmax(220px, 1fr))`)**:
+   - Modular card and item collections (`.sb-grid--auto-fit`, `.donation-tiers-grid`, `.admin-panel__grid--modular`) use `display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));` so items wrap naturally as the viewport narrows.
+3. **Targeted Mobile Breakpoints (`600px` & `480px`)**:
+   - `@media (max-width: 600px)`: Shifts multi-column split layouts (`.sb-layout--split`, `.form-grid-row`, `.admin-panel__split`, `.journey-detail-panel`) into single-column stacks.
+   - `@media (max-width: 480px)`: Collapses modular grids to `1fr` and stacks action buttons to full width (`min-height: 48px` touch targets).
+4. **Accessibility Motion (`@media (prefers-reduced-motion: reduce)`)**:
+   - Automatically disables smooth scrolling (`scroll-behavior: auto !important`) and collapses transition/animation durations (`0.01ms !important`) for users with reduced-motion preferences.
 
 ---
 

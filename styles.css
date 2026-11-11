@@ -257,11 +257,11 @@
   --text-base: 1rem;                                      /* 16px — Primary body copy */
   --text-lg: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);   /* 17px–19px — Lead paragraphs */
   --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);      /* 20px–24px — Card headings (H3) */
-  --text-2xl: clamp(1.5rem, 1.25rem + 1.2vw, 2rem);       /* 24px–32px — Sub-section headings */
+  --text-2xl: clamp(1.5rem, 4vw, 2.4rem);                 /* 24px–38.4px — Organic fluid sub-section / panel heading */
   --text-3xl: clamp(1.875rem, 1.5rem + 1.8vw, 2.625rem);  /* 30px–42px — Section headings (H2) */
   --text-display: clamp(2.25rem, 1.75rem + 2.5vw, 3.5rem);/* 36px–56px — Hero display (H1) */
 
-  /* 8px Base Spacing System (4px Sub-grid) */
+  /* 8px Base Spacing System & Fluid Container Spacing (clamp) */
   --space-1: 0.25rem;  /* 4px */
   --space-2: 0.5rem;   /* 8px */
   --space-3: 0.75rem;  /* 12px */
@@ -273,6 +273,7 @@
   --space-12: 3rem;    /* 48px */
   --space-16: 4rem;    /* 64px */
   --space-20: 5rem;    /* 80px */
+  --space-fluid: clamp(1.5rem, 4vw, 2.4rem);
   --section-pad-y: clamp(3.5rem, 6vw, 5.5rem);
   --container-max: 1240px;
   --container-pad-x: clamp(1.25rem, 4vw, 2rem);
@@ -6281,3 +6282,95 @@ summary:focus-visible,
     margin-top: 0.75rem;
   }
 }
+
+/* --------------------------------------------------------------------------
+   22. Standardized Layouts, Auto-Fitting Grids, Targeted Breakpoints & Motion
+   -------------------------------------------------------------------------- */
+
+/* Fluid Container & Panel Spacing */
+.sb-fluid-panel,
+.admin-panel__block,
+.wizard-card__block {
+  padding: var(--space-fluid, clamp(1.5rem, 4vw, 2.4rem));
+}
+
+/* Auto-Fitting Modular Grids */
+.sb-grid,
+.sb-grid--auto-fit,
+.admin-panel__grid--modular {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+}
+
+/* Multi-Column Split Layout Primitive */
+.sb-layout--split,
+.admin-panel__split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+
+/* Targeted Mobile Breakpoint: <= 600px (Collapse Multi-Column Layouts to Single-Column Stacks) */
+@media (max-width: 600px) {
+  .sb-layout--split,
+  .admin-panel__split,
+  .form-grid-row,
+  .journey-detail-panel {
+    grid-template-columns: 1fr !important;
+  }
+
+  .classroom-hub-top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* Targeted Small-Mobile Breakpoint: <= 480px (Single-Column Stack & Full-Width Touch Controls) */
+@media (max-width: 480px) {
+  .sb-grid,
+  .sb-grid--auto-fit,
+  .admin-panel__grid--modular,
+  .donation-tiers-grid,
+  .classroom-courses-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .sb-card__actions,
+  .train-card__actions,
+  .wizard-card__actions,
+  .admin-panel__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sb-card__actions .sb-btn,
+  .sb-card__actions .btn-cta,
+  .train-card__actions .btn-cta {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Accessibility Motion: Disable Smooth Scrolling & Transitions When Reduced Motion Is Preferred */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0.01ms;
+    --transition-normal: 0.01ms;
+  }
+
+  html,
+  body {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

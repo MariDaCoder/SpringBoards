@@ -190,7 +190,12 @@ const requiredCssVariables = [
   '--font-ui',
   '--font-mono',
   '--space-4',
-  '--radius-btn:\\s*3px'
+  '--radius-btn:\\s*3px',
+  'clamp\\(1\\.5rem,\\s*4vw,\\s*2\\.4rem\\)',
+  'repeat\\(auto-fit,\\s*minmax\\(220px,\\s*1fr\\)\\)',
+  '@media\\s*\\(max-width:\\s*600px\\)',
+  '@media\\s*\\(max-width:\\s*480px\\)',
+  '@media\\s*\\(prefers-reduced-motion:\\s*reduce\\)'
 ];
 for (const tokenPattern of requiredCssVariables) {
   if (!new RegExp(tokenPattern, 'i').test(stylesContent)) {
