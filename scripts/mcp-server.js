@@ -72,7 +72,23 @@ export const MCP_CAPABILITIES_AND_PERMISSIONS = {
     }
   }
 };
-
+export const MCP_RESOURCES = [
+  {
+    uri: 'mcp://springboards/design-system',
+    name: 'Springboards Design System Specification',
+    mimeType: 'text/markdown'
+  },
+  {
+    uri: 'mcp://springboards/styles-tokens',
+    name: 'Springboards CSS Root Tokens & Fluid Scales',
+    mimeType: 'text/css'
+  },
+  {
+    uri: 'mcp://springboards/rbac-workflows',
+    name: 'Springboards RBAC & Publishing Workflows',
+    mimeType: 'application/json'
+  }
+];
 export const MCP_TOOLS = [
   {
     name: 'design_system_inspect_tokens',
