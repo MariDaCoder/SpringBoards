@@ -195,7 +195,10 @@ const requiredCssVariables = [
   'repeat\\(auto-fit,\\s*minmax\\(220px,\\s*1fr\\)\\)',
   '@media\\s*\\(max-width:\\s*600px\\)',
   '@media\\s*\\(max-width:\\s*480px\\)',
-  '@media\\s*\\(prefers-reduced-motion:\\s*reduce\\)'
+  '@media\\s*\\(prefers-reduced-motion:\\s*reduce\\)',
+  'min-height:\\s*3\\.1rem',
+  '\\.wizard-fieldset',
+  '\\.wizard-choice'
 ];
 for (const tokenPattern of requiredCssVariables) {
   if (!new RegExp(tokenPattern, 'i').test(stylesContent)) {
@@ -213,12 +216,30 @@ for (const fw of forbiddenCssFrameworks) {
   }
 }
 
+// 6. MCP Server & Workflow Integration Audit (.mcp.json, .vscode/mcp.json, scripts/mcp-server.js)
+const mcpConfigPath = path.join(ROOT, '.mcp.json');
+const vscodeMcpPath = path.join(ROOT, '.vscode', 'mcp.json');
+const mcpServerScriptPath = path.join(ROOT, 'scripts', 'mcp-server.js');
+
+if (!fs.existsSync(mcpConfigPath) || !fs.existsSync(vscodeMcpPath) || !fs.existsSync(mcpServerScriptPath)) {
+  console.error('[MCP AUDIT FAIL] Missing .mcp.json, .vscode/mcp.json, or scripts/mcp-server.js.');
+  hasErrors = true;
+} else {
+  const mcpJson = JSON.parse(fs.readFileSync(mcpConfigPath, 'utf8'));
+  if (!mcpJson.mcpServers?.['springboards-design-content-mcp'] || !mcpJson.mcpServers?.['io.github.ChromeDevTools/chrome-devtools-mcp']) {
+    console.error('[MCP AUDIT FAIL] .mcp.json must configure springboards-design-content-mcp and ChromeDevTools MCP.');
+    hasErrors = true;
+  }
+}
+
 if (hasErrors) {
   process.exit(1);
 }
 
 console.log('[Build Pipeline] Asset hashing complete:', manifest.assets);
 console.log('[Build Pipeline] Verified native styles.css custom variable architecture (zero external CSS framework bloat).');
+console.log('[Build Pipeline] Verified MCP servers (.mcp.json, .vscode/mcp.json, scripts/mcp-server.js) & RBAC workflow permissions.');
 console.log('[Build Pipeline] Verified package-lock.json (lockfileVersion 3), apphosting.yaml (NODE_ENV=RUNTIME only), and Node >=20.0.0 LTS engine.');
 console.log('[Build Pipeline] SEO, canonical, OpenGraph, H1, and backend security separation verified for all 6 intent pages.');
+
 

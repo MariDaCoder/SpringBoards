@@ -1843,56 +1843,7 @@ function getDefaultTeamRbacAndWorkflows() {
         gateRule: 'Execute production build, verify canonical SEO/security headers, deploy to https://springboardsfcd.org, and log release.'
       }
     ],
-    publishingWorkflowRequests: [
-      {
-        id: 'wf-hero-header-2026',
-        title: 'Homepage Hero Image Crop, Typography & 72px Header Legibility Update',
-        targetRoute: '/',
-        category: 'UI/UX Design & Layout',
-        authorName: 'Marilynn Ward',
-        authorRole: 'Lead Designer, Developer & Technical Publisher',
-        complianceReviewer: 'Shamia Morgan & Giselle Campos',
-        executiveApprover: 'Marvin Thompson',
-        publisherName: 'Marilynn Ward',
-        driveEvidenceDoc: 'Springboards Master Execution Package.pdf',
-        currentStage: 'stage_4_published',
-        statusLabel: 'Published to Production',
-        updatedAt: '2026-11-09T19:30:00Z',
-        notes: 'Cropped hero image to trainee backside, aligned bottom trust bar, removed eyebrow/outline button background fill, and resized header to 72px.'
-      },
-      {
-        id: 'wf-transitional-jobs-220',
-        title: 'Transitional Jobs (WIOA Activity 220) Worksite Host & Career Center Referral Copy',
-        targetRoute: '/train & /eligibility',
-        category: 'Program Content & WIOA Compliance',
-        authorName: 'Marvin Thompson & Johnathan Washington',
-        authorRole: 'Executive Content Director & Lead Trades Instructor',
-        complianceReviewer: 'Giselle Campos',
-        executiveApprover: 'Marvin Thompson',
-        publisherName: 'Marilynn Ward',
-        driveEvidenceDoc: 'Worksite Agreement_Springboards & Guidelines 2025-13 Transitional Jobs',
-        currentStage: 'stage_3_executive_board_approval',
-        statusLabel: 'Awaiting Final Executive Gate (Sirius 5-Day Form Confirmation)',
-        updatedAt: '2026-11-09T18:15:00Z',
-        notes: '32 hr/wk cap, 390-hour max, and Carpenter/Electrician/Plumber helper job descriptions verified against Google Drive tracker.'
-      },
-      {
-        id: 'wf-etpl-ita-pathway',
-        title: 'ETPL / WIOA ITA Tuition-Funded Training Provider Public Listing',
-        targetRoute: '/train',
-        category: 'New Program Promotion Gate',
-        authorName: 'Marilynn Ward & Giselle Campos',
-        authorRole: 'Workforce Development Lead & Education Member',
-        complianceReviewer: 'Giselle Campos',
-        executiveApprover: 'Marvin Thompson & Melvin M.L. Ward',
-        publisherName: 'Marilynn Ward',
-        driveEvidenceDoc: 'New-WIOA-Training-Provider-Guide Jill Grant.pdf & AD-Policy-PY-2025-11-ITA',
-        currentStage: 'stage_2_domain_compliance_review',
-        statusLabel: 'Held in Preparation (Awaiting Written ETPL Approval)',
-        updatedAt: '2026-11-09T17:00:00Z',
-        notes: 'Per MASTER-TRACKER.md: Do not market as WIOA tuition-approved until written ETPL approval is archived in Google Drive.'
-      }
-    ]
+    publishingWorkflowRequests: []
   };
 }
 

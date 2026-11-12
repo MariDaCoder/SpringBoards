@@ -13,6 +13,13 @@ import {
   getAdminSessionFromRequest,
   sanitizeInput
 } from '../middleware/security.js';
+import {
+  MCP_SERVER_INFO,
+  MCP_TOOLS,
+  MCP_RESOURCES,
+  MCP_CAPABILITIES_AND_PERMISSIONS,
+  executeMcpTool
+} from '../../scripts/mcp-server.js';
 
 export function createAdminRouter({
   backofficeData,
@@ -66,6 +73,12 @@ export function createAdminRouter({
     res.status(200).json({
       governance: gov,
       rbac,
+      mcp: {
+        serverInfo: MCP_SERVER_INFO,
+        tools: MCP_TOOLS,
+        resources: MCP_RESOURCES,
+        capabilitiesAndPermissions: MCP_CAPABILITIES_AND_PERMISSIONS
+      },
       seoAudit: runLiveSeoAudit(),
       observability: getObservabilitySummary(),
       analytics: {
@@ -77,6 +90,53 @@ export function createAdminRouter({
         formConversionFunnel: analyticsStore.formFunnel
       }
     });
+  });
+
+  // MCP Status & Tool Execution Endpoints (RBAC-Enforced)
+  router.get('/backoffice/mcp/status', (req, res) => {
+    return res.status(200).json({
+      serverInfo: MCP_SERVER_INFO,
+      tools: MCP_TOOLS,
+      resources: MCP_RESOURCES,
+      capabilitiesAndPermissions: MCP_CAPABILITIES_AND_PERMISSIONS
+    });
+  });
+
+  router.post('/backoffice/mcp/execute', (req, res) => {
+    const { toolName, args = {}, actor = 'Marilynn Ward' } = req.body || {};
+    if (!toolName) {
+      return res.status(400).json({ error: 'toolName is required.' });
+    }
+    const actorInfo = resolveActorRoleAndPermissions(actor);
+    const toolPermissionMap = {
+      design_system_inspect_tokens: 'mcp:audit_read',
+      design_system_audit_compliance: 'mcp:audit_read',
+      pages_list_and_inspect: 'mcp:audit_read',
+      pages_scaffold_component: 'mcp:page_editor',
+      content_workflow_manage: 'mcp:content_workflow'
+    };
+    const requiredPerm = toolPermissionMap[toolName] || 'mcp:design_system';
+    if (
+      !actorInfo.permissions.has(requiredPerm) &&
+      !actorInfo.permissions.has('design:write') &&
+      !actorInfo.permissions.has('workflow:publish')
+    ) {
+      return res.status(403).json({
+        error: `MCP Access Control Gate: Actor "${actorInfo.member?.name}" (${actorInfo.role?.roleName}) lacks required permission "${requiredPerm}" for tool "${toolName}".`
+      });
+    }
+    try {
+      const result = executeMcpTool(toolName, { ...args, actorName: actorInfo.member?.name || actor });
+      return res.status(200).json({
+        success: true,
+        actor: actorInfo.member?.name || actor,
+        role: actorInfo.role?.roleName || '',
+        toolName,
+        result
+      });
+    } catch (err) {
+      return res.status(400).json({ error: err.message || 'MCP tool execution failed.' });
+    }
   });
 
   router.get('/backoffice/rbac', (req, res) => {

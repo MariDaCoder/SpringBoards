@@ -398,16 +398,20 @@ textarea:focus-visible,
 }
 
 /* --------------------------------------------------------------------------
-   3. Uniform Button & BEM Component System ([domain]-[block]__[element]--[modifier])
+   3. Component Library & Reusable Patterns
+      - Action Elements: Unified primary utility class (min-height: 3.1rem)
+      - Card Architectures: Standardized padding, border-radius: var(--radius-md), & box-shadow
+      - Form Modules: Reusable .wizard-fieldset, .wizard-choice, & .wizard-error blocks
    -------------------------------------------------------------------------- */
 .btn-cta,
 .sb-btn,
-.sb-btn--primary {
+.sb-btn--primary,
+.wizard-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  min-height: 48px;
+  min-height: 3.1rem;
   padding: 0.85rem 1.75rem;
   background-color: var(--color-accent-primary);
   color: #ffffff;
@@ -441,6 +445,7 @@ button,
 .btn-cta-secondary,
 .btn-cta-outline,
 .btn-secondary,
+.wizard-button,
 .hero-primary-cta,
 .hero-secondary-cta,
 .nav-right .desktop-cta,
@@ -452,7 +457,9 @@ button,
 .btn-cta:hover,
 .btn-cta:focus-visible,
 .sb-btn--primary:hover,
-.sb-btn--primary:focus-visible {
+.sb-btn--primary:focus-visible,
+.wizard-button:hover,
+.wizard-button:focus-visible {
   background-color: var(--color-accent-primary-hover);
   border-color: var(--color-accent-primary-hover);
   color: #ffffff;
@@ -461,11 +468,32 @@ button,
 }
 
 .btn-cta:active,
-.sb-btn--primary:active {
+.sb-btn--primary:active,
+.wizard-button:active {
   background-color: var(--color-accent-primary-hover);
   border-color: var(--color-accent-primary-hover);
   transform: translateY(0);
   box-shadow: 0 2px 6px rgba(197, 78, 41, 0.22);
+}
+
+.wizard-button.secondary {
+  border-color: var(--wizard-line);
+  background-color: transparent;
+  color: var(--wizard-ink);
+  box-shadow: none;
+}
+
+.wizard-button.secondary:hover,
+.wizard-button.secondary:focus-visible {
+  background-color: #f3eee4;
+  border-color: var(--wizard-ink);
+  color: var(--wizard-ink);
+  box-shadow: var(--shadow-sm);
+}
+
+.wizard-button:disabled {
+  cursor: wait;
+  opacity: 0.65;
 }
 
 /* Secondary / Outline Button Variant */
@@ -495,6 +523,7 @@ button,
 /* Large CTA Button Variant */
 .btn-cta-large,
 .sb-btn--large {
+  min-height: 3.1rem;
   padding: 1rem 2.25rem;
   font-size: 1.05rem;
 }
@@ -503,20 +532,28 @@ button,
 .btn-volunteer-action,
 .sb-btn--full {
   width: 100%;
+  min-height: 3.1rem;
   margin-top: 1.25rem;
   font-size: 0.95rem;
   padding: 0.75rem 1.25rem;
 }
 
-/* Domain-Scoped BEM Card & Section Primitives */
+/* Standardized Card Architectures: Structural Padding, border-radius: var(--radius-md), & Box-Shadows */
 .sb-card,
 .train-card__block,
 .wizard-card__block,
-.admin-panel__block {
+.admin-panel__block,
+.wizard-panel,
+.wizard-result-card,
+.wizard-center-card,
+.wizard-center-search,
+.wizard-calendar {
+  padding: var(--space-fluid, clamp(1.5rem, 4vw, 2.4rem));
   background-color: var(--color-surface-elevated);
   border: 1px solid var(--color-border-default);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
 }
 
 .sb-card--dark {
@@ -559,6 +596,114 @@ button,
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-3);
+}
+
+/* Standardized Reusable Form Modules (.wizard-fieldset, .wizard-choice, & .wizard-error) */
+.wizard-fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.wizard-fieldset legend {
+  width: 100%;
+  padding: 0;
+  font-family: var(--font-heading);
+  color: var(--color-text-primary);
+}
+
+.wizard-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.wizard-options.is-compact {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.wizard-choice {
+  position: relative;
+  display: flex;
+  min-height: 88px;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: 1rem;
+  border: 1.5px solid var(--wizard-line, var(--color-border-default));
+  border-radius: var(--radius-md);
+  background: var(--wizard-card, var(--color-surface-elevated));
+  color: var(--wizard-ink, var(--color-text-primary));
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.wizard-choice:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-accent-primary-border);
+  box-shadow: var(--shadow-md);
+}
+
+.wizard-choice:focus-within,
+.wizard-choice:focus-visible {
+  outline: 3px solid var(--color-accent-primary) !important;
+  outline-offset: 3px !important;
+  border-color: var(--color-accent-primary);
+}
+
+.wizard-choice:has(input:checked) {
+  border-color: var(--color-accent-primary);
+  background: var(--color-accent-primary-tint);
+  box-shadow: 0 0 0 2px rgba(224, 91, 50, 0.14);
+}
+
+.wizard-choice input {
+  flex: 0 0 auto;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: 0.15rem 0 0;
+  accent-color: var(--color-accent-primary);
+}
+
+.wizard-choice-copy {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.wizard-choice-copy strong {
+  font-size: 0.98rem;
+  line-height: 1.4;
+  color: var(--wizard-ink, var(--color-text-primary));
+}
+
+.wizard-choice-copy span {
+  color: var(--wizard-muted, var(--color-text-muted));
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.wizard-choice-icon {
+  display: grid;
+  width: 2.15rem;
+  height: 2.15rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background: #f5ead5;
+  font-size: 1.15rem;
+}
+
+.wizard-error,
+.form-error-msg {
+  min-height: 1.5rem;
+  margin: 0.7rem 0 0;
+  color: #a83222;
+  font-size: 0.88rem;
+  font-weight: 700;
 }
 
 /* --------------------------------------------------------------------------

@@ -70,8 +70,36 @@ The design system adapts seamlessly from desktop environments down to mobile dev
 
 ---
 
-## 6. Reusable Design Patterns
-1. **Primary Action Buttons (`.btn-cta`)**: `background: var(--accent-orange)` (`#E05B32`), `:hover` / `:focus-visible` `background: var(--accent-orange-hover)` (`#C54E29`), `border-radius: var(--radius-btn)` (`3px`), `min-height: 48px`, `font-weight: 700`.
-2. **Elevated Content Cards (`.train-card`, `.pathway-card`, `.admin-card`)**: `background: var(--bg-card)`, `1px solid var(--border-color)`, `border-radius: var(--radius-lg)`, `box-shadow: var(--shadow-sm)`.
-3. **Accessible Form Controls (`.form-input`, `.form-select`)**: Explicit `<label>` associations, `1px solid var(--border-color)`, high-contrast focus ring (`outline: 3px solid var(--accent-orange)`), inline validation states.
-4. **Intent Page Shell**: Shared sticky header, skip-to-content link (`.skip-link`), structured JSON-LD schema, and unified footer across `/`, `/train`, `/eligibility`, `/volunteer`, `/partner`, and `/donate`.
+## 6. Component Library & Reusable Patterns
+1. **Card Architectures (`.sb-card`, `.train-card__block`, `.wizard-card__block`, `.admin-panel__block`, `.wizard-panel`, `.wizard-result-card`)**:
+   - Standardized structural padding (`var(--space-fluid, clamp(1.5rem, 4vw, 2.4rem))`), `border-radius: var(--radius-md)` (`8px`), `1px solid var(--color-border-default)`, and `box-shadow: var(--shadow-sm)` so container elements look and feel identical across public pages, the eligibility wizard, and the backoffice.
+2. **Action Elements (`.btn-cta`, `.sb-btn`, `.sb-btn--primary`, `.wizard-button`)**:
+   - Unified primary button utility classes enforcing a minimum touch-target height of `min-height: 3.1rem`, consistent `border-radius: var(--radius-btn)` (`3px`), Safety Orange background (`var(--color-accent-primary)` `#E05B32`), and distinct hover/focus transitions (`var(--color-accent-primary-hover)` `#C54E29`, `transform: translateY(-2px)`).
+3. **Form Modules (`.wizard-fieldset`, `.wizard-choice`, `.wizard-error`)**:
+   - Standardized form inputs, labels, option cards, and validation error messages into reusable `.wizard-fieldset` and `.wizard-choice` blocks in `/styles.css` sharing identical spacing (`gap: 0.8rem`, `padding: 1rem`, `border-radius: var(--radius-md)`), checked states (`:has(input:checked)`), and high-contrast focus outlines (`outline: 3px solid var(--color-accent-primary); outline-offset: 3px;`).
+
+---
+
+## 7. MCP & AI Tooling Workflow Integration (`.mcp.json` & `scripts/mcp-server.js`)
+
+Model Context Protocol (MCP) servers and AI tools are integrated into both local development (`.mcp.json`, `.vscode/mcp.json`) and the Executive Backoffice API (`/api/backoffice/mcp/status`, `/api/backoffice/mcp/execute`):
+
+1. **Configured MCP Servers**:
+   - **`springboards-design-content-mcp` (`node scripts/mcp-server.js`)**: Custom JSON-RPC 2.0 MCP server providing design-system token inspection, compliance auditing, BEM component scaffolding, page structure auditing, and 4-stage content workflow management.
+   - **`io.github.ChromeDevTools/chrome-devtools-mcp`**: Live DOM inspection, computed CSS token verification, responsive viewport testing (`600px` and `480px`), and Core Web Vitals checks.
+   - **`firebase-mcp` (`firebase-tools experimental:mcp`)**: Firestore security rules auditing (`firestore.rules`), collection schema validation, and Firebase App Hosting configuration checks.
+
+2. **Supported MCP Tools**:
+   - `design_system_inspect_tokens`: Reads `:root` CSS custom properties in `/styles.css` by category (`brand`, `accent`, `surface`, `text`, `font`, `space`, `radius`).
+   - `design_system_audit_compliance`: Verifies zero external CSS frameworks, `#E05B32` / `#C54E29` accents, `Plus Jakarta Sans` variable WOFF2 with `font-display: swap`, `clamp()`, `repeat(auto-fit, minmax(220px, 1fr))`, `600px`/`480px` breakpoints, `prefers-reduced-motion: reduce`, `min-height: 3.1rem` buttons, `var(--radius-md)` cards, and `.wizard-fieldset` / `.wizard-choice` modules.
+   - `pages_list_and_inspect`: Audits all 7 site pages (`index.html`, `train.html`, `eligibility.html`, `volunteer.html`, `partner.html`, `donate.html`, `backoffice.html`) for SEO tags, font preloads, BEM class usage, and zero duplicate `:root` blocks.
+   - `pages_scaffold_component`: Generates compliant HTML snippets using domain-prefixed BEM classes (`sb-card`, `train-card__block`, `wizard-card__block`, `admin-panel__block`, `wizard-fieldset`, `sb-btn--primary`, `sb-grid--auto-fit`).
+   - `content_workflow_manage`: Lists, creates, or advances 4-stage publishing workflow requests (`stage_1_draft` -> `stage_2_domain_compliance_review` -> `stage_3_executive_board_approval` -> `stage_4_published`) with WIOA/ETPL claim validation.
+
+3. **Capabilities & RBAC Permission Matrix**:
+   - `mcp:design_system`: Restricted to `role_designer_developer_publisher` (Marilynn Ward).
+   - `mcp:page_editor`: Restricted to `role_designer_developer_publisher` (Marilynn Ward) and `role_executive_content_approver` (Marvin Thompson).
+   - `mcp:content_workflow`: Enabled for all 9 board/leadership roles according to their stage gate permissions (`workflow:submit_draft`, `workflow:review_compliance`, `workflow:approve_executive`, `workflow:publish`).
+   - `mcp:audit_read`: Read-only design-system and page compliance auditing available across all authenticated roles.
+
+

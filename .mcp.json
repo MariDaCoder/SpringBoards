@@ -1,16 +1,87 @@
 {
-	"mcpServers": {
-		"io.github.ChromeDevTools/chrome-devtools-mcp": {
-			"type": "local",
-			"command": "npx",
-			"args": [
-				"--registry",
-				"https://registry.npmjs.org",
-				"chrome-devtools-mcp@1.10.1"
-			],
-			"tools": [
-				"*"
-			]
-		}
-	}
+  "mcpServers": {
+    "springboards-design-content-mcp": {
+      "type": "local",
+      "command": "node",
+      "args": [
+        "scripts/mcp-server.js"
+      ],
+      "description": "Springboards Design System, Page Editor & Content Workflow MCP Server (Protocol 2024-11-05)",
+      "capabilities": [
+        "tools",
+        "resources",
+        "design_system_setup",
+        "page_creation_and_editing",
+        "content_publishing_workflow",
+        "rbac_permission_enforcement"
+      ],
+      "tools": [
+        "design_system_inspect_tokens",
+        "design_system_audit_compliance",
+        "pages_list_and_inspect",
+        "pages_scaffold_component",
+        "content_workflow_manage"
+      ],
+      "permissions": {
+        "mcp:design_system": [
+          "role_designer_developer_publisher"
+        ],
+        "mcp:page_editor": [
+          "role_designer_developer_publisher",
+          "role_executive_content_approver"
+        ],
+        "mcp:content_workflow": [
+          "role_designer_developer_publisher",
+          "role_executive_content_approver",
+          "role_board_chair_approver",
+          "role_compliance_reviewer",
+          "role_financial_reviewer",
+          "role_policy_custodian",
+          "role_trade_contributor",
+          "role_partnership_content_manager",
+          "role_community_contributor"
+        ],
+        "mcp:audit_read": [
+          "*"
+        ]
+      }
+    },
+    "io.github.ChromeDevTools/chrome-devtools-mcp": {
+      "type": "local",
+      "command": "npx",
+      "args": [
+        "--registry",
+        "https://registry.npmjs.org",
+        "chrome-devtools-mcp@1.10.1"
+      ],
+      "description": "Chrome DevTools MCP for live DOM inspection, responsive viewport testing (600px/480px), and Web Vitals verification",
+      "capabilities": [
+        "dom_inspection",
+        "css_computed_styles",
+        "responsive_viewport_audit",
+        "network_and_performance"
+      ],
+      "tools": [
+        "*"
+      ]
+    },
+    "firebase-mcp": {
+      "type": "local",
+      "command": "npx",
+      "args": [
+        "-y",
+        "firebase-tools@latest",
+        "experimental:mcp"
+      ],
+      "description": "Firebase MCP Server for Firestore rules auditing, App Hosting configuration, and collection inspection",
+      "capabilities": [
+        "firestore_schema_and_rules",
+        "apphosting_deployment_validation"
+      ],
+      "tools": [
+        "*"
+      ]
+    }
+  }
 }
+

@@ -5,7 +5,6 @@
   "scripts": {
     "dev": "node server.js",
     "start": "node server.js",
-    "genkit:hello": "node --env-file=.env hello-flow.js",
     "build": "node scripts/build.js",
     "lint": "node --check server.js && node --check main.js && node --check eligibility.js && node --check scripts/build.js && node --check src/config/env.js && node --check src/lib/firebase-admin.js && node --check src/routes/adminRoutes.js",
     "deploy:rules": "firebase deploy --only firestore:rules --project springboards-community-dev",
