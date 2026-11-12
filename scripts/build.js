@@ -12,21 +12,30 @@ if (!fs.existsSync(ASSETS_DIR)) {
   fs.mkdirSync(ASSETS_DIR, { recursive: true });
 }
 
-// 0. Ensure Self-Hosted Custom Font Assets (Plus Jakarta Sans WOFF2 Variable)
+// 0. Ensure Self-Hosted Custom Font Assets (Plus Jakarta Sans WOFF2 Variable — Latin Subset Only)
 const FONTS_DIR = path.join(ASSETS_DIR, 'fonts');
-const PUBLIC_FONTS_DIR = path.join(ROOT, 'public', 'assets', 'fonts');
 if (!fs.existsSync(FONTS_DIR)) fs.mkdirSync(FONTS_DIR, { recursive: true });
-if (!fs.existsSync(PUBLIC_FONTS_DIR)) fs.mkdirSync(PUBLIC_FONTS_DIR, { recursive: true });
+
+const APPROVED_FONT_FILES = [
+  'plus-jakarta-sans-latin-wght-normal.woff2',
+  'plus-jakarta-sans-latin-wght-italic.woff2'
+];
 
 const fontsourceDir = path.join(ROOT, 'node_modules', '@fontsource-variable', 'plus-jakarta-sans', 'files');
 if (fs.existsSync(fontsourceDir)) {
-  const fontFiles = fs.readdirSync(fontsourceDir).filter(f => f.endsWith('.woff2'));
-  for (const fontFile of fontFiles) {
+  for (const fontFile of APPROVED_FONT_FILES) {
     const src = path.join(fontsourceDir, fontFile);
     const dest = path.join(FONTS_DIR, fontFile);
-    const publicDest = path.join(PUBLIC_FONTS_DIR, fontFile);
-    if (!fs.existsSync(dest)) fs.copyFileSync(src, dest);
-    if (!fs.existsSync(publicDest)) fs.copyFileSync(src, publicDest);
+    if (fs.existsSync(src) && !fs.existsSync(dest)) {
+      fs.copyFileSync(src, dest);
+    }
+  }
+}
+
+// Prune any non-approved font variants from /assets/fonts
+for (const existingFont of fs.readdirSync(FONTS_DIR)) {
+  if (existingFont.endsWith('.woff2') && !APPROVED_FONT_FILES.includes(existingFont)) {
+    fs.unlinkSync(path.join(FONTS_DIR, existingFont));
   }
 }
 
@@ -37,6 +46,7 @@ const manifest = {
   assets: {}
 };
 
+const activeHashedFiles = new Set();
 for (const file of hashTargets) {
   const srcPath = path.join(ROOT, file);
   if (!fs.existsSync(srcPath)) continue;
@@ -47,6 +57,14 @@ for (const file of hashTargets) {
   const hashedFile = `${base}.${hash}${ext}`;
   fs.writeFileSync(path.join(ASSETS_DIR, hashedFile), content);
   manifest.assets[file] = `/assets/${hashedFile}`;
+  activeHashedFiles.add(hashedFile);
+}
+
+// Prune superseded hashed bundles in /assets
+for (const entry of fs.readdirSync(ASSETS_DIR)) {
+  if (/^(styles|main|eligibility|analytics)\.[a-f0-9]{10}\.(css|js)$/.test(entry) && !activeHashedFiles.has(entry)) {
+    fs.unlinkSync(path.join(ASSETS_DIR, entry));
+  }
 }
 
 fs.writeFileSync(path.join(ROOT, 'dist-manifest.json'), JSON.stringify(manifest, null, 2), 'utf8');

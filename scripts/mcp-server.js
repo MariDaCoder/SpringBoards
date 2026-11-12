@@ -107,7 +107,7 @@ export const MCP_TOOLS = [
   },
   {
     name: 'design_system_audit_compliance',
-    description: 'Audits /styles.css and /DESIGN_SYSTEM.md for brand & architecture rules (Safety Orange #E05B32, Deep Amber #C54E29, min-height 3.1rem buttons, var(--radius-md) cards, .wizard-fieldset/.wizard-choice modules, auto-fit grids, 600px/480px breakpoints, and prefers-reduced-motion).',
+    description: 'Audits /styles.css for brand & architecture rules (Safety Orange #E05B32, Deep Amber #C54E29, min-height 3.1rem buttons, var(--radius-md) cards, .wizard-fieldset/.wizard-choice modules, auto-fit grids, 600px/480px breakpoints, and prefers-reduced-motion).',
     requiredPermission: 'mcp:audit_read',
     inputSchema: {
       type: 'object',
