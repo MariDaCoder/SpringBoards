@@ -8,15 +8,7 @@ import { getFirestore } from 'firebase-admin/firestore';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-let appletConfig: Record<string, string> = {};
-try {
-  const configPath = path.resolve(__dirname, '../../firebase-applet-config.json');
-  if (fs.existsSync(configPath)) {
-    appletConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-  }
-} catch {
-  appletConfig = {};
-}
+const appletConfig: Record<string, string> = {};
 
 function cleanEnv(
   val: string | undefined,

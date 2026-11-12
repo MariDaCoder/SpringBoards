@@ -7,7 +7,7 @@
       "secondaryEmail": "info@springboardsfcd.org",
       "role": "Lead Designer, Full-Stack Developer & Technical Publisher",
       "customRoleId": "role_designer_developer_publisher",
-      "phone": "(615) 603-1157",
+      "phone": "731.388.WORK",
       "pin": "",
       "isAdmin": true,
       "status": "Active"
@@ -2440,9 +2440,9 @@
       "id": "doc-4",
       "title": "Springboards Community & Workforce Informational Flyer",
       "category": "Community Outreach",
-      "fileName": "springboards flyer 1.jpg",
-      "fileUrl": "/springboards flyer 1.jpg",
-      "fileSize": "2.3 MB",
+      "fileName": "springboards-community-flyer.webp",
+      "fileUrl": "/springboards-community-flyer.webp",
+      "fileSize": "270 KB",
       "updatedAt": "2026-09-27",
       "description": "Public informational flyer detailing vocational trade pathways, community partnerships, and contact avenues."
     },
@@ -2528,7 +2528,7 @@
       "id": "board-6",
       "position": "Workforce Development Member",
       "name": "Marilynn Ward",
-      "phone": "615-603-1157",
+      "phone": "731.388.WORK",
       "primaryResponsibility": "Connects training to employment, apprenticeships and certifications",
       "duties": [
         "Develop relationships with employers, workforce agencies and apprenticeship programs",

@@ -8,15 +8,7 @@ import { getFirestore } from 'firebase-admin/firestore';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-let appletConfig = {};
-try {
-  const configPath = path.resolve(__dirname, '../../firebase-applet-config.json');
-  if (fs.existsSync(configPath)) {
-    appletConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-  }
-} catch {
-  appletConfig = {};
-}
+const appletConfig = {};
 
 let runtimeWebAppConfig = {};
 if (process.env.FIREBASE_WEBAPP_CONFIG) {

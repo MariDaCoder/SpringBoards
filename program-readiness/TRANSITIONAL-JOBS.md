@@ -38,7 +38,7 @@ Local Career Center staff refer eligible participants to Springboards after inta
 Use the general contact path until program-specific staff and intake details are approved:
 
 - Email: `info@springboardsfcd.org`
-- Phone: `(615) 603-1157`
+- Phone: `731.388.WORK`
 - Website: `https://springboardsfcd.org`
 
 ## Readiness checklist

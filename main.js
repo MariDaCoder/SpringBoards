@@ -752,7 +752,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } catch (err) {
         console.error(err);
         status.classList.add("is-error");
-        status.textContent = "Could not submit application. Please call 615-603-1157 or email info@springboardsfcd.org.";
+        status.textContent = "Could not submit application. Please call 731.388.WORK or email info@springboardsfcd.org.";
       } finally {
         delete candidateForm.dataset.submitting;
         submit.disabled = false;
@@ -883,7 +883,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } catch (err) {
         console.error(err);
         status.classList.add("is-error");
-        status.textContent = "Could not submit inquiry. Please call 615-603-1157 or email info@springboardsfcd.org.";
+        status.textContent = "Could not submit inquiry. Please call 731.388.WORK or email info@springboardsfcd.org.";
       } finally {
         delete partnerForm.dataset.submitting;
         submit.disabled = false;
@@ -1022,8 +1022,8 @@ document.addEventListener("DOMContentLoaded", () => {
     "springboards-community-flyer": {
       title: "Springboards Community Flyer & Volunteer Schedule",
       preview: "/springboards-community-flyer.webp",
-      download: "/springboards flyer 1.jpg",
-      filename: "Springboards_Community_Flyer.jpg"
+      download: "/springboards-community-flyer.webp",
+      filename: "Springboards_Community_Flyer.webp"
     }
   };
 
@@ -1076,6 +1076,25 @@ document.addEventListener("DOMContentLoaded", () => {
     documentModal.querySelectorAll("[data-doc-close]").forEach((btn) => {
       btn.addEventListener("click", () => {
         closeModalWithFocus(documentModal);
+      });
+    });
+  }
+
+  // TRAINEE PORTAL & WORKSITE HOURS MODAL
+  const traineePortalModal = document.getElementById("traineePortalModal");
+  document.querySelectorAll(".btn-trainee-portal-trigger").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (traineePortalModal) {
+        openModalWithFocus(traineePortalModal, traineePortalModal.querySelector(".btn-cta, .inquiry-modal-close"));
+      }
+    });
+  });
+
+  if (traineePortalModal) {
+    traineePortalModal.querySelectorAll("[data-trainee-portal-close]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        closeModalWithFocus(traineePortalModal);
       });
     });
   }

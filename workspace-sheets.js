@@ -823,7 +823,7 @@ export async function createTrainingManualDoc(title = 'Springboards Trainee Onbo
 
   const bodyText =
     `SPRINGBOARDS FOR COMMUNITY DEVELOPMENT\n` +
-    `2269 15th Ave. S.W., Lanett (Shawmut), AL 36863 • (615) 603-1157\n\n` +
+    `2269 15th Ave. S.W., Lanett (Shawmut), AL 36863 • 731.388.WORK\n\n` +
     `1. PROGRAM OVERVIEW (WIOA ACTIVITY 220 & OJT)\n` +
     `• 195 Hours Blended NCCER Core & OSHA-10 Safety Curriculum\n` +
     `• Up to 390 Hours Paid Transitional Worksite Experience (32 hrs/wk, Mon–Thu 8:00 AM – 4:00 PM)\n\n` +
@@ -1015,7 +1015,7 @@ export async function createSpringboardsContact({
   givenName = 'Marvin',
   familyName = 'Thompson (Springboards Advisor)',
   email = 'info@springboardsfcd.org',
-  phone = '615-603-1157',
+  phone = '731.388.WORK',
   organization = 'Springboards for Community Development',
   jobTitle = 'Founder & Executive Director — Trade Training & WIOA Pathways'
 } = {}) {

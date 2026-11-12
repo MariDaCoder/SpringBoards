@@ -329,7 +329,7 @@ app.post('/api/inquiries', publicFormLimiter, async (req, res) => {
 
     if (trimmedPhone && !isValidPhone(trimmedPhone)) {
       recordFormFunnelMetric('programInquiries', 'errors');
-      return res.status(400).json({ error: 'Please provide a valid 10-digit phone number (e.g. (615) 603-1157).' });
+      return res.status(400).json({ error: 'Please provide a valid 10-digit phone number (e.g. 731.388.WORK).' });
     }
 
     const newRecord = {
@@ -391,7 +391,7 @@ app.post('/api/volunteer-signups', publicFormLimiter, async (req, res) => {
 
     if (trimmedPhone && !isValidPhone(trimmedPhone)) {
       recordFormFunnelMetric('volunteerSignups', 'errors');
-      return res.status(400).json({ error: 'Please provide a valid 10-digit phone number (e.g. (615) 603-1157).' });
+      return res.status(400).json({ error: 'Please provide a valid 10-digit phone number (e.g. 731.388.WORK).' });
     }
 
     const newRecord = {
@@ -463,7 +463,7 @@ app.post('/api/candidates', publicFormLimiter, async (req, res) => {
 
     if (trimmedPhone && !isValidPhone(trimmedPhone)) {
       recordFormFunnelMetric('candidateApplications', 'errors');
-      return res.status(400).json({ error: 'Please provide a valid 10-digit phone number (e.g. (615) 603-1157).' });
+      return res.status(400).json({ error: 'Please provide a valid 10-digit phone number (e.g. 731.388.WORK).' });
     }
 
     const newRecord = {
@@ -1063,7 +1063,7 @@ app.get('/api/documents/list', (req, res) => {
       format: 'WebP / High-Res Image Document',
       fileSize: '270 KB',
       previewUrl: '/springboards-community-flyer.webp',
-      downloadUrl: '/springboards flyer 1.jpg'
+      downloadUrl: '/springboards-community-flyer.webp'
     },
     {
       id: 'trainee-intake-checklist',
@@ -1329,7 +1329,6 @@ app.get('/api/firebase/status', (req, res) => {
   const hasFirebaserc = fs.existsSync(path.join(__dirname, '.firebaserc'));
   const hasFirebaseJson = fs.existsSync(path.join(__dirname, 'firebase.json'));
   const hasAppHostingYaml = fs.existsSync(path.join(__dirname, 'apphosting.yaml'));
-  const hasAppletConfig = fs.existsSync(path.join(__dirname, 'firebase-applet-config.json'));
   const hasFirestoreRules = fs.existsSync(path.join(__dirname, 'firestore.rules'));
   const hasPackageLock = fs.existsSync(path.join(__dirname, 'package-lock.json'));
 
@@ -1345,7 +1344,6 @@ app.get('/api/firebase/status', (req, res) => {
       firebaserc: hasFirebaserc,
       firebaseJson: hasFirebaseJson,
       apphostingYaml: hasAppHostingYaml,
-      firebaseAppletConfig: hasAppletConfig,
       firestoreRules: hasFirestoreRules,
       packageLockJson: hasPackageLock
     }
@@ -1492,7 +1490,7 @@ function getDefaultTeamRbacAndWorkflows() {
         pillarName: '1. Designing the Site',
         primaryLead: 'Marilynn Ward',
         primaryRole: 'Workforce Development Member & Lead Designer / IT & Web Coordinator',
-        contact: 'marilynnlward@gmail.com | (615) 603-1157',
+        contact: 'marilynnlward@gmail.com | 731.388.WORK',
         supportingMembers: ['Danny Williams (Community UX Feedback)'],
         driveSourceDoc: 'Springboards Master Execution Package & Board Structure (IT and Web page coordination)',
         responsibilities: [
@@ -1506,7 +1504,7 @@ function getDefaultTeamRbacAndWorkflows() {
         pillarName: '2. Developing the Site',
         primaryLead: 'Marilynn Ward',
         primaryRole: 'Lead Full-Stack Developer & Technical Systems Architect',
-        contact: 'marilynnlward@gmail.com | (615) 603-1157',
+        contact: 'marilynnlward@gmail.com | 731.388.WORK',
         supportingMembers: [],
         driveSourceDoc: 'Springboards Workforce Programs Tracker (Owner: Marilynn)',
         responsibilities: [
@@ -1706,7 +1704,7 @@ function getDefaultTeamRbacAndWorkflows() {
         boardPosition: 'Workforce Development Member',
         operationalTitle: 'Lead Designer, Full-Stack Developer & Technical Publisher',
         email: 'marilynnlward@gmail.com',
-        phone: '615-603-1157',
+        phone: '731.388.WORK',
         roleId: 'role_designer_developer_publisher',
         sitePillars: ['Designing', 'Developing', 'Reviewing Changes (Technical/WIOA)', 'Publishing'],
         ownedRoutes: ['/', '/train', '/eligibility', '/volunteer', '/partner', '/donate', '/backoffice'],
