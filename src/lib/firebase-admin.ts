@@ -63,7 +63,7 @@ export const firebaseAppId = cleanEnv(
 
 export const firestoreDatabaseId = cleanEnv(
   process.env.FIRESTORE_DATABASE_ID || appletConfig.firestoreDatabaseId,
-  'ai-studio-springboardsland-71046992-4c5a-4c20-bdcd-c5ee24b8cc0a'
+  'main'
 );
 
 export const apphostingBackendId = cleanEnv(

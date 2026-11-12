@@ -13,6 +13,10 @@ service cloud.firestore {
       return request.resource.data;
     }
 
+    function existing() {
+      return resource.data;
+    }
+
     function isSignedIn() {
       return request.auth != null;
     }
@@ -25,58 +29,97 @@ service cloud.firestore {
          request.auth.token.email == 'info@springboardsfcd.org');
     }
 
+    function isValidTimestampOrIso(val) {
+      return val is timestamp || (val is string && val.size() >= 1 && val.size() <= 64);
+    }
+
     function isValidInquiry(data) {
       return data.keys().hasAll(['name', 'program', 'createdAt']) &&
+             data.keys().hasOnly(['name', 'phone', 'email', 'program', 'tag', 'deliveredTo', 'createdAt']) &&
              data.name is string && data.name.size() >= 2 && data.name.size() <= 100 &&
              data.program is string && data.program.size() >= 1 && data.program.size() <= 100 &&
-             data.createdAt is string && data.createdAt.size() <= 64;
+             isValidTimestampOrIso(data.createdAt) &&
+             (!('tag' in data) || (data.tag is string && data.tag.size() <= 120)) &&
+             (!('phone' in data) || (data.phone is string && data.phone.size() <= 40)) &&
+             (!('email' in data) || (data.email is string && data.email.size() <= 120)) &&
+             (!('deliveredTo' in data) || (data.deliveredTo is string && data.deliveredTo.size() <= 120));
     }
 
     function isValidCandidate(data) {
       return data.keys().hasAll(['name', 'trade', 'createdAt']) &&
+             data.keys().hasOnly(['name', 'phone', 'email', 'trade', 'backgroundStatus', 'transportation', 'careerCenter', 'notes', 'createdAt']) &&
              data.name is string && data.name.size() >= 2 && data.name.size() <= 100 &&
              data.trade is string && data.trade.size() >= 2 && data.trade.size() <= 120 &&
-             data.createdAt is string && data.createdAt.size() <= 64;
+             isValidTimestampOrIso(data.createdAt) &&
+             (!('phone' in data) || (data.phone is string && data.phone.size() <= 40)) &&
+             (!('email' in data) || (data.email is string && data.email.size() <= 120)) &&
+             (!('backgroundStatus' in data) || (data.backgroundStatus is string && data.backgroundStatus.size() <= 120)) &&
+             (!('transportation' in data) || (data.transportation is string && data.transportation.size() <= 120)) &&
+             (!('careerCenter' in data) || (data.careerCenter is string && data.careerCenter.size() <= 160)) &&
+             (!('notes' in data) || (data.notes is string && data.notes.size() <= 1500));
     }
 
     function isValidVolunteer(data) {
       return data.keys().hasAll(['name', 'availability', 'interest', 'createdAt']) &&
+             data.keys().hasOnly(['name', 'phone', 'email', 'availability', 'interest', 'location', 'event', 'deliveredTo', 'createdAt']) &&
              data.name is string && data.name.size() >= 2 && data.name.size() <= 100 &&
              data.availability is string && data.availability.size() <= 60 &&
              data.interest is string && data.interest.size() <= 80 &&
-             data.createdAt is string && data.createdAt.size() <= 64;
+             isValidTimestampOrIso(data.createdAt) &&
+             (!('phone' in data) || (data.phone is string && data.phone.size() <= 40)) &&
+             (!('email' in data) || (data.email is string && data.email.size() <= 120)) &&
+             (!('location' in data) || (data.location is string && data.location.size() <= 160)) &&
+             (!('event' in data) || (data.event is string && data.event.size() <= 120)) &&
+             (!('deliveredTo' in data) || (data.deliveredTo is string && data.deliveredTo.size() <= 120));
     }
 
     function isValidPartnership(data) {
       return data.keys().hasAll(['companyName', 'contactName', 'createdAt']) &&
+             data.keys().hasOnly(['companyName', 'contactName', 'phone', 'email', 'partnershipType', 'tradeSpecialty', 'message', 'createdAt']) &&
              data.companyName is string && data.companyName.size() >= 2 && data.companyName.size() <= 120 &&
              data.contactName is string && data.contactName.size() >= 2 && data.contactName.size() <= 100 &&
-             data.createdAt is string && data.createdAt.size() <= 64;
+             isValidTimestampOrIso(data.createdAt) &&
+             (!('phone' in data) || (data.phone is string && data.phone.size() <= 40)) &&
+             (!('email' in data) || (data.email is string && data.email.size() <= 120)) &&
+             (!('partnershipType' in data) || (data.partnershipType is string && data.partnershipType.size() <= 120)) &&
+             (!('tradeSpecialty' in data) || (data.tradeSpecialty is string && data.tradeSpecialty.size() <= 120)) &&
+             (!('message' in data) || (data.message is string && data.message.size() <= 1500));
     }
 
     function isValidDonation(data) {
       return data.keys().hasAll(['donorName', 'createdAt']) &&
+             data.keys().hasOnly(['donorName', 'phone', 'email', 'donationType', 'pledgeAmount', 'taxReceiptRequested', 'message', 'createdAt']) &&
              data.donorName is string && data.donorName.size() >= 2 && data.donorName.size() <= 120 &&
-             data.createdAt is string && data.createdAt.size() <= 64;
+             isValidTimestampOrIso(data.createdAt) &&
+             (!('phone' in data) || (data.phone is string && data.phone.size() <= 40)) &&
+             (!('email' in data) || (data.email is string && data.email.size() <= 120)) &&
+             (!('donationType' in data) || (data.donationType is string && data.donationType.size() <= 100)) &&
+             (!('pledgeAmount' in data) || (data.pledgeAmount is string && data.pledgeAmount.size() <= 150)) &&
+             (!('taxReceiptRequested' in data) || data.taxReceiptRequested is bool) &&
+             (!('message' in data) || (data.message is string && data.message.size() <= 1500));
     }
 
     function isValidRoadmapProgress(data) {
       return data.keys().hasAll(['currentStep', 'updatedAt']) &&
+             data.keys().hasOnly(['completedSteps', 'currentStep', 'updatedAt']) &&
              data.currentStep is int && data.currentStep >= 0 && data.currentStep <= 10 &&
-             data.updatedAt is string && data.updatedAt.size() <= 64 &&
-             (!('completedSteps' in data) || (data.completedSteps is list && data.completedSteps.size() <= 10));
+             data.updatedAt is string && data.updatedAt.size() >= 1 && data.updatedAt.size() <= 64 &&
+             (!('completedSteps' in data) || (data.completedSteps is list && data.completedSteps.size() <= 10 && (data.completedSteps.size() == 0 || data.completedSteps[0] is int)));
     }
 
     function isValidTeamRole(data) {
       return data.keys().hasAll(['memberId', 'name', 'roleId', 'updatedAt']) &&
+             data.keys().hasOnly(['memberId', 'name', 'roleId', 'approvalAuthority', 'updatedAt']) &&
              data.memberId is string && data.memberId.size() >= 2 && data.memberId.size() <= 80 &&
              data.name is string && data.name.size() >= 2 && data.name.size() <= 100 &&
              data.roleId is string && data.roleId.size() >= 2 && data.roleId.size() <= 100 &&
-             data.updatedAt is string && data.updatedAt.size() <= 64;
+             data.updatedAt is string && data.updatedAt.size() >= 1 && data.updatedAt.size() <= 64 &&
+             (!('approvalAuthority' in data) || (data.approvalAuthority is string && data.approvalAuthority.size() <= 200));
     }
 
     function isValidPublishingWorkflow(data) {
       return data.keys().hasAll(['title', 'targetRoute', 'authorName', 'currentStage', 'updatedAt']) &&
+             data.keys().hasOnly(['title', 'targetRoute', 'category', 'authorName', 'currentStage', 'driveEvidenceDoc', 'updatedAt']) &&
              data.title is string && data.title.size() >= 3 && data.title.size() <= 180 &&
              data.targetRoute is string && data.targetRoute.size() >= 1 && data.targetRoute.size() <= 80 &&
              data.authorName is string && data.authorName.size() >= 2 && data.authorName.size() <= 100 &&
@@ -84,36 +127,43 @@ service cloud.firestore {
               data.currentStage == 'stage_2_domain_compliance_review' ||
               data.currentStage == 'stage_3_executive_board_approval' ||
               data.currentStage == 'stage_4_published') &&
-             data.updatedAt is string && data.updatedAt.size() <= 64;
+             data.updatedAt is string && data.updatedAt.size() >= 1 && data.updatedAt.size() <= 64 &&
+             (!('category' in data) || (data.category is string && data.category.size() <= 100)) &&
+             (!('driveEvidenceDoc' in data) || (data.driveEvidenceDoc is string && data.driveEvidenceDoc.size() <= 200));
     }
 
     match /programInquiries/{docId} {
       allow create: if isValidId(docId) && isValidInquiry(incoming());
-      allow get, update, delete: if isValidId(docId) && isAdmin();
+      allow get, delete: if isValidId(docId) && isAdmin();
+      allow update: if isValidId(docId) && isAdmin() && isValidInquiry(incoming()) && incoming().createdAt == existing().createdAt;
       allow list: if isAdmin();
     }
 
     match /candidateApplications/{docId} {
       allow create: if isValidId(docId) && isValidCandidate(incoming());
-      allow get, update, delete: if isValidId(docId) && isAdmin();
+      allow get, delete: if isValidId(docId) && isAdmin();
+      allow update: if isValidId(docId) && isAdmin() && isValidCandidate(incoming()) && incoming().createdAt == existing().createdAt;
       allow list: if isAdmin();
     }
 
     match /volunteerSignups/{docId} {
       allow create: if isValidId(docId) && isValidVolunteer(incoming());
-      allow get, update, delete: if isValidId(docId) && isAdmin();
+      allow get, delete: if isValidId(docId) && isAdmin();
+      allow update: if isValidId(docId) && isAdmin() && isValidVolunteer(incoming()) && incoming().createdAt == existing().createdAt;
       allow list: if isAdmin();
     }
 
     match /employerPartnerships/{docId} {
       allow create: if isValidId(docId) && isValidPartnership(incoming());
-      allow get, update, delete: if isValidId(docId) && isAdmin();
+      allow get, delete: if isValidId(docId) && isAdmin();
+      allow update: if isValidId(docId) && isAdmin() && isValidPartnership(incoming()) && incoming().createdAt == existing().createdAt;
       allow list: if isAdmin();
     }
 
     match /donationPledges/{docId} {
       allow create: if isValidId(docId) && isValidDonation(incoming());
-      allow get, update, delete: if isValidId(docId) && isAdmin();
+      allow get, delete: if isValidId(docId) && isAdmin();
+      allow update: if isValidId(docId) && isAdmin() && isValidDonation(incoming()) && incoming().createdAt == existing().createdAt;
       allow list: if isAdmin();
     }
 
@@ -124,13 +174,15 @@ service cloud.firestore {
     }
 
     match /teamRoles/{memberId} {
-      allow get, list: if isSignedIn();
+      allow get: if isValidId(memberId) && isAdmin();
+      allow list: if isAdmin();
       allow create, update: if isValidId(memberId) && isAdmin() && isValidTeamRole(incoming());
       allow delete: if isValidId(memberId) && isAdmin();
     }
 
     match /publishingWorkflows/{workflowId} {
-      allow get, list: if isSignedIn();
+      allow get: if isValidId(workflowId) && isAdmin();
+      allow list: if isAdmin();
       allow create, update: if isValidId(workflowId) && isAdmin() && isValidPublishingWorkflow(incoming());
       allow delete: if isValidId(workflowId) && isAdmin();
     }

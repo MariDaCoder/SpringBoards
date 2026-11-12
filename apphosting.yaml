@@ -73,7 +73,7 @@ env:
       - BUILD
       - RUNTIME
   - variable: FIRESTORE_DATABASE_ID
-    value: ai-studio-springboardsland-71046992-4c5a-4c20-bdcd-c5ee24b8cc0a
+    value: main
     availability:
       - BUILD
       - RUNTIME

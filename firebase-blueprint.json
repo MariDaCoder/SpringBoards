@@ -9,6 +9,7 @@
         "phone": { "type": "string" },
         "email": { "type": "string" },
         "program": { "type": "string" },
+        "tag": { "type": "string" },
         "deliveredTo": { "type": "string" },
         "createdAt": { "type": "string", "format": "date-time" }
       },
@@ -42,6 +43,8 @@
         "availability": { "type": "string" },
         "interest": { "type": "string" },
         "location": { "type": "string" },
+        "event": { "type": "string" },
+        "deliveredTo": { "type": "string" },
         "createdAt": { "type": "string", "format": "date-time" }
       },
       "required": ["name", "availability", "interest", "createdAt"]

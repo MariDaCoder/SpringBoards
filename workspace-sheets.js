@@ -20,7 +20,7 @@ const firebaseConfig = {
   appId: "1:651964189612:web:fc444ee616bf91da99c809",
   apiKey: "AIzaSyCZbXdTnbIlmFc6Jm0AYt9scNYJFqGOyB8",
   authDomain: "springboards-community-dev.firebaseapp.com",
-  firestoreDatabaseId: "ai-studio-springboardsland-71046992-4c5a-4c20-bdcd-c5ee24b8cc0a",
+  firestoreDatabaseId: "main",
   storageBucket: "springboards-community-dev.firebasestorage.app",
   messagingSenderId: "651964189612",
   oAuthClientId: "651964189612-jdk3n5qnhq6s8trvrpbemnq4t3djffeo.apps.googleusercontent.com"

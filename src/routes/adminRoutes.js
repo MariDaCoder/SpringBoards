@@ -4,7 +4,9 @@ import {
   WORKSPACE_CONNECTED_EMAIL,
   ADMIN_PASSCODE,
   STAFF_DEFAULT_PIN,
-  ADMIN_ALLOWED_EMAILS
+  ADMIN_ALLOWED_EMAILS,
+  SPRINGBOARDS_TRACKER_SHEET_ID,
+  GOOGLE_OAUTH_CLIENT_ID
 } from '../config/env.js';
 import {
   adminAuthLimiter,
@@ -735,14 +737,20 @@ export function createAdminRouter({
 
   // Google Workspace & Sheets Configuration and Live Sync State
   router.get('/workspace/config', (req, res) => {
-    const ws = backofficeData.workspaceSettings || {
-      connectedEmail: WORKSPACE_CONNECTED_EMAIL,
-      spreadsheetId: '',
-      spreadsheetUrl: '',
-      sheetName: 'Candidate Intake',
-      attendanceSheetName: 'Worksite Daily Attendance',
-      lastSyncedAt: null,
-      autoSync: true
+    const saved = backofficeData.workspaceSettings || {};
+    const spreadsheetId = saved.spreadsheetId || SPRINGBOARDS_TRACKER_SHEET_ID || '';
+    const spreadsheetUrl =
+      saved.spreadsheetUrl ||
+      (spreadsheetId ? `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit` : '');
+    const ws = {
+      connectedEmail: saved.connectedEmail || WORKSPACE_CONNECTED_EMAIL,
+      spreadsheetId,
+      spreadsheetUrl,
+      sheetName: saved.sheetName || 'Candidate Intake',
+      attendanceSheetName: saved.attendanceSheetName || 'Worksite Daily Attendance',
+      lastSyncedAt: saved.lastSyncedAt || null,
+      autoSync: saved.autoSync !== false,
+      oAuthClientId: GOOGLE_OAUTH_CLIENT_ID
     };
     return res.status(200).json(ws);
   });
@@ -768,10 +776,11 @@ export function createAdminRouter({
     if (!backofficeData.workspaceSettings) {
       backofficeData.workspaceSettings = {};
     }
+    const activeSheetId = spreadsheetId || backofficeData.workspaceSettings.spreadsheetId || SPRINGBOARDS_TRACKER_SHEET_ID || '';
     backofficeData.workspaceSettings.lastSyncedAt = timestamp || new Date().toISOString();
     backofficeData.workspaceSettings.lastSyncCount = rowCount || (backofficeData.candidateApplications || []).length;
     backofficeData.workspaceSettings.lastSyncUser = sanitizeInput(user || WORKSPACE_CONNECTED_EMAIL, 120);
-    if (spreadsheetId) backofficeData.workspaceSettings.spreadsheetId = sanitizeInput(spreadsheetId, 160);
+    if (activeSheetId) backofficeData.workspaceSettings.spreadsheetId = sanitizeInput(activeSheetId, 160);
 
     if (!Array.isArray(backofficeData.workspaceSyncHistory)) {
       backofficeData.workspaceSyncHistory = [];
@@ -793,14 +802,19 @@ export function createAdminRouter({
 
   router.get('/workspace/status', (req, res) => {
     const ws = backofficeData.workspaceSettings || {};
+    const spreadsheetId = ws.spreadsheetId || SPRINGBOARDS_TRACKER_SHEET_ID || '';
+    const spreadsheetUrl =
+      ws.spreadsheetUrl ||
+      (spreadsheetId ? `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit` : null);
     const candidatesCount = (backofficeData.candidateApplications || []).length;
     const attendanceCount = (backofficeData.attendanceLogs || []).length;
     res.status(200).json({
       connectedEmail: ws.connectedEmail || WORKSPACE_CONNECTED_EMAIL,
       designatedInbox: DESIGNATED_INBOX,
-      isLinked: Boolean(ws.spreadsheetId),
-      spreadsheetId: ws.spreadsheetId || null,
-      spreadsheetUrl: ws.spreadsheetUrl || null,
+      isLinked: Boolean(spreadsheetId),
+      spreadsheetId: spreadsheetId || null,
+      spreadsheetUrl: spreadsheetUrl || null,
+      oAuthClientId: GOOGLE_OAUTH_CLIENT_ID,
       autoSync: ws.autoSync !== false,
       lastSyncedAt: ws.lastSyncedAt || null,
       candidatesCount,

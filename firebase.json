@@ -114,7 +114,7 @@
     ]
   },
   "firestore": {
-    "database": "ai-studio-springboardsland-71046992-4c5a-4c20-bdcd-c5ee24b8cc0a",
+    "database": "main",
     "location": "us-east1",
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"

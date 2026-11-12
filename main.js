@@ -369,7 +369,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!delivered) {
           const directRes = await fetch(
-            "https://firestore.googleapis.com/v1/projects/springboards-community-dev/databases/ai-studio-springboardsland-71046992-4c5a-4c20-bdcd-c5ee24b8cc0a/documents/programInquiries",
+            "https://firestore.googleapis.com/v1/projects/springboards-community-dev/databases/main/documents/programInquiries",
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -521,7 +521,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!delivered) {
           const directRes = await fetch(
-            "https://firestore.googleapis.com/v1/projects/springboards-community-dev/databases/ai-studio-springboardsland-71046992-4c5a-4c20-bdcd-c5ee24b8cc0a/documents/volunteerSignups",
+            "https://firestore.googleapis.com/v1/projects/springboards-community-dev/databases/main/documents/volunteerSignups",
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -717,7 +717,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!delivered) {
           // Direct fallback to Firestore REST
           await fetch(
-            "https://firestore.googleapis.com/v1/projects/springboards-community-dev/databases/ai-studio-springboardsland-71046992-4c5a-4c20-bdcd-c5ee24b8cc0a/documents/candidateApplications",
+            "https://firestore.googleapis.com/v1/projects/springboards-community-dev/databases/main/documents/candidateApplications",
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },

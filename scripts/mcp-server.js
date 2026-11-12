@@ -174,7 +174,7 @@ export const MCP_TOOLS = [
       properties: {
         operation: {
           type: 'string',
-          enum: ['list', 'create_draft', 'advance_stage'],
+          enum: ['list', 'create_draft'],
           description: 'Workflow operation to execute.'
         },
         actorName: {
@@ -462,12 +462,7 @@ if (isMain) {
           process.stdout.write(JSON.stringify({
             jsonrpc: '2.0',
             id,
-            result: {
-              resources: [
-                { uri: 'mcp://springboards/design-system', name: 'Springboards Design System Specification', mimeType: 'text/markdown' },
-                { uri: 'mcp://springboards/rbac-workflows', name: 'Springboards RBAC & Publishing Workflows', mimeType: 'application/json' }
-              ]
-            }
+            result: { resources: MCP_RESOURCES }
           }) + '\n');
         } else if (id !== undefined) {
           process.stdout.write(JSON.stringify({ jsonrpc: '2.0', id, result: {} }) + '\n');

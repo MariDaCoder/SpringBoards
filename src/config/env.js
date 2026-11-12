@@ -52,7 +52,7 @@ export const FIREBASE_DATABASE_URL =
 export const FIREBASE_STORAGE_BUCKET =
   process.env.FIREBASE_STORAGE_BUCKET || 'springboards-community-dev.firebasestorage.app';
 export const FIRESTORE_DATABASE_ID =
-  process.env.FIRESTORE_DATABASE_ID || 'ai-studio-springboardsland-71046992-4c5a-4c20-bdcd-c5ee24b8cc0a';
+  process.env.FIRESTORE_DATABASE_ID || 'main';
 export const FIRESTORE_LOCATION = process.env.FIRESTORE_LOCATION || 'us-east1';
 export const GOOGLE_OAUTH_CLIENT_ID =
   process.env.GOOGLE_OAUTH_CLIENT_ID || '651964189612-jdk3n5qnhq6s8trvrpbemnq4t3djffeo.apps.googleusercontent.com';
