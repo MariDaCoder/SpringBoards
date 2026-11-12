@@ -99,7 +99,7 @@ export const MCP_TOOLS = [
       properties: {
         category: {
           type: 'string',
-          enum: ['all', 'colors', 'typography', 'spacing', 'layout'],
+          enum: ['all', 'colors', 'typography', 'spacing', 'sizing', 'layout'],
           description: 'Token category to inspect.'
         }
       }
@@ -223,10 +223,27 @@ export function executeMcpTool(toolName, args = {}) {
       }
     }
 
+    const category = args.category || 'all';
+    const categoryMatchers = {
+      colors: /^--(color|rgb|primary-navy|secondary-navy|navy-|accent-|bg-|border-|text-dark|text-body|text-muted|text-light|admin-|wizard-|train-page-)/,
+      typography: /^--(font-|text-xs|text-sm|text-base|text-lg|text-xl|text-2xl|text-3xl|text-display|leading-|tracking-)/,
+      spacing: /^--(space-|section-pad-|container-pad-)/,
+      sizing: /^--(size-|container-max|container-narrow|container-prose|nav-height|radius-)/,
+      layout: /^--(container-|size-grid-|shadow-|z-|transition-)/
+    };
+
+    const filteredTokens =
+      category === 'all' || !categoryMatchers[category]
+        ? tokens
+        : Object.fromEntries(
+            Object.entries(tokens).filter(([k]) => categoryMatchers[category].test(k))
+          );
+
     return {
       server: MCP_SERVER_INFO.name,
       tool: toolName,
-      totalTokensCount: Object.keys(tokens).length,
+      category,
+      totalTokensCount: Object.keys(filteredTokens).length,
       coreTokens: {
         brandPrimary: tokens['--color-brand-primary'],
         accentPrimary: tokens['--color-accent-primary'],
@@ -234,10 +251,11 @@ export function executeMcpTool(toolName, args = {}) {
         surfaceCanvas: tokens['--color-surface-canvas'],
         fontFamily: tokens['--font-family'],
         spaceFluid: tokens['--space-fluid'],
+        sizeTouchMin: tokens['--size-touch-min'],
         radiusBtn: tokens['--radius-btn'],
         radiusMd: tokens['--radius-md']
       },
-      tokens
+      tokens: filteredTokens
     };
   }
 

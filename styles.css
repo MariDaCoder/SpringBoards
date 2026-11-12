@@ -201,57 +201,99 @@
   --train-page-panel: var(--color-surface-elevated);
   --train-page-border: rgba(148, 163, 184, 0.35);
 
-  /* Global Typography — Plus Jakarta Sans Across All Headings, Body Copy & UI Elements */
+  /* --------------------------------------------------------------------------
+     5. TYPOGRAPHY TOKENS (--font-*, --text-*, --font-weight-*, --leading-*, --tracking-*)
+     Naming Convention: --font-[role], --text-[scale], --font-weight-[weight]
+     -------------------------------------------------------------------------- */
   --font-family: 'Plus Jakarta Sans', 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans Fallback', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  --font-sans: var(--font-family);
-  --font-heading: var(--font-family);
-  --font-ui: var(--font-family);
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-sans: var(--font-family);         /* Body copy, lists, blockquotes & descriptions */
+  --font-heading: var(--font-family);      /* H1–H6 display & section headings */
+  --font-ui: var(--font-family);           /* Buttons, inputs, selects, labels, nav & tables */
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; /* Pass codes, IDs & technical diagnostics */
 
-  /* Fluid Typography Scale (Mobile-to-Desktop Clamp) */
-  --text-xs: 0.75rem;                                     /* 12px — Micro labels & badges */
-  --text-sm: 0.875rem;                                    /* 14px — Captions & secondary UI */
-  --text-base: 1rem;                                      /* 16px — Primary body copy */
-  --text-lg: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);   /* 17px–19px — Lead paragraphs */
-  --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);      /* 20px–24px — Card headings (H3) */
-  --text-2xl: clamp(1.5rem, 4vw, 2.4rem);                 /* 24px–38.4px — Organic fluid sub-section / panel heading */
-  --text-3xl: clamp(1.875rem, 1.5rem + 1.8vw, 2.625rem);  /* 30px–42px — Section headings (H2) */
-  --text-display: clamp(2.25rem, 1.75rem + 2.5vw, 3.5rem);/* 36px–56px — Hero display (H1) */
+  /* Fluid & Fixed Font Size Scale (16px = 1rem root base) */
+  --text-xs: 0.75rem;                                      /* 12px — Micro labels, eyebrows & status pills */
+  --text-sm: 0.875rem;                                     /* 14px — Captions, helper text & secondary UI */
+  --text-base: 1rem;                                       /* 16px — Standard body copy & form controls */
+  --text-lg: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);    /* 17px–19px — Lead paragraphs & section intros */
+  --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);       /* 20px–24px — Card titles (H3) */
+  --text-2xl: clamp(1.5rem, 4vw, 2.4rem);                  /* 24px–38.4px — Fluid sub-section & modal headings */
+  --text-3xl: clamp(1.875rem, 1.5rem + 1.8vw, 2.625rem);   /* 30px–42px — Primary section headings (H2) */
+  --text-display: clamp(2.25rem, 1.75rem + 2.5vw, 3.5rem); /* 36px–56px — Hero display headlines (H1) */
 
-  /* 8px Base Spacing System & Fluid Container Spacing (clamp) */
-  --space-1: 0.25rem;  /* 4px */
-  --space-2: 0.5rem;   /* 8px */
-  --space-3: 0.75rem;  /* 12px */
-  --space-4: 1rem;     /* 16px */
-  --space-5: 1.25rem;  /* 20px */
-  --space-6: 1.5rem;   /* 24px */
-  --space-8: 2rem;     /* 32px */
-  --space-10: 2.5rem;  /* 40px */
-  --space-12: 3rem;    /* 48px */
-  --space-16: 4rem;    /* 64px */
-  --space-20: 5rem;    /* 80px */
-  --space-fluid: clamp(1.5rem, 4vw, 2.4rem);
-  --section-pad-y: clamp(3.5rem, 6vw, 5.5rem);
-  --container-max: 1240px;
-  --container-pad-x: clamp(1.25rem, 4vw, 2rem);
+  /* Approved Variable Font Weights (400–800 axis) */
+  --font-weight-regular: 400;              /* Standard body paragraphs & long-form prose */
+  --font-weight-medium: 500;               /* Subtle metadata & secondary table text */
+  --font-weight-semibold: 600;             /* Navigation links, form field labels & subheads */
+  --font-weight-bold: 700;                 /* Card headings, secondary buttons & status badges */
+  --font-weight-extrabold: 800;            /* H1–H2 display headings, eyebrows & primary CTAs */
 
-  /* Border Radius & Elevation Scale */
-  --radius-btn: 3px;   /* Unified 3px architectural button radius */
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 14px;
-  --radius-xl: 20px;
+  /* Line Height (Leading) & Letter Spacing (Tracking) */
+  --leading-tight: 1.15;                   /* H1–H2 display headlines */
+  --leading-snug: 1.35;                    /* H3–H4 card titles & UI headings */
+  --leading-normal: 1.65;                  /* Body copy & list items */
+  --tracking-tight: -0.025em;              /* Hero display headlines */
+  --tracking-heading: -0.02em;             /* Section & card headings */
+  --tracking-caps: 0.08em;                 /* Uppercase eyebrows & badge labels */
+
+  /* --------------------------------------------------------------------------
+     6. SPACING TOKENS (--space-[step], --space-fluid, --section-pad-y, --container-pad-x)
+     Naming Convention: 8px Base Grid (1 step = 4px sub-grid increment)
+     -------------------------------------------------------------------------- */
+  --space-1: 0.25rem;                      /* 4px  — Tight inline icon/badge gap */
+  --space-2: 0.5rem;                       /* 8px  — Compact element gap & badge padding */
+  --space-3: 0.75rem;                      /* 12px — Form input vertical padding & field stack gap */
+  --space-4: 1rem;                         /* 16px — Base unit: standard card/input padding */
+  --space-5: 1.25rem;                      /* 20px — Medium card & callout interior padding */
+  --space-6: 1.5rem;                       /* 24px — Standard grid gap & modal section spacing */
+  --space-8: 2rem;                         /* 32px — Large card padding & sub-section margin */
+  --space-10: 2.5rem;                      /* 40px — Major component group separation */
+  --space-12: 3rem;                        /* 48px — Section header-to-content spacing */
+  --space-16: 4rem;                        /* 64px — Desktop section vertical rhythm */
+  --space-20: 5rem;                        /* 80px — Hero & landmark vertical separation */
+  --space-fluid: clamp(1.5rem, 4vw, 2.4rem);      /* 24px–38.4px — Responsive card & modal padding */
+  --section-pad-y: clamp(3.5rem, 6vw, 5.5rem);    /* 56px–88px — Fluid vertical section padding */
+  --container-pad-x: clamp(1.25rem, 4vw, 2rem);   /* 20px–32px — Fluid horizontal viewport gutter */
+
+  /* --------------------------------------------------------------------------
+     7. SIZING, GEOMETRY & LAYOUT TOKENS (--size-*, --container-*, --radius-*, --shadow-*, --z-*)
+     Naming Convention: --size-[element], --container-[variant], --radius-[scale]
+     -------------------------------------------------------------------------- */
+  /* Interactive Touch Target & Control Sizing */
+  --size-touch-min: 3.1rem;                /* 49.6px — Minimum height for primary CTA & wizard buttons */
+  --size-input-height: 2.875rem;           /* 46px   — Standard form input & select control height */
+  --size-icon-sm: 1rem;                    /* 16px   — Inline link & badge icon size */
+  --size-icon-md: 1.25rem;                 /* 20px   — Button & form control icon size */
+  --size-icon-lg: 1.5rem;                  /* 24px   — Feature card & navigation icon size */
+  --nav-height: 88px;                      /* Sticky top navigation bar height & scroll offset */
+
+  /* Container, Modal & Grid Track Sizing */
+  --container-max: 1240px;                 /* Primary 12-column layout max-width */
+  --container-narrow: 840px;               /* Focused reading, FAQ & wizard layout max-width */
+  --container-prose: 65ch;                 /* Optimal reading line-length measure for body copy */
+  --size-modal-md: 540px;                  /* Standard inquiry dialog max-width */
+  --size-modal-lg: 720px;                  /* Extended intake, partner & donation dialog max-width */
+  --size-grid-card-min: 220px;             /* Minimum responsive card column width in auto-fit grids */
+
+  /* Border Radius Scale */
+  --radius-btn: 3px;                       /* Unified 3px architectural CTA button corner radius */
+  --radius-sm: 6px;                        /* Form inputs, select menus & small tags */
+  --radius-md: 8px;                        /* Standard cards (.sb-card), wizard choices & callouts */
+  --radius-lg: 14px;                       /* Feature containers, video frames & modal dialogs */
+  --radius-xl: 20px;                       /* Hero media frames & large showcase panels */
+  --radius-pill: 9999px;                   /* Pill badges & circular icon containers */
+
+  /* Elevation Shadows */
   --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
   --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.04);
   --shadow-lg: 0 12px 28px rgba(15, 23, 42, 0.12), 0 4px 10px rgba(15, 23, 42, 0.06);
 
-  /* Z-Index & Motion Tokens */
+  /* Z-Index Layering & Motion Timing */
   --z-dropdown: 100;
   --z-sticky: 500;
   --z-navbar: 1000;
   --z-modal: 2000;
   --z-skip-link: 10000;
-  --nav-height: 88px;
   --transition-fast: 0.18s ease;
   --transition-normal: 0.25s ease;
 }
@@ -267,9 +309,11 @@ html {
 
 body {
   font-family: var(--font-family);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-regular);
   background-color: var(--color-surface-canvas);
   color: var(--color-text-secondary);
-  line-height: 1.65;
+  line-height: var(--leading-normal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -280,7 +324,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   color: var(--color-text-primary);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-heading);
 }
 
 p, li, blockquote, dt, dd, figcaption {
@@ -984,11 +1028,7 @@ header#navigation > nav > div:nth-of-type(3) > button:focus-visible,
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: url("04_hero_photo_clean.jpg");
-  background-image: image-set(
-    url("04_hero_photo_clean.webp") type("image/webp"),
-    url("04_hero_photo_clean.jpg") type("image/jpeg")
-  );
+  background-image: url("/04_hero_photo_clean.webp");
   /* Resized and contained on the right so the entire trainee (hard hat, face, safety vest, tools, hands) is fully visible */
   background-position: right center;
   background-size: contain;
