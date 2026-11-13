@@ -184,14 +184,15 @@
 
   <!-- Self-Hosted Custom Font Preload (Plus Jakarta Sans WOFF2 Variable) -->
   <link rel="preload" href="/assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20261109-crop-backside-logo-v1">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/components.js" defer></script>
 </head>
 <body id="top">
   <!-- Accessibility Skip Link -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- Navigation Bar (Simplified Job-Seeker-First Menu) -->
-  <header class="navbar-wrapper" id="navigation">
+  <header class="navbar-wrapper" id="navigation" data-component="site-navbar" data-prop-active-route="/">
     <nav class="navbar" aria-label="Main Navigation">
       <!-- Left: Oversized Logo -->
       <div class="nav-left">

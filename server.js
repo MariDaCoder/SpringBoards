@@ -120,6 +120,9 @@ app.use(express.static(__dirname, {
       res.setHeader('Cache-Control', 'public, max-age=86400, stale-while-revalidate=86400');
     } else if (/\.(css|js)$/i.test(filePath)) {
       res.setHeader('Cache-Control', 'public, max-age=3600, must-revalidate');
+      if (/\.css$/i.test(filePath)) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+      }
     } else if (/\.html$/i.test(filePath)) {
       res.setHeader('Cache-Control', 'no-cache, must-revalidate');
     }

@@ -72,7 +72,7 @@
 <body id="top" class="c-bg-canvas c-text-primary">
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <header class="navbar-wrapper" id="navigation">
+  <header class="navbar-wrapper" id="navigation" data-component="site-navbar" data-prop-active-route="/partner">
     <nav class="navbar" aria-label="Main Navigation">
       <div class="nav-left">
         <a href="/" class="nav-logo-link" aria-label="Springboards Home">
@@ -106,36 +106,40 @@
   <main id="main-content" tabindex="-1">
     <section class="section problem-section subpage-hero-section is-subpage-hero">
       <div class="container">
-        <div class="problem-header-grid">
+        <div class="problem-header-grid l-split-60-40">
           <div>
             <span class="section-eyebrow problem-eyebrow">WORKFORCE &amp; INDUSTRY COLLABORATION</span>
             <h1 class="section-title problem-title is-display">Partner With Springboards to Build East Alabama’s Skilled Workforce</h1>
             <p class="problem-intro">We connect regional contractors, building supply leaders, and civic institutions with motivated, safety-trained trade candidates across Chambers County and East Alabama.</p>
           </div>
           <aside class="problem-callout-right" aria-label="Employer partnership highlights">
-            <div class="problem-supporting-quote is-upright">
-              <strong class="section-eyebrow is-ochre-light u-mb-2" style="display: block;">Why Contractors Partner With Us</strong>
-              <p class="u-mb-3" style="font-style: normal;">• Pre-screened trainees with OSHA safety &amp; NCCER fundamentals<br>• WIOA Transitional Jobs &amp; OJT wage reimbursement pathways<br>• Tax-deductible tool &amp; material sponsorships</p>
-              <footer>Direct Partner Line: 731.388.WORK • info@springboardsfcd.org</footer>
+            <div class="problem-supporting-quote is-upright rich-text is-inverse is-compact">
+              <strong class="section-eyebrow t-eyebrow is-ochre-light u-mb-2">Why Contractors Partner With Us</strong>
+              <ul>
+                <li>Pre-screened trainees with OSHA safety &amp; NCCER fundamentals</li>
+                <li>WIOA Transitional Jobs &amp; OJT wage reimbursement pathways</li>
+                <li>Tax-deductible tool &amp; material sponsorships</li>
+              </ul>
+              <footer>Direct Partner Line: <a href="tel:731.388.WORK">731.388.WORK</a> • <a href="mailto:info@springboardsfcd.org">info@springboardsfcd.org</a></footer>
             </div>
           </aside>
         </div>
 
-        <div class="proof-cards-grid" role="list">
-          <article class="proof-card proof-card-dark" role="listitem">
-            <span class="proof-card-index" aria-hidden="true">01</span>
-            <h2>Hire Trained Candidates &amp; OJT</h2>
-            <p>Connect with graduates ready for Carpentry, Electrical, Plumbing, HVAC, and site preparation roles.</p>
+        <div class="proof-cards-grid l-grid-3" role="list">
+          <article class="proof-card proof-card-dark c-feature-card is-dark" role="listitem" data-component="feature-card" data-prop-variant="dark" data-prop-index="01" data-prop-title="Hire Trained Candidates &amp; OJT" data-prop-description="Connect with graduates ready for Carpentry, Electrical, Plumbing, HVAC, and site preparation roles.">
+            <span class="proof-card-index c-feature-card__index" aria-hidden="true">01</span>
+            <h2 class="c-feature-card__title">Hire Trained Candidates &amp; OJT</h2>
+            <p class="c-feature-card__body">Connect with graduates ready for Carpentry, Electrical, Plumbing, HVAC, and site preparation roles.</p>
           </article>
-          <article class="proof-card proof-card-dark" role="listitem">
-            <span class="proof-card-index" aria-hidden="true">02</span>
-            <h2>Donate Tools &amp; Building Materials</h2>
-            <p>Contribute framing lumber, conduit, copper/PVC fittings, or commercial hand and power tools for hands-on shop builds.</p>
+          <article class="proof-card proof-card-dark c-feature-card is-dark" role="listitem" data-component="feature-card" data-prop-variant="dark" data-prop-index="02" data-prop-title="Donate Tools &amp; Building Materials" data-prop-description="Contribute framing lumber, conduit, copper/PVC fittings, or commercial hand and power tools for hands-on shop builds.">
+            <span class="proof-card-index c-feature-card__index" aria-hidden="true">02</span>
+            <h2 class="c-feature-card__title">Donate Tools &amp; Building Materials</h2>
+            <p class="c-feature-card__body">Contribute framing lumber, conduit, copper/PVC fittings, or commercial hand and power tools for hands-on shop builds.</p>
           </article>
-          <article class="proof-card proof-card-dark" role="listitem">
-            <span class="proof-card-index" aria-hidden="true">03</span>
-            <h2>Guest Craft Instruction</h2>
-            <p>Lead a workshop demonstration or share real-world jobsite expectations with our current training cohort.</p>
+          <article class="proof-card proof-card-dark c-feature-card is-dark" role="listitem" data-component="feature-card" data-prop-variant="dark" data-prop-index="03" data-prop-title="Guest Craft Instruction" data-prop-description="Lead a workshop demonstration or share real-world jobsite expectations with our current training cohort.">
+            <span class="proof-card-index c-feature-card__index" aria-hidden="true">03</span>
+            <h2 class="c-feature-card__title">Guest Craft Instruction</h2>
+            <p class="c-feature-card__body">Lead a workshop demonstration or share real-world jobsite expectations with our current training cohort.</p>
           </article>
         </div>
       </div>
@@ -143,29 +147,31 @@
 
     <section class="section mission-section subpage-form-section">
       <div class="container container--narrow">
-        <span class="section-eyebrow">CONNECT YOUR ORGANIZATION</span>
-        <h2 class="section-title">Submit a Partnership Inquiry</h2>
-        <p class="section-subtitle u-mb-8">Complete the form below and Executive Director Marvin Thompson and our workforce team will follow up directly.</p>
+        <header class="c-section-header" data-component="section-header" data-prop-eyebrow="CONNECT YOUR ORGANIZATION" data-prop-title="Submit a Partnership Inquiry" data-prop-description="Complete the form below and Executive Director Marvin Thompson and our workforce team will follow up directly.">
+          <span class="section-eyebrow c-section-header__eyebrow">CONNECT YOUR ORGANIZATION</span>
+          <h2 class="section-title c-section-header__title">Submit a Partnership Inquiry</h2>
+          <p class="section-subtitle c-section-header__desc u-mb-8">Complete the form below and Executive Director Marvin Thompson and our workforce team will follow up directly.</p>
+        </header>
 
-        <form class="program-inquiry-form is-boxed-panel c-bg-subtle c-border-default" id="dedicatedPartnerForm" novalidate>
+        <form class="program-inquiry-form is-boxed-panel c-bg-subtle c-border-default state-focus-within" id="dedicatedPartnerForm" novalidate>
           <input type="text" name="website_url" class="sr-only-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" aria-label="Leave this field blank">
-          <div class="form-grid-row">
-            <label>Company / Organization Name
-              <input name="companyName" type="text" autocomplete="organization" placeholder="e.g. Valley Framing Contractors" required>
+          <div class="form-grid-row l-grid-2">
+            <label>Company / Organization Name <span class="form-required" aria-hidden="true">*</span>
+              <input name="companyName" type="text" class="form-input" autocomplete="organization" placeholder="e.g. Valley Framing Contractors" required>
             </label>
-            <label>Contact Person &amp; Title
-              <input name="contactName" type="text" autocomplete="name" placeholder="e.g. John Miller, Operations Manager" required>
-            </label>
-          </div>
-          <div class="form-grid-row">
-            <label>Business Phone
-              <input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="334-556-0000" required>
-            </label>
-            <label>Business Email
-              <input name="email" type="email" autocomplete="email" inputmode="email" placeholder="contact@company.com" required>
+            <label>Contact Person &amp; Title <span class="form-required" aria-hidden="true">*</span>
+              <input name="contactName" type="text" class="form-input" autocomplete="name" placeholder="e.g. John Miller, Operations Manager" required>
             </label>
           </div>
-          <div class="form-grid-row">
+          <div class="form-grid-row l-grid-2">
+            <label>Business Phone <span class="form-required" aria-hidden="true">*</span>
+              <input name="phone" type="tel" class="form-input" autocomplete="tel" inputmode="tel" placeholder="334-556-0000" required>
+            </label>
+            <label>Business Email <span class="form-required" aria-hidden="true">*</span>
+              <input name="email" type="email" class="form-input" autocomplete="email" inputmode="email" placeholder="contact@company.com" required>
+            </label>
+          </div>
+          <div class="form-grid-row l-grid-2">
             <label>Partnership Type
               <select name="partnershipType" class="form-select">
                 <option value="Host Worksite / OJT Employer">Host Worksite / OJT Employer</option>
@@ -185,28 +191,41 @@
             </label>
           </div>
           <label>How would you like to collaborate?
-            <textarea name="message" rows="3" class="form-input is-textarea c-border-default" placeholder="Tell us about your hiring needs, OJT interest, or materials/tools available..."></textarea>
+            <textarea name="message" rows="3" class="form-textarea is-textarea c-border-default" placeholder="Tell us about your hiring needs, OJT interest, or materials/tools available..."></textarea>
+            <span class="field-hint">Our employer relations coordinator responds within 1–2 business days.</span>
           </label>
           <button type="submit" class="btn-cta program-submit u-mt-4">Submit Partnership Inquiry</button>
           <p class="form-status" id="partStatus" role="status" aria-live="polite"></p>
         </form>
+        <aside class="c-cta-banner is-navy u-mt-8" aria-label="Student sponsorship callout" data-component="cta-banner" data-prop-theme="navy" data-prop-eyebrow="501(C)(3) STUDENT SPONSORSHIPS" data-prop-title="Want to Sponsor a Trainee Tool Belt or Safety Kit?" data-prop-description="Tax-deductible financial and in-kind tool contributions equip East Alabama trainees with OSHA 10 credentials and field gear." data-prop-primary-label="Donate or Sponsor Tools" data-prop-primary-href="/donate" data-prop-secondary-label="Volunteer as Guest Mentor" data-prop-secondary-href="/volunteer">
+          <div class="c-cta-banner__copy">
+            <span class="section-eyebrow c-cta-banner__eyebrow">501(C)(3) STUDENT SPONSORSHIPS</span>
+            <h2 class="c-cta-banner__title">Want to Sponsor a Trainee Tool Belt or Safety Kit?</h2>
+            <p class="c-cta-banner__desc">Tax-deductible financial and in-kind tool contributions equip East Alabama trainees with OSHA 10 credentials and field gear.</p>
+          </div>
+          <div class="c-cta-banner__actions">
+            <a href="/donate" class="btn-cta">Donate or Sponsor Tools</a>
+            <a href="/volunteer" class="btn-secondary">Volunteer as Guest Mentor</a>
+          </div>
+        </aside>
       </div>
     </section>
   </main>
 
-  <footer class="footer-section" id="footer">
-    <div class="container footer-bottom-flex" style="padding: 2rem 0;">
-      <p>&copy; 2026 Springboards for Community Development • 2269 15th Ave. S.W., Lanett, AL 36863</p>
+  <footer class="footer-section" id="footer" data-component="site-footer" data-prop-active-route="/partner">
+    <div class="container footer-bottom-flex u-py-6">
+      <p class="u-m-0">&copy; 2026 Springboards for Community Development • 2269 15th Ave. S.W., Lanett, AL 36863</p>
       <div class="footer-legal-group">
-        <a href="/" class="footer-legal-link">Home</a>
-        <a href="/train" class="footer-legal-link">Training</a>
-        <a href="/eligibility" class="footer-legal-link">Eligibility</a>
-        <a href="/volunteer" class="footer-legal-link">Volunteer</a>
-        <a href="/donate" class="footer-legal-link">Donate</a>
+        <a href="/" class="footer-legal-link link-text is-inverse is-underline-hover is-sm">Home</a>
+        <a href="/train" class="footer-legal-link link-text is-inverse is-underline-hover is-sm">Training</a>
+        <a href="/eligibility" class="footer-legal-link link-text is-inverse is-underline-hover is-sm">Eligibility</a>
+        <a href="/volunteer" class="footer-legal-link link-text is-inverse is-underline-hover is-sm">Volunteer</a>
+        <a href="/donate" class="footer-legal-link link-text is-inverse is-underline-hover is-sm">Donate</a>
       </div>
     </div>
   </footer>
 
+  <script src="/components.js" defer></script>
   <script src="/analytics.js" defer></script>
   <script>
     (() => {

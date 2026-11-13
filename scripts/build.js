@@ -223,6 +223,27 @@ for (const fw of forbiddenCssFrameworks) {
   }
 }
 
+// Verify consolidated external stylesheet linkage & zero inline <style> blocks across all HTML files
+const htmlFilesToAuditCss = [...publicPages, 'backoffice.html'];
+for (const htmlFile of htmlFilesToAuditCss) {
+  const htmlPath = path.join(ROOT, htmlFile);
+  if (!fs.existsSync(htmlPath)) continue;
+  const htmlSource = fs.readFileSync(htmlPath, 'utf8');
+  if (/<style[\s>]/i.test(htmlSource)) {
+    console.error(`[CSS ARCHITECTURE AUDIT FAIL] ${htmlFile} contains an inline <style> block. Consolidate all styles into /styles.css.`);
+    hasErrors = true;
+  }
+  if (!/<link[^>]+rel=["']stylesheet["'][^>]+href=["'](?:https:\/\/springboardsfcd\.org)?\/styles\.css["']/i.test(htmlSource)) {
+    console.error(`[CSS ARCHITECTURE AUDIT FAIL] ${htmlFile} is missing standardized external stylesheet link to /styles.css.`);
+    hasErrors = true;
+  }
+}
+
+if (!fs.existsSync(path.join(ROOT, 'components.js'))) {
+  console.error('[COMPONENT ARCHITECTURE AUDIT FAIL] Missing /components.js reusable component system.');
+  hasErrors = true;
+}
+
 // 6. MCP Server & Workflow Integration Audit (.mcp.json, .vscode/mcp.json, scripts/mcp-server.js)
 const mcpConfigPath = path.join(ROOT, '.mcp.json');
 const vscodeMcpPath = path.join(ROOT, '.vscode', 'mcp.json');

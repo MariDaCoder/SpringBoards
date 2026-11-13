@@ -72,7 +72,7 @@
 <body id="top" class="c-bg-canvas c-text-primary">
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <header class="navbar-wrapper" id="navigation">
+  <header class="navbar-wrapper" id="navigation" data-component="site-navbar" data-prop-active-route="/volunteer">
     <nav class="navbar" aria-label="Main Navigation">
       <div class="nav-left">
         <a href="/" class="nav-logo-link" aria-label="Springboards Home">
@@ -106,36 +106,40 @@
   <main id="main-content" tabindex="-1">
     <section class="section problem-section subpage-hero-section is-subpage-hero">
       <div class="container">
-        <div class="problem-header-grid">
+        <div class="problem-header-grid l-split-60-40">
           <div>
             <span class="section-eyebrow problem-eyebrow">COMMUNITY SERVICE • SHAWMUT &amp; LANETT, AL</span>
             <h1 class="section-title problem-title is-display">Volunteer at the Springboards Community Center</h1>
             <p class="problem-intro">Neighbors, skilled tradespeople, churches, and civic groups help keep our training workshops safe, organized, and ready for East Alabama trainees.</p>
           </div>
           <aside class="problem-callout-right" aria-label="Volunteer schedule summary">
-            <div class="problem-supporting-quote is-upright">
-              <strong class="section-eyebrow is-ochre-light u-mb-2" style="display: block;">Work Block Schedule</strong>
-              <p class="u-mb-3" style="font-style: normal;"><strong>Days:</strong> Monday through Thursday<br><strong>Morning Block:</strong> 8:00 AM – 12:00 PM EST<br><strong>Afternoon Block:</strong> 12:00 PM – 4:00 PM EST</p>
+            <div class="problem-supporting-quote is-upright rich-text is-inverse is-compact">
+              <strong class="section-eyebrow t-eyebrow is-ochre-light u-mb-2">Work Block Schedule</strong>
+              <ul>
+                <li><strong>Days:</strong> Monday through Thursday</li>
+                <li><strong>Morning Block:</strong> 8:00 AM – 12:00 PM EST</li>
+                <li><strong>Afternoon Block:</strong> 12:00 PM – 4:00 PM EST</li>
+              </ul>
               <footer>Location: 2269 15th Ave. S.W., Lanett, AL 36863</footer>
             </div>
           </aside>
         </div>
 
-        <div class="proof-cards-grid" role="list">
-          <article class="proof-card proof-card-dark" role="listitem">
-            <span class="proof-card-index" aria-hidden="true">01</span>
-            <h2>Facility &amp; Workshop Prep</h2>
-            <p>Assist with cleaning, organizing lumber and electrical bays, and preparing hands-on training stations.</p>
+        <div class="proof-cards-grid l-grid-3" role="list">
+          <article class="proof-card proof-card-dark c-feature-card is-dark" role="listitem" data-component="feature-card" data-prop-variant="dark" data-prop-index="01" data-prop-title="Facility &amp; Workshop Prep" data-prop-description="Assist with cleaning, organizing lumber and electrical bays, and preparing hands-on training stations.">
+            <span class="proof-card-index c-feature-card__index" aria-hidden="true">01</span>
+            <h2 class="c-feature-card__title">Facility &amp; Workshop Prep</h2>
+            <p class="c-feature-card__body">Assist with cleaning, organizing lumber and electrical bays, and preparing hands-on training stations.</p>
           </article>
-          <article class="proof-card proof-card-dark" role="listitem">
-            <span class="proof-card-index" aria-hidden="true">02</span>
-            <h2>Tool &amp; Safety Readiness</h2>
-            <p>Help inventory donated hand and power tools, inspect PPE, and prepare materials for upcoming cohorts.</p>
+          <article class="proof-card proof-card-dark c-feature-card is-dark" role="listitem" data-component="feature-card" data-prop-variant="dark" data-prop-index="02" data-prop-title="Tool &amp; Safety Readiness" data-prop-description="Help inventory donated hand and power tools, inspect PPE, and prepare materials for upcoming cohorts.">
+            <span class="proof-card-index c-feature-card__index" aria-hidden="true">02</span>
+            <h2 class="c-feature-card__title">Tool &amp; Safety Readiness</h2>
+            <p class="c-feature-card__body">Help inventory donated hand and power tools, inspect PPE, and prepare materials for upcoming cohorts.</p>
           </article>
-          <article class="proof-card proof-card-dark" role="listitem">
-            <span class="proof-card-index" aria-hidden="true">03</span>
-            <h2>Guest Trade Mentorship</h2>
-            <p>Experienced carpenters, electricians, plumbers, and HVAC technicians can mentor trainees during lab builds.</p>
+          <article class="proof-card proof-card-dark c-feature-card is-dark" role="listitem" data-component="feature-card" data-prop-variant="dark" data-prop-index="03" data-prop-title="Guest Trade Mentorship" data-prop-description="Experienced carpenters, electricians, plumbers, and HVAC technicians can mentor trainees during lab builds.">
+            <span class="proof-card-index c-feature-card__index" aria-hidden="true">03</span>
+            <h2 class="c-feature-card__title">Guest Trade Mentorship</h2>
+            <p class="c-feature-card__body">Experienced carpenters, electricians, plumbers, and HVAC technicians can mentor trainees during lab builds.</p>
           </article>
         </div>
       </div>
@@ -143,27 +147,30 @@
 
     <section class="section mission-section subpage-form-section">
       <div class="container container--narrow">
-        <span class="section-eyebrow">SIGN UP TO SERVE</span>
-        <h2 class="section-title">Express Volunteer Interest</h2>
-        <p class="section-subtitle u-mb-8">Share your availability and area of interest below. Our coordinator will follow up to confirm your scheduled block.</p>
+        <header class="c-section-header" data-component="section-header" data-prop-eyebrow="SIGN UP TO SERVE" data-prop-title="Express Volunteer Interest" data-prop-description="Share your availability and area of interest below. Our coordinator will follow up to confirm your scheduled block.">
+          <span class="section-eyebrow c-section-header__eyebrow">SIGN UP TO SERVE</span>
+          <h2 class="section-title c-section-header__title">Express Volunteer Interest</h2>
+          <p class="section-subtitle c-section-header__desc u-mb-8">Share your availability and area of interest below. Our coordinator will follow up to confirm your scheduled block.</p>
+        </header>
 
-        <form class="program-inquiry-form is-boxed-panel c-bg-subtle c-border-default" id="dedicatedVolunteerForm" novalidate>
+        <form class="program-inquiry-form is-boxed-panel c-bg-subtle c-border-default state-focus-within" id="dedicatedVolunteerForm" novalidate>
           <input type="text" name="website_url" class="sr-only-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" aria-label="Leave this field blank">
-          <label>Full Name
-            <input name="name" type="text" autocomplete="name" placeholder="Your full name" minlength="2" maxlength="80" required>
+          <label>Full Name <span class="form-required" aria-hidden="true">*</span>
+            <input name="name" type="text" class="form-input" autocomplete="name" placeholder="Your full name" minlength="2" maxlength="80" required>
           </label>
           <label>Organization, Church, or Group (optional)
-            <input name="organization" type="text" autocomplete="organization" placeholder="Group or employer name">
+            <input name="organization" type="text" class="form-input" autocomplete="organization" placeholder="Group or employer name">
+            <span class="field-hint">Civic clubs, church groups, and contractor teams are welcome.</span>
           </label>
-          <div class="form-grid-row">
+          <div class="form-grid-row l-grid-2">
             <label>Phone Number
-              <input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="334-556-0000">
+              <input name="phone" type="tel" class="form-input" autocomplete="tel" inputmode="tel" placeholder="334-556-0000">
             </label>
             <label>Email Address
-              <input name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com">
+              <input name="email" type="email" class="form-input" autocomplete="email" inputmode="email" placeholder="you@example.com">
             </label>
           </div>
-          <div class="form-grid-row">
+          <div class="form-grid-row l-grid-2">
             <label>Preferred Block
               <select name="availability" class="form-select">
                 <option value="morning">Morning Block (8:00 AM – 12:00 PM EST)</option>
@@ -183,23 +190,35 @@
           <button type="submit" class="btn-cta program-submit u-mt-4">Submit Volunteer Interest</button>
           <p class="form-status" id="volStatus" role="status" aria-live="polite"></p>
         </form>
+        <aside class="c-cta-banner is-warm u-mt-8" aria-label="Sponsor trainee gear callout" data-component="cta-banner" data-prop-theme="warm" data-prop-eyebrow="SUPPORT THE SHAWMUT WORKSHOP" data-prop-title="Can’t Make a Weekday Block? Sponsor Trainee Gear Instead" data-prop-description="Your tax-deductible gift or donated hand tools directly equip cohorts training at 2269 15th Ave. S.W., Lanett, AL." data-prop-primary-label="Sponsor a Trainee" data-prop-primary-href="/donate" data-prop-secondary-label="Partner With Your Company" data-prop-secondary-href="/partner">
+          <div class="c-cta-banner__copy">
+            <span class="section-eyebrow c-cta-banner__eyebrow">SUPPORT THE SHAWMUT WORKSHOP</span>
+            <h2 class="c-cta-banner__title">Can’t Make a Weekday Block? Sponsor Trainee Gear Instead</h2>
+            <p class="c-cta-banner__desc">Your tax-deductible gift or donated hand tools directly equip cohorts training at 2269 15th Ave. S.W., Lanett, AL.</p>
+          </div>
+          <div class="c-cta-banner__actions">
+            <a href="/donate" class="btn-cta">Sponsor a Trainee</a>
+            <a href="/partner" class="btn-outline-dark">Partner With Your Company</a>
+          </div>
+        </aside>
       </div>
     </section>
   </main>
 
-  <footer class="footer-section" id="footer">
-    <div class="container footer-bottom-flex" style="padding: 2rem 0;">
-      <p>&copy; 2026 Springboards for Community Development • 2269 15th Ave. S.W., Lanett, AL 36863</p>
+  <footer class="footer-section" id="footer" data-component="site-footer" data-prop-active-route="/volunteer">
+    <div class="container footer-bottom-flex u-py-6">
+      <p class="u-m-0">&copy; 2026 Springboards for Community Development • 2269 15th Ave. S.W., Lanett, AL 36863</p>
       <div class="footer-legal-group">
-        <a href="/" class="footer-legal-link">Home</a>
-        <a href="/train" class="footer-legal-link">Training</a>
-        <a href="/eligibility" class="footer-legal-link">Eligibility</a>
-        <a href="/partner" class="footer-legal-link">Partner</a>
-        <a href="/donate" class="footer-legal-link">Donate</a>
+        <a href="/" class="footer-legal-link link-text is-inverse is-underline-hover is-sm">Home</a>
+        <a href="/train" class="footer-legal-link link-text is-inverse is-underline-hover is-sm">Training</a>
+        <a href="/eligibility" class="footer-legal-link link-text is-inverse is-underline-hover is-sm">Eligibility</a>
+        <a href="/partner" class="footer-legal-link link-text is-inverse is-underline-hover is-sm">Partner</a>
+        <a href="/donate" class="footer-legal-link link-text is-inverse is-underline-hover is-sm">Donate</a>
       </div>
     </div>
   </footer>
 
+  <script src="/components.js" defer></script>
   <script src="/analytics.js" defer></script>
   <script>
     (() => {

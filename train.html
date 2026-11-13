@@ -59,212 +59,9 @@
     <!-- Self-Hosted Custom Font Preload (Plus Jakarta Sans WOFF2 Variable) -->
     <link rel="preload" href="/assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="/styles.css">
-    <style>
-      /* Scoped prequal styles inheriting centralized :root tokens from /styles.css */
-      body {
-        min-height: 100vh;
-        margin: 0;
-        background: var(--train-page-bg);
-        font-family: var(--font-family);
-      }
-
-      .prequal-shell {
-        display: flex;
-        flex-direction: column;
-        max-width: var(--container-max, 1240px);
-        min-height: 100vh;
-        min-height: 100svh;
-        margin: 0 auto;
-        padding: clamp(1rem, 3vw, 2.25rem) var(--container-pad-x, clamp(1.25rem, 4vw, 2rem));
-      }
-
-      .prequal-back-link {
-        align-self: flex-start;
-        color: var(--primary-navy, #0b192c);
-        font-weight: 700;
-        text-decoration: none;
-        margin-bottom: 0.5rem;
-      }
-
-      .prequal-back-link:hover,
-      .prequal-back-link:focus-visible {
-        color: var(--accent-orange, #e05b32);
-        text-decoration: underline;
-        text-underline-offset: 0.2em;
-      }
-
-      .prequal-content {
-        display: flex;
-        flex: 1;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: clamp(1rem, 2.5vh, 1.75rem);
-        padding: 0.5rem 0 2rem;
-        text-align: center;
-      }
-
-      .prequal-deck-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        max-width: var(--container-content, 960px);
-      }
-
-      .prequal-heading {
-        margin: 0;
-        color: var(--primary-navy, #0b192c);
-        font-size: clamp(1.7rem, 3.5vw, 2.75rem);
-        line-height: 1.15;
-        letter-spacing: -0.025em;
-      }
-
-      .prequal-intro-copy {
-        margin: 0 0 1.25rem;
-        color: var(--text-muted, #64748b);
-        font-size: clamp(0.95rem, 1.5vw, 1.1rem);
-      }
-
-      .prequal-slide-frame {
-        width: 100%;
-        position: relative;
-        overflow: hidden;
-        border: 1.5px solid #cbd5e1;
-        border-radius: 12px;
-        background: #0b192c;
-        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
-      }
-
-      .prequal-slide-toggle {
-        position: relative;
-        display: block;
-        width: 100%;
-        padding: 0;
-        border: 0;
-        background: transparent;
-        color: #ffffff;
-        cursor: pointer;
-        touch-action: manipulation;
-      }
-
-      .prequal-slide-toggle:focus-visible {
-        outline: 4px solid #f59e0b;
-        outline-offset: -5px;
-      }
-
-      .prequal-slide {
-        display: block;
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        object-fit: contain;
-      }
-
-      .prequal-slide-control {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        display: grid;
-        width: clamp(3.5rem, 9vw, 5.5rem);
-        aspect-ratio: 1;
-        place-items: center;
-        border: 1px solid rgba(255, 255, 255, 0.75);
-        border-radius: 50%;
-        background: rgba(15, 23, 42, 0.3);
-        color: #ffffff;
-        opacity: 0;
-        pointer-events: none;
-        transform: translate(-50%, -50%);
-        transition: opacity 0.2s ease;
-        backdrop-filter: blur(5px);
-      }
-
-      .prequal-slide-control svg {
-        width: 42%;
-        height: 42%;
-        fill: currentColor;
-      }
-
-      .prequal-slide-toggle[data-playing="false"] .prequal-play-control {
-        opacity: 0.95;
-      }
-
-      .prequal-slide-toggle[data-playing="true"]:hover .prequal-pause-control,
-      .prequal-slide-toggle[data-playing="true"]:focus-visible .prequal-pause-control {
-        opacity: 0.95;
-      }
-
-      @media (hover: none) {
-        .prequal-slide-toggle[data-playing="true"] .prequal-pause-control {
-          opacity: 0.8;
-        }
-      }
-
-      .prequal-actions {
-        display: flex;
-        min-height: 6rem;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 0.85rem;
-        margin-top: 1.5rem;
-      }
-
-      .prequal-yes {
-        display: inline-flex;
-        min-height: 3.25rem;
-        align-items: center;
-        justify-content: center;
-        padding: 0.85rem 1.75rem;
-        border: 2px solid #166534;
-        border-radius: var(--radius-md, 0.75rem);
-        background: #15803d;
-        box-shadow: 0 8px 20px rgba(21, 128, 61, 0.22);
-        color: #ffffff;
-        font-size: 1.05rem;
-        font-weight: 800;
-        text-decoration: none;
-        cursor: pointer;
-        transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-      }
-
-      .prequal-yes:hover,
-      .prequal-yes:focus-visible {
-        transform: translateY(-2px);
-        background: #166534;
-        box-shadow: 0 10px 24px rgba(21, 128, 61, 0.28);
-      }
-
-      .prequal-no {
-        color: #b91c1c;
-        font-weight: 700;
-        text-decoration: underline;
-        text-underline-offset: 0.2em;
-        cursor: pointer;
-      }
-
-      .prequal-no:hover,
-      .prequal-no:focus-visible {
-        color: #7f1d1d;
-      }
-
-      @media (max-width: 600px) {
-        .prequal-shell {
-          padding: 1rem;
-        }
-        .prequal-content {
-          padding-top: 4vh;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .prequal-yes {
-          transition: none;
-        }
-      }
-    </style>
+    <script src="/components.js" defer></script>
   </head>
-  <body>
+  <body class="is-train-page">
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <main class="prequal-shell" id="main-content" tabindex="-1">
       <a class="prequal-back-link" href="/#our-programs">← Back to programs</a>
@@ -298,15 +95,15 @@
             <button class="prequal-yes" id="btnStartWizardFromDeck" type="button">Yes: Get Pre Qualified!</button>
             <a class="prequal-no" id="btnDeckNotReady" href="/#our-programs">No: Not Ready Yet.</a>
           </div>
-          <div style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-muted, #64748b); display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;">
-            <a href="/" style="color: var(--primary-navy, #0b192c); font-weight: 700;">Home</a>
-            <span>&bull;</span>
-            <a href="/eligibility" style="color: var(--primary-navy, #0b192c); font-weight: 700;">Eligibility Check</a>
-            <span>&bull;</span>
-            <a href="tel:731.388.WORK" style="color: var(--primary-navy, #0b192c); font-weight: 700;">Call 731.388.WORK</a>
-            <span>&bull;</span>
-            <a href="mailto:info@springboardsfcd.org" style="color: var(--primary-navy, #0b192c); font-weight: 700;">Email info@springboardsfcd.org</a>
-          </div>
+          <nav class="prequal-footer-links" aria-label="Orientation quick links">
+            <a href="/" class="link-text is-brand is-underline-hover">Home</a>
+            <span aria-hidden="true">&bull;</span>
+            <a href="/eligibility" class="link-text is-brand is-underline-hover">Eligibility Check</a>
+            <span aria-hidden="true">&bull;</span>
+            <a href="tel:731.388.WORK" class="link-text is-brand is-underline-hover">Call 731.388.WORK</a>
+            <span aria-hidden="true">&bull;</span>
+            <a href="mailto:info@springboardsfcd.org" class="link-text is-brand is-underline-hover">Email info@springboardsfcd.org</a>
+          </nav>
         </div>
       </section>
     </main>

@@ -49,9 +49,9 @@
         <!-- Style Guide Hero Header -->
         <header class="sg-hero">
             <div class="container">
-                <span class="section-tag">Design System &amp; Component Architecture v2.5</span>
+                <span class="section-tag">Design System &amp; Component Architecture v2.6</span>
                 <h1 class="u-text-display u-color-inverse u-mb-4">Centralized Living Style Guide &amp; Global Utility Reference</h1>
-                <p class="u-text-lg u-measure u-mb-6" style="color: rgba(255, 255, 255, 0.88);">
+                <p class="u-text-lg u-measure u-mb-6 c-text-inverse-muted">
                     Single source of truth for Springboards for Community Development’s <strong>Civic Workshop &amp; Editorial Warmth</strong> design system. Built on a 3-tier CSS Custom Property architecture (<code>--palette-*</code> &rarr; <code>--color-*</code> &rarr; <code>.sb-*</code> / <code>.ds-*</code> / <code>.u-*</code>), WCAG 2.2 AA contrast governance, and zero-dependency interactive states.
                 </p>
                 <div class="ds-cluster">
@@ -76,6 +76,9 @@
                     <li><a href="#utility-classes" class="sg-subnav-link">7. Utilities</a></li>
                     <li><a href="#combo-classes" class="sg-subnav-link">8. Combo Classes</a></li>
                     <li><a href="#color-styles" class="sg-subnav-link">9. Color Styles</a></li>
+                    <li><a href="#layout-classes" class="sg-subnav-link">10. Layout System</a></li>
+                    <li><a href="#rich-text-elements" class="sg-subnav-link">11. Rich Text</a></li>
+                    <li><a href="#reusable-components" class="sg-subnav-link">12. Components &amp; CSS</a></li>
                 </ul>
             </div>
         </nav>
@@ -460,6 +463,40 @@
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Foundational HTML Element Tag Defaults & Class Overrides -->
+                <div class="ds-grid-auto u-mt-8">
+                    <div class="sb-card">
+                        <span class="section-tag">Semantic HTML Tag Defaults</span>
+                        <h3 class="t-h3 u-mb-3">Base Prose, Lists, Quotes &amp; Inline Elements</h3>
+                        <p>Unclassed <code>&lt;p&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;blockquote&gt;</code>, <code>&lt;code&gt;</code>, <code>&lt;mark&gt;</code>, and <code>&lt;a&gt;</code> tags inherit accessible typography and spacing defaults automatically:</p>
+                        <ul>
+                            <li>Default <code>&lt;a&gt;</code> inline link: <a href="/eligibility">WIOA Activity Code 220 Guidelines</a></li>
+                            <li>Highlighted <code>&lt;mark&gt;</code> token: <mark>100% Tuition-Free</mark> &amp; <code>EIN 99-1922526</code></li>
+                        </ul>
+                        <blockquote>
+                            “Skills are the springboard—every trainee deserves tools, mentorship, and a verified path to work.”
+                        </blockquote>
+                    </div>
+
+                    <div class="sb-card is-subtle">
+                        <span class="section-tag">Class Overrides on HTML Tags</span>
+                        <h3 class="t-h3 u-mb-3">Overriding Tag Defaults with Utility &amp; Pattern Classes</h3>
+                        <p class="t-body-sm c-text-secondary">Apply <code>.t-*</code>, <code>.c-*</code>, <code>.u-list-unstyled</code>, or <code>.u-m-0</code> to override semantic tag defaults without specificity wars:</p>
+                        <ul class="u-list-unstyled ds-stack u-gap-2 u-mb-4">
+                            <li class="u-p-3 c-bg-elevated u-border-subtle u-radius-sm">
+                                <h2 class="t-h5 u-m-0"><code>&lt;h2 class="t-h5 u-m-0"&gt;</code> — Semantic H2 rendered at H5 scale</h2>
+                            </li>
+                            <li class="u-p-3 c-bg-elevated u-border-subtle u-radius-sm">
+                                <p class="t-caption c-text-muted u-m-0"><code>&lt;ul class="u-list-unstyled"&gt;</code> — Removes default list bullets and left padding</p>
+                            </li>
+                        </ul>
+                        <details>
+                            <summary>Inspect Native <code>&lt;details&gt;</code> &amp; <code>&lt;summary&gt;</code> Default Styling</summary>
+                            <p class="t-body-sm c-text-secondary u-mt-2 u-mb-0">Native disclosure widgets inherit elevated surface, subtle border, and bold summary typography out of the box.</p>
+                        </details>
+                    </div>
+                </div>
             </section>
 
             <!-- ==========================================================================
@@ -551,15 +588,15 @@
             </section>
 
             <!-- ==========================================================================
-                 4. BUTTONS & INTERACTIVE STATES MATRIX
+                 4. LINKS, LINK BLOCKS & BUTTONS MATRIX
                  ========================================================================== -->
             <section id="buttons-states" class="sg-section" aria-labelledby="heading-buttons">
                 <div class="sg-section-header">
                     <div>
-                        <span class="section-tag">Section 04 &bull; Interactive Affordances &amp; WCAG Target Sizes</span>
-                        <h2 id="heading-buttons" class="u-text-2xl u-mt-2">Buttons &amp; Interactive States Matrix</h2>
-                        <p class="u-color-secondary u-measure u-mt-2">
-                            All primary and secondary buttons enforce a <code>3px</code> structural corner radius (<code>--radius-btn</code>), tactile hover elevation, <code>3px</code> high-contrast keyboard focus rings, and <code>aria-busy="true"</code> loading spinners.
+                        <span class="section-tag">Section 04 &bull; Text Links, Link Blocks &amp; Button Variations</span>
+                        <h2 id="heading-buttons" class="t-h2 u-mt-2">Links, Link Blocks &amp; Interactive Buttons</h2>
+                        <p class="c-text-secondary s-max-w-prose u-mt-2">
+                            Consistent patterns for inline text links (<code>.link-text</code>), full-card interactive link blocks (<code>.link-block</code>), and buttons (<code>.btn-primary</code>, <code>.btn-outline-dark</code>, <code>.btn-subtle</code>, <code>.btn-ghost</code>, <code>.btn-outline</code>) with combo variations.
                         </p>
                     </div>
                     <button type="button" id="sgToggleBtnLoading" class="btn-outline-dark is-sm">
@@ -567,33 +604,142 @@
                     </button>
                 </div>
 
+                <!-- Buttons & Combo Variations -->
                 <div class="ds-grid-auto u-mb-6">
                     <!-- Light Canvas Buttons -->
                     <div class="sb-card">
                         <span class="section-tag">Light Editorial Surface</span>
-                        <h3 class="u-text-lg u-mb-4">Primary &amp; Outline Actions</h3>
+                        <h3 class="t-h4 u-mb-4">Primary, Outline, Subtle &amp; Ghost Buttons</h3>
                         <div class="ds-cluster u-mb-4">
-                            <button type="button" class="btn-primary sg-testable-btn">Primary Action (.btn-primary)</button>
-                            <button type="button" class="btn-outline-dark sg-testable-btn">Secondary Outline (.btn-outline-dark)</button>
+                            <button type="button" class="btn-primary sg-testable-btn">Primary (.btn-primary)</button>
+                            <button type="button" class="btn-outline-dark sg-testable-btn">Outline (.btn-outline-dark)</button>
+                            <button type="button" class="btn-subtle sg-testable-btn">Subtle (.btn-subtle)</button>
+                            <button type="button" class="btn-ghost sg-testable-btn">Ghost (.btn-ghost)</button>
+                        </div>
+                        <div class="ds-cluster u-mb-4">
+                            <button type="button" class="btn-primary is-navy sg-testable-btn">Navy (.is-navy)</button>
+                            <button type="button" class="btn-primary is-success sg-testable-btn">Success (.is-success)</button>
+                            <button type="button" class="btn-primary is-sm sg-testable-btn">Small (.is-sm)</button>
+                            <button type="button" class="btn-primary is-lg sg-testable-btn">Large (.is-lg)</button>
                         </div>
                         <div class="ds-cluster">
                             <button type="button" class="btn-primary" disabled>Disabled Primary</button>
-                            <button type="button" class="btn-outline-dark" disabled>Disabled Secondary</button>
+                            <button type="button" class="btn-outline-dark" disabled>Disabled Outline</button>
                             <button type="button" class="btn-primary is-loading" aria-busy="true">Submitting...</button>
                         </div>
                     </div>
 
-                    <!-- Dark Civic Navy Canvas Buttons -->
+                    <!-- Dark Civic Navy Canvas Buttons & Links -->
                     <div class="sb-card is-navy">
                         <span class="section-tag is-ochre-light">Dark Civic Navy Surface</span>
-                        <h3 class="u-text-lg u-color-inverse u-mb-4">Inverse Hero &amp; Banner Actions</h3>
+                        <h3 class="t-h4 c-text-inverse u-mb-4">Inverse Buttons &amp; Text Links</h3>
                         <div class="ds-cluster u-mb-4">
                             <button type="button" class="btn-primary sg-testable-btn">Hero CTA (.btn-primary)</button>
                             <button type="button" class="btn-outline sg-testable-btn">Inverse Outline (.btn-outline)</button>
+                            <button type="button" class="btn-primary is-ochre sg-testable-btn">Ochre (.is-ochre)</button>
                         </div>
-                        <p class="u-text-xs c-text-inverse-muted u-m-0">
-                            Press <kbd style="padding: 0.1rem 0.35rem; background: rgba(255,255,255,0.15); border-radius: 3px;">Tab</kbd> across these buttons to inspect the <code>:focus-visible</code> ring contrast on both light and dark surfaces.
+                        <div class="ds-cluster u-gap-4 u-mb-4">
+                            <a href="/eligibility" class="link-text is-inverse is-arrow">Inverse Link (.link-text.is-inverse) <span aria-hidden="true">→</span></a>
+                            <a href="/train" class="link-text is-inverse is-underline-hover is-sm">Hover Underline (.is-underline-hover)</a>
+                        </div>
+                        <p class="t-caption c-text-inverse-muted u-m-0">
+                            Press <kbd style="background: rgba(255,255,255,0.15); color: #FFFFFF; border-color: rgba(255,255,255,0.3);">Tab</kbd> across these controls to inspect the <code>:focus-visible</code> ring contrast on both light and dark surfaces.
                         </p>
+                    </div>
+                </div>
+
+                <!-- Text Links & Link Blocks Showcase -->
+                <div class="sb-card u-mb-6">
+                    <span class="section-tag">Text Link Variations (.link-text)</span>
+                    <h3 class="t-h4 u-mb-3">Inline &amp; Standalone Text Links</h3>
+                    <div class="ds-cluster u-gap-6">
+                        <a href="/eligibility" class="link-text is-arrow">Primary Accent Link (<code>.link-text.is-arrow</code>) <span aria-hidden="true">→</span></a>
+                        <a href="/train" class="link-text is-brand is-arrow">Brand Navy Link (<code>.link-text.is-brand</code>) <span aria-hidden="true">→</span></a>
+                        <a href="/donate" class="link-text is-success">Verified Green Link (<code>.link-text.is-success</code>)</a>
+                        <a href="/partner" class="link-text is-muted is-underline-hover">Muted Hover-Underline (<code>.is-muted.is-underline-hover</code>)</a>
+                    </div>
+                </div>
+
+                <h3 class="t-h4 u-mb-3">Interactive Link Blocks (<code>.link-block</code> &amp; Combo Variations)</h3>
+                <div class="ds-grid-auto">
+                    <a href="/eligibility" class="link-block is-featured">
+                        <div>
+                            <span class="link-block__meta">01 &bull; .link-block.is-featured</span>
+                            <h4 class="link-block__title">WIOA Eligibility &amp; Career Center Locator</h4>
+                            <p class="link-block__desc">Full-card anchor container with unified hover lift, border highlight, and animated trailing CTA arrow.</p>
+                        </div>
+                        <span class="link-block__cta">Start Eligibility Check <span aria-hidden="true">→</span></span>
+                    </a>
+
+                    <a href="/train" class="link-block is-warm">
+                        <div>
+                            <span class="link-block__meta">02 &bull; .link-block.is-warm</span>
+                            <h4 class="link-block__title">Transitional Jobs Orientation Deck</h4>
+                            <p class="link-block__desc">Warm editorial sand surface variation extending <code>.link-block</code> without duplicating box-model CSS.</p>
+                        </div>
+                        <span class="link-block__cta">Open Orientation Deck <span aria-hidden="true">→</span></span>
+                    </a>
+
+                    <a href="/partner" class="link-block is-navy">
+                        <div>
+                            <span class="link-block__meta">03 &bull; .link-block.is-navy</span>
+                            <h4 class="link-block__title">Employer &amp; Contractor Partnerships</h4>
+                            <p class="link-block__desc">Deep Civic Navy inverse surface variation with ochre-gold metadata and high-contrast focus ring.</p>
+                        </div>
+                        <span class="link-block__cta">Partner With Springboards <span aria-hidden="true">→</span></span>
+                    </a>
+                </div>
+
+                <!-- Interactive Element State Communication Matrix -->
+                <div class="sb-card u-mt-6 state-focus-within">
+                    <div class="l-spread u-mb-4">
+                        <div>
+                            <span class="section-tag">Semantic State Communication (.state-* &bull; [aria-*] &bull; :focus-visible)</span>
+                            <h3 class="t-h4 u-mt-1 u-mb-1">Interactive Element States &amp; Keyboard Focus Indicators</h3>
+                            <p class="t-body-sm u-m-0">
+                                Every interactive state communicates unmistakable meaning: hover elevates and highlights, keyboard <code>:focus-visible</code> renders a dual-layer high-contrast ring, <code>:active</code> presses down tactilely, and ARIA states (<code>aria-pressed</code>, <code>aria-expanded</code>, <code>aria-current</code>, <code>aria-busy</code>) update visual affordances immediately.
+                            </p>
+                        </div>
+                        <span class="ds-badge ds-badge--info">Focus-Within Card (<code>.state-focus-within</code>)</span>
+                    </div>
+
+                    <div class="l-grid-3">
+                        <!-- 1. Toggle & Filter State ([aria-pressed]) -->
+                        <div class="sb-card is-compact c-bg-subtle">
+                            <span class="t-eyebrow">1. Toggle State (<code>[aria-pressed]</code>)</span>
+                            <p class="t-body-sm u-mt-1 u-mb-3">Click or press <kbd>Space</kbd> / <kbd>Enter</kbd> to toggle filter selection state:</p>
+                            <div class="l-cluster is-sm" role="group" aria-label="Trade Track Filter Demo">
+                                <button type="button" class="btn-outline-dark is-sm state-toggle sg-state-toggle-demo" aria-pressed="true">Carpentry (Selected)</button>
+                                <button type="button" class="btn-outline-dark is-sm state-toggle sg-state-toggle-demo" aria-pressed="false">Electrical</button>
+                                <button type="button" class="btn-outline-dark is-sm state-toggle sg-state-toggle-demo" aria-pressed="false">Plumbing</button>
+                            </div>
+                        </div>
+
+                        <!-- 2. Current Page / Step Indicator ([aria-current]) -->
+                        <div class="sb-card is-compact c-bg-subtle">
+                            <span class="t-eyebrow">2. Location State (<code>[aria-current="page"]</code>)</span>
+                            <p class="t-body-sm u-mt-1 u-mb-3">Communicates active navigation item with bold weight and terracotta bar:</p>
+                            <nav class="l-cluster is-sm" aria-label="Specimen Pagination Demo">
+                                <a href="#buttons-states" class="state-nav-item" aria-current="page">Step 1: Intake</a>
+                                <a href="#buttons-states" class="state-nav-item">Step 2: OSHA 10</a>
+                                <a href="#buttons-states" class="state-nav-item">Step 3: Placement</a>
+                            </nav>
+                        </div>
+
+                        <!-- 3. Disclosure / Expanded State (details.state-disclosure) -->
+                        <div class="sb-card is-compact c-bg-subtle">
+                            <span class="t-eyebrow">3. Disclosure State (<code>details[open]</code>)</span>
+                            <p class="t-body-sm u-mt-1 u-mb-3">Rotates <code>.state-chevron</code> 180&deg; and highlights border when expanded:</p>
+                            <details class="state-disclosure">
+                                <summary class="l-spread u-m-0">
+                                    <span>Tool Belt &amp; PPE Included</span>
+                                    <span class="state-chevron" aria-hidden="true">&#9662;</span>
+                                </summary>
+                                <p class="t-body-sm u-mt-2 u-mb-0">
+                                    All enrolled trainees receive OSHA-compliant eye/head protection, work gloves, and trade hand tools at zero cost.
+                                </p>
+                            </details>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -601,13 +747,13 @@
             <!-- ==========================================================================
                  5. FORMS, WIZARD FIELDSETS & INTERACTIVE VALIDATION HARNESS
                  ========================================================================== -->
-            <section id="forms-validation" class="sg-section" aria-labelledby="heading-forms">
+            <section id="forms-validation" class="sg-section u-scroll-mt-nav" aria-labelledby="heading-forms">
                 <div class="sg-section-header">
                     <div>
-                        <span class="section-tag">Section 05 &bull; Accessible Form Controls &amp; Live Validation</span>
+                        <span class="section-tag">Section 05 &bull; Form Elements, Labels, Validation Messages &amp; States</span>
                         <h2 id="heading-forms" class="u-text-2xl u-mt-2">Forms, Wizard Choices &amp; Validation States</h2>
                         <p class="u-color-secondary u-measure u-mt-2">
-                            Use the interactive state switcher below to inspect default, error (<code>.is-invalid</code> + <code>.form-status.is-error</code>), and verified success (<code>.is-valid</code> + <code>.form-status.is-success</code>) states across inputs and <code>.wizard-fieldset</code> radio cards.
+                            Consistent styles for form inputs (<code>.form-input</code>), selects (<code>.form-select</code>), textareas (<code>.form-textarea</code>), labels (<code>.form-label</code>), checkboxes (<code>.form-check</code>), field hints (<code>.field-hint</code>), inline validation messages (<code>.field-error-msg</code>, <code>.field-valid-msg</code>), and form status banners (<code>.form-status</code>).
                         </p>
                     </div>
                     <div class="ds-cluster" role="group" aria-label="Form Validation State Switcher">
@@ -619,34 +765,66 @@
 
                 <div class="ds-grid-auto">
                     <!-- Interactive Form Specimen -->
-                    <form id="sgInteractiveForm" class="sb-card" novalidate onsubmit="return false;">
+                    <form id="sgInteractiveForm" class="sb-card state-focus-within" novalidate onsubmit="return false;">
                         <h3 class="u-text-lg u-mb-4">Standard Form Controls &amp; Field Feedback</h3>
 
                         <div id="sgFormBanner" class="form-status is-error" role="alert" hidden>
                             Please resolve the highlighted field errors below before submitting your cohort inquiry.
                         </div>
 
-                        <div class="form-group">
-                            <label for="sgFullName">Applicant Full Name <span class="u-color-danger" aria-hidden="true">*</span></label>
-                            <input type="text" id="sgFullName" value="Marcus Vance" aria-describedby="sgFullNameHint sgFullNameError">
+                        <div class="form-group" id="sgFullNameGroup">
+                            <label for="sgFullName" class="form-label">
+                                <span>Applicant Full Name <span class="form-required" aria-hidden="true">*</span></span>
+                                <span class="form-optional">Required</span>
+                            </label>
+                            <input type="text" id="sgFullName" class="form-input" value="Marcus Vance" placeholder="First and last legal name" aria-describedby="sgFullNameHint sgFullNameError sgFullNameValid">
                             <span id="sgFullNameHint" class="field-hint">Enter your legal name as it appears on state apprenticeship records.</span>
-                            <div id="sgFullNameError" class="field-error-msg" role="alert" hidden>Please enter your first and last legal name (at least 2 characters).</div>
+                            <div id="sgFullNameError" class="field-error-msg" role="alert" hidden>&#9888; Please enter your first and last legal name (at least 2 characters).</div>
+                            <div id="sgFullNameValid" class="field-valid-msg" role="status" hidden>&#10003; Applicant legal name verified against intake format.</div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="sgCohortTrack">Preferred Vocational Track <span class="u-color-danger" aria-hidden="true">*</span></label>
-                            <select id="sgCohortTrack" aria-describedby="sgCohortTrackError">
+                        <div class="form-group" id="sgCohortTrackGroup">
+                            <label for="sgCohortTrack" class="form-label">
+                                <span>Preferred Vocational Track <span class="form-required" aria-hidden="true">*</span></span>
+                            </label>
+                            <select id="sgCohortTrack" class="form-select" aria-describedby="sgCohortTrackError sgCohortTrackValid">
                                 <option value="trade">01. Trade &amp; Technical Skills (16 Weeks)</option>
                                 <option value="venture">02. Micro-Enterprise &amp; Venture Lab (12 Weeks)</option>
                                 <option value="youth">03. Youth Civic Leadership Fellowship</option>
                             </select>
-                            <div id="sgCohortTrackError" class="field-error-msg" role="alert" hidden>Please select an active cohort pathway.</div>
+                            <div id="sgCohortTrackError" class="field-error-msg" role="alert" hidden>&#9888; Please select an active cohort pathway for East Alabama intake.</div>
+                            <div id="sgCohortTrackValid" class="field-valid-msg" role="status" hidden>&#10003; Cohort seats available for the selected vocational track.</div>
                         </div>
 
-                        <div class="form-group u-mb-0">
-                            <label for="sgPinInput">Partner Verification Code (Monospace Input)</label>
-                            <input type="text" id="sgPinInput" class="u-font-mono" value="SB-2026-COHORT" aria-describedby="sgPinHint">
-                            <span id="sgPinHint" class="field-hint">Uses <code>.u-font-mono</code> and <code>min-height: 3.1rem</code> touch target compliance.</span>
+                        <div class="form-group">
+                            <label for="sgNotesTextarea" class="form-label">
+                                <span>Trade Experience or Accommodations</span>
+                                <span class="form-optional">Optional</span>
+                            </label>
+                            <textarea id="sgNotesTextarea" class="form-textarea" rows="2" placeholder="Share any prior construction, electrical, or shop safety experience..."></textarea>
+                        </div>
+
+                        <div class="l-grid-2 u-mb-4">
+                            <div class="form-group u-mb-0">
+                                <label for="sgPinInput" class="form-label">Partner Code (<code>.is-mono</code>)</label>
+                                <input type="text" id="sgPinInput" class="form-input is-mono" value="SB-2026-COHORT" aria-describedby="sgPinHint">
+                                <span id="sgPinHint" class="field-hint">Uses <code>.form-input.is-mono</code> &amp; <code>3.1rem</code> touch target.</span>
+                            </div>
+                            <div class="form-group u-mb-0">
+                                <label for="sgDisabledInput" class="form-label">Campus Location (<code>:disabled</code>)</label>
+                                <input type="text" id="sgDisabledInput" class="form-input" value="Lanett / Shawmut Workshop" disabled>
+                                <span class="field-hint">Communicates non-editable state via <code>:disabled</code>.</span>
+                            </div>
+                        </div>
+
+                        <label class="form-check">
+                            <input type="checkbox" checked>
+                            <span>I confirm that I am at least 18 years of age and eligible for tuition-free WIOA training in Alabama.</span>
+                        </label>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary is-sm sg-testable-btn">Submit Cohort Application</button>
+                            <button type="reset" class="btn-subtle is-sm">Reset Form</button>
                         </div>
                     </form>
 
@@ -660,18 +838,27 @@
                                     <input type="radio" name="sg_wizard_demo" value="trade" checked>
                                     <span class="choice-box">
                                         <strong>Earn an Accredited Trade Certification</strong>
-                                        <small>Hands-on electrical, solar, HVAC, or cloud support training with paid apprenticeship hours.</small>
+                                        <small>Hands-on electrical, carpentry, plumbing, or HVAC training with transitional job placement.</small>
                                     </span>
                                 </label>
                                 <label class="wizard-choice">
                                     <input type="radio" name="sg_wizard_demo" value="venture">
                                     <span class="choice-box">
                                         <strong>Launch or Scale a Neighborhood Enterprise</strong>
-                                        <small>Bookkeeping, legal formation, commercial leasing, and micro-grant readiness.</small>
+                                        <small>Contractor estimating, safety compliance, and local employer partnership pathways.</small>
                                     </span>
                                 </label>
                             </div>
                         </fieldset>
+
+                        <hr class="ds-divider">
+
+                        <h4 class="t-h5 u-mb-2">Form Status Banner Variations (<code>.form-status</code>)</h4>
+                        <div class="l-stack is-sm">
+                            <div class="form-status is-loading" style="margin-top: 0;">&#8987; Submitting your cohort application and verifying WIOA eligibility&hellip;</div>
+                            <div class="form-status is-success" style="margin-top: 0;">&#10003; Application Confirmed: Orientation packet sent to your email address.</div>
+                            <div class="form-status is-error" style="margin-top: 0;">&#9888; Submission Blocked: Please provide a valid 10-digit telephone number.</div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -880,18 +1067,24 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><strong>Layout &amp; Flex Helpers</strong></td>
+                                <td><strong>Layout, Grid &amp; Flex Helpers</strong></td>
                                 <td>
                                     <div class="ds-cluster">
-                                        <code class="sg-code-token" data-copy-token=".ds-stack">.ds-stack</code>
-                                        <code class="sg-code-token" data-copy-token=".u-stack-sm">.u-stack-sm</code>
-                                        <code class="sg-code-token" data-copy-token=".ds-cluster">.ds-cluster</code>
-                                        <code class="sg-code-token" data-copy-token=".u-flex-between">.u-flex-between</code>
-                                        <code class="sg-code-token" data-copy-token=".ds-grid-auto">.ds-grid-auto</code>
+                                        <code class="sg-code-token" data-copy-token=".l-stack">.l-stack</code>
+                                        <code class="sg-code-token" data-copy-token=".l-cluster">.l-cluster</code>
+                                        <code class="sg-code-token" data-copy-token=".l-spread">.l-spread</code>
+                                        <code class="sg-code-token" data-copy-token=".l-switcher">.l-switcher</code>
+                                        <code class="sg-code-token" data-copy-token=".l-grid-auto">.l-grid-auto</code>
+                                        <code class="sg-code-token" data-copy-token=".l-grid-2">.l-grid-2</code>
+                                        <code class="sg-code-token" data-copy-token=".l-grid-3">.l-grid-3</code>
+                                        <code class="sg-code-token" data-copy-token=".l-grid-4">.l-grid-4</code>
+                                        <code class="sg-code-token" data-copy-token=".l-grid-12">.l-grid-12</code>
+                                        <code class="sg-code-token" data-copy-token=".l-split-60-40">.l-split-60-40</code>
+                                        <code class="sg-code-token" data-copy-token=".l-with-sidebar">.l-with-sidebar</code>
                                     </div>
                                 </td>
                                 <td class="u-text-sm u-color-secondary">
-                                    Provides vertical flex stacks, horizontal wrapping badge/button clusters, space-between headers, and responsive auto-fit grids.
+                                    Provides vertical flex stacks, horizontal wrapping clusters, space-between bars, responsive flex switchers, multi-column CSS Grids, asymmetric 60/40 splits, and sidebar layouts with explicit breakpoint adaptation.
                                 </td>
                             </tr>
                             <tr>
@@ -1164,13 +1357,360 @@
                     </div>
                 </div>
             </section>
+
+            <!-- ==========================================================================
+                 10. REUSABLE LAYOUT CLASSES & RESPONSIVE BREAKPOINT MATRIX (.l-*)
+                 ========================================================================== -->
+            <section id="layout-classes" class="sg-section u-scroll-mt-nav" aria-labelledby="heading-layout-classes">
+                <div class="sg-section-header">
+                    <div>
+                        <span class="section-tag">Section 10 &bull; Grid, Flexbox &amp; Breakpoint Architecture</span>
+                        <h2 id="heading-layout-classes" class="u-text-2xl u-mt-2">Reusable Layout Classes &amp; Responsive Breakpoints</h2>
+                        <p class="u-color-secondary u-measure u-mt-2">
+                            Built with CSS Grid (<code>.l-grid-*</code>, <code>.l-split-*</code>, <code>.l-with-sidebar</code>) and Flexbox (<code>.l-stack</code>, <code>.l-cluster</code>, <code>.l-spread</code>, <code>.l-switcher</code>). Every layout pattern responds predictably across four viewport breakpoints without requiring ad-hoc media queries.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Breakpoint Adaptation Reference Table -->
+                <div class="sg-specimen-table-wrap u-mb-6">
+                    <table class="sg-specimen-table" aria-label="Responsive Layout Breakpoint Behavior">
+                        <thead>
+                            <tr>
+                                <th scope="col">Layout Class</th>
+                                <th scope="col">Desktop (&gt; 1040px)</th>
+                                <th scope="col">Tablet Landscape (&le; 1040px)</th>
+                                <th scope="col">Tablet Portrait (&le; 900px)</th>
+                                <th scope="col">Mobile (&le; 600px / &le; 480px)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code class="sg-code-token" data-copy-token=".l-grid-4">.l-grid-4</code></td>
+                                <td class="t-body-sm">4 equal columns (<code>repeat(4, 1fr)</code>)</td>
+                                <td class="t-body-sm">Reflows to <strong>2 columns</strong></td>
+                                <td class="t-body-sm">2 columns</td>
+                                <td class="t-body-sm">Collapses to <strong>1 column stack</strong></td>
+                            </tr>
+                            <tr>
+                                <td><code class="sg-code-token" data-copy-token=".l-grid-3">.l-grid-3</code></td>
+                                <td class="t-body-sm">3 equal columns (<code>repeat(3, 1fr)</code>)</td>
+                                <td class="t-body-sm">3 columns</td>
+                                <td class="t-body-sm">Collapses to <strong>1 column stack</strong></td>
+                                <td class="t-body-sm">1 column stack</td>
+                            </tr>
+                            <tr>
+                                <td><code class="sg-code-token" data-copy-token=".l-split-60-40">.l-split-60-40</code></td>
+                                <td class="t-body-sm">Asymmetric <code>1.35fr 1fr</code> split</td>
+                                <td class="t-body-sm">Asymmetric <code>1.35fr 1fr</code> split</td>
+                                <td class="t-body-sm">Collapses to <strong>1 column stack</strong></td>
+                                <td class="t-body-sm">1 column stack</td>
+                            </tr>
+                            <tr>
+                                <td><code class="sg-code-token" data-copy-token=".l-with-sidebar">.l-with-sidebar</code></td>
+                                <td class="t-body-sm">Fluid main + <code>320px</code> right rail</td>
+                                <td class="t-body-sm">Collapses to <strong>1 column stack</strong></td>
+                                <td class="t-body-sm">1 column stack</td>
+                                <td class="t-body-sm">1 column stack</td>
+                            </tr>
+                            <tr>
+                                <td><code class="sg-code-token" data-copy-token=".l-grid-12">.l-grid-12</code></td>
+                                <td class="t-body-sm">12-col architectural grid (<code>.l-col-span-*</code>)</td>
+                                <td class="t-body-sm"><code>.l-col-span-3/4</code> expand to 6 cols</td>
+                                <td class="t-body-sm"><code>.l-col-span-5/7/8</code> span full width</td>
+                                <td class="t-body-sm">All spans collapse to <strong>full width</strong></td>
+                            </tr>
+                            <tr>
+                                <td><code class="sg-code-token" data-copy-token=".l-switcher">.l-switcher</code></td>
+                                <td class="t-body-sm">Horizontal flex row (<code>flex: 1 1 260px</code>)</td>
+                                <td class="t-body-sm">Wraps when item &lt; 260px</td>
+                                <td class="t-body-sm">Switches to <strong>vertical flex column</strong></td>
+                                <td class="t-body-sm">Vertical flex column</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 1. Asymmetric 60/40 Split Specimen (.l-split-60-40) -->
+                <h3 class="t-h4 u-mb-3">1. Asymmetric Editorial Split (<code>.l-split-60-40</code>) &amp; Sidebar Layout (<code>.l-with-sidebar</code>)</h3>
+                <div class="l-split-60-40 u-mb-6">
+                    <div class="sb-card is-featured">
+                        <span class="t-eyebrow">Primary Column &bull; 60% Fluid Ratio (1.35fr)</span>
+                        <h4 class="t-h4 u-mt-1">Curriculum &amp; Workshop Lab Overview</h4>
+                        <p class="t-body-sm u-mb-3">
+                            Used on subpage hero headers and intake sections to pair long-form narrative content with a structured callout or quick-action card. Automatically stacks into a single column at <code>&le; 900px</code>.
+                        </p>
+                        <div class="l-cluster is-sm">
+                            <span class="ds-badge ds-badge--neutral">Desktop: 1.35fr</span>
+                            <span class="ds-badge ds-badge--info">&le; 900px: 1fr Stack</span>
+                        </div>
+                    </div>
+                    <aside class="sb-card is-warm" aria-label="Secondary split column specimen">
+                        <span class="t-eyebrow is-ochre">Secondary Rail &bull; 40% Ratio (1fr)</span>
+                        <h4 class="t-h4 u-mt-1">Direct Cohort Callout</h4>
+                        <p class="t-body-sm u-mb-0">
+                            Houses schedule blocks, direct giving instructions, or employer contact lines beside the primary narrative.
+                        </p>
+                    </aside>
+                </div>
+
+                <!-- 2. 12-Column Architectural Grid Specimen (.l-grid-12) -->
+                <h3 class="t-h4 u-mb-3">2. 12-Column Architectural Grid (<code>.l-grid-12</code> + <code>.l-col-span-*</code>)</h3>
+                <div class="l-grid-12 u-mb-6">
+                    <div class="sb-card is-compact l-col-span-4 c-bg-subtle">
+                        <span class="t-mono">.l-col-span-4</span>
+                        <p class="t-body-sm u-mt-1 u-mb-0">4 of 12 columns on desktop &rarr; 6 of 12 at &le;1040px &rarr; 12 of 12 at &le;600px.</p>
+                    </div>
+                    <div class="sb-card is-compact l-col-span-4 c-bg-subtle">
+                        <span class="t-mono">.l-col-span-4</span>
+                        <p class="t-body-sm u-mt-1 u-mb-0">4 of 12 columns on desktop &rarr; 6 of 12 at &le;1040px &rarr; 12 of 12 at &le;600px.</p>
+                    </div>
+                    <div class="sb-card is-compact l-col-span-4 c-bg-subtle">
+                        <span class="t-mono">.l-col-span-4</span>
+                        <p class="t-body-sm u-mt-1 u-mb-0">4 of 12 columns on desktop &rarr; 6 of 12 at &le;1040px &rarr; 12 of 12 at &le;600px.</p>
+                    </div>
+                    <div class="sb-card is-compact l-col-span-8 c-bg-warm">
+                        <span class="t-mono">.l-col-span-8</span>
+                        <p class="t-body-sm u-mt-1 u-mb-0">8-column main workspace span paired with a 4-column summary card.</p>
+                    </div>
+                    <div class="sb-card is-compact l-col-span-4 c-surface-navy">
+                        <span class="t-mono c-text-ochre">.l-col-span-4</span>
+                        <p class="t-body-sm c-text-inverse-muted u-mt-1 u-mb-0">4-column companion callout panel.</p>
+                    </div>
+                </div>
+
+                <!-- 3. Flexbox Switcher, Cluster & Spread Specimen -->
+                <h3 class="t-h4 u-mb-3">3. Flexbox Patterns (<code>.l-switcher</code>, <code>.l-spread</code>, <code>.l-cluster</code>, <code>.l-stack</code>)</h3>
+                <div class="l-switcher">
+                    <div class="sb-card is-compact state-interactive" tabindex="0">
+                        <div class="l-spread u-mb-2">
+                            <span class="t-eyebrow">Flex Switcher Item 01</span>
+                            <code class="t-mono">.l-switcher</code>
+                        </div>
+                        <p class="t-body-sm u-mb-0">Interactive card (<code>.state-interactive</code>) inside a <code>.l-switcher</code> container. Try hovering, tabbing with keyboard, or clicking.</p>
+                    </div>
+                    <div class="sb-card is-compact state-interactive" tabindex="0">
+                        <div class="l-spread u-mb-2">
+                            <span class="t-eyebrow">Flex Switcher Item 02</span>
+                            <code class="t-mono">.l-spread</code>
+                        </div>
+                        <p class="t-body-sm u-mb-0">Header uses <code>.l-spread</code> for space-between alignment that automatically stacks on narrow viewports.</p>
+                    </div>
+                    <div class="sb-card is-compact state-interactive" tabindex="0">
+                        <div class="l-spread u-mb-2">
+                            <span class="t-eyebrow">Flex Switcher Item 03</span>
+                            <code class="t-mono">.state-interactive</code>
+                        </div>
+                        <p class="t-body-sm u-mb-0">Communicates hover lift, high-contrast keyboard <code>:focus-visible</code> ring, and active press feedback.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+                 11. RICH TEXT ELEMENTS, NESTED TAGS & CONTEXTUAL VARIATIONS (.rich-text)
+                 ========================================================================== -->
+            <section id="rich-text-elements" class="sg-section u-scroll-mt-nav" aria-labelledby="heading-rich-text">
+                <div class="sg-section-header">
+                    <div>
+                        <span class="section-tag">Section 11 &bull; Editorial Prose, Nested HTML Tags &amp; Context Modifiers</span>
+                        <h2 id="heading-rich-text" class="u-text-2xl u-mt-2">Rich Text Elements &amp; Nested Tag Styling (<code>.rich-text</code>)</h2>
+                        <p class="u-color-secondary u-measure u-mt-2">
+                            Apply <code>.rich-text</code> to any article, syllabus, policy disclosure, or CMS body container to style nested headings, paragraphs, multi-level lists, inline links, pull quotes, specification tables, and definition lists. Add a contextual combo class (<code>.is-editorial</code>, <code>.is-compact</code>, <code>.is-inverse</code>, <code>.is-legal</code>) when a rich text block needs to differ from global defaults.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="l-split-60-40">
+                    <!-- Primary Editorial Rich Text Specimen (.rich-text.is-editorial) -->
+                    <article class="sb-card rich-text is-editorial" aria-label="Editorial Rich Text Specimen">
+                        <span class="t-eyebrow">1. Editorial Rich Text (<code>.rich-text.is-editorial</code>)</span>
+                        <h2>Hands-On Construction Readiness in Chambers County</h2>
+                        <p>
+                            Springboards for Community Development equips young adults, returning citizens, and displaced workers with tuition-free trade credentials at the historic <a href="/train">Shawmut Elementary Workshop Campus</a> in Lanett, Alabama.
+                        </p>
+                        <p>
+                            Unlike lecture-only programs, trainees spend <strong>70% of cohort hours</strong> in supervised shop bays working with framing lumber, residential electrical panels, copper and PEX plumbing assemblies, and <mark>OSHA 10-Hour Construction Safety</mark> protocols.
+                        </p>
+
+                        <h3>Core Craft Modules &amp; Tool Readiness</h3>
+                        <ul>
+                            <li>
+                                <strong>NCCER Core Curriculum:</strong> Construction math, blueprint reading, rigging, and hand/power tool safety.
+                                <ul>
+                                    <li>Includes personal leather tool belt, framing hammer, speed square, and 25-foot tape measure.</li>
+                                    <li>Includes ANSI Z87.1 eye protection, hard hat, and high-visibility work gear.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Transitional Jobs Pathway:</strong> Wage-reimbursed on-the-job training with vetted East Alabama contractors.</li>
+                            <li><strong>Career Center Co-Enrollment:</strong> Coordinated WIOA support through the <a href="/eligibility">Opelika &amp; Valley Career Center network</a>.</li>
+                        </ul>
+
+                        <blockquote>
+                            <p>&ldquo;When a trainee earns their OSHA card and builds their first square wall frame, their entire posture changes—they walk onto a jobsite knowing they belong.&rdquo;</p>
+                            <cite>Marvin Thompson &bull; Executive Director, Springboards FCD</cite>
+                        </blockquote>
+
+                        <h3>Cohort Progression Schedule</h3>
+                        <ol>
+                            <li>Complete the online <a href="/eligibility">WIOA Eligibility &amp; Career Center Check</a>.</li>
+                            <li>Attend Monday morning shop orientation at <code>2269 15th Ave. S.W., Lanett, AL</code>.</li>
+                            <li>Complete safety credentialing and match with a regional host employer.</li>
+                        </ol>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Training Phase</th>
+                                    <th scope="col">Schedule</th>
+                                    <th scope="col">Credential Earned</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Phase I: Shop Safety &amp; Core</strong></td>
+                                    <td>Weeks 1–4 (Mon–Thu)</td>
+                                    <td>OSHA 10-Hour &amp; NCCER Core</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Phase II: Craft Specialization</strong></td>
+                                    <td>Weeks 5–12 (Mon–Thu)</td>
+                                    <td>Carpentry, Electrical, Plumbing, or HVAC</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Phase III: Transitional Worksite</strong></td>
+                                    <td>Weeks 13–16</td>
+                                    <td>Employer Reference &amp; OJT Placement</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <dl>
+                            <dt>Tuition &amp; Lab Fees</dt>
+                            <dd>100% Tuition-Free for qualified trainees (funded via WIOA &amp; 501(c)(3) sponsors).</dd>
+                            <dt>Training Location</dt>
+                            <dd>2269 15th Ave. S.W., Lanett, AL 36863 (Chambers County).</dd>
+                        </dl>
+                    </article>
+
+                    <!-- Contextual Rich Text Variations Stack (.is-inverse, .is-compact, .is-legal) -->
+                    <div class="l-stack is-lg">
+                        <!-- Inverse Dark Surface Rich Text (.rich-text.is-inverse) -->
+                        <aside class="sb-card is-navy rich-text is-inverse" aria-label="Inverse Rich Text Specimen">
+                            <span class="t-eyebrow c-text-ochre-light">2. Inverse Surface Variation (<code>.rich-text.is-inverse</code>)</span>
+                            <h3>Employer &amp; Contractor Host Standards</h3>
+                            <p>
+                                Applied when rich text appears inside dark navy sections or cards. Automatically adapts headings to pure white, body prose to warm alabaster, list markers to ochre gold, and inline links to <a href="/partner">high-contrast ochre links</a>.
+                            </p>
+                            <ul>
+                                <li><strong>OJT Wage Reimbursement:</strong> Up to 50%–75% wage reimbursement during initial onboarding.</li>
+                                <li><strong>Pre-Screened Candidates:</strong> Drug-screened, safety-certified trainees ready for field crews.</li>
+                            </ul>
+                            <blockquote>
+                                <p>&ldquo;Partnering with Springboards gave our framing crew two dependable apprentices who already knew jobsite safety from day one.&rdquo;</p>
+                                <footer>Valley Commercial Builders &bull; Chambers County Partner</footer>
+                            </blockquote>
+                        </aside>
+
+                        <!-- Compact Rich Text Variation (.rich-text.is-compact) -->
+                        <aside class="sb-card is-warm rich-text is-compact" aria-label="Compact Rich Text Specimen">
+                            <span class="t-eyebrow is-ochre">3. Compact Syllabus Variation (<code>.rich-text.is-compact</code>)</span>
+                            <h3>Tool Locker &amp; PPE Issue Checklist</h3>
+                            <p>
+                                Overrides global rich-text spacing with compact <code>--text-sm</code> sizing and tighter vertical margins for cards, accordions, and modal dialogs:
+                            </p>
+                            <ul>
+                                <li><strong>Day 1 Issue:</strong> ANSI Z87.1 safety glasses, Class E hard hat, and leather work gloves.</li>
+                                <li><strong>Week 2 Issue:</strong> 16 oz. claw hammer, utility knife, chalk line, and carpenter’s pencil set.</li>
+                            </ul>
+                        </aside>
+
+                        <!-- Legal / Policy Rich Text Variation (.rich-text.is-legal) -->
+                        <aside class="sb-card is-subtle rich-text is-legal" aria-label="Legal Disclosure Rich Text Specimen">
+                            <span class="t-eyebrow">4. Policy &amp; Governance Variation (<code>.rich-text.is-legal</code>)</span>
+                            <h3>IRS 501(c)(3) &amp; Equal Opportunity Notice</h3>
+                            <p>
+                                Springboards for Community Development is a registered 501(c)(3) nonprofit organization (EIN: 94-3810492). Contributions are tax-deductible to the fullest extent permitted by law.
+                            </p>
+                            <ul>
+                                <li>Auxiliary aids and services are available upon request to individuals with disabilities through the <a href="/eligibility">Alabama Career Center System</a>.</li>
+                                <li>Equal Opportunity Employer / Program • TDD/TTY 1-800-548-2546.</li>
+                            </ul>
+                        </aside>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+                 12. REUSABLE LAYOUT & CONTENT COMPONENTS + GLOBAL EXTERNAL CSS ARCHITECTURE
+                 ========================================================================== -->
+            <section id="reusable-components" class="sg-section" aria-labelledby="heading-reusable-components">
+                <div class="sg-section-header">
+                    <div>
+                        <span class="section-tag">Section 12 &bull; Declarative Components &amp; Consolidated Global CSS</span>
+                        <h2 id="heading-reusable-components" class="u-text-2xl u-mt-2">Reusable Layout &amp; Content Components (<code>/components.js</code> &amp; <code>/styles.css</code>)</h2>
+                        <p class="u-color-secondary u-measure u-mt-2">
+                            Repeated layout patterns and content blocks use flat, low-nesting components (<code>.c-section-header</code>, <code>.c-feature-card</code>, <code>.c-cta-banner</code>, <code>[data-component="site-navbar"]</code>, <code>[data-component="site-footer"]</code>) hydrated via <code>data-prop-*</code> attributes so individual instances display unique content without wrapper soup.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 12A. Interactive Component Property Switcher -->
+                <div class="sb-card is-warm u-mb-6">
+                    <div class="l-split-60-40">
+                        <div>
+                            <span class="t-eyebrow is-ochre">Interactive Component Property Playground</span>
+                            <h3 class="t-h3 u-mt-1 u-mb-2">Live <code>[data-component="feature-card"]</code> Property Binding</h3>
+                            <p class="t-body-sm c-text-secondary u-mb-4">
+                                Select a preset below to update <code>data-prop-index</code>, <code>data-prop-title</code>, <code>data-prop-description</code>, and <code>data-prop-variant</code> on the single component instance without duplicating markup.
+                            </p>
+                            <div class="l-cluster is-sm u-mb-4" role="group" aria-label="Component property presets">
+                                <button type="button" class="btn-primary is-sm sg-comp-prop-btn" data-prop-preset="donate" aria-pressed="true">Donate Instance ($50–$150)</button>
+                                <button type="button" class="btn-outline-dark is-sm sg-comp-prop-btn" data-prop-preset="partner" aria-pressed="false">Partner Instance (01 OJT)</button>
+                                <button type="button" class="btn-outline-dark is-sm sg-comp-prop-btn" data-prop-preset="volunteer" aria-pressed="false">Volunteer Instance (03 Mentor)</button>
+                            </div>
+                            <code id="sgCompPropCode" class="sg-token-pill" data-copy-token='data-component="feature-card" data-prop-variant="dark" data-prop-index="$50 – $150"'>data-component="feature-card" data-prop-variant="dark" data-prop-index="$50 – $150"</code>
+                        </div>
+                        <article id="sgLiveFeatureCard" class="proof-card proof-card-dark c-feature-card is-dark" data-component="feature-card" data-prop-variant="dark" data-prop-index="$50 – $150" data-prop-title="Safety Gear &amp; Trainee Tool Belt" data-prop-description="Equips a trainee with an OSHA 10 safety card, hard hat, eye protection, gloves, leather tool belt, tape measure, and framing hammer.">
+                            <span class="proof-card-index c-feature-card__index" aria-hidden="true">$50 – $150</span>
+                            <h3 class="c-feature-card__title">Safety Gear &amp; Trainee Tool Belt</h3>
+                            <p class="c-feature-card__body">Equips a trainee with an OSHA 10 safety card, hard hat, eye protection, gloves, leather tool belt, tape measure, and framing hammer.</p>
+                        </article>
+                    </div>
+                </div>
+
+                <!-- 12B. Reusable Conversion Banner Specimen (.c-cta-banner) -->
+                <aside class="c-cta-banner is-navy u-mb-6" data-component="cta-banner" data-prop-theme="navy" data-prop-eyebrow="FLAT 2-LEVEL COMPONENT ARCHITECTURE" data-prop-title="Reusable Conversion Banner (.c-cta-banner)" data-prop-description="Shared across Donate, Partner, and Volunteer pages with per-instance eyebrow, heading, description, and CTA button properties." data-prop-primary-label="Check WIOA Eligibility" data-prop-primary-href="/eligibility" data-prop-secondary-label="Explore Trade Tracks" data-prop-secondary-href="/train">
+                    <div class="c-cta-banner__copy">
+                        <span class="section-eyebrow c-cta-banner__eyebrow">FLAT 2-LEVEL COMPONENT ARCHITECTURE</span>
+                        <h3 class="c-cta-banner__title">Reusable Conversion Banner (<code>.c-cta-banner</code>)</h3>
+                        <p class="c-cta-banner__desc">Shared across Donate, Partner, and Volunteer pages with per-instance eyebrow, heading, description, and CTA button properties.</p>
+                    </div>
+                    <div class="c-cta-banner__actions">
+                        <a href="/eligibility" class="btn-cta">Check WIOA Eligibility</a>
+                        <a href="/train" class="btn-secondary">Explore Trade Tracks</a>
+                    </div>
+                </aside>
+
+                <!-- 12C. Consolidated External Global CSS Architecture -->
+                <div class="sb-card is-subtle rich-text is-compact">
+                    <span class="t-eyebrow">Global External Stylesheet Governance</span>
+                    <h3>Single Consolidated Stylesheet (<code>/styles.css</code> &bull; <code>https://springboardsfcd.org/styles.css</code>)</h3>
+                    <p>
+                        All site-wide tokens, foundational HTML tag defaults, layout primitives, form states, rich-text rules, and page-scoped modules (<code>body.is-train-page</code>, <code>body.is-wizard-page</code>, <code>body.is-admin-page</code>) are consolidated into a single externally hosted stylesheet with zero inline <code>&lt;style&gt;</code> blocks across any HTML document.
+                    </p>
+                    <ul>
+                        <li><strong>Canonical External Stylesheet URL:</strong> <code>&lt;link rel="stylesheet" href="https://springboardsfcd.org/styles.css"&gt;</code> (served locally and at root via <code>/styles.css</code> with CORS enabled).</li>
+                        <li><strong>Master Table of Contents (Sections 00–31):</strong> Indexed at the top of <code>/styles.css</code> for rapid maintenance across tokens, typography, buttons, forms, rich text, reusable components, and responsive breakpoints.</li>
+                    </ul>
+                </div>
+            </section>
         </div>
     </main>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+            <div class="footer-bottom u-border-0 u-pt-0">
                 <p>&copy; 2026 Springboards for Community Development. Registered 501(c)(3) Nonprofit Organization (EIN: 94-3810492).</p>
                 <p class="footer-legal-links">
                     <a href="/" class="c-link-inverse">Home</a> &bull;
@@ -1183,6 +1723,8 @@
             </div>
         </div>
     </footer>
+
+    <script src="/components.js" defer></script>
 
     <!-- Interactive Script for Token Copy, Loading State Test, Form Validation Switcher & Combo Composer -->
     <script>
@@ -1233,8 +1775,12 @@
             var nameInput = document.getElementById('sgFullName');
             var trackSelect = document.getElementById('sgCohortTrack');
             var pinInput = document.getElementById('sgPinInput');
+            var nameGroup = document.getElementById('sgFullNameGroup');
+            var trackGroup = document.getElementById('sgCohortTrackGroup');
             var nameError = document.getElementById('sgFullNameError');
             var trackError = document.getElementById('sgCohortTrackError');
+            var nameValid = document.getElementById('sgFullNameValid');
+            var trackValid = document.getElementById('sgCohortTrackValid');
             var formBanner = document.getElementById('sgFormBanner');
 
             document.querySelectorAll('.sg-form-state-btn').forEach(function (btn) {
@@ -1245,8 +1791,14 @@
                         input.classList.remove('is-invalid', 'is-valid');
                         input.removeAttribute('aria-invalid');
                     });
+                    [nameGroup, trackGroup].forEach(function (grp) {
+                        if (!grp) return;
+                        grp.classList.remove('is-invalid', 'is-valid');
+                    });
                     if (nameError) nameError.hidden = true;
                     if (trackError) trackError.hidden = true;
+                    if (nameValid) nameValid.hidden = true;
+                    if (trackValid) trackValid.hidden = true;
                     if (formBanner) formBanner.hidden = true;
 
                     if (state === 'error') {
@@ -1258,11 +1810,13 @@
                             trackSelect.classList.add('is-invalid');
                             trackSelect.setAttribute('aria-invalid', 'true');
                         }
+                        if (nameGroup) nameGroup.classList.add('is-invalid');
+                        if (trackGroup) trackGroup.classList.add('is-invalid');
                         if (nameError) nameError.hidden = false;
                         if (trackError) trackError.hidden = false;
                         if (formBanner) {
                             formBanner.className = 'form-status is-error';
-                            formBanner.textContent = 'Please resolve the highlighted field errors below before submitting your cohort inquiry.';
+                            formBanner.textContent = '⚠ Please resolve the highlighted field errors below before submitting your cohort inquiry.';
                             formBanner.hidden = false;
                         }
                     } else if (state === 'success') {
@@ -1270,9 +1824,13 @@
                             if (!input) return;
                             input.classList.add('is-valid');
                         });
+                        if (nameGroup) nameGroup.classList.add('is-valid');
+                        if (trackGroup) trackGroup.classList.add('is-valid');
+                        if (nameValid) nameValid.hidden = false;
+                        if (trackValid) trackValid.hidden = false;
                         if (formBanner) {
                             formBanner.className = 'form-status is-success';
-                            formBanner.textContent = 'All applicant fields and partner verification codes passed validation.';
+                            formBanner.textContent = '✓ All applicant fields and partner verification codes passed validation.';
                             formBanner.hidden = false;
                         }
                     }
@@ -1324,6 +1882,61 @@
                 link.addEventListener('click', function () {
                     subnavLinks.forEach(function (l) { l.classList.remove('is-active'); });
                     link.classList.add('is-active');
+                });
+            });
+
+            // 6. Interactive Toggle State Demo ([aria-pressed])
+            document.querySelectorAll('.sg-state-toggle-demo').forEach(function (toggleBtn) {
+                toggleBtn.addEventListener('click', function () {
+                    var pressed = toggleBtn.getAttribute('aria-pressed') === 'true';
+                    toggleBtn.setAttribute('aria-pressed', String(!pressed));
+                    var baseLabel = toggleBtn.textContent.replace(' (Selected)', '');
+                    toggleBtn.textContent = !pressed ? baseLabel + ' (Selected)' : baseLabel;
+                });
+            });
+
+            // 7. Interactive Component Property Switcher (Section 12)
+            var liveFeatureCard = document.getElementById('sgLiveFeatureCard');
+            var compPropCode = document.getElementById('sgCompPropCode');
+            var compPresets = {
+                donate: {
+                    variant: 'dark',
+                    index: '$50 – $150',
+                    title: 'Safety Gear & Trainee Tool Belt',
+                    description: 'Equips a trainee with an OSHA 10 safety card, hard hat, eye protection, gloves, leather tool belt, tape measure, and framing hammer.'
+                },
+                partner: {
+                    variant: 'featured',
+                    index: '01',
+                    title: 'Hire Trained Candidates & OJT',
+                    description: 'Connect with graduates ready for Carpentry, Electrical, Plumbing, HVAC, and site preparation roles across East Alabama.'
+                },
+                volunteer: {
+                    variant: 'warm',
+                    index: '03',
+                    title: 'Guest Trade Mentorship',
+                    description: 'Experienced carpenters, electricians, plumbers, and HVAC technicians mentor trainees during hands-on shop builds.'
+                }
+            };
+            document.querySelectorAll('.sg-comp-prop-btn').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var presetKey = btn.getAttribute('data-prop-preset');
+                    var preset = compPresets[presetKey];
+                    if (!preset || !liveFeatureCard) return;
+                    document.querySelectorAll('.sg-comp-prop-btn').forEach(function (other) {
+                        var active = other === btn;
+                        other.classList.toggle('btn-primary', active);
+                        other.classList.toggle('btn-outline-dark', !active);
+                        other.setAttribute('aria-pressed', String(active));
+                    });
+                    if (window.SpringboardsComponents && window.SpringboardsComponents.updateProps) {
+                        window.SpringboardsComponents.updateProps(liveFeatureCard, preset);
+                    }
+                    if (compPropCode) {
+                        var snippet = 'data-component="feature-card" data-prop-variant="' + preset.variant + '" data-prop-index="' + preset.index + '"';
+                        compPropCode.textContent = snippet;
+                        compPropCode.setAttribute('data-copy-token', snippet);
+                    }
                 });
             });
         })();

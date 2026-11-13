@@ -72,7 +72,7 @@
 <body id="top" class="c-bg-canvas c-text-primary">
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <header class="navbar-wrapper" id="navigation">
+  <header class="navbar-wrapper" id="navigation" data-component="site-navbar" data-prop-active-route="/donate">
     <nav class="navbar" aria-label="Main Navigation">
       <div class="nav-left">
         <a href="/" class="nav-logo-link" aria-label="Springboards Home">
@@ -106,36 +106,40 @@
   <main id="main-content" tabindex="-1">
     <section class="section problem-section subpage-hero-section is-subpage-hero">
       <div class="container">
-        <div class="problem-header-grid">
+        <div class="problem-header-grid l-split-60-40">
           <div>
             <span class="section-eyebrow problem-eyebrow">INVEST IN SECOND CHANCES &amp; SKILLED WORK</span>
             <h1 class="section-title problem-title is-display">Keep Trade Training 100% Tuition-Free in East Alabama</h1>
             <p class="problem-intro">Every dollar and tool donated removes financial barriers for young adults, returning citizens, and jobseekers working toward stable construction careers.</p>
           </div>
           <aside class="problem-callout-right" aria-label="Direct giving methods">
-            <div class="problem-supporting-quote is-upright">
-              <strong class="section-eyebrow is-ochre-light u-mb-2" style="display: block;">Direct Giving Options</strong>
-              <p class="u-mb-3" style="font-style: normal;"><strong>Electronic / Zelle:</strong> info@springboardsfcd.org<br><strong>Checks Payable To:</strong> Springboards for Community Development<br><strong>Mail:</strong> 2269 15th Ave. S.W., Lanett, AL 36863</p>
+            <div class="problem-supporting-quote is-upright rich-text is-inverse is-compact">
+              <strong class="section-eyebrow t-eyebrow is-ochre-light u-mb-2">Direct Giving Options</strong>
+              <ul>
+                <li><strong>Electronic / Zelle:</strong> <a href="mailto:info@springboardsfcd.org">info@springboardsfcd.org</a></li>
+                <li><strong>Checks Payable To:</strong> Springboards for Community Development</li>
+                <li><strong>Mail:</strong> 2269 15th Ave. S.W., Lanett, AL 36863</li>
+              </ul>
               <footer>100% of contributions support trainee tools, safety gear, and instruction</footer>
             </div>
           </aside>
         </div>
 
-        <div class="proof-cards-grid" role="list">
-          <article class="proof-card proof-card-dark" role="listitem">
-            <span class="proof-card-index" aria-hidden="true">$50 – $150</span>
-            <h2>Safety Gear &amp; Trainee Tool Belt</h2>
-            <p>Equips a trainee with an OSHA 10 safety card, hard hat, eye protection, gloves, leather tool belt, tape measure, and framing hammer.</p>
+        <div class="proof-cards-grid l-grid-3" role="list">
+          <article class="proof-card proof-card-dark c-feature-card is-dark" role="listitem" data-component="feature-card" data-prop-variant="dark" data-prop-index="$50 – $150" data-prop-title="Safety Gear &amp; Trainee Tool Belt" data-prop-description="Equips a trainee with an OSHA 10 safety card, hard hat, eye protection, gloves, leather tool belt, tape measure, and framing hammer.">
+            <span class="proof-card-index c-feature-card__index" aria-hidden="true">$50 – $150</span>
+            <h2 class="c-feature-card__title">Safety Gear &amp; Trainee Tool Belt</h2>
+            <p class="c-feature-card__body">Equips a trainee with an OSHA 10 safety card, hard hat, eye protection, gloves, leather tool belt, tape measure, and framing hammer.</p>
           </article>
-          <article class="proof-card proof-card-dark" role="listitem">
-            <span class="proof-card-index" aria-hidden="true">$500</span>
-            <h2>NCCER Modules &amp; Lab Materials</h2>
-            <p>Covers craft curriculum modules, lumber, electrical breaker panels, copper/PVC pipe fittings, and certification exam fees.</p>
+          <article class="proof-card proof-card-dark c-feature-card is-dark" role="listitem" data-component="feature-card" data-prop-variant="dark" data-prop-index="$500" data-prop-title="NCCER Modules &amp; Lab Materials" data-prop-description="Covers craft curriculum modules, lumber, electrical breaker panels, copper/PVC pipe fittings, and certification exam fees.">
+            <span class="proof-card-index c-feature-card__index" aria-hidden="true">$500</span>
+            <h2 class="c-feature-card__title">NCCER Modules &amp; Lab Materials</h2>
+            <p class="c-feature-card__body">Covers craft curriculum modules, lumber, electrical breaker panels, copper/PVC pipe fittings, and certification exam fees.</p>
           </article>
-          <article class="proof-card proof-card-dark" role="listitem">
-            <span class="proof-card-index" aria-hidden="true">$1,500+</span>
-            <h2>Full Trainee Pathway Sponsorship</h2>
-            <p>Supports a participant from day-one shop orientation through credentialing and transitional job placement.</p>
+          <article class="proof-card proof-card-dark c-feature-card is-dark" role="listitem" data-component="feature-card" data-prop-variant="dark" data-prop-index="$1,500+" data-prop-title="Full Trainee Pathway Sponsorship" data-prop-description="Supports a participant from day-one shop orientation through credentialing and transitional job placement.">
+            <span class="proof-card-index c-feature-card__index" aria-hidden="true">$1,500+</span>
+            <h2 class="c-feature-card__title">Full Trainee Pathway Sponsorship</h2>
+            <p class="c-feature-card__body">Supports a participant from day-one shop orientation through credentialing and transitional job placement.</p>
           </article>
         </div>
       </div>
@@ -143,25 +147,27 @@
 
     <section class="section mission-section subpage-form-section">
       <div class="container container--narrow">
-        <span class="section-eyebrow">PLEDGE SUPPORT OR REQUEST RECEIPT</span>
-        <h2 class="section-title">Record a Donation Pledge</h2>
-        <p class="section-subtitle u-mb-8">Complete the form below to coordinate a contribution or request an official tax acknowledgment receipt.</p>
+        <header class="c-section-header" data-component="section-header" data-prop-eyebrow="PLEDGE SUPPORT OR REQUEST RECEIPT" data-prop-title="Record a Donation Pledge" data-prop-description="Complete the form below to coordinate a contribution or request an official tax acknowledgment receipt.">
+          <span class="section-eyebrow c-section-header__eyebrow">PLEDGE SUPPORT OR REQUEST RECEIPT</span>
+          <h2 class="section-title c-section-header__title">Record a Donation Pledge</h2>
+          <p class="section-subtitle c-section-header__desc u-mb-8">Complete the form below to coordinate a contribution or request an official tax acknowledgment receipt.</p>
+        </header>
 
-        <form class="program-inquiry-form is-boxed-panel c-bg-subtle c-border-default" id="dedicatedDonateForm" novalidate>
+        <form class="program-inquiry-form is-boxed-panel c-bg-subtle c-border-default state-focus-within" id="dedicatedDonateForm" novalidate>
           <input type="text" name="website_url" class="sr-only-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" aria-label="Leave this field blank">
-          <div class="form-grid-row">
-            <label>Your Name or Organization
-              <input name="donorName" type="text" autocomplete="name" placeholder="Full name or business" required>
+          <div class="form-grid-row l-grid-2">
+            <label class="form-label-stack">Your Name or Organization <span class="form-required" aria-hidden="true">*</span>
+              <input name="donorName" type="text" class="form-input" autocomplete="name" placeholder="Full name or business" required>
             </label>
-            <label>Phone Number
-              <input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="334-556-0000">
+            <label class="form-label-stack">Phone Number
+              <input name="phone" type="tel" class="form-input" autocomplete="tel" inputmode="tel" placeholder="334-556-0000">
             </label>
           </div>
-          <div class="form-grid-row">
-            <label>Email Address (for tax receipt)
-              <input name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
+          <div class="form-grid-row l-grid-2">
+            <label class="form-label-stack">Email Address (for tax receipt) <span class="form-required" aria-hidden="true">*</span>
+              <input name="email" type="email" class="form-input" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
             </label>
-            <label>Contribution Type
+            <label class="form-label-stack">Contribution Type
               <select name="donationType" class="form-select">
                 <option value="financial_sponsorship">Financial Donation / Student Sponsorship</option>
                 <option value="tools_materials">In-Kind Tools &amp; Building Materials</option>
@@ -169,32 +175,56 @@
               </select>
             </label>
           </div>
-          <label>Pledge Amount or Donated Items
-            <input name="pledgeAmount" type="text" placeholder="e.g. $150 Tool Belt Sponsorship or 5 cordless drill kits">
+          <label class="form-label-stack">Pledge Amount or Donated Items
+            <input name="pledgeAmount" type="text" class="form-input" placeholder="e.g. $150 Tool Belt Sponsorship or 5 cordless drill kits">
+            <span class="field-hint">Specify dollar amount or list tools/materials for our shop inventory coordinator.</span>
           </label>
-          <label>Notes or Dedication (optional)
-            <textarea name="message" rows="2" class="form-input is-textarea c-border-default" placeholder="In honor of someone, or delivery coordination details..."></textarea>
+          <label class="form-label-stack">Notes or Dedication (optional)
+            <textarea name="message" rows="2" class="form-textarea is-textarea c-border-default" placeholder="In honor of someone, or delivery coordination details..."></textarea>
           </label>
           <button type="submit" class="btn-cta program-submit u-mt-4">Submit Pledge &amp; Receipt Request</button>
           <p class="form-status" id="donStatus" role="status" aria-live="polite"></p>
         </form>
+
+        <aside class="sb-card is-subtle rich-text is-legal u-mt-6" aria-label="501(c)(3) Tax Deductibility Disclosure">
+          <h3>501(c)(3) Tax-Deductible Contribution &amp; In-Kind Gift Policy</h3>
+          <p>
+            Springboards for Community Development is a registered 501(c)(3) public charity located at <strong>2269 15th Ave. S.W., Lanett, AL 36863</strong>. No goods or services are provided in exchange for charitable contributions.
+          </p>
+          <ul>
+            <li><strong>Financial Contributions:</strong> Official written tax acknowledgment receipts are issued via email and postal mail within 1–2 business days.</li>
+            <li><strong>In-Kind Tool &amp; Material Donations:</strong> Itemized receipt letters documenting donated lumber, electrical supplies, plumbing fittings, or serviceable trade tools are provided upon drop-off or pickup at our Shawmut campus.</li>
+          </ul>
+        </aside>
+        <aside class="c-cta-banner is-warm u-mt-8" aria-label="Employer partnership callout" data-component="cta-banner" data-prop-theme="warm" data-prop-eyebrow="EMPLOYER &amp; CONTRACTOR PARTNERSHIPS" data-prop-title="Sponsor a Cohort or Host an Apprentice Worksite" data-prop-description="Regional contractors and suppliers can also partner through WIOA On-the-Job Training (OJT) or bulk material sponsorships." data-prop-primary-label="Explore Employer Partnerships" data-prop-primary-href="/partner" data-prop-secondary-label="View Training Pathways" data-prop-secondary-href="/train">
+          <div class="c-cta-banner__copy">
+            <span class="section-eyebrow c-cta-banner__eyebrow">EMPLOYER &amp; CONTRACTOR PARTNERSHIPS</span>
+            <h2 class="c-cta-banner__title">Sponsor a Cohort or Host an Apprentice Worksite</h2>
+            <p class="c-cta-banner__desc">Regional contractors and suppliers can also partner through WIOA On-the-Job Training (OJT) or bulk material sponsorships.</p>
+          </div>
+          <div class="c-cta-banner__actions">
+            <a href="/partner" class="btn-cta">Explore Employer Partnerships</a>
+            <a href="/train" class="btn-outline-dark">View Training Pathways</a>
+          </div>
+        </aside>
       </div>
     </section>
   </main>
 
-  <footer class="footer-section" id="footer">
-    <div class="container footer-bottom-flex" style="padding: 2rem 0;">
-      <p>&copy; 2026 Springboards for Community Development • 2269 15th Ave. S.W., Lanett, AL 36863</p>
+  <footer class="footer-section" id="footer" data-component="site-footer" data-prop-active-route="/donate">
+    <div class="container footer-bottom-flex u-py-6">
+      <p class="u-m-0">&copy; 2026 Springboards for Community Development • 2269 15th Ave. S.W., Lanett, AL 36863</p>
       <div class="footer-legal-group">
-        <a href="/" class="footer-legal-link">Home</a>
-        <a href="/train" class="footer-legal-link">Training</a>
-        <a href="/eligibility" class="footer-legal-link">Eligibility</a>
-        <a href="/volunteer" class="footer-legal-link">Volunteer</a>
-        <a href="/partner" class="footer-legal-link">Partner</a>
+        <a href="/" class="footer-legal-link link-text is-inverse is-underline-hover is-sm">Home</a>
+        <a href="/train" class="footer-legal-link link-text is-inverse is-underline-hover is-sm">Training</a>
+        <a href="/eligibility" class="footer-legal-link link-text is-inverse is-underline-hover is-sm">Eligibility</a>
+        <a href="/volunteer" class="footer-legal-link link-text is-inverse is-underline-hover is-sm">Volunteer</a>
+        <a href="/partner" class="footer-legal-link link-text is-inverse is-underline-hover is-sm">Partner</a>
       </div>
     </div>
   </footer>
 
+  <script src="/components.js" defer></script>
   <script src="/analytics.js" defer></script>
   <script>
     (() => {
