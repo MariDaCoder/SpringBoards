@@ -1160,4 +1160,44 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  // FOOTER PHONE BUSINESS HOURS LINK ROUTING (Mon–Thu, 8:00 AM – 4:00 PM Eastern Time)
+  const footerPhonePrimaryLink = document.getElementById("footerPhonePrimaryLink");
+  if (footerPhonePrimaryLink) {
+    try {
+      const now = new Date();
+      const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/New_York",
+        weekday: "short",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: false
+      }).formatToParts(now);
+
+      const partMap = {};
+      parts.forEach((p) => { partMap[p.type] = p.value; });
+      const weekday = partMap.weekday || "";
+      const hour = parseInt(partMap.hour || "0", 10);
+      const minute = parseInt(partMap.minute || "0", 10);
+      const totalMinutes = hour * 60 + minute;
+
+      const isBusinessDay = ["Mon", "Tue", "Wed", "Thu"].includes(weekday);
+      const isWithinHours = totalMinutes >= 8 * 60 && totalMinutes < 16 * 60;
+      const isOpen = isBusinessDay && isWithinHours;
+
+      footerPhonePrimaryLink.setAttribute(
+        "href",
+        isOpen ? "tel:731.388.WORK" : "tel:731.388.WORK;postd=p"
+      );
+      footerPhonePrimaryLink.setAttribute(
+        "aria-label",
+        isOpen
+          ? "Call 731.388.WORK directly (Business hours: Mon-Thu 8am-4pm EST)"
+          : "Leave a voicemail at 731.388.WORK (After hours)"
+      );
+    } catch {
+      footerPhonePrimaryLink.setAttribute("href", "tel:731.388.WORK");
+    }
+  }
 });
+
