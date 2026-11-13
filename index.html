@@ -484,37 +484,68 @@
           <p class="section-subtitle programs-subtitle mobile-conversational-summary">Real tools, real projects, and high-demand trade skills employers in East Alabama are hiring for right now.</p>
         </div>
 
-        <div class="skills-learn-grid" role="list">
-          <article class="skill-learn-card" role="listitem">
+        <div class="collection-filter-bar" id="skillsFilterBar" role="search" aria-label="Filter trade training skills">
+          <div class="collection-filter-tabs" role="group" aria-label="Filter by trade area">
+            <button type="button" class="collection-filter-tab is-active" data-skill-filter="all" aria-pressed="true">All Pathways (6)</button>
+            <button type="button" class="collection-filter-tab" data-skill-filter="construction" aria-pressed="false">Carpentry &amp; Framing</button>
+            <button type="button" class="collection-filter-tab" data-skill-filter="mechanical" aria-pressed="false">Electrical, Plumbing &amp; HVAC</button>
+            <button type="button" class="collection-filter-tab" data-skill-filter="readiness" aria-pressed="false">Safety &amp; Work Readiness</button>
+          </div>
+          <div class="collection-filter-search-wrap">
+            <input type="search" id="skillsSearchInput" class="collection-filter-search" placeholder="Filter skills (e.g. OSHA, wiring, blueprint)..." aria-label="Search trade skills">
+            <button type="button" id="skillsSearchClear" class="collection-filter-clear" aria-label="Clear skills search" hidden>×</button>
+          </div>
+        </div>
+
+        <div class="skills-learn-grid" id="skillsLearnGrid" role="list" data-collection-list="skills">
+          <article class="skill-learn-card" role="listitem" data-skill-category="construction" data-keywords="carpentry framing layout blueprint woodworking tools">
             <span class="skill-card-num" aria-hidden="true">01</span>
             <h3>Carpentry and construction basics</h3>
             <p>Learn essential framing, layout, blueprint reading, tool use, and woodworking techniques for real-world jobsite projects.</p>
           </article>
-          <article class="skill-learn-card" role="listitem">
+          <article class="skill-learn-card" role="listitem" data-skill-category="mechanical" data-keywords="electrical wiring circuitry breaker panels conduit safety">
             <span class="skill-card-num" aria-hidden="true">02</span>
             <h3>Electrical fundamentals</h3>
             <p>Master basic wiring, circuitry, breaker panels, electrical safety, and conduit installation guided by experienced pros.</p>
           </article>
-          <article class="skill-learn-card" role="listitem">
+          <article class="skill-learn-card" role="listitem" data-skill-category="mechanical" data-keywords="plumbing pipefitting copper pvc soldering fixtures">
             <span class="skill-card-num" aria-hidden="true">03</span>
             <h3>Plumbing and pipefitting</h3>
             <p>Understand copper and PVC piping systems, soldering, fittings, and fixture installation for residential and commercial spaces.</p>
           </article>
-          <article class="skill-learn-card" role="listitem">
+          <article class="skill-learn-card" role="listitem" data-skill-category="mechanical" data-keywords="hvac heating ventilation air conditioning refrigeration epa 608 mechanical">
             <span class="skill-card-num" aria-hidden="true">04</span>
             <h3>HVAC and mechanical systems</h3>
             <p>Introduction to heating, ventilation, air conditioning, and refrigeration systems, diagnostics, and EPA 608 certification prep.</p>
           </article>
-          <article class="skill-learn-card" role="listitem">
+          <article class="skill-learn-card" role="listitem" data-skill-category="readiness" data-keywords="osha 10 nccer safety certifications hazard ppe credentials">
             <span class="skill-card-num" aria-hidden="true">05</span>
             <h3>Jobsite safety and certifications</h3>
             <p>Earn valuable industry credentials like OSHA-10 and NCCER core modules with a focus on hazard recognition and safety protocol.</p>
           </article>
-          <article class="skill-learn-card" role="listitem">
+          <article class="skill-learn-card" role="listitem" data-skill-category="readiness" data-keywords="teamwork discipline work ethic timekeeping communication career readiness">
             <span class="skill-card-num" aria-hidden="true">06</span>
             <h3>Teamwork, discipline, and work readiness</h3>
             <p>Build the work ethic, collaboration, timekeeping, and communication skills needed to excel in any professional trade.</p>
           </article>
+        </div>
+
+        <div class="collection-empty-state" id="skillsEmptyState" role="status" aria-live="polite" hidden>
+          <div class="collection-empty-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+            </svg>
+          </div>
+          <p class="collection-empty-eyebrow">NO MATCHING TRADE MODULES</p>
+          <h3 class="collection-empty-title" id="skillsEmptyTitle">No trade modules matched your filter</h3>
+          <p class="collection-empty-desc">
+            Looking for a specialized trade certification, On-the-Job Training (OJT) placement, or custom employer pathway? Reset the filter to view all 6 core modules or ask our team about upcoming cohorts.
+          </p>
+          <div class="collection-empty-actions">
+            <button type="button" class="btn-cta" id="resetSkillsFilterBtn">Show All 6 Trade Modules</button>
+            <button type="button" class="collection-empty-btn-secondary program-inquiry-button" data-program="General">Ask About Custom Pathways</button>
+            <button type="button" class="collection-empty-btn-secondary btn-candidate-trigger">Apply for Training →</button>
+          </div>
         </div>
 
         <div class="programs-cta-row">
@@ -637,8 +668,21 @@
           <p class="section-subtitle faq-subtitle desktop-detailed-copy">Direct answers to the most common questions about free trade training at Springboards.</p>
           <p class="section-subtitle faq-subtitle mobile-conversational-summary">Quick, honest answers before you apply.</p>
         </div>
-        <div class="faq-list">
-          <details class="faq-item">
+        <div class="collection-filter-bar" id="faqFilterBar" role="search" aria-label="Search or filter Frequently Asked Questions">
+          <div class="collection-filter-tabs" role="group" aria-label="Filter questions by topic">
+            <button type="button" class="collection-filter-tab is-active" data-faq-filter="all" aria-pressed="true">All Questions (7)</button>
+            <button type="button" class="collection-filter-tab" data-faq-filter="eligibility" aria-pressed="false">Cost &amp; Eligibility</button>
+            <button type="button" class="collection-filter-tab" data-faq-filter="training" aria-pressed="false">Skills &amp; Schedule</button>
+            <button type="button" class="collection-filter-tab" data-faq-filter="outcomes" aria-pressed="false">Applying &amp; Jobs</button>
+          </div>
+          <div class="collection-filter-search-wrap">
+            <input type="search" id="faqSearchInput" class="collection-filter-search" placeholder="Search questions (e.g. free, experience, hours)..." aria-label="Search frequently asked questions">
+            <button type="button" id="faqSearchClear" class="collection-filter-clear" aria-label="Clear FAQ search" hidden>×</button>
+          </div>
+        </div>
+
+        <div class="faq-list" id="faqCollectionList" role="list" data-collection-list="faq">
+          <details class="faq-item" role="listitem" data-faq-category="eligibility">
             <summary class="faq-question">
               <span>Is the training really free?</span>
               <svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -648,7 +692,7 @@
             </div>
           </details>
 
-          <details class="faq-item">
+          <details class="faq-item" role="listitem" data-faq-category="eligibility">
             <summary class="faq-question">
               <span>Who is eligible?</span>
               <svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -658,7 +702,7 @@
             </div>
           </details>
 
-          <details class="faq-item">
+          <details class="faq-item" role="listitem" data-faq-category="eligibility">
             <summary class="faq-question">
               <span>Do I need experience?</span>
               <svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -668,7 +712,7 @@
             </div>
           </details>
 
-          <details class="faq-item">
+          <details class="faq-item" role="listitem" data-faq-category="training">
             <summary class="faq-question">
               <span>What skills are taught?</span>
               <svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -678,7 +722,7 @@
             </div>
           </details>
 
-          <details class="faq-item">
+          <details class="faq-item" role="listitem" data-faq-category="training">
             <summary class="faq-question">
               <span>Where are programs held?</span>
               <svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -688,7 +732,7 @@
             </div>
           </details>
 
-          <details class="faq-item">
+          <details class="faq-item" role="listitem" data-faq-category="outcomes">
             <summary class="faq-question">
               <span>How do I apply?</span>
               <svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -698,7 +742,7 @@
             </div>
           </details>
 
-          <details class="faq-item">
+          <details class="faq-item" role="listitem" data-faq-category="outcomes">
             <summary class="faq-question">
               <span>What happens after training?</span>
               <svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -707,6 +751,26 @@
               <p>Graduates receive guided support into WIOA Transitional Jobs, On-the-Job Training (OJT), apprenticeship pathways, and referrals to local construction and trade employers across East Alabama.</p>
             </div>
           </details>
+        </div>
+
+        <div class="collection-empty-state" id="faqEmptyState" role="status" aria-live="polite" hidden>
+          <div class="collection-empty-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+          </div>
+          <p class="collection-empty-eyebrow">NO MATCHING QUESTIONS FOUND</p>
+          <h3 class="collection-empty-title" id="faqEmptyTitle">We didn’t find a question matching your search</h3>
+          <p class="collection-empty-desc">
+            Every person’s situation is unique. Reset your search to browse all 7 common questions, or reach out directly and a Springboards advisor will answer your question one-on-one.
+          </p>
+          <div class="collection-empty-actions">
+            <button type="button" class="btn-cta" id="resetFaqFilterBtn">Show All 7 Questions</button>
+            <button type="button" class="collection-empty-btn-secondary program-inquiry-button" data-program="General">Ask Our Team Directly</button>
+            <a href="tel:731.388.WORK" class="collection-empty-btn-secondary">Call 731.388.WORK</a>
+          </div>
         </div>
       </div>
     </section>
@@ -1304,28 +1368,57 @@
       <h2 id="documentModalTitle">Program Documents &amp; Downloads</h2>
       <p class="modal-subtext">Official overview documents, worksite guides, volunteer schedule flyers, and candidate requirements for download and printing.</p>
 
-      <div class="document-item-card">
-        <div class="document-info">
-          <span class="document-badge">Community Flyer</span>
-          <h4>Springboards Community Flyer &amp; Volunteer Schedule</h4>
-          <p>Official community center flyer outlining Monday–Thursday work block hours (8:00 AM – 4:00 PM EST), dress code, tool prep, and civic service opportunities.</p>
-          <span style="font-size: 0.8rem; color: #64748b;">Optimized Web Asset (270 KB) • Original High-Res (2.3 MB)</span>
-        </div>
-        <div class="document-actions">
-          <button type="button" class="btn-cta btn-view-doc" data-doc-view="springboards-community-flyer">View Preview</button>
-          <a href="/springboards-community-flyer.webp" download="Springboards_Community_Flyer.webp" class="btn-cta btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 0.85rem; text-decoration: none;">Download File ↓</a>
+      <div class="collection-filter-bar" id="docFilterBar" style="margin-bottom: 1rem;">
+        <div class="collection-filter-tabs" role="group" aria-label="Filter documents by audience">
+          <button type="button" class="collection-filter-tab is-active" data-doc-filter="all" aria-pressed="true">All Documents (2)</button>
+          <button type="button" class="collection-filter-tab" data-doc-filter="community" aria-pressed="false">Community &amp; Volunteer</button>
+          <button type="button" class="collection-filter-tab" data-doc-filter="candidate" aria-pressed="false">Trainee Intake</button>
+          <button type="button" class="collection-filter-tab" data-doc-filter="worksite" aria-pressed="false">Employer &amp; Worksite Agreements</button>
         </div>
       </div>
 
-      <div class="document-item-card">
-        <div class="document-info">
-          <span class="document-badge">Checklist</span>
-          <h4>Trainee Intake Checklist &amp; Required Documents</h4>
-          <p>Everything you need to bring to your enrollment session: Valid Government Photo ID, Social Security Card or Work Authorization, and Career Center registration.</p>
-          <span style="font-size: 0.8rem; color: #64748b;">Digital Intake Guide</span>
+      <div class="document-collection-list" id="documentCollectionList" role="list" data-collection-list="documents">
+        <div class="document-item-card" role="listitem" data-doc-category="community">
+          <div class="document-info">
+            <span class="document-badge">Community Flyer</span>
+            <h4>Springboards Community Flyer &amp; Volunteer Schedule</h4>
+            <p>Official community center flyer outlining Monday–Thursday work block hours (8:00 AM – 4:00 PM EST), dress code, tool prep, and civic service opportunities.</p>
+            <span style="font-size: 0.8rem; color: #64748b;">Optimized Web Asset (270 KB) • Original High-Res (2.3 MB)</span>
+          </div>
+          <div class="document-actions">
+            <button type="button" class="btn-cta btn-view-doc" data-doc-view="springboards-community-flyer">View Preview</button>
+            <a href="/springboards-community-flyer.webp" download="Springboards_Community_Flyer.webp" class="btn-cta btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 0.85rem; text-decoration: none;">Download File ↓</a>
+          </div>
         </div>
-        <div class="document-actions">
-          <button type="button" class="btn-cta btn-candidate-trigger">Start Intake Now →</button>
+
+        <div class="document-item-card" role="listitem" data-doc-category="candidate">
+          <div class="document-info">
+            <span class="document-badge">Checklist</span>
+            <h4>Trainee Intake Checklist &amp; Required Documents</h4>
+            <p>Everything you need to bring to your enrollment session: Valid Government Photo ID, Social Security Card or Work Authorization, and Career Center registration.</p>
+            <span style="font-size: 0.8rem; color: #64748b;">Digital Intake Guide</span>
+          </div>
+          <div class="document-actions">
+            <button type="button" class="btn-cta btn-candidate-trigger">Start Intake Now →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="collection-empty-state" id="documentEmptyState" role="status" aria-live="polite" hidden>
+        <div class="collection-empty-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+          </svg>
+        </div>
+        <p class="collection-empty-eyebrow">ONBOARDING PACKET REQUIRED</p>
+        <h3 class="collection-empty-title">No public downloads in this category</h3>
+        <p class="collection-empty-desc">
+          Host Worksite Agreements and WIOA payroll packets are issued directly during employer partnership setup or participant onboarding. Submit a partnership request or view all public documents below.
+        </p>
+        <div class="collection-empty-actions">
+          <button type="button" class="btn-cta" id="resetDocFilterBtn">Show All Public Documents</button>
+          <button type="button" class="collection-empty-btn-secondary btn-partner-trigger">Request Employer Partnership Packet</button>
         </div>
       </div>
 

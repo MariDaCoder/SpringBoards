@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Page Not Found | Springboards for Community Development</title>
-  <meta name="description" content="The page you requested could not be found. Return to Springboards for Community Development to explore debt-free vocational trade training.">
+  <title>Page Not Found (404) | Springboards for Community Development</title>
+  <meta name="description" content="The page you requested could not be found. Use our recovery directory to explore tuition-free trade training, WIOA eligibility, Career Centers, or community support in East Alabama.">
   <meta name="robots" content="noindex, follow">
 
   <!-- Branded Browser Tab, Bookmark & Mobile Home Screen Icons (Light & Dark Mode) -->
@@ -21,122 +21,382 @@
 
   <!-- Self-Hosted Custom Font Preload (Plus Jakarta Sans WOFF2 Variable) -->
   <link rel="preload" href="/assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css">
-
-  <style>
-    .error-page-wrapper {
-      min-height: 80vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: clamp(3rem, 6vw, 6rem) 1.5rem;
-      background: linear-gradient(180deg, #f8fafc 0%, #edf2f7 100%);
-    }
-
-    .error-card {
-      max-width: 640px;
-      width: 100%;
-      background: #ffffff;
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-xl);
-      padding: clamp(2.25rem, 5vw, 3.5rem);
-      box-shadow: 0 20px 48px rgba(15, 23, 42, 0.1);
-      text-align: center;
-    }
-
-    .error-code {
-      display: inline-block;
-      font-size: clamp(3.5rem, 8vw, 5.5rem);
-      font-weight: 800;
-      line-height: 1;
-      letter-spacing: -0.05em;
-      color: var(--accent-orange);
-      margin-bottom: 0.75rem;
-    }
-
-    .error-title {
-      font-size: clamp(1.65rem, 3vw, 2.25rem);
-      font-weight: 800;
-      color: var(--primary-navy);
-      line-height: 1.2;
-      margin-bottom: 1rem;
-    }
-
-    .error-desc {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      line-height: 1.65;
-      margin-bottom: 2rem;
-      max-width: 52ch;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .error-actions {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .error-help {
-      border-top: 1px solid var(--border-subtle);
-      padding-top: 1.75rem;
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    .error-help a {
-      color: var(--accent-orange);
-      font-weight: 700;
-      text-decoration: none;
-    }
-
-    .error-help a:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body id="top">
   <!-- Accessibility Skip Link -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- Navigation Bar -->
+  <!-- Navigation Bar (Consistent with Main Site) -->
   <header class="navbar-wrapper" id="navigation">
     <nav class="navbar" aria-label="Main Navigation">
       <div class="nav-left">
-        <a href="/" class="nav-logo-link" aria-label="Springboards for Community Development Homepage">
-          <img src="springboards_logo.webp" alt="Springboards for Community Development Logo" class="oversized-logo" width="220" height="75">
+        <a href="/" class="nav-logo-link" aria-label="Springboards Home">
+          <img src="/public/assets/aistudio/springboards_logo_white_text.png" alt="Springboards for Community Development logo" class="nav-logo oversized-logo" width="260" height="52" fetchpriority="high" decoding="async">
         </a>
       </div>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+
+      <div class="nav-center" id="navMenu">
+        <ul class="nav-links">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/train" class="nav-link">Training</a></li>
+          <li><a href="/eligibility" class="nav-link">Eligibility</a></li>
+          <li><a href="/volunteer" class="nav-link">Volunteer</a></li>
+          <li><a href="/partner" class="nav-link">Partner</a></li>
+          <li><a href="/donate" class="nav-link">Donate</a></li>
+        </ul>
+        <div class="mobile-cta-wrapper">
+          <a href="/eligibility" class="btn-cta mobile-cta">Check Eligibility</a>
+        </div>
+      </div>
+
       <div class="nav-right">
-        <a href="/" class="btn-cta">Home <span aria-hidden="true">→</span></a>
+        <a href="/eligibility" class="btn-cta desktop-cta">Check Eligibility</a>
       </div>
     </nav>
   </header>
 
-  <main id="main-content" class="error-page-wrapper">
-    <div class="error-card">
-      <span class="error-code">404</span>
-      <h1 class="error-title">Page Not Found</h1>
-      <p class="error-desc">
-        The page you are looking for does not exist, was moved, or had its address mistyped. Let's get you back on track toward debt-free trade training and community pathways.
-      </p>
-      <div class="error-actions">
-        <a href="/" class="btn-cta">Return to Homepage <span aria-hidden="true">→</span></a>
-        <a href="/#our-programs" class="btn-cta btn-secondary" style="background-color: var(--primary-navy); border-color: var(--primary-navy); color: #ffffff;">Explore Programs</a>
-      </div>
-      <div class="error-help">
-        Need assistance? Call us directly at <a href="tel:731.388.WORK">731.388.WORK</a> or email <a href="mailto:info@springboardsfcd.org">info@springboardsfcd.org</a>.
-      </div>
+  <main id="main-content" class="error-page-shell" tabindex="-1">
+    <div class="container">
+      <!-- 1. Diagnostic 404 Hero Banner -->
+      <section class="error-hero-card" aria-labelledby="errorPageTitle">
+        <div class="error-status-row">
+          <span class="error-code-pill">HTTP 404 · PAGE OR LINK UNAVAILABLE</span>
+          <div class="error-url-diagnostic" aria-live="polite">
+            <span>Requested address:</span>
+            <code id="requestedPathDisplay">/unavailable-page</code>
+          </div>
+        </div>
+
+        <h1 id="errorPageTitle" class="section-title" style="color: #ffffff; margin: 0 0 0.75rem;">We couldn’t find that page—let’s get you to the right pathway.</h1>
+        <p style="color: #e2e8f0; font-size: var(--text-lg); line-height: var(--leading-relaxed); max-width: 64ch; margin: 0 0 1.5rem;">
+          The link you followed may be outdated, moved, or mistyped. All of Springboards’ tuition-free construction trade programs, WIOA eligibility checks, and community resources are active and available below.
+        </p>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 0.85rem; align-items: center;">
+          <a href="/" class="btn-cta">Return to Homepage →</a>
+          <a href="/eligibility" class="btn-cta" style="background-color: #15803d; border-color: #166534; color: #ffffff;">Start 2-Minute Eligibility Check →</a>
+          <button type="button" id="errorGoBackBtn" class="collection-empty-btn-secondary" style="background: rgba(255, 255, 255, 0.1); color: #ffffff; border-color: rgba(255, 255, 255, 0.45);">← Go Back to Previous Page</button>
+        </div>
+
+        <!-- Smart Route Match Callout (Populated automatically when broken URL matches a known topic) -->
+        <div id="smartRouteSuggestion" class="error-suggestion-callout" hidden>
+          <div>
+            <span style="display: block; font-size: var(--text-xs); font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #86efac; margin-bottom: 0.2rem;">RECOMMENDED MATCH BASED ON YOUR LINK</span>
+            <strong id="smartRouteTitle" style="font-size: var(--text-lg); color: #ffffff;">Looking for WIOA Eligibility &amp; Career Centers?</strong>
+            <p id="smartRouteDesc" style="margin: 0.2rem 0 0; font-size: var(--text-sm); color: #dcfce7;">Check your eligibility for paid Transitional Jobs and find your closest Alabama Career Center.</p>
+          </div>
+          <a id="smartRouteLink" href="/eligibility" class="btn-cta" style="background: #ffffff; color: #0b192c; border-color: #ffffff; flex-shrink: 0;">Open Recommended Page →</a>
+        </div>
+      </section>
+
+      <!-- 2. Interactive Site Directory & Recovery Collection -->
+      <section class="error-directory-section" aria-labelledby="recoveryDirectoryHeading">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 1.25rem;">
+          <div>
+            <span class="section-eyebrow" style="color: var(--accent-orange); display: block; margin-bottom: 0.35rem;">SITE RECOVERY DIRECTORY</span>
+            <h2 id="recoveryDirectoryHeading" class="section-title" style="margin: 0; font-size: var(--text-2xl);">Where would you like to go next?</h2>
+          </div>
+          <p id="directoryCountStatus" style="margin: 0; font-size: var(--text-sm); font-weight: 700; color: var(--text-muted);" aria-live="polite">Showing all 6 verified destinations</p>
+        </div>
+
+        <!-- Filter & Search Bar for Recovery Collection -->
+        <div class="collection-filter-bar" role="search" aria-label="Filter site destinations">
+          <div class="collection-filter-tabs" role="group" aria-label="Filter by visitor goal">
+            <button type="button" class="collection-filter-tab is-active" data-dir-filter="all" aria-pressed="true">All Destinations (6)</button>
+            <button type="button" class="collection-filter-tab" data-dir-filter="training" aria-pressed="false">Jobseekers &amp; Training (3)</button>
+            <button type="button" class="collection-filter-tab" data-dir-filter="community" aria-pressed="false">Volunteer, Partner &amp; Give (3)</button>
+          </div>
+          <div class="collection-filter-search-wrap">
+            <input type="search" id="errorPageSearch" class="collection-filter-search" placeholder="Search pages (e.g. HVAC, WIOA, donate, Lanett)..." aria-label="Search available pages and topics">
+            <button type="button" id="errorSearchClear" class="collection-filter-clear" aria-label="Clear search query" hidden>×</button>
+          </div>
+        </div>
+
+        <!-- Collection List of Verified Destinations -->
+        <div class="error-directory-grid" id="recoveryDirectoryGrid" role="list" data-collection-list="recovery-directory">
+          <a href="/#our-programs" class="error-directory-card" role="listitem" data-category="training" data-keywords="programs skills carpentry electrical plumbing hvac osha nccer safety free trade training">
+            <div>
+              <span class="error-directory-meta">01 · SKILLED TRADES CURRICULUM</span>
+              <h3>Tuition-Free Trade Programs</h3>
+              <p>Explore hands-on Carpentry, Electrical, Plumbing, HVAC, and OSHA-10 / NCCER safety readiness at our Shawmut training center.</p>
+            </div>
+            <span class="error-directory-link-label">Explore What People Learn <span aria-hidden="true">→</span></span>
+          </a>
+
+          <a href="/eligibility" class="error-directory-card" role="listitem" data-category="training" data-keywords="eligibility check wioa career center pre-qualification valley opelika roanoke talladega alexander city">
+            <div>
+              <span class="error-directory-meta">02 · WIOA PRE-SCREEN &amp; LOCATOR</span>
+              <h3>Eligibility Check &amp; Career Centers</h3>
+              <p>Answer a few quick questions to check your fit for Activity Code 220 Transitional Jobs and locate your closest Alabama Career Center.</p>
+            </div>
+            <span class="error-directory-link-label">Start Eligibility Check <span aria-hidden="true">→</span></span>
+          </a>
+
+          <a href="/train" class="error-directory-card" role="listitem" data-category="training" data-keywords="transitional jobs ojt on-the-job training orientation slides paid work experience 390 hours sirius">
+            <div>
+              <span class="error-directory-meta">03 · PAID WORK EXPERIENCE</span>
+              <h3>Transitional Jobs &amp; OJT Overview</h3>
+              <p>Watch the 10-slide interactive orientation deck covering 32 hr/week schedules, subsidized payroll, and permanent hiring pathways.</p>
+            </div>
+            <span class="error-directory-link-label">View Orientation Deck <span aria-hidden="true">→</span></span>
+          </a>
+
+          <a href="/volunteer" class="error-directory-card" role="listitem" data-category="community" data-keywords="volunteer community service mentorship workshop prep cleaning tools church group lanett">
+            <div>
+              <span class="error-directory-meta">04 · COMMUNITY SERVICE</span>
+              <h3>Volunteer at the Center</h3>
+              <p>Sign up for Monday–Thursday morning (8 AM–12 PM EST) or afternoon (12 PM–4 PM EST) workshop preparation and guest trade mentorship.</p>
+            </div>
+            <span class="error-directory-link-label">Sign Up to Volunteer <span aria-hidden="true">→</span></span>
+          </a>
+
+          <a href="/partner" class="error-directory-card" role="listitem" data-category="community" data-keywords="partner employer contractor business worksite host donate lumber tools equipment mentorship">
+            <div>
+              <span class="error-directory-meta">05 · WORKFORCE COLLABORATION</span>
+              <h3>Employer &amp; Material Partnerships</h3>
+              <p>Collaborate with Springboards as an OJT employer, contribute commercial tools and lumber, or serve as a guest craft instructor.</p>
+            </div>
+            <span class="error-directory-link-label">Partner With Springboards <span aria-hidden="true">→</span></span>
+          </a>
+
+          <a href="/donate" class="error-directory-card" role="listitem" data-category="community" data-keywords="donate giving sponsor trainee tax receipt 501c3 tool belt safety gear stipend zelle check">
+            <div>
+              <span class="error-directory-meta">06 · 501(C)(3) GIVING &amp; RECEIPTS</span>
+              <h3>Donate &amp; Sponsor a Trainee</h3>
+              <p>Keep trade education 100% debt-free by sponsoring OSHA safety gear ($50), a trainee tool belt ($150), or a full student stipend.</p>
+            </div>
+            <span class="error-directory-link-label">Make a Pledge or Gift <span aria-hidden="true">→</span></span>
+          </a>
+        </div>
+
+        <!-- Collection Empty State (Displayed when filter/search returns 0 items) -->
+        <div class="collection-empty-state" id="recoveryDirectoryEmpty" role="status" aria-live="polite" hidden>
+          <div class="collection-empty-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+          <p class="collection-empty-eyebrow">NO MATCHING DESTINATIONS</p>
+          <h3 class="collection-empty-title" id="recoveryEmptyTitle">No pages matched your search filter</h3>
+          <p class="collection-empty-desc" id="recoveryEmptyDesc">
+            We couldn’t find a page matching that keyword. You can reset the filter to browse all 6 verified Springboards destinations, check your training eligibility, or contact our team directly.
+          </p>
+          <div class="collection-empty-actions">
+            <button type="button" class="btn-cta" id="resetRecoveryFilterBtn">Show All 6 Destinations</button>
+            <a href="/eligibility" class="collection-empty-btn-secondary">Check Training Eligibility →</a>
+            <a href="tel:731.388.WORK" class="collection-empty-btn-secondary">Call 731.388.WORK</a>
+          </div>
+        </div>
+
+        <!-- Direct Human Assistance Strip -->
+        <div class="error-support-strip">
+          <div>
+            <strong style="display: block; font-size: var(--text-base); color: var(--primary-navy);">Still can’t find what you need? Talk with our team in Shawmut.</strong>
+            <span style="font-size: var(--text-sm); color: var(--text-body);">
+              Springboards Community Center • 2269 15th Ave. S.W., Lanett, AL 36863 • Mon–Thu, 8:00 AM – 4:00 PM EST
+            </span>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.65rem;">
+            <a href="tel:731.388.WORK" class="collection-empty-btn-secondary">Call 731.388.WORK</a>
+            <a href="mailto:info@springboardsfcd.org?subject=Website%20Navigation%20Assistance" class="collection-empty-btn-secondary">Email info@springboardsfcd.org</a>
+          </div>
+        </div>
+      </section>
     </div>
   </main>
 
-  <footer class="footer-section" id="footer" style="padding: 2.5rem 0;">
-    <div class="container footer-bottom" style="border: 0; padding: 0;">
-      <p>&copy; Springboards for Community Development. All rights reserved.</p>
+  <footer class="footer-section" id="footer">
+    <div class="container footer-bottom-flex" style="padding: 2rem 0;">
+      <p>&copy; <span id="current-year">2026</span> Springboards for Community Development • 2269 15th Ave. S.W., Lanett, AL 36863</p>
+      <div class="footer-legal-group">
+        <a href="/" class="footer-legal-link">Home</a>
+        <a href="/train" class="footer-legal-link">Training</a>
+        <a href="/eligibility" class="footer-legal-link">Eligibility</a>
+        <a href="/volunteer" class="footer-legal-link">Volunteer</a>
+        <a href="/partner" class="footer-legal-link">Partner</a>
+        <a href="/donate" class="footer-legal-link">Donate</a>
+      </div>
     </div>
   </footer>
+
+  <script src="/analytics.js" defer></script>
+  <script>
+    (() => {
+      // 1. Mobile navigation drawer toggle
+      const navToggle = document.getElementById('navToggle');
+      const navMenu = document.getElementById('navMenu');
+      if (navToggle && navMenu) {
+        navToggle.addEventListener('click', () => {
+          const next = navToggle.getAttribute('aria-expanded') !== 'true';
+          navToggle.setAttribute('aria-expanded', String(next));
+          navToggle.classList.toggle('active', next);
+          navMenu.classList.toggle('open', next);
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && navMenu.classList.contains('open')) {
+            navToggle.setAttribute('aria-expanded', 'false');
+            navToggle.classList.remove('active');
+            navMenu.classList.remove('open');
+            navToggle.focus();
+          }
+        });
+      }
+
+      // 2. Display the requested broken URL path & compute smart route recommendation
+      const pathDisplay = document.getElementById('requestedPathDisplay');
+      const currentPath = window.location.pathname + window.location.search + window.location.hash;
+      if (pathDisplay) {
+        pathDisplay.textContent = currentPath && currentPath !== '/404.html' ? currentPath : '/unavailable-url';
+      }
+
+      const backBtn = document.getElementById('errorGoBackBtn');
+      if (backBtn) {
+        backBtn.addEventListener('click', () => {
+          if (window.history.length > 1) {
+            window.history.back();
+          } else {
+            window.location.assign('/');
+          }
+        });
+      }
+
+      const routeSuggestions = [
+        {
+          match: /eligib|wioa|qualif|check|center|valley|opelika|roanoke|assessment/i,
+          title: 'Looking for the WIOA Eligibility Check & Career Center Locator?',
+          desc: 'Pre-screen your eligibility for Activity Code 220 Transitional Jobs and find your nearest Alabama Career Center.',
+          href: '/eligibility',
+          cta: 'Go to Eligibility Check →'
+        },
+        {
+          match: /train|job|ojt|slide|deck|apprentice|worksite|carpentr|electr|plumb|hvac|osha/i,
+          title: 'Looking for Trade Training & Transitional Jobs?',
+          desc: 'Review the 10-slide Transitional Jobs orientation or explore our tuition-free skilled trade curriculum.',
+          href: '/train',
+          cta: 'Open Training & Jobs →'
+        },
+        {
+          match: /volunt|serve|mentor|clean|schedule|block/i,
+          title: 'Looking for Volunteer Sign-Up & Workshop Hours?',
+          desc: 'Join Monday–Thursday morning or afternoon volunteer blocks at the Springboards Community Center.',
+          href: '/volunteer',
+          cta: 'Open Volunteer Page →'
+        },
+        {
+          match: /partn|employ|contract|business|material|tool|host/i,
+          title: 'Looking for Employer & Material Partnerships?',
+          desc: 'Partner with Springboards as a host worksite, guest trade instructor, or building material contributor.',
+          href: '/partner',
+          cta: 'Open Partner Page →'
+        },
+        {
+          match: /donat|giv|sponsor|pledge|receipt|501|support|fund/i,
+          title: 'Looking for Donations & 501(c)(3) Tax Receipts?',
+          desc: 'Sponsor trainee safety gear, tool belts, or stipends and request your official deductible receipt.',
+          href: '/donate',
+          cta: 'Open Donate Page →'
+        }
+      ];
+
+      const suggestionBox = document.getElementById('smartRouteSuggestion');
+      const suggestionTitle = document.getElementById('smartRouteTitle');
+      const suggestionDesc = document.getElementById('smartRouteDesc');
+      const suggestionLink = document.getElementById('smartRouteLink');
+      const matchedSuggestion = routeSuggestions.find((item) => item.match.test(currentPath));
+      if (matchedSuggestion && suggestionBox && suggestionTitle && suggestionDesc && suggestionLink) {
+        suggestionTitle.textContent = matchedSuggestion.title;
+        suggestionDesc.textContent = matchedSuggestion.desc;
+        suggestionLink.href = matchedSuggestion.href;
+        suggestionLink.textContent = matchedSuggestion.cta;
+        suggestionBox.hidden = false;
+      }
+
+      // 3. Interactive Recovery Directory Filtering & Collection Empty State
+      const searchInput = document.getElementById('errorPageSearch');
+      const clearBtn = document.getElementById('errorSearchClear');
+      const filterTabs = Array.from(document.querySelectorAll('[data-dir-filter]'));
+      const cards = Array.from(document.querySelectorAll('#recoveryDirectoryGrid .error-directory-card'));
+      const emptyState = document.getElementById('recoveryDirectoryEmpty');
+      const emptyTitle = document.getElementById('recoveryEmptyTitle');
+      const countStatus = document.getElementById('directoryCountStatus');
+      const resetBtn = document.getElementById('resetRecoveryFilterBtn');
+
+      let activeCategory = 'all';
+
+      const applyDirectoryFilter = () => {
+        const query = (searchInput?.value || '').trim().toLowerCase();
+        if (clearBtn) clearBtn.hidden = !query;
+
+        let visibleCount = 0;
+        cards.forEach((card) => {
+          const cat = card.dataset.category || '';
+          const text = (card.textContent + ' ' + (card.dataset.keywords || '')).toLowerCase();
+          const matchesCat = activeCategory === 'all' || cat === activeCategory;
+          const matchesQuery = !query || text.includes(query);
+          const isVisible = matchesCat && matchesQuery;
+          card.hidden = !isVisible;
+          if (isVisible) visibleCount += 1;
+        });
+
+        if (emptyState) {
+          emptyState.hidden = visibleCount > 0;
+          if (visibleCount === 0 && emptyTitle) {
+            emptyTitle.textContent = query
+              ? `No pages matched “${searchInput.value.trim()}”`
+              : 'No destinations in this category';
+          }
+        }
+
+        if (countStatus) {
+          countStatus.textContent = visibleCount === cards.length
+            ? `Showing all ${cards.length} verified destinations`
+            : `Showing ${visibleCount} of ${cards.length} verified destinations`;
+        }
+      };
+
+      filterTabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          activeCategory = tab.dataset.dirFilter || 'all';
+          filterTabs.forEach((t) => {
+            const isSelected = t === tab;
+            t.classList.toggle('is-active', isSelected);
+            t.setAttribute('aria-pressed', String(isSelected));
+          });
+          applyDirectoryFilter();
+        });
+      });
+
+      searchInput?.addEventListener('input', applyDirectoryFilter);
+
+      clearBtn?.addEventListener('click', () => {
+        if (searchInput) {
+          searchInput.value = '';
+          searchInput.focus();
+        }
+        applyDirectoryFilter();
+      });
+
+      resetBtn?.addEventListener('click', () => {
+        activeCategory = 'all';
+        if (searchInput) searchInput.value = '';
+        filterTabs.forEach((t) => {
+          const isAll = t.dataset.dirFilter === 'all';
+          t.classList.toggle('is-active', isAll);
+          t.setAttribute('aria-pressed', String(isAll));
+        });
+        applyDirectoryFilter();
+        searchInput?.focus();
+      });
+    })();
+  </script>
 </body>
 </html>
+

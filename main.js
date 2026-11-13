@@ -1352,5 +1352,136 @@ document.addEventListener("DOMContentLoaded", () => {
       footerPhonePrimaryLink.setAttribute("href", "tel:731.388.WORK");
     }
   }
+
+  // COLLECTION LIST FILTERING & EMPTY STATE CONTROLLERS
+  const setupCollectionFilter = ({
+    gridSelector,
+    itemSelector,
+    tabSelector,
+    tabAttr,
+    itemCategoryAttr,
+    searchInputId,
+    clearBtnId,
+    emptyStateId,
+    emptyTitleId,
+    resetBtnId,
+    emptyQueryLabel
+  }) => {
+    const grid = document.querySelector(gridSelector);
+    if (!grid) return;
+    const items = Array.from(grid.querySelectorAll(itemSelector));
+    const tabs = Array.from(document.querySelectorAll(tabSelector));
+    const searchInput = searchInputId ? document.getElementById(searchInputId) : null;
+    const clearBtn = clearBtnId ? document.getElementById(clearBtnId) : null;
+    const emptyState = emptyStateId ? document.getElementById(emptyStateId) : null;
+    const emptyTitle = emptyTitleId ? document.getElementById(emptyTitleId) : null;
+    const resetBtn = resetBtnId ? document.getElementById(resetBtnId) : null;
+
+    let activeCategory = "all";
+
+    const updateCollection = () => {
+      const query = (searchInput?.value || "").trim().toLowerCase();
+      if (clearBtn) clearBtn.hidden = !query;
+
+      let visibleCount = 0;
+      items.forEach((item) => {
+        const category = item.getAttribute(itemCategoryAttr) || "";
+        const keywords = item.getAttribute("data-keywords") || "";
+        const haystack = `${item.textContent || ""} ${keywords}`.toLowerCase();
+        const matchesCat = activeCategory === "all" || category === activeCategory;
+        const matchesQuery = !query || haystack.includes(query);
+        const isVisible = matchesCat && matchesQuery;
+        item.hidden = !isVisible;
+        if (isVisible) visibleCount += 1;
+      });
+
+      grid.hidden = visibleCount === 0;
+      if (emptyState) {
+        emptyState.hidden = visibleCount > 0;
+        if (visibleCount === 0 && emptyTitle && query) {
+          emptyTitle.textContent = `${emptyQueryLabel} “${searchInput.value.trim()}”`;
+        }
+      }
+    };
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        activeCategory = tab.getAttribute(tabAttr) || "all";
+        tabs.forEach((t) => {
+          const isSelected = t === tab;
+          t.classList.toggle("is-active", isSelected);
+          t.setAttribute("aria-pressed", String(isSelected));
+        });
+        updateCollection();
+      });
+    });
+
+    searchInput?.addEventListener("input", updateCollection);
+
+    clearBtn?.addEventListener("click", () => {
+      if (searchInput) {
+        searchInput.value = "";
+        searchInput.focus();
+      }
+      updateCollection();
+    });
+
+    resetBtn?.addEventListener("click", () => {
+      activeCategory = "all";
+      if (searchInput) searchInput.value = "";
+      tabs.forEach((t) => {
+        const isAll = (t.getAttribute(tabAttr) || "all") === "all";
+        t.classList.toggle("is-active", isAll);
+        t.setAttribute("aria-pressed", String(isAll));
+      });
+      updateCollection();
+    });
+  };
+
+  // 1. Skills & Trade Pathways Collection
+  setupCollectionFilter({
+    gridSelector: "#skillsLearnGrid",
+    itemSelector: ".skill-learn-card",
+    tabSelector: "[data-skill-filter]",
+    tabAttr: "data-skill-filter",
+    itemCategoryAttr: "data-skill-category",
+    searchInputId: "skillsSearchInput",
+    clearBtnId: "skillsSearchClear",
+    emptyStateId: "skillsEmptyState",
+    emptyTitleId: "skillsEmptyTitle",
+    resetBtnId: "resetSkillsFilterBtn",
+    emptyQueryLabel: "No trade modules matched"
+  });
+
+  // 2. Frequently Asked Questions Collection
+  setupCollectionFilter({
+    gridSelector: "#faqCollectionList",
+    itemSelector: ".faq-item",
+    tabSelector: "[data-faq-filter]",
+    tabAttr: "data-faq-filter",
+    itemCategoryAttr: "data-faq-category",
+    searchInputId: "faqSearchInput",
+    clearBtnId: "faqSearchClear",
+    emptyStateId: "faqEmptyState",
+    emptyTitleId: "faqEmptyTitle",
+    resetBtnId: "resetFaqFilterBtn",
+    emptyQueryLabel: "No questions matched"
+  });
+
+  // 3. Document Center Collection
+  setupCollectionFilter({
+    gridSelector: "#documentCollectionList",
+    itemSelector: ".document-item-card",
+    tabSelector: "[data-doc-filter]",
+    tabAttr: "data-doc-filter",
+    itemCategoryAttr: "data-doc-category",
+    searchInputId: null,
+    clearBtnId: null,
+    emptyStateId: "documentEmptyState",
+    emptyTitleId: null,
+    resetBtnId: "resetDocFilterBtn",
+    emptyQueryLabel: "No documents matched"
+  });
 });
+
 

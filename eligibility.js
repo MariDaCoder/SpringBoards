@@ -501,6 +501,21 @@
 
   const renderCareerCenters = () => {
     centerList.replaceChildren();
+    if (!careerCenters.length) {
+      const emptyCard = document.createElement("div");
+      emptyCard.className = "collection-empty-state collection-empty-state--compact";
+      emptyCard.innerHTML = `
+        <p class="collection-empty-eyebrow">CAREER CENTER DIRECTORY</p>
+        <h3 class="collection-empty-title">No Career Centers matched this filter</h3>
+        <p class="collection-empty-desc">Call Springboards at 731.388.WORK or email info@springboardsfcd.org and we will connect you directly with your local Alabama Career Center advisor.</p>
+        <div class="collection-empty-actions">
+          <a class="wizard-button" href="tel:731.388.WORK">Call 731.388.WORK</a>
+          <a class="wizard-button secondary" href="mailto:info@springboardsfcd.org">Email Our Team</a>
+        </div>
+      `;
+      centerList.append(emptyCard);
+      return;
+    }
     careerCenters.forEach((center) => {
       const card = document.createElement("article");
       card.className = "wizard-center-card";
@@ -580,10 +595,12 @@
   const renderAppointmentCalendar = () => {
     calendarDays.replaceChildren();
     appointmentTimes.replaceChildren();
+    calendarStatus.classList.remove("is-error", "is-success");
     calendarStatus.textContent = "Choose a day to see sample appointment times (Eastern Standard Time - EST).";
     previewAppointmentButton.disabled = !(selectedAppointmentDate && selectedAppointmentTime);
 
-    getSampleDates().forEach((date) => {
+    const sampleDates = getSampleDates();
+    sampleDates.forEach((date) => {
       const dateValue = toLocalDateString(date);
       const dateButton = document.createElement("button");
       dateButton.type = "button";
@@ -603,7 +620,36 @@
       calendarDays.append(dateButton);
     });
 
-    if (!selectedAppointmentDate) return;
+    if (!selectedAppointmentDate) {
+      const emptySlots = document.createElement("div");
+      emptySlots.className = "collection-empty-state collection-empty-state--compact";
+      emptySlots.style.width = "100%";
+      const title = document.createElement("strong");
+      title.style.display = "block";
+      title.style.color = "var(--wizard-ink)";
+      title.textContent = "No visit day selected yet";
+      const desc = document.createElement("p");
+      desc.style.margin = "0.25rem 0 0.65rem";
+      desc.style.fontSize = "0.88rem";
+      desc.style.color = "var(--wizard-muted)";
+      desc.textContent = `Pick one of the weekday dates above to view sample morning and afternoon visit times at ${selectedCareerCenter.name}, or jump straight to the earliest available weekday.`;
+      const pickFirstBtn = document.createElement("button");
+      pickFirstBtn.type = "button";
+      pickFirstBtn.className = "wizard-button secondary";
+      pickFirstBtn.style.fontSize = "0.84rem";
+      pickFirstBtn.style.padding = "0.5rem 0.85rem";
+      pickFirstBtn.textContent = "Select earliest weekday →";
+      pickFirstBtn.addEventListener("click", () => {
+        if (sampleDates[0]) {
+          selectedAppointmentDate = toLocalDateString(sampleDates[0]);
+          selectedAppointmentTime = "";
+          renderAppointmentCalendar();
+        }
+      });
+      emptySlots.append(title, desc, pickFirstBtn);
+      appointmentTimes.append(emptySlots);
+      return;
+    }
     const chosenDate = new Date(`${selectedAppointmentDate}T12:00:00`);
     calendarStatus.textContent = `Sample times (EST) for ${chosenDate.toLocaleDateString("en-US", { timeZone: WEBSITE_TIMEZONE, weekday: "long", month: "long", day: "numeric" })} at ${selectedCareerCenter.name}.`;
     sampleAppointmentTimes.forEach((time) => {
@@ -909,10 +955,14 @@
     }
 
     if (!profileTags.childElementCount) {
-      const fallback = outcome === "not-eligible"
-        ? "No matching barrier or work-history tags selected"
-        : "A team member can help fill in the details";
-      addTag(fallback);
+      const emptyItem = document.createElement("li");
+      emptyItem.className = "collection-empty-state collection-empty-state--compact";
+      emptyItem.style.listStyle = "none";
+      emptyItem.style.width = "100%";
+      emptyItem.innerHTML = outcome === "not-eligible"
+        ? `<strong>No qualifying barrier or work-history items were selected.</strong><span style="display:block; margin-top:0.25rem; font-size:0.86rem; color:var(--wizard-muted);">You can still explore Springboards’ tuition-free hands-on trade workshops or speak with an advisor about alternative pathways.</span>`
+        : `<strong>Your profile details are ready for a one-on-one review.</strong><span style="display:block; margin-top:0.25rem; font-size:0.86rem; color:var(--wizard-muted);">A Springboards or Career Center advisor will walk through your work history and help confirm your best training pathway.</span>`;
+      profileTags.append(emptyItem);
     }
   };
 
@@ -938,12 +988,19 @@
     const missing = requirements.filter((item) => !selectedDocuments.includes(item.value));
     const isReady = missing.length === 0 && !isUnsure && !selectedDocuments.includes("none");
     if (isReady) {
-      documentReadinessStatus.textContent = "You’ve marked all the listed documents as ready to bring. Nice work—you’re prepared for the next conversation.";
+      documentReadinessStatus.textContent = "✓ You’ve marked all required intake documents as ready to bring. Nice work—you’re prepared for your Career Center visit.";
+      const readyItem = document.createElement("li");
+      readyItem.style.listStyle = "none";
+      readyItem.style.marginLeft = "-1.25rem";
+      readyItem.style.color = "#166534";
+      readyItem.style.fontWeight = "700";
+      readyItem.textContent = "No missing documents—proceed to locate your nearest Career Center or submit your application below.";
+      missingDocuments.append(readyItem);
       return;
     }
 
     if (isUnsure) {
-      documentReadinessStatus.textContent = "A Career Center team member can confirm which documents apply to your situation.";
+      documentReadinessStatus.textContent = "A Career Center team member can confirm which documents apply to your situation:";
     } else if (missing.length) {
       documentReadinessStatus.textContent = "You may still need to gather these items before your visit:";
     } else {

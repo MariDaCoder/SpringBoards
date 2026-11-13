@@ -1611,10 +1611,24 @@
       }
 
       if (list.length === 0) {
+        const hasActiveFilter = stageFilter !== 'ALL' || Boolean(query);
         tbody.innerHTML = `
           <tr>
-            <td colspan="8" style="text-align: center; padding: 2.5rem; color: var(--text-muted);">
-              No candidate applications match this view. Submissions from the public website intake quiz appear here in real-time.
+            <td colspan="8" style="padding: 1.5rem;">
+              <div class="collection-empty-state" style="margin: 0 auto;">
+                <p class="collection-empty-eyebrow">CANDIDATE PIPELINE COLLECTION</p>
+                <h3 class="collection-empty-title">${hasActiveFilter ? 'No candidate applications match your current filter' : 'No candidate applications recorded yet'}</h3>
+                <p class="collection-empty-desc">
+                  ${hasActiveFilter
+                    ? 'Try clearing your search keyword or switching the pipeline stage dropdown back to "All Pipeline Stages" to view all registered applicants.'
+                    : 'As prospective trainees complete the public Candidate Application or Eligibility Check on the website, their profiles and Career Center routing appear here in real time.'}
+                </p>
+                <div class="collection-empty-actions">
+                  ${hasActiveFilter ? `<button type="button" class="btn-cta" onclick="document.getElementById('cand-search-input').value=''; document.getElementById('cand-stage-filter').value='ALL'; filterCandidates();">Reset Search &amp; Stage Filter</button>` : ''}
+                  <button type="button" class="collection-empty-btn-secondary" onclick="refreshData()">↻ Refresh Pipeline Data</button>
+                  <a href="/eligibility" target="_blank" rel="noopener" class="collection-empty-btn-secondary">Open Public Eligibility Check ↗</a>
+                </div>
+              </div>
             </td>
           </tr>
         `;
@@ -1870,10 +1884,24 @@
       }
 
       if (list.length === 0) {
+        const hasTypeFilter = typeFilter !== 'ALL';
         tbody.innerHTML = `
           <tr>
-            <td colspan="5" style="text-align: center; padding: 2.5rem; color: var(--text-muted);">
-              No submissions found for this filter. As visitors submit inquiries, volunteer signups, or employer partnerships on the website, they will appear here.
+            <td colspan="5" style="padding: 1.5rem;">
+              <div class="collection-empty-state" style="margin: 0 auto;">
+                <p class="collection-empty-eyebrow">COMMUNITY INBOX COLLECTION</p>
+                <h3 class="collection-empty-title">${hasTypeFilter ? 'No submissions found for this category' : 'Your community inquiry inbox is currently empty'}</h3>
+                <p class="collection-empty-desc">
+                  ${hasTypeFilter
+                    ? 'Switch the submission type filter to "All Submission Types" to view program inquiries, volunteer sign-ups, employer partnerships, and donor pledges.'
+                    : 'When visitors submit program inquiries, volunteer interest, employer partnerships, or donation pledges on the public site, they are routed here and to info@springboardsfcd.org.'}
+                </p>
+                <div class="collection-empty-actions">
+                  ${hasTypeFilter ? `<button type="button" class="btn-cta" onclick="document.getElementById('inbox-filter-type').value='ALL'; filterInboxMessages();">Show All Submission Types</button>` : ''}
+                  <button type="button" class="collection-empty-btn-secondary" onclick="refreshData()">↻ Refresh Inbox</button>
+                  <a href="/" target="_blank" rel="noopener" class="collection-empty-btn-secondary">View Public Website Forms ↗</a>
+                </div>
+              </div>
             </td>
           </tr>
         `;
@@ -1928,8 +1956,17 @@
       if (items.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="5" style="text-align: center; padding: 2rem; color: var(--text-muted);">
-              Loading compliance milestones...
+            <td colspan="5" style="padding: 1.5rem;">
+              <div class="collection-empty-state" style="margin: 0 auto;">
+                <p class="collection-empty-eyebrow">WIOA &amp; WORKSITE COMPLIANCE</p>
+                <h3 class="collection-empty-title">No compliance milestones loaded</h3>
+                <p class="collection-empty-desc">
+                  Reload the portal data to sync Chambers County Career Center referral certifications, ETPL/ITA status, and Sirius Workforce wage subsidy checkpoints.
+                </p>
+                <div class="collection-empty-actions">
+                  <button type="button" class="btn-cta" onclick="refreshData()">↻ Reload Compliance Milestones</button>
+                </div>
+              </div>
             </td>
           </tr>
         `;
