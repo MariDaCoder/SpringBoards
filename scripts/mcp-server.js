@@ -229,7 +229,7 @@ export function executeMcpTool(toolName, args = {}) {
       typography: /^--(font-|text-xs|text-sm|text-base|text-lg|text-xl|text-2xl|text-3xl|text-display|leading-|tracking-)/,
       spacing: /^--(space-|section-pad-|container-pad-)/,
       sizing: /^--(size-|container-max|container-narrow|container-prose|nav-height|radius-)/,
-      layout: /^--(container-|size-grid-|shadow-|z-|transition-)/
+      layout: /^--(bp-|container-|size-grid-|shadow-|z-|transition-)/
     };
 
     const filteredTokens =

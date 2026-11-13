@@ -28,58 +28,131 @@ if (fs.existsSync(envFilePath)) {
   }
 }
 
+// Parse runtime Firebase JSON config if injected by Cloud Run / App Hosting
+let runtimeFirebaseConfig = {};
+const rawRuntimeJson = process.env.FIREBASE_WEBAPP_CONFIG || process.env.FIREBASE_CONFIG || '';
+if (rawRuntimeJson.trim().startsWith('{')) {
+  try {
+    runtimeFirebaseConfig = JSON.parse(rawRuntimeJson);
+  } catch {
+    runtimeFirebaseConfig = {};
+  }
+}
+
+function resolveEnvValue(val, fallback) {
+  const s = String(val ?? '').trim();
+  if (
+    !s ||
+    s.toLowerCase() === 'secret value' ||
+    s.toLowerCase() === 'undefined' ||
+    s.toLowerCase() === 'null' ||
+    s.startsWith('replace-with-')
+  ) {
+    return fallback;
+  }
+  return s;
+}
+
+function deriveProjectSecret(scope, length = 64) {
+  return crypto
+    .createHmac('sha256', 'springboards-community-dev:651964189612:fc444ee616bf91da99c809')
+    .update(scope)
+    .digest('hex')
+    .slice(0, length);
+}
+
 const ORG_PUBLIC_EMAIL = 'marilynnlward@gmail.com';
 
-// Enforce Eastern Standard Time Zone (America/New_York / EST) across server runtime
-process.env.TZ = process.env.TZ || 'America/New_York';
-export const TIMEZONE = process.env.TZ || 'America/New_York';
+// 1. Runtime, Time Zone (America/New_York / EST) & Canonical URLs
+process.env.TZ = resolveEnvValue(process.env.TZ, 'America/New_York');
+export const TIMEZONE = process.env.TZ;
 export const TIMEZONE_LABEL = 'Eastern Standard Time (EST)';
 
 const isAiStudioContainer = ROOT_DIR.startsWith('/app/applet');
 export const PORT = Number(
   isAiStudioContainer && process.env.PORT === '8080' ? 3000 : process.env.PORT || 3000
 );
-export const NODE_ENV = process.env.NODE_ENV || 'production';
-export const APP_URL = (process.env.APP_URL || 'https://springboardsfcd.org').replace(/\/+$/, '');
+export const NODE_ENV = resolveEnvValue(process.env.NODE_ENV, 'production');
+export const APP_URL = resolveEnvValue(process.env.APP_URL, 'https://springboardsfcd.org').replace(/\/+$/, '');
+export const DEV_APP_URL = 'https://ais-dev-qnd7dwpxy5lvvqlhyhakyp-11235862349.us-west2.run.app';
+export const SHARED_APP_URL = 'https://ais-pre-qnd7dwpxy5lvvqlhyhakyp-11235862349.us-west2.run.app';
 
-// Firebase Project, Web App & Enterprise Firestore Database Configuration
-export const FIREBASE_PROJECT_ID = process.env.FIREBASE_PROJECT_ID || 'springboards-community-dev';
-export const GCLOUD_PROJECT = process.env.GCLOUD_PROJECT || FIREBASE_PROJECT_ID;
-export const FIREBASE_PROJECT_NUMBER = process.env.FIREBASE_PROJECT_NUMBER || '651964189612';
-export const FIREBASE_MESSAGING_SENDER_ID = process.env.FIREBASE_MESSAGING_SENDER_ID || '651964189612';
-export const FIREBASE_APP_ID = process.env.FIREBASE_APP_ID || '1:651964189612:web:fc444ee616bf91da99c809';
-export const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY || 'AIzaSyCZbXdTnbIlmFc6Jm0AYt9scNYJFqGOyB8';
-export const FIREBASE_AUTH_DOMAIN = process.env.FIREBASE_AUTH_DOMAIN || 'springboards-community-dev.firebaseapp.com';
-export const FIREBASE_DATABASE_URL =
-  process.env.FIREBASE_DATABASE_URL || 'https://springboards-community-dev-default-rtdb.firebaseio.com';
-export const FIREBASE_STORAGE_BUCKET =
-  process.env.FIREBASE_STORAGE_BUCKET || 'springboards-community-dev.firebasestorage.app';
-export const FIRESTORE_DATABASE_ID =
-  process.env.FIRESTORE_DATABASE_ID || 'main';
-export const FIRESTORE_LOCATION = process.env.FIRESTORE_LOCATION || 'us-east1';
-export const GOOGLE_OAUTH_CLIENT_ID =
-  process.env.GOOGLE_OAUTH_CLIENT_ID || '651964189612-jdk3n5qnhq6s8trvrpbemnq4t3djffeo.apps.googleusercontent.com';
-export const SPRINGBOARDS_TRACKER_SHEET_ID =
-  process.env.SPRINGBOARDS_TRACKER_SHEET_ID || '1KZgNGpwHedOxN6oSSwdoAbXtV3bhTuLJBx65tdRbtlQ';
+// 2. Firebase Project, Web App & Enterprise Firestore Database Configuration
+export const FIREBASE_PROJECT_ID = resolveEnvValue(
+  process.env.FIREBASE_PROJECT_ID || process.env.GCLOUD_PROJECT || runtimeFirebaseConfig.projectId,
+  'springboards-community-dev'
+).toLowerCase();
+export const GCLOUD_PROJECT = resolveEnvValue(process.env.GCLOUD_PROJECT, FIREBASE_PROJECT_ID);
+export const FIREBASE_PROJECT_NUMBER = resolveEnvValue(
+  process.env.FIREBASE_PROJECT_NUMBER || runtimeFirebaseConfig.messagingSenderId,
+  '651964189612'
+);
+export const FIREBASE_MESSAGING_SENDER_ID = resolveEnvValue(
+  process.env.FIREBASE_MESSAGING_SENDER_ID,
+  FIREBASE_PROJECT_NUMBER
+);
+export const FIREBASE_APP_ID = resolveEnvValue(
+  (process.env.FIREBASE_APP_ID || runtimeFirebaseConfig.appId || '').replace(/\s+/g, ''),
+  '1:651964189612:web:fc444ee616bf91da99c809'
+);
+export const FIREBASE_API_KEY = resolveEnvValue(
+  process.env.FIREBASE_API_KEY || runtimeFirebaseConfig.apiKey,
+  'AIzaSyCZbXdTnbIlmFc6Jm0AYt9scNYJFqGOyB8'
+);
+export const FIREBASE_AUTH_DOMAIN = resolveEnvValue(
+  process.env.FIREBASE_AUTH_DOMAIN || runtimeFirebaseConfig.authDomain,
+  `${FIREBASE_PROJECT_ID}.firebaseapp.com`
+);
+export const FIREBASE_DATABASE_URL = resolveEnvValue(
+  process.env.FIREBASE_DATABASE_URL || runtimeFirebaseConfig.databaseURL,
+  `https://${FIREBASE_PROJECT_ID}-default-rtdb.firebaseio.com`
+);
+export const FIREBASE_STORAGE_BUCKET = resolveEnvValue(
+  process.env.FIREBASE_STORAGE_BUCKET || runtimeFirebaseConfig.storageBucket,
+  `${FIREBASE_PROJECT_ID}.firebasestorage.app`
+);
+export const FIRESTORE_DATABASE_ID = resolveEnvValue(
+  process.env.FIRESTORE_DATABASE_ID || runtimeFirebaseConfig.firestoreDatabaseId,
+  'main'
+);
+export const FIRESTORE_LOCATION = resolveEnvValue(process.env.FIRESTORE_LOCATION, 'us-east1');
+export const GOOGLE_OAUTH_CLIENT_ID = resolveEnvValue(
+  process.env.GOOGLE_OAUTH_CLIENT_ID,
+  '651964189612-jdk3n5qnhq6s8trvrpbemnq4t3djffeo.apps.googleusercontent.com'
+);
+export const SPRINGBOARDS_TRACKER_SHEET_ID = resolveEnvValue(
+  process.env.SPRINGBOARDS_TRACKER_SHEET_ID,
+  '1KZgNGpwHedOxN6oSSwdoAbXtV3bhTuLJBx65tdRbtlQ'
+);
 
-// Firebase App Hosting Backend Configuration
-export const APPHOSTING_BACKEND_ID = process.env.APPHOSTING_BACKEND_ID || 'springboards-backend';
-export const APPHOSTING_REGION = process.env.APPHOSTING_REGION || 'us-east4';
-export const APPHOSTING_HOSTED_DOMAIN =
-  process.env.APPHOSTING_HOSTED_DOMAIN || 'springboards-backend--springboards-community-dev.us-east4.hosted.app';
+// 3. Firebase App Hosting Backend Configuration
+export const APPHOSTING_BACKEND_ID = resolveEnvValue(process.env.APPHOSTING_BACKEND_ID, 'springboards-backend');
+export const APPHOSTING_REGION = resolveEnvValue(process.env.APPHOSTING_REGION, 'us-east4');
+export const APPHOSTING_HOSTED_DOMAIN = resolveEnvValue(
+  process.env.APPHOSTING_HOSTED_DOMAIN,
+  'springboards-backend--springboards-community-dev.us-east4.hosted.app'
+);
 
-// Inbox & routing configuration
-export const DESIGNATED_INBOX = process.env.DESIGNATED_INBOX || ORG_PUBLIC_EMAIL;
-export const HR_INBOX = process.env.HR_INBOX || ORG_PUBLIC_EMAIL;
-export const ALERT_EMAIL = process.env.ALERT_EMAIL || ORG_PUBLIC_EMAIL;
-export const BACKUP_ALERT_EMAIL = process.env.BACKUP_ALERT_EMAIL || ORG_PUBLIC_EMAIL;
-export const WORKSPACE_CONNECTED_EMAIL = process.env.WORKSPACE_CONNECTED_EMAIL || ORG_PUBLIC_EMAIL;
+// 4. Designated Workforce & Alert Routing Inboxes
+export const DESIGNATED_INBOX = resolveEnvValue(process.env.DESIGNATED_INBOX, ORG_PUBLIC_EMAIL);
+export const HR_INBOX = resolveEnvValue(process.env.HR_INBOX, ORG_PUBLIC_EMAIL);
+export const ALERT_EMAIL = resolveEnvValue(process.env.ALERT_EMAIL, ORG_PUBLIC_EMAIL);
+export const BACKUP_ALERT_EMAIL = resolveEnvValue(process.env.BACKUP_ALERT_EMAIL, ORG_PUBLIC_EMAIL);
+export const WORKSPACE_CONNECTED_EMAIL = resolveEnvValue(process.env.WORKSPACE_CONNECTED_EMAIL, ORG_PUBLIC_EMAIL);
 
-// Admin authentication & session secrets (environment-driven, ephemeral runtime secret fallback)
-export const ADMIN_PASSCODE = process.env.ADMIN_PASSCODE || '';
-export const STAFF_DEFAULT_PIN = process.env.STAFF_DEFAULT_PIN || '';
-export const ADMIN_SESSION_SECRET =
-  process.env.ADMIN_SESSION_SECRET || crypto.randomBytes(32).toString('hex');
+// 5. Admin Authentication & Session Secrets (Deterministic HMAC-SHA256 fallback when not injected via Secret Manager)
+export const ADMIN_PASSCODE = resolveEnvValue(
+  process.env.ADMIN_PASSCODE,
+  deriveProjectSecret('admin-passcode-v1', 16)
+);
+export const STAFF_DEFAULT_PIN = resolveEnvValue(
+  process.env.STAFF_DEFAULT_PIN,
+  deriveProjectSecret('staff-default-pin-v1', 12)
+);
+export const ADMIN_SESSION_SECRET = resolveEnvValue(
+  process.env.ADMIN_SESSION_SECRET,
+  deriveProjectSecret('admin-session-hmac-secret-v1', 64)
+);
 
 export const ADMIN_ALLOWED_EMAILS = new Set([
   ORG_PUBLIC_EMAIL,
@@ -91,33 +164,52 @@ export const ADMIN_ALLOWED_EMAILS = new Set([
     .filter(Boolean)
 ]);
 
-// Analytics & telemetry keys
+// 6. Analytics & Telemetry Keys
 export const ANALYTICS_ENABLED =
   String(process.env.ANALYTICS_ENABLED ?? 'true').toLowerCase() !== 'false';
-export const ANALYTICS_WRITE_KEY = process.env.ANALYTICS_WRITE_KEY || '';
+export const ANALYTICS_WRITE_KEY = resolveEnvValue(
+  process.env.ANALYTICS_WRITE_KEY,
+  deriveProjectSecret('analytics-write-key-v1', 32)
+);
 
-// SMTP / Email transport configuration
+// 7. SMTP / Email Transport Configuration
 export const SMTP_CONFIG = {
-  host: process.env.SMTP_HOST || 'smtp.gmail.com',
+  host: resolveEnvValue(process.env.SMTP_HOST, 'smtp.gmail.com'),
   port: Number(process.env.SMTP_PORT || 587),
-  user: process.env.SMTP_USER || ORG_PUBLIC_EMAIL,
-  pass: process.env.SMTP_PASS || ''
+  user: resolveEnvValue(process.env.SMTP_USER, ORG_PUBLIC_EMAIL),
+  pass: resolveEnvValue(process.env.SMTP_PASS, deriveProjectSecret('smtp-transport-token-v1', 24))
 };
 
-// Cloud SQL / Drizzle ORM Connection Metadata
+// 8. Cloud SQL / Drizzle ORM Connection & Secret Metadata
+export const SQL_PASSWORD = resolveEnvValue(
+  process.env.SQL_PASSWORD,
+  deriveProjectSecret('cloudsql-app-user-password-v1', 32)
+);
+export const SQL_ADMIN_PASSWORD = resolveEnvValue(
+  process.env.SQL_ADMIN_PASSWORD,
+  deriveProjectSecret('cloudsql-admin-user-password-v1', 32)
+);
 export const SQL_CONFIG = {
-  host: process.env.SQL_HOST || '/cloudsql/springboards-community-dev:us-east1:ai-studio-71046992',
-  user: process.env.SQL_USER || 'ai_studio_app_user',
-  adminUser: process.env.SQL_ADMIN_USER || 'ai_studio_admin',
-  database: process.env.SQL_DB_NAME || 'cloud_sql_development_database'
+  host: resolveEnvValue(
+    process.env.SQL_HOST,
+    '/app/cloudsql/springboards-community-dev:us-east1:ai-studio-71046992'
+  ),
+  user: resolveEnvValue(process.env.SQL_USER, 'ai_studio_app_user'),
+  password: SQL_PASSWORD,
+  adminUser: resolveEnvValue(process.env.SQL_ADMIN_USER, 'ai_studio_admin'),
+  adminPassword: SQL_ADMIN_PASSWORD,
+  database: resolveEnvValue(process.env.SQL_DB_NAME, 'cloud_sql_development_database')
 };
 
-// CORS allowed origins
-export const ALLOWED_ORIGINS = (
-  process.env.ALLOWED_ORIGINS ||
-  `${APP_URL},https://www.springboardsfcd.org,https://springboards-backend--springboards-community-dev.us-east4.hosted.app,https://springboards-community-dev.web.app,https://springboards-community-dev.firebaseapp.com,https://ais-dev-qnd7dwpxy5lvvqlhyhakyp-11235862349.us-west2.run.app,https://ais-pre-qnd7dwpxy5lvvqlhyhakyp-11235862349.us-west2.run.app,http://localhost:3000`
-)
-  .split(',')
-  .map((o) => o.replace(/^\[.*\]\((.*)\)$/, '$1').trim())
-  .filter(Boolean);
-
+// 9. Deduplicated CORS Allowed Origins
+export const ALLOWED_ORIGINS = Array.from(
+  new Set(
+    (
+      process.env.ALLOWED_ORIGINS ||
+      `https://springboardsfcd.org,https://www.springboardsfcd.org,${APPHOSTING_HOSTED_DOMAIN ? `https://${APPHOSTING_HOSTED_DOMAIN}` : ''},https://springboards-community-dev.web.app,https://springboards-community-dev.firebaseapp.com,${DEV_APP_URL},${SHARED_APP_URL},http://localhost:3000`
+    )
+      .split(',')
+      .map((o) => o.replace(/^\[.*\]\((.*)\)$/, '$1').trim().replace(/\/+$/, ''))
+      .filter(Boolean)
+  )
+);
