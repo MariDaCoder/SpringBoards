@@ -2306,87 +2306,160 @@ main#main-content > section#hero > div:nth-of-type(3) > div:nth-of-type(3) > but
 }
 
 /* --------------------------------------------------------------------------
-   11. Getting Started Section (3 Steps)
+   11. Section 5: How The Program Works (Consolidated)
    -------------------------------------------------------------------------- */
 .process-section {
-  background-color: var(--bg-light);
-  border-top: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-brand-primary);
+  color: #ffffff;
+  padding-bottom: 0;
+}
+
+.process-container {
+  position: relative;
+  z-index: 2;
 }
 
 .process-heading {
-  max-width: 760px;
-  margin: 0 auto;
+  max-width: 52rem;
+  margin: 0 auto clamp(2.25rem, 4.2vw, 3rem);
   text-align: center;
 }
 
-.process-heading .section-subtitle {
-  margin-left: auto;
-  margin-right: auto;
+.process-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.38rem 1.1rem;
+  margin-bottom: 1.25rem;
+  background-color: rgba(217, 155, 82, 0.12);
+  color: var(--color-accent-ochre);
+  border: 1px solid rgba(217, 155, 82, 0.55);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-extrabold);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.process-title {
+  color: #ffffff;
+  font-size: clamp(2.15rem, 4.1vw, 3.45rem);
+  font-weight: var(--font-weight-extrabold);
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  margin: 0 auto 1.15rem;
+  text-wrap: balance;
+}
+
+.process-heading .section-subtitle,
+.process-subtitle {
+  max-width: 50ch;
+  margin: 0 auto;
+  color: #cbd5e1;
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  line-height: 1.6;
 }
 
 .process-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.75rem;
-  margin-top: 2.75rem;
+  gap: clamp(1.15rem, 2.2vw, 1.5rem);
 }
 
 .process-card {
   position: relative;
-  min-height: 310px;
-  padding: 2.25rem 2rem 2rem;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  background-color: #ffffff;
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+  height: auto;
+  min-height: 220px;
+  padding: clamp(1.85rem, 3.2vw, 2.35rem);
+  background-color: rgba(19, 36, 58, 0.92);
+  border: 1.5px solid rgba(217, 155, 82, 0.48);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 28px -8px rgba(6, 16, 30, 0.45);
   display: flex;
   flex-direction: column;
+  gap: 0.65rem;
 }
 
 .process-number {
-  display: inline-grid;
-  width: 3rem;
-  height: 3rem;
-  margin-bottom: 1.5rem;
-  place-items: center;
-  border-radius: 50%;
-  background-color: var(--accent-orange);
-  color: #ffffff;
-  font-size: 1.35rem;
-  font-weight: 800;
+  display: block;
+  width: auto;
+  height: auto;
+  margin-bottom: 0.4rem;
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--color-accent-ochre);
+  font-size: clamp(2.65rem, 4vw, 3.4rem);
+  font-weight: var(--font-weight-extrabold);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
 }
 
 .process-card h3 {
-  margin-bottom: 0.85rem;
-  color: var(--primary-navy);
-  font-size: 1.45rem;
-  font-weight: 800;
-  line-height: 1.25;
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(1.18rem, 1.55vw, 1.32rem);
+  font-weight: var(--font-weight-extrabold);
+  line-height: 1.28;
 }
 
 .process-card p {
-  color: var(--text-muted);
-  font-size: 1.05rem;
-  line-height: 1.65;
-  margin-bottom: 1.25rem;
+  margin: 0;
+  color: #cbd5e1;
+  font-size: clamp(0.92rem, 1.1vw, 0.98rem);
+  line-height: 1.6;
 }
 
-.process-link {
-  display: inline-flex;
+.process-mid-cta {
+  margin-top: clamp(2.25rem, 4vw, 3rem);
+  margin-bottom: clamp(2.5rem, 4.5vw, 3.5rem);
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.45rem;
-  margin-top: auto;
-  color: var(--accent-orange);
-  font-size: 1rem;
-  font-weight: 800;
-  text-decoration: none;
-  transition: color var(--transition-fast);
+  justify-content: center;
+  text-align: center;
 }
 
-.process-link:hover,
-.process-link:focus-visible {
-  color: var(--accent-orange-hover);
-  text-decoration: underline;
+.process-primary-cta {
+  background-color: var(--color-accent-primary);
+  color: #ffffff;
+  border: 1.5px solid var(--color-accent-primary);
+  border-radius: var(--radius-sm);
+  font-weight: var(--font-weight-bold);
+  padding: 0.85rem 2rem;
+}
+
+.process-primary-cta:hover {
+  background-color: var(--color-accent-primary-hover);
+  border-color: var(--color-accent-primary-hover);
+}
+
+.process-bottom-band {
+  width: 100%;
+  height: clamp(2.25rem, 4vw, 3.25rem);
+  border-top: 1px solid rgba(217, 155, 82, 0.42);
+  background-image:
+    linear-gradient(90deg,
+      transparent 0%,
+      transparent 4.5%,
+      rgba(56, 189, 248, 0.16) 4.5%,
+      rgba(56, 189, 248, 0.16) calc(4.5% + 1px),
+      transparent calc(4.5% + 1px),
+      transparent 9%,
+      rgba(217, 155, 82, 0.22) 9%,
+      rgba(217, 155, 82, 0.22) calc(9% + 1px),
+      transparent calc(9% + 1px),
+      transparent 91%,
+      rgba(217, 155, 82, 0.22) 91%,
+      rgba(217, 155, 82, 0.22) calc(91% + 1px),
+      transparent calc(91% + 1px),
+      transparent 95.5%,
+      rgba(56, 189, 248, 0.16) 95.5%,
+      rgba(56, 189, 248, 0.16) calc(95.5% + 1px),
+      transparent calc(95.5% + 1px)
+    );
 }
 
 /* --------------------------------------------------------------------------
@@ -5390,58 +5463,7 @@ summary:focus-visible,
 
 /* Section 4 styles consolidated into Section 8b above */
 
-/* Section 5: How It Works (3 Step Cards in Row on Desktop, Vertical Stack on Small Screens) */
-.process-section {
-  background-color: #ffffff;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.process-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: clamp(1.15rem, 2.5vw, 1.75rem);
-}
-
-.process-card {
-  height: auto;
-  min-height: 0;
-  padding: clamp(1.6rem, 3vw, 2.15rem);
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-}
-
-.process-mid-cta {
-  margin-top: clamp(2rem, 4vw, 2.75rem);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-  text-align: center;
-}
-
-.process-secondary-link {
-  background: none;
-  border: none;
-  padding: 0.4rem 0.75rem;
-  font-family: inherit;
-  color: var(--primary-navy);
-  font-size: 0.98rem;
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  min-height: 48px;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  cursor: pointer;
-  transition: color var(--transition-fast);
-}
-
-.process-secondary-link:hover,
-.process-secondary-link:focus-visible {
-  color: var(--accent-orange);
-}
+/* Section 5 styles consolidated into Section 11 above */
 
 /* Section 6: What People Learn (Balanced 3 -> 2 -> 1 Card Grid using minmax) */
 .programs-section {
