@@ -218,12 +218,21 @@
           <li><a href="#footer" class="nav-link">Contact</a></li>
         </ul>
         <div class="mobile-cta-wrapper">
+          <button type="button" class="nav-search-trigger btn-site-search-trigger" style="width: 100%; justify-content: center; margin: 0 0 0.5rem;" aria-label="Search site programs, FAQs, and documents">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span>Search Site</span>
+          </button>
           <button type="button" class="btn-cta mobile-cta nav-apply-link btn-candidate-trigger">Apply for Training</button>
         </div>
       </div>
 
-      <!-- Right: Primary CTA Button -->
+      <!-- Right: Site Search & Primary CTA Button -->
       <div class="nav-right">
+        <button type="button" class="nav-search-trigger btn-site-search-trigger" id="openSiteSearchBtn" aria-label="Search site programs, FAQs, and documents">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span>Search</span>
+          <kbd class="nav-search-kbd" aria-hidden="true">/</kbd>
+        </button>
         <button type="button" class="btn-cta desktop-cta nav-apply-link btn-candidate-trigger">Apply for Training</button>
       </div>
     </nav>
@@ -920,6 +929,12 @@
             <button type="button" class="footer-action-link btn-doc-trigger">Download Documents</button>
           </li>
           <li>
+            <button type="button" class="footer-action-link btn-trainee-portal-trigger">Protected Worksite Portal</button>
+          </li>
+          <li>
+            <button type="button" class="footer-action-link btn-site-search-trigger">Site Search</button>
+          </li>
+          <li>
             <a class="footer-action-link" href="https://www.facebook.com/groups/1367088638276683/" target="_blank" rel="noopener noreferrer">Facebook Community</a>
           </li>
         </ul>
@@ -1417,7 +1432,8 @@
           Host Worksite Agreements and WIOA payroll packets are issued directly during employer partnership setup or participant onboarding. Submit a partnership request or view all public documents below.
         </p>
         <div class="collection-empty-actions">
-          <button type="button" class="btn-cta" id="resetDocFilterBtn">Show All Public Documents</button>
+          <button type="button" class="btn-cta btn-trainee-portal-trigger" id="openProtectedWorksiteGateBtn">Enter Worksite Passcode</button>
+          <button type="button" class="collection-empty-btn-secondary" id="resetDocFilterBtn">Show All Public Documents</button>
           <button type="button" class="collection-empty-btn-secondary btn-partner-trigger">Request Employer Partnership Packet</button>
         </div>
       </div>
@@ -1436,17 +1452,194 @@
     </div>
   </div>
 
-  <!-- TRAINEE PORTAL & WORKSITE HOURS MODAL -->
+  <!-- TRAINEE PORTAL & PASSWORD-PROTECTED WORKSITE GATE MODAL -->
   <div class="inquiry-modal" id="traineePortalModal" hidden>
     <div class="inquiry-modal-backdrop" data-trainee-portal-close></div>
     <div class="inquiry-modal-dialog modal-large" role="dialog" aria-modal="true" aria-labelledby="traineePortalModalTitle">
       <button type="button" class="inquiry-modal-close" data-trainee-portal-close aria-label="Close trainee portal">×</button>
-      <span class="section-eyebrow">Transitional Jobs Worksite Portal</span>
-      <h2 id="traineePortalModalTitle">Trainee Hours &amp; Milestone Tracker</h2>
-      <p class="modal-subtext">Track your 390-hour worksite progression, 195-hour online learning milestone, and internal retention readiness.</p>
-      <div class="tj-clockin-box" id="traineePortalBody">
-        <p style="margin: 0 0 0.75rem; color: var(--text-dark); font-size: 0.95rem;">Active trainees enrolled through the Career Center can log daily worksite hours and review progress with their site supervisor.</p>
-        <button type="button" class="btn-cta" data-trainee-portal-close>Close Portal</button>
+
+      <div id="traineePortalAuthView">
+        <div class="protected-gate-banner">
+          <span class="protected-gate-badge">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Password-Protected Content • Enrolled Trainees &amp; Worksite Partners
+          </span>
+          <h2 id="traineePortalModalTitle" style="color: #ffffff; font-size: 1.38rem; font-weight: 800; margin: 0 0 0.35rem;">Transitional Jobs Worksite &amp; Document Gate</h2>
+          <p>Protected access for enrolled trainees, worksite supervisors, and career coaches to view the 390-hour milestone tracker and WIOA Host Worksite Agreement packet.</p>
+        </div>
+
+        <div class="protected-instructions-box" aria-label="Instructions for accessing protected worksite content">
+          <div class="protected-instructions-title">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            Clear Instructions for Unlocking This Content
+          </div>
+          <ol class="protected-instructions-list">
+            <li><strong>Who is authorized:</strong> Active trainees enrolled through the Opelika or Valley Career Center, approved host worksite supervisors, and Springboards staff.</li>
+            <li><strong>Enter your passcode:</strong> Type the worksite passcode or staff PIN issued during Career Center orientation or employer onboarding.</li>
+            <li><strong>Need a passcode?</strong> If you are a new candidate or prospective employer partner, use the links at the bottom of this window to apply or request your onboarding packet.</li>
+          </ol>
+        </div>
+
+        <form id="traineePortalAuthForm" class="program-inquiry-form" novalidate>
+          <div style="text-align: left; margin-bottom: 1rem;">
+            <label for="traineePortalPasscodeInput" style="font-size: 0.85rem; font-weight: 700; color: var(--primary-navy); display: block; margin-bottom: 0.35rem;">
+              Worksite Passcode or Staff PIN <span style="color: #dc2626;" aria-hidden="true">*</span>
+            </label>
+            <div class="protected-input-wrap">
+              <input
+                type="password"
+                id="traineePortalPasscodeInput"
+                name="passcode"
+                autocomplete="current-password"
+                placeholder="Enter assigned worksite passcode"
+                required
+                aria-describedby="traineePortalHint traineePortalErrorAlert"
+                style="width: 100%; padding: 0.75rem; border: 1.5px solid #cbd5e1; border-radius: var(--radius-sm); font-size: 1rem;"
+              >
+              <button
+                type="button"
+                class="protected-toggle-visibility"
+                id="traineePortalToggleVisibility"
+                aria-pressed="false"
+                aria-label="Show worksite passcode"
+              >Show</button>
+            </div>
+            <span id="traineePortalHint" style="display: block; font-size: 0.78rem; color: #475569; margin-top: 0.35rem;">Passcodes are case-sensitive and issued upon WIOA Activity 220 or OJT placement verification.</span>
+            <div id="traineePortalCapsWarning" class="protected-caps-warning" hidden>
+              <span aria-hidden="true">⚠️</span> Caps Lock is active — check capitalization before submitting.
+            </div>
+          </div>
+
+          <button type="submit" class="btn-cta program-submit" id="traineePortalSubmitBtn" style="width: 100%;">
+            Unlock Worksite Portal &amp; Protected Documents &rarr;
+          </button>
+
+          <div id="traineePortalErrorAlert" class="protected-error-banner" role="alert" aria-live="assertive" hidden></div>
+        </form>
+
+        <div class="protected-help-footer">
+          <strong>Don’t have a worksite passcode yet?</strong>
+          New trainees can <button type="button" class="search-result-action-link btn-candidate-trigger" data-trainee-portal-close>Apply for Tuition-Free Training</button>, and employers can <button type="button" class="search-result-action-link btn-partner-trigger" data-trainee-portal-close>Request an Employer Partnership Packet</button> or call <a href="tel:731.388.WORK">731.388.WORK</a>.
+        </div>
+      </div>
+
+      <div id="traineePortalUnlockedView" class="protected-unlocked-panel" hidden>
+        <span class="section-eyebrow" style="color: #15803d;">✓ Passcode Verified • Session Unlocked</span>
+        <h3 style="color: var(--primary-navy); margin: 0.25rem 0 0.4rem;">390-Hour Worksite Milestone Tracker &amp; Protected Documents</h3>
+        <p style="font-size: 0.88rem; color: #334155; margin: 0;">Active trainees enrolled through the Career Center log daily worksite hours and review retention milestones with their supervisor.</p>
+
+        <div class="protected-milestone-grid">
+          <div class="protected-milestone-card">
+            <strong>195 Hours</strong>
+            <span>Foundational Craft &amp; OSHA 10 Classroom Milestone</span>
+          </div>
+          <div class="protected-milestone-card">
+            <strong>390 Hours</strong>
+            <span>Paid Transitional Job Worksite Progression Cap</span>
+          </div>
+          <div class="protected-milestone-card">
+            <strong>100% WIOA</strong>
+            <span>Activity 220 &amp; OJT Wage Reimbursement Track</span>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 0.65rem; margin-top: 1rem;">
+          <a href="/Worksite Agreement_Springboards.pdf" download="Worksite_Agreement_Springboards.pdf" class="btn-cta">Download Protected Worksite Agreement (PDF) ↓</a>
+          <a href="/backoffice" class="collection-empty-btn-secondary">Open Full Staff Backoffice ↗</a>
+          <button type="button" class="collection-empty-btn-secondary" id="traineePortalLockBtn">Lock Session</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SITE SEARCH & SEARCH RESULTS PAGE MODAL -->
+  <div class="inquiry-modal" id="siteSearchModal" hidden>
+    <div class="inquiry-modal-backdrop" data-site-search-close></div>
+    <div class="inquiry-modal-dialog modal-large" role="dialog" aria-modal="true" aria-labelledby="siteSearchModalTitle">
+      <button type="button" class="inquiry-modal-close" data-site-search-close aria-label="Close site search">×</button>
+      <span class="section-eyebrow">Site-Wide Directory &amp; Instant Finder</span>
+      <h2 id="siteSearchModalTitle" style="margin-bottom: 0.35rem;">Search Springboards Programs, FAQs &amp; Resources</h2>
+      <p class="modal-subtext" style="margin-bottom: 1rem;">Search trade pathways, WIOA eligibility rules, Career Center locations, transitional jobs, or downloadable forms.</p>
+
+      <div class="site-search-hero-bar">
+        <form id="siteSearchForm" class="site-search-form" role="search" novalidate>
+          <div class="site-search-input-wrap">
+            <svg class="site-search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input
+              type="search"
+              id="siteSearchInput"
+              class="site-search-input"
+              placeholder="Search e.g. Carpentry, HVAC, OSHA 10, WIOA eligibility, paid training..."
+              autocomplete="off"
+              aria-label="Search Springboards website"
+            >
+            <button type="button" id="siteSearchClearBtn" class="site-search-clear" hidden aria-label="Clear search query">Clear</button>
+          </div>
+          <button type="submit" class="btn-cta" style="min-height: 3.1rem; padding: 0 1.25rem;">Search</button>
+        </form>
+      </div>
+
+      <div class="site-search-meta-bar">
+        <p id="siteSearchResultCount" class="site-search-count" role="status" aria-live="polite">Showing all 12 indexed site resources</p>
+        <div class="site-search-filters" role="group" aria-label="Filter search results by category">
+          <button type="button" class="site-search-filter-btn is-active" data-search-category="all" aria-pressed="true">All Results</button>
+          <button type="button" class="site-search-filter-btn" data-search-category="programs" aria-pressed="false">Trade Programs</button>
+          <button type="button" class="site-search-filter-btn" data-search-category="eligibility" aria-pressed="false">WIOA &amp; Eligibility</button>
+          <button type="button" class="site-search-filter-btn" data-search-category="faq" aria-pressed="false">FAQ Answers</button>
+          <button type="button" class="site-search-filter-btn" data-search-category="documents" aria-pressed="false">Documents</button>
+        </div>
+      </div>
+
+      <!-- Search Results List -->
+      <div id="siteSearchResultsList" class="search-results-list" role="region" aria-label="Search results"></div>
+
+      <!-- Unsuccessful Search Recovery State -->
+      <div id="siteSearchEmptyState" class="search-empty-recovery" hidden>
+        <div class="search-empty-header">
+          <div class="search-empty-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <line x1="8" y1="11" x2="14" y2="11"></line>
+            </svg>
+          </div>
+          <div>
+            <h3 id="siteSearchEmptyTitle" class="search-empty-title">No matching results found</h3>
+            <p id="siteSearchEmptyDesc" class="search-empty-desc">We couldn’t find any pages, trade modules, or FAQs matching that exact phrase. Try one of the suggested topics below or adjust your search terms.</p>
+          </div>
+        </div>
+
+        <div class="search-tips-box">
+          <h4>Helpful Search Tips</h4>
+          <ul class="search-tips-list">
+            <li>Check for spelling typos or try a shorter keyword (for example, search <strong>“carpentry”</strong>, <strong>“HVAC”</strong>, <strong>“paid”</strong>, or <strong>“OSHA”</strong>).</li>
+            <li>If you are looking for enrollment requirements, try searching <strong>“eligibility”</strong>, <strong>“returning citizen”</strong>, or <strong>“Career Center”</strong>.</li>
+            <li>Switch the category filter above back to <strong>All Results</strong> to search across every section of the site.</li>
+          </ul>
+        </div>
+
+        <div>
+          <span style="display: block; font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--primary-navy); margin-bottom: 0.4rem;">Try a Popular Search Topic:</span>
+          <div class="search-suggestion-chips">
+            <button type="button" class="search-suggestion-chip" data-suggest-query="Carpentry">Carpentry &amp; Framing</button>
+            <button type="button" class="search-suggestion-chip" data-suggest-query="Electrical">Electrical &amp; Wiring</button>
+            <button type="button" class="search-suggestion-chip" data-suggest-query="HVAC">HVAC &amp; Mechanical</button>
+            <button type="button" class="search-suggestion-chip" data-suggest-query="Plumbing">Plumbing &amp; Pipefitting</button>
+            <button type="button" class="search-suggestion-chip" data-suggest-query="WIOA Eligibility">WIOA Eligibility Check</button>
+            <button type="button" class="search-suggestion-chip" data-suggest-query="Transitional Jobs">390-Hour Paid Transitional Jobs</button>
+            <button type="button" class="search-suggestion-chip" data-suggest-query="Free">100% Tuition-Free Training</button>
+            <button type="button" class="search-suggestion-chip" data-suggest-query="Document">Brochure &amp; Flyer Downloads</button>
+          </div>
+        </div>
+
+        <div class="collection-empty-actions" style="justify-content: flex-start; margin-top: 0.75rem;">
+          <button type="button" class="btn-cta" id="resetSiteSearchBtn">Show All Site Resources</button>
+          <button type="button" class="collection-empty-btn-secondary btn-candidate-trigger" data-site-search-close>Apply for Training</button>
+          <a href="/eligibility" class="collection-empty-btn-secondary">Check WIOA Eligibility &rarr;</a>
+        </div>
       </div>
     </div>
   </div>

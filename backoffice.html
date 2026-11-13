@@ -408,21 +408,33 @@
     </div>
   </header>
 
-  <!-- Login Section (when unauthenticated) -->
+  <!-- Branded Password-Protected Gate (when unauthenticated) -->
   <div id="section-auth" class="login-wrapper">
-    <div class="login-card">
-      <img src="/springboards_logo.webp" alt="Springboards Logo" class="login-logo" width="198" height="52" decoding="async">
-      <span class="section-eyebrow" style="color: var(--accent-orange);">Leadership Portal</span>
-      <h1 class="section-title" style="font-size: 1.65rem; margin-bottom: 0.5rem;">Executive Admin Login</h1>
-      <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.5rem;">
-        Restricted administrative portal for authorized Springboards workforce leadership and compliance staff.
-      </p>
+    <div class="login-card" style="max-width: 520px; width: 100%; padding: 2rem;">
+      <img src="/springboards_logo.webp" alt="Springboards Logo" class="login-logo" width="198" height="52" decoding="async" style="margin-bottom: 1rem;">
 
-      <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: var(--radius-sm); padding: 0.75rem; margin-bottom: 1.25rem; font-size: 0.8rem; color: #166534; text-align: left;">
-        🔒 <strong>Authenticated Session Required:</strong> Sign in with an authorized Springboards Google Workspace account or enter your executive passcode.
+      <div class="protected-gate-banner">
+        <span class="protected-gate-badge">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Password-Protected Portal • WIOA &amp; Board Governance
+        </span>
+        <h1 style="color: #ffffff; font-size: 1.45rem; font-weight: 800; margin: 0 0 0.35rem;">Executive &amp; Workforce Staff Gate</h1>
+        <p>This protected area contains confidential candidate intake records, WIOA/ETPL compliance evidence, and board governance workflows.</p>
       </div>
 
-      <button type="button" class="gsi-material-button" style="width: 100%; height: 46px; margin-bottom: 1.25rem;" onclick="loginWithGoogle()">
+      <div class="protected-instructions-box" aria-label="Access instructions">
+        <div class="protected-instructions-title">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          How to Access This Protected Page
+        </div>
+        <ol class="protected-instructions-list">
+          <li><strong>Google Workspace SSO:</strong> Authorized leadership (<code>info@springboardsfcd.org</code> or approved board members) can sign in directly with Google.</li>
+          <li><strong>Executive Passcode:</strong> Enter your assigned administrative passcode below to unlock full governance and compliance controls.</li>
+          <li><strong>Staff Roster PIN:</strong> Field instructors and career coaches can switch to the <em>Staff Phone + PIN</em> tab to sign in with their 10-digit mobile number and 4-digit PIN.</li>
+        </ol>
+      </div>
+
+      <button type="button" class="gsi-material-button" style="width: 100%; height: 46px; margin-bottom: 1.15rem;" onclick="loginWithGoogle()">
         <div class="gsi-material-button-state"></div>
         <div class="gsi-material-button-content-wrapper">
           <div class="gsi-material-button-icon">
@@ -438,23 +450,66 @@
         </div>
       </button>
 
-      <div style="display: flex; align-items: center; margin: 1.25rem 0; gap: 0.75rem;">
+      <div style="display: flex; align-items: center; margin: 1.1rem 0; gap: 0.75rem;">
         <div style="flex: 1; height: 1px; background: var(--admin-border);"></div>
-        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700;">OR ENTER PASSCODE</span>
+        <span style="font-size: 0.74rem; color: var(--text-muted); font-weight: 800; letter-spacing: 0.06em;">OR VERIFY CREDENTIALS</span>
         <div style="flex: 1; height: 1px; background: var(--admin-border);"></div>
       </div>
 
-      <form onsubmit="loginWithPasscode(event)">
+      <div class="protected-auth-tabs" role="tablist" aria-label="Credential verification method">
+        <button type="button" role="tab" id="tab-auth-passcode" class="protected-auth-tab is-active" aria-selected="true" onclick="switchAuthTab('passcode')">
+          Executive Passcode
+        </button>
+        <button type="button" role="tab" id="tab-auth-staff" class="protected-auth-tab" aria-selected="false" onclick="switchAuthTab('staff')">
+          Staff Phone + PIN
+        </button>
+      </div>
+
+      <form id="form-auth-passcode" onsubmit="loginWithPasscode(event)" novalidate>
         <div style="text-align: left; margin-bottom: 1rem;">
-          <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-dark); display: block; margin-bottom: 0.35rem;" for="input-passcode">Executive Passcode</label>
-          <input type="password" id="input-passcode" class="form-input" autocomplete="current-password" placeholder="Enter admin passcode" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: var(--radius-sm); font-size: 1rem;">
+          <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-dark); display: block; margin-bottom: 0.35rem;" for="input-passcode">
+            Executive Passcode <span style="color: #dc2626;" aria-hidden="true">*</span>
+          </label>
+          <div class="protected-input-wrap">
+            <input type="password" id="input-passcode" class="form-input" autocomplete="current-password" placeholder="Enter authorized passcode" required aria-describedby="passcode-help-hint auth-error-alert" style="width: 100%; padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: var(--radius-sm); font-size: 1rem;">
+            <button type="button" class="protected-toggle-visibility" id="btn-toggle-passcode" aria-pressed="false" aria-label="Show passcode characters" onclick="togglePasscodeVisibility('input-passcode', 'btn-toggle-passcode')">Show</button>
+          </div>
+          <span id="passcode-help-hint" style="display: block; font-size: 0.76rem; color: var(--text-muted); margin-top: 0.35rem;">Case-sensitive administrative passcode issued to leadership and WIOA reviewers.</span>
+          <div id="auth-caps-warning" class="protected-caps-warning" hidden>
+            <span aria-hidden="true">⚠️</span> Caps Lock is turned on — passcodes are case-sensitive.
+          </div>
         </div>
-        <button type="submit" class="btn-cta" style="width: 100%; padding: 0.85rem; font-size: 1rem;">
-          Enter Leadership Backoffice &rarr;
+        <button type="submit" id="btn-submit-passcode" class="btn-cta" style="width: 100%; padding: 0.85rem; font-size: 1rem;">
+          Unlock Protected Portal &rarr;
         </button>
       </form>
 
-      <div id="auth-error-alert" role="alert" aria-live="assertive" style="display: none; background: #FEE2E2; border: 1px solid #F87171; color: #991B1B; padding: 0.75rem; border-radius: var(--radius-sm); font-size: 0.85rem; margin-top: 1rem;"></div>
+      <form id="form-auth-staff" onsubmit="loginWithStaffPin(event)" novalidate hidden>
+        <div style="text-align: left; margin-bottom: 0.85rem;">
+          <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-dark); display: block; margin-bottom: 0.35rem;" for="input-staff-phone">
+            Registered Mobile Phone <span style="color: #dc2626;" aria-hidden="true">*</span>
+          </label>
+          <input type="tel" id="input-staff-phone" class="form-input" autocomplete="tel" inputmode="tel" placeholder="(334) 556-0000" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: var(--radius-sm); font-size: 1rem;">
+        </div>
+        <div style="text-align: left; margin-bottom: 1rem;">
+          <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-dark); display: block; margin-bottom: 0.35rem;" for="input-staff-pin">
+            4-Digit Staff PIN <span style="color: #dc2626;" aria-hidden="true">*</span>
+          </label>
+          <div class="protected-input-wrap">
+            <input type="password" id="input-staff-pin" class="form-input" inputmode="numeric" maxlength="8" autocomplete="one-time-code" placeholder="Enter 4-digit PIN" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: var(--radius-sm); font-size: 1rem;">
+            <button type="button" class="protected-toggle-visibility" id="btn-toggle-staff-pin" aria-pressed="false" aria-label="Show staff PIN" onclick="togglePasscodeVisibility('input-staff-pin', 'btn-toggle-staff-pin')">Show</button>
+          </div>
+        </div>
+        <button type="submit" id="btn-submit-staff" class="btn-cta" style="width: 100%; padding: 0.85rem; font-size: 1rem;">
+          Verify Staff Roster Access &rarr;
+        </button>
+      </form>
+
+      <div id="auth-error-alert" class="protected-error-banner" role="alert" aria-live="assertive" style="display: none;"></div>
+
+      <div class="protected-help-footer">
+        <strong>Need access or locked out?</strong> Contact Technical Publisher Marilynn Ward or Executive Director Marvin Thompson at <a href="mailto:info@springboardsfcd.org">info@springboardsfcd.org</a> or call <a href="tel:731.388.WORK">731.388.WORK</a>. Looking for public trade programs? <a href="/">Return to Public Homepage &rarr;</a>
+      </div>
     </div>
   </div>
 
@@ -1151,6 +1206,69 @@
       };
     }
 
+    function switchAuthTab(mode) {
+      const passTab = document.getElementById('tab-auth-passcode');
+      const staffTab = document.getElementById('tab-auth-staff');
+      const passForm = document.getElementById('form-auth-passcode');
+      const staffForm = document.getElementById('form-auth-staff');
+      const errBox = document.getElementById('auth-error-alert');
+      if (errBox) errBox.style.display = 'none';
+
+      if (mode === 'staff') {
+        passTab.classList.remove('is-active');
+        passTab.setAttribute('aria-selected', 'false');
+        staffTab.classList.add('is-active');
+        staffTab.setAttribute('aria-selected', 'true');
+        passForm.hidden = true;
+        staffForm.hidden = false;
+        document.getElementById('input-staff-phone')?.focus();
+      } else {
+        staffTab.classList.remove('is-active');
+        staffTab.setAttribute('aria-selected', 'false');
+        passTab.classList.add('is-active');
+        passTab.setAttribute('aria-selected', 'true');
+        staffForm.hidden = true;
+        passForm.hidden = false;
+        document.getElementById('input-passcode')?.focus();
+      }
+    }
+
+    function togglePasscodeVisibility(inputId, btnId) {
+      const input = document.getElementById(inputId);
+      const btn = document.getElementById(btnId);
+      if (!input || !btn) return;
+      const isHidden = input.type === 'password';
+      input.type = isHidden ? 'text' : 'password';
+      btn.textContent = isHidden ? 'Hide' : 'Show';
+      btn.setAttribute('aria-pressed', String(isHidden));
+      input.focus();
+    }
+
+    function renderProtectedAuthError(title, detail, suggestions) {
+      const errBox = document.getElementById('auth-error-alert');
+      if (!errBox) return;
+      const listHtml = Array.isArray(suggestions) && suggestions.length
+        ? `<ul>${suggestions.map((s) => `<li>${s}</li>`).join('')}</ul>`
+        : '';
+      errBox.innerHTML = `<strong>🔒 ${title}</strong><span>${detail}</span>${listHtml}`;
+      errBox.style.display = 'block';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const passInput = document.getElementById('input-passcode');
+      const capsWarn = document.getElementById('auth-caps-warning');
+      if (passInput && capsWarn) {
+        const checkCaps = (e) => {
+          if (typeof e.getModifierState === 'function') {
+            capsWarn.hidden = !e.getModifierState('CapsLock');
+          }
+        };
+        passInput.addEventListener('keydown', checkCaps);
+        passInput.addEventListener('keyup', checkCaps);
+        passInput.addEventListener('blur', () => { capsWarn.hidden = true; });
+      }
+    });
+
     async function loginWithGoogle() {
       try {
         if (window.SpringboardsWorkspace?.signInWithGoogle) {
@@ -1167,26 +1285,90 @@
           return;
         }
       } catch (err) {
-        const errBox = document.getElementById('auth-error-alert');
-        if (errBox) {
-          errBox.textContent = 'Google Sign-In could not be completed. Please enter your executive passcode.';
-          errBox.style.display = 'block';
-        }
+        renderProtectedAuthError(
+          'Google Workspace Sign-In Not Completed',
+          'We could not verify an authorized Springboards Google Workspace session.',
+          [
+            'Ensure pop-ups are allowed for springboardsfcd.org and sign in with your @springboardsfcd.org or authorized leadership email.',
+            'Or enter your Executive Passcode or Staff Roster PIN below.'
+          ]
+        );
       }
     }
 
     async function loginWithPasscode(e) {
       e.preventDefault();
-      const code = document.getElementById('input-passcode').value.trim();
+      const passInput = document.getElementById('input-passcode');
+      const code = (passInput?.value || '').trim();
+      if (!code) {
+        if (passInput) {
+          passInput.classList.add('is-invalid');
+          passInput.setAttribute('aria-invalid', 'true');
+          passInput.focus();
+        }
+        renderProtectedAuthError(
+          'Passcode Required',
+          'Please enter your executive administrative passcode before continuing.',
+          ['Enter the passcode provided by Springboards leadership or switch to the Staff Phone + PIN tab.']
+        );
+        return;
+      }
+      if (passInput) {
+        passInput.classList.remove('is-invalid');
+        passInput.removeAttribute('aria-invalid');
+      }
       await executeAdminLogin({
         type: 'admin',
         adminCode: code
       });
     }
 
+    async function loginWithStaffPin(e) {
+      e.preventDefault();
+      const phoneInput = document.getElementById('input-staff-phone');
+      const pinInput = document.getElementById('input-staff-pin');
+      const phone = (phoneInput?.value || '').trim();
+      const pin = (pinInput?.value || '').trim();
+      const digits = phone.replace(/\D/g, '');
+
+      if (digits.length < 10) {
+        if (phoneInput) {
+          phoneInput.classList.add('is-invalid');
+          phoneInput.setAttribute('aria-invalid', 'true');
+          phoneInput.focus();
+        }
+        renderProtectedAuthError(
+          'Valid 10-Digit Phone Required',
+          'Please enter the 10-digit mobile phone number listed on the Springboards staff roster.',
+          ['Format example: (334) 556-0000']
+        );
+        return;
+      }
+      if (!pin) {
+        if (pinInput) {
+          pinInput.classList.add('is-invalid');
+          pinInput.setAttribute('aria-invalid', 'true');
+          pinInput.focus();
+        }
+        renderProtectedAuthError(
+          'Staff PIN Required',
+          'Please enter your 4-digit staff PIN to verify your roster identity.',
+          ['Contact your program director if you need your staff PIN reissued.']
+        );
+        return;
+      }
+      phoneInput?.classList.remove('is-invalid');
+      pinInput?.classList.remove('is-invalid');
+      await executeAdminLogin({ phone, pin });
+    }
+
     async function executeAdminLogin(payload) {
       const errBox = document.getElementById('auth-error-alert');
-      errBox.style.display = 'none';
+      if (errBox) errBox.style.display = 'none';
+      const passBtn = document.getElementById('btn-submit-passcode');
+      const staffBtn = document.getElementById('btn-submit-staff');
+      if (passBtn) passBtn.setAttribute('aria-busy', 'true');
+      if (staffBtn) staffBtn.setAttribute('aria-busy', 'true');
 
       try {
         const res = await fetch('/api/backoffice/auth', {
@@ -1205,12 +1387,28 @@
           showPortal();
           await loadBackofficeData();
         } else {
-          errBox.textContent = data.error || 'Authentication failed. Please verify credentials.';
-          errBox.style.display = 'block';
+          const isRateLimited = res.status === 429;
+          renderProtectedAuthError(
+            isRateLimited ? 'Too Many Verification Attempts' : 'Access Denied — Invalid Credentials',
+            data.error || 'The passcode or staff credentials you entered were not recognized.',
+            isRateLimited
+              ? ['Please wait a few minutes before trying again or contact info@springboardsfcd.org for immediate assistance.']
+              : [
+                  'Verify that Caps Lock is off and there are no leading or trailing spaces.',
+                  'Ensure you selected the correct tab (Executive Passcode vs. Staff Phone + PIN).',
+                  'Need authorization? Email info@springboardsfcd.org or call 731.388.WORK.'
+                ]
+          );
         }
       } catch (err) {
-        errBox.textContent = 'Server connection error. Please try again.';
-        errBox.style.display = 'block';
+        renderProtectedAuthError(
+          'Connection Error During Verification',
+          'We could not reach the authentication service to verify your passcode.',
+          ['Check your internet connection and click Unlock Protected Portal to try again.']
+        );
+      } finally {
+        if (passBtn) passBtn.removeAttribute('aria-busy');
+        if (staffBtn) staffBtn.removeAttribute('aria-busy');
       }
     }
 

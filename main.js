@@ -1235,25 +1235,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // TRAINEE PORTAL & WORKSITE HOURS MODAL
-  const traineePortalModal = document.getElementById("traineePortalModal");
-  document.querySelectorAll(".btn-trainee-portal-trigger").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      if (traineePortalModal) {
-        openModalWithFocus(traineePortalModal, traineePortalModal.querySelector(".btn-cta, .inquiry-modal-close"));
-      }
-    });
-  });
-
-  if (traineePortalModal) {
-    traineePortalModal.querySelectorAll("[data-trainee-portal-close]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        closeModalWithFocus(traineePortalModal);
-      });
-    });
-  }
-
   // BACK TO TOP FLOATING BUTTON
   const backToTopBtn = document.getElementById("backToTop");
   if (backToTopBtn) {
@@ -1482,6 +1463,557 @@ document.addEventListener("DOMContentLoaded", () => {
     resetBtnId: "resetDocFilterBtn",
     emptyQueryLabel: "No documents matched"
   });
+
+  // =========================================================================
+  // 4. PASSWORD-PROTECTED WORKSITE & DOCUMENT GATE CONTROLLER
+  // =========================================================================
+  const traineePortalModal = document.getElementById("traineePortalModal");
+  const traineeAuthView = document.getElementById("traineePortalAuthView");
+  const traineeUnlockedView = document.getElementById("traineePortalUnlockedView");
+  const traineeAuthForm = document.getElementById("traineePortalAuthForm");
+  const traineePassInput = document.getElementById("traineePortalPasscodeInput");
+  const traineeToggleVis = document.getElementById("traineePortalToggleVisibility");
+  const traineeCapsWarn = document.getElementById("traineePortalCapsWarning");
+  const traineeErrorAlert = document.getElementById("traineePortalErrorAlert");
+  const traineeSubmitBtn = document.getElementById("traineePortalSubmitBtn");
+  const traineeLockBtn = document.getElementById("traineePortalLockBtn");
+
+  const openTraineePortalGate = () => {
+    if (!traineePortalModal) return;
+    // Close document modal if open so modals don't stack
+    const docModal = document.getElementById("documentModal");
+    if (docModal && !docModal.hidden) docModal.hidden = true;
+
+    traineePortalModal.hidden = false;
+    document.body.style.overflow = "hidden";
+    if (traineeErrorAlert) traineeErrorAlert.hidden = true;
+    setTimeout(() => {
+      if (traineeAuthView && !traineeAuthView.hidden) {
+        traineePassInput?.focus();
+      }
+    }, 60);
+  };
+
+  const closeTraineePortalGate = () => {
+    if (!traineePortalModal) return;
+    traineePortalModal.hidden = true;
+    document.body.style.overflow = "";
+  };
+
+  document.querySelectorAll(".btn-trainee-portal-trigger").forEach((btn) => {
+    btn.addEventListener("click", openTraineePortalGate);
+  });
+
+  document.querySelectorAll("[data-trainee-portal-close]").forEach((el) => {
+    el.addEventListener("click", closeTraineePortalGate);
+  });
+
+  traineeToggleVis?.addEventListener("click", () => {
+    if (!traineePassInput) return;
+    const isPassword = traineePassInput.type === "password";
+    traineePassInput.type = isPassword ? "text" : "password";
+    traineeToggleVis.textContent = isPassword ? "Hide" : "Show";
+    traineeToggleVis.setAttribute("aria-pressed", String(isPassword));
+    traineePassInput.focus();
+  });
+
+  if (traineePassInput && traineeCapsWarn) {
+    const checkCapsLock = (event) => {
+      if (typeof event.getModifierState === "function") {
+        traineeCapsWarn.hidden = !event.getModifierState("CapsLock");
+      }
+    };
+    traineePassInput.addEventListener("keydown", checkCapsLock);
+    traineePassInput.addEventListener("keyup", checkCapsLock);
+    traineePassInput.addEventListener("blur", () => {
+      traineeCapsWarn.hidden = true;
+    });
+  }
+
+  const showTraineeGateError = (title, message, steps = []) => {
+    if (!traineeErrorAlert) return;
+    const stepsHtml = steps.length
+      ? `<ul>${steps.map((s) => `<li>${s}</li>`).join("")}</ul>`
+      : "";
+    traineeErrorAlert.innerHTML = `<strong>🔒 ${title}</strong><span>${message}</span>${stepsHtml}`;
+    traineeErrorAlert.hidden = false;
+  };
+
+  traineeAuthForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const code = (traineePassInput?.value || "").trim();
+    if (!code) {
+      if (traineePassInput) {
+        traineePassInput.classList.add("is-invalid");
+        traineePassInput.setAttribute("aria-invalid", "true");
+        traineePassInput.focus();
+      }
+      showTraineeGateError(
+        "Worksite Passcode Required",
+        "Please enter your assigned worksite passcode or staff PIN before submitting.",
+        [
+          "Check your Career Center orientation packet or employer onboarding email for your passcode.",
+          "New candidates can click Apply for Tuition-Free Training below."
+        ]
+      );
+      return;
+    }
+
+    if (traineePassInput) {
+      traineePassInput.classList.remove("is-invalid");
+      traineePassInput.removeAttribute("aria-invalid");
+    }
+    if (traineeErrorAlert) traineeErrorAlert.hidden = true;
+    if (traineeSubmitBtn) {
+      traineeSubmitBtn.classList.add("is-loading");
+      traineeSubmitBtn.setAttribute("aria-busy", "true");
+      traineeSubmitBtn.disabled = true;
+    }
+
+    try {
+      const response = await fetch("/api/backoffice/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "admin", adminCode: code })
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        if (traineeAuthView) traineeAuthView.hidden = true;
+        if (traineeUnlockedView) traineeUnlockedView.hidden = false;
+        if (traineePassInput) traineePassInput.value = "";
+      } else {
+        if (traineePassInput) {
+          traineePassInput.classList.add("is-invalid");
+          traineePassInput.setAttribute("aria-invalid", "true");
+          traineePassInput.focus();
+        }
+        showTraineeGateError(
+          response.status === 429 ? "Too Many Passcode Attempts" : "Passcode Not Recognized",
+          data.error || "The passcode entered does not match an active worksite or staff credential.",
+          [
+            "Verify that Caps Lock is turned off and there are no extra spaces.",
+            "Confirm your WIOA Activity 220 or OJT placement status with your Career Center case manager.",
+            "Need help? Call 731.388.WORK or email info@springboardsfcd.org."
+          ]
+        );
+      }
+    } catch {
+      showTraineeGateError(
+        "Verification Service Temporarily Unavailable",
+        "We could not verify your worksite passcode right now due to a connection interruption.",
+        ["Please check your network connection and try again, or call 731.388.WORK."]
+      );
+    } finally {
+      if (traineeSubmitBtn) {
+        traineeSubmitBtn.classList.remove("is-loading");
+        traineeSubmitBtn.removeAttribute("aria-busy");
+        traineeSubmitBtn.disabled = false;
+      }
+    }
+  });
+
+  traineeLockBtn?.addEventListener("click", () => {
+    if (traineeUnlockedView) traineeUnlockedView.hidden = true;
+    if (traineeAuthView) traineeAuthView.hidden = false;
+    if (traineeErrorAlert) traineeErrorAlert.hidden = true;
+    traineePassInput?.focus();
+  });
+
+  // =========================================================================
+  // 5. SITE SEARCH & SEARCH RESULTS PAGE CONTROLLER
+  // =========================================================================
+  const SITE_SEARCH_INDEX = [
+    {
+      id: "prog-carpentry",
+      category: "programs",
+      categoryLabel: "Trade Program",
+      breadcrumb: "springboardsfcd.org › Programs › Carpentry",
+      title: "Carpentry & Construction Technology",
+      snippet: "Hands-on residential and commercial framing, blueprint reading, floor/wall layout, roof rafters, and power tool mastery in Shawmut, AL.",
+      tags: ["100% Tuition-Free", "NCCER Craft", "Hands-On Workshop"],
+      keywords: "carpentry wood framing construction blueprint rafters layout tools hammer saw",
+      href: "#our-programs",
+      actionLabel: "View Carpentry Program →"
+    },
+    {
+      id: "prog-electrical",
+      category: "programs",
+      categoryLabel: "Trade Program",
+      breadcrumb: "springboardsfcd.org › Programs › Electrical",
+      title: "Electrical & Residential/Commercial Wiring",
+      snippet: "Learn National Electrical Code (NEC) fundamentals, circuit installation, conduit bending, breaker panels, switches, and multimeter diagnostics.",
+      tags: ["100% Tuition-Free", "NEC Code", "Circuit Diagnostics"],
+      keywords: "electrical electrician wiring conduit circuits voltage NEC switches outlets",
+      href: "#our-programs",
+      actionLabel: "View Electrical Program →"
+    },
+    {
+      id: "prog-hvac",
+      category: "programs",
+      categoryLabel: "Trade Program",
+      breadcrumb: "springboardsfcd.org › Programs › HVAC",
+      title: "HVAC & Mechanical Systems",
+      snippet: "Heating, ventilation, and air conditioning fundamentals, airflow diagnostics, ductwork installation, refrigerant safety, and thermostat controls.",
+      tags: ["100% Tuition-Free", "Mechanical Systems", "High-Demand Trade"],
+      keywords: "hvac heating cooling air conditioning ductwork mechanical refrigerant technician",
+      href: "#our-programs",
+      actionLabel: "View HVAC Program →"
+    },
+    {
+      id: "prog-plumbing",
+      category: "programs",
+      categoryLabel: "Trade Program",
+      breadcrumb: "springboardsfcd.org › Programs › Plumbing",
+      title: "Plumbing & Pipefitting Fundamentals",
+      snippet: "Install and repair PEX, PVC, and copper piping systems, drainage assemblies, commercial fixtures, valves, and water pressure testing.",
+      tags: ["100% Tuition-Free", "Copper / PEX / PVC", "Fixture Installation"],
+      keywords: "plumbing plumber pipefitting pipes water drainage copper pvc pex fixtures",
+      href: "#our-programs",
+      actionLabel: "View Plumbing Program →"
+    },
+    {
+      id: "prog-safety-osha",
+      category: "programs",
+      categoryLabel: "Trade Program",
+      breadcrumb: "springboardsfcd.org › Programs › Jobsite Safety",
+      title: "OSHA 10-Hour Construction Safety & Work Readiness",
+      snippet: "Earn your OSHA 10 safety credential alongside PPE compliance, fall protection, hazard recognition, and professional jobsite communication.",
+      tags: ["OSHA 10 Card", "PPE Included", "Jobsite Readiness"],
+      keywords: "osha safety ppe hard hat gloves certification fall protection hazard readiness",
+      href: "#our-programs",
+      actionLabel: "Explore Safety Credential →"
+    },
+    {
+      id: "elig-wioa",
+      category: "eligibility",
+      categoryLabel: "WIOA & Eligibility",
+      breadcrumb: "springboardsfcd.org › /eligibility",
+      title: "WIOA Eligibility Check & Regional Career Center Routing",
+      snippet: "2-minute eligibility wizard for young adults (18–24), returning citizens, veterans, and underemployed adults in Chambers, Lee, and Troup Counties.",
+      tags: ["Opelika Career Center", "Valley Career Center", "WorkSource GA"],
+      keywords: "eligibility wioa qualify requirements age 18 24 returning citizen justice involved opelika valley laGrange career center",
+      href: "/eligibility",
+      actionLabel: "Start Eligibility Check →"
+    },
+    {
+      id: "elig-transitional-jobs",
+      category: "eligibility",
+      categoryLabel: "WIOA & Eligibility",
+      breadcrumb: "springboardsfcd.org › /train",
+      title: "Transitional Jobs (Activity 220) & On-The-Job Training (OJT)",
+      snippet: "Up to 390 hours of 100% WIOA wage-subsidized paid work experience (including 195 hours of foundational learning) transitioning into permanent OJT.",
+      tags: ["390 Paid Hours", "Activity 220", "OJT Wage Reimbursement"],
+      keywords: "transitional jobs activity 220 ojt paid training wage subsidy 390 hours 195 hours paycheck employer",
+      href: "/train",
+      actionLabel: "Explore Transitional Jobs & OJT →"
+    },
+    {
+      id: "faq-free",
+      category: "faq",
+      categoryLabel: "FAQ Answer",
+      breadcrumb: "springboardsfcd.org › FAQ › Tuition & Cost",
+      title: "Is the trade training really 100% tuition-free?",
+      snippet: "Yes. All Springboards trade training is 100% tuition-free for participants. Training fees, tools, safety gear, and certification exams are fully covered.",
+      tags: ["Zero Tuition", "Zero Debt", "Tools & Gear Covered"],
+      keywords: "free cost tuition price money debt pay scholarship grant financial aid",
+      href: "#faq",
+      actionLabel: "Read Full FAQ Answer →"
+    },
+    {
+      id: "faq-location-hours",
+      category: "faq",
+      categoryLabel: "FAQ Answer",
+      breadcrumb: "springboardsfcd.org › FAQ › Location & Schedule",
+      title: "Where is Springboards located and what are the training hours?",
+      snippet: "Training is held at the Springboards Community Center at 2269 15th Ave. S.W., Lanett, AL 36863 (Shawmut), Monday through Thursday from 8:00 AM to 4:00 PM EST.",
+      tags: ["Shawmut / Lanett AL", "Mon–Thu 8AM–4PM EST", "731.388.WORK"],
+      keywords: "location address hours schedule time where lanett shawmut valley alabama phone contact",
+      href: "#footer",
+      actionLabel: "View Campus Map & Hours →"
+    },
+    {
+      id: "doc-flyer-brochure",
+      category: "documents",
+      categoryLabel: "Document",
+      breadcrumb: "springboardsfcd.org › Document Center",
+      title: "Official Program Brochure, Community Flyer & One-Page Summary",
+      snippet: "Download high-resolution printable program flyers, executive summaries, and community outreach brochures for applicants and families.",
+      tags: ["Printable PDF / WebP", "Public Download", "Outreach Packet"],
+      keywords: "document download flyer brochure pdf summary printable handout packet",
+      modalTrigger: "doc",
+      actionLabel: "Open Document Center →"
+    },
+    {
+      id: "doc-worksite-agreement",
+      category: "documents",
+      categoryLabel: "Protected Portal",
+      breadcrumb: "springboardsfcd.org › Protected Worksite Gate",
+      title: "Password-Protected Worksite Agreement & 390-Hour Trainee Tracker",
+      snippet: "Authorized trainees and host worksite supervisors can enter their passcode to access the WIOA Host Worksite Agreement PDF and milestone tracker.",
+      tags: ["Password-Protected", "Worksite Supervisors", "Enrolled Trainees"],
+      keywords: "password protected worksite agreement portal login passcode tracker hours supervisor",
+      modalTrigger: "trainee-portal",
+      actionLabel: "Open Protected Gate →"
+    },
+    {
+      id: "comm-partner-donate",
+      category: "programs",
+      categoryLabel: "Community & Support",
+      breadcrumb: "springboardsfcd.org › /partner & /donate",
+      title: "Employer Partnerships, Volunteer Signups & Tax-Deductible Giving",
+      snippet: "Partner as a host employer, donate tools and building materials, sign up to volunteer at the Shawmut facility, or sponsor a trainee's tool belt.",
+      tags: ["501(c)(3) Deductible", "Employer Partners", "Volunteer"],
+      keywords: "donate donation partner employer sponsor volunteer tools lumber materials gift tax deductible",
+      href: "/partner",
+      actionLabel: "Explore Partnerships & Giving →"
+    }
+  ];
+
+  const siteSearchModal = document.getElementById("siteSearchModal");
+  const siteSearchForm = document.getElementById("siteSearchForm");
+  const siteSearchInput = document.getElementById("siteSearchInput");
+  const siteSearchClearBtn = document.getElementById("siteSearchClearBtn");
+  const siteSearchResultCount = document.getElementById("siteSearchResultCount");
+  const siteSearchResultsList = document.getElementById("siteSearchResultsList");
+  const siteSearchEmptyState = document.getElementById("siteSearchEmptyState");
+  const siteSearchEmptyTitle = document.getElementById("siteSearchEmptyTitle");
+  const resetSiteSearchBtn = document.getElementById("resetSiteSearchBtn");
+  const searchCategoryButtons = Array.from(document.querySelectorAll("[data-search-category]"));
+
+  let activeSearchCategory = "all";
+
+  const escapeHtml = (str) =>
+    String(str).replace(/[&<>"']/g, (ch) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    }[ch]));
+
+  const highlightMatch = (text, rawQuery) => {
+    const safeText = escapeHtml(text);
+    const cleanQuery = (rawQuery || "").trim();
+    if (!cleanQuery) return safeText;
+    const tokens = cleanQuery
+      .split(/\s+/)
+      .filter((t) => t.length >= 2)
+      .map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+    if (!tokens.length) return safeText;
+    const regex = new RegExp(`(${tokens.join("|")})`, "gi");
+    return safeText.replace(regex, '<mark class="search-highlight">$1</mark>');
+  };
+
+  const renderSiteSearchResults = () => {
+    if (!siteSearchResultsList) return;
+    const rawQuery = (siteSearchInput?.value || "").trim();
+    const queryLower = rawQuery.toLowerCase();
+    if (siteSearchClearBtn) siteSearchClearBtn.hidden = !rawQuery;
+
+    const tokens = queryLower.split(/\s+/).filter(Boolean);
+
+    const matched = SITE_SEARCH_INDEX.filter((item) => {
+      const catMatch = activeSearchCategory === "all" || item.category === activeSearchCategory;
+      if (!catMatch) return false;
+      if (!tokens.length) return true;
+      const haystack = `${item.title} ${item.snippet} ${item.keywords} ${item.tags.join(" ")} ${item.categoryLabel}`.toLowerCase();
+      return tokens.every((tok) => haystack.includes(tok));
+    });
+
+    if (matched.length === 0) {
+      siteSearchResultsList.hidden = true;
+      siteSearchResultsList.innerHTML = "";
+      if (siteSearchEmptyState) siteSearchEmptyState.hidden = false;
+      if (siteSearchEmptyTitle) {
+        siteSearchEmptyTitle.textContent = rawQuery
+          ? `No results found for “${rawQuery}”`
+          : "No results found in this category";
+      }
+      if (siteSearchResultCount) {
+        siteSearchResultCount.textContent = rawQuery
+          ? `0 results for “${rawQuery}”`
+          : "0 results in selected category";
+      }
+      return;
+    }
+
+    if (siteSearchEmptyState) siteSearchEmptyState.hidden = true;
+    siteSearchResultsList.hidden = false;
+
+    if (siteSearchResultCount) {
+      if (rawQuery) {
+        siteSearchResultCount.textContent = `Found ${matched.length} result${matched.length === 1 ? "" : "s"} for “${rawQuery}”`;
+      } else {
+        siteSearchResultCount.textContent = `Showing ${matched.length} indexed site resource${matched.length === 1 ? "" : "s"}`;
+      }
+    }
+
+    siteSearchResultsList.innerHTML = matched
+      .map((item) => {
+        const titleHtml = highlightMatch(item.title, rawQuery);
+        const snippetHtml = highlightMatch(item.snippet, rawQuery);
+        const tagsHtml = item.tags
+          .map((t) => `<span class="search-result-tag">${escapeHtml(t)}</span>`)
+          .join("");
+        const actionHtml = item.modalTrigger
+          ? `<button type="button" class="search-result-action-link" data-search-modal-trigger="${escapeHtml(item.modalTrigger)}">${escapeHtml(item.actionLabel)}</button>`
+          : `<a href="${escapeHtml(item.href)}" class="search-result-action-link" data-search-nav-link>${escapeHtml(item.actionLabel)}</a>`;
+
+        const titleInner = item.modalTrigger
+          ? `<button type="button" class="search-result-action-link" style="font-size: inherit; color: inherit; text-align: left;" data-search-modal-trigger="${escapeHtml(item.modalTrigger)}">${titleHtml}</button>`
+          : `<a href="${escapeHtml(item.href)}" data-search-nav-link>${titleHtml}</a>`;
+
+        return `
+          <article class="search-result-card">
+            <div class="search-result-top">
+              <span class="search-result-badge" data-category="${escapeHtml(item.category)}">${escapeHtml(item.categoryLabel)}</span>
+              <span class="search-result-breadcrumb">${escapeHtml(item.breadcrumb)}</span>
+            </div>
+            <h3 class="search-result-title">${titleInner}</h3>
+            <p class="search-result-snippet">${snippetHtml}</p>
+            <div class="search-result-footer">
+              <div class="search-result-tags">${tagsHtml}</div>
+              ${actionHtml}
+            </div>
+          </article>
+        `;
+      })
+      .join("");
+
+    siteSearchResultsList.querySelectorAll("[data-search-nav-link]").forEach((link) => {
+      link.addEventListener("click", () => {
+        closeSiteSearch();
+      });
+    });
+
+    siteSearchResultsList.querySelectorAll("[data-search-modal-trigger]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const target = btn.getAttribute("data-search-modal-trigger");
+        closeSiteSearch();
+        if (target === "doc") {
+          document.querySelector(".btn-doc-trigger")?.click();
+        } else if (target === "trainee-portal") {
+          openTraineePortalGate();
+        }
+      });
+    });
+  };
+
+  const openSiteSearch = (initialQuery = "") => {
+    if (!siteSearchModal) return;
+    siteSearchModal.hidden = false;
+    document.body.style.overflow = "hidden";
+    if (typeof initialQuery === "string" && initialQuery.trim() && siteSearchInput) {
+      siteSearchInput.value = initialQuery.trim();
+    }
+    renderSiteSearchResults();
+    setTimeout(() => {
+      siteSearchInput?.focus();
+    }, 60);
+  };
+
+  const closeSiteSearch = () => {
+    if (!siteSearchModal) return;
+    siteSearchModal.hidden = true;
+    document.body.style.overflow = "";
+  };
+
+  document.querySelectorAll(".btn-site-search-trigger").forEach((btn) => {
+    btn.addEventListener("click", () => openSiteSearch());
+  });
+
+  document.querySelectorAll("[data-site-search-close]").forEach((el) => {
+    el.addEventListener("click", closeSiteSearch);
+  });
+
+  siteSearchForm?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    renderSiteSearchResults();
+  });
+
+  siteSearchInput?.addEventListener("input", renderSiteSearchResults);
+
+  siteSearchClearBtn?.addEventListener("click", () => {
+    if (siteSearchInput) {
+      siteSearchInput.value = "";
+      siteSearchInput.focus();
+    }
+    renderSiteSearchResults();
+  });
+
+  searchCategoryButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      activeSearchCategory = btn.getAttribute("data-search-category") || "all";
+      searchCategoryButtons.forEach((b) => {
+        const isSelected = b === btn;
+        b.classList.toggle("is-active", isSelected);
+        b.setAttribute("aria-pressed", String(isSelected));
+      });
+      renderSiteSearchResults();
+    });
+  });
+
+  document.querySelectorAll("[data-suggest-query]").forEach((chip) => {
+    chip.addEventListener("click", () => {
+      const suggested = chip.getAttribute("data-suggest-query") || "";
+      activeSearchCategory = "all";
+      searchCategoryButtons.forEach((b) => {
+        const isAll = (b.getAttribute("data-search-category") || "all") === "all";
+        b.classList.toggle("is-active", isAll);
+        b.setAttribute("aria-pressed", String(isAll));
+      });
+      if (siteSearchInput) {
+        siteSearchInput.value = suggested;
+        siteSearchInput.focus();
+      }
+      renderSiteSearchResults();
+    });
+  });
+
+  resetSiteSearchBtn?.addEventListener("click", () => {
+    activeSearchCategory = "all";
+    if (siteSearchInput) {
+      siteSearchInput.value = "";
+      siteSearchInput.focus();
+    }
+    searchCategoryButtons.forEach((b) => {
+      const isAll = (b.getAttribute("data-search-category") || "all") === "all";
+      b.classList.toggle("is-active", isAll);
+      b.setAttribute("aria-pressed", String(isAll));
+    });
+    renderSiteSearchResults();
+  });
+
+  // Global keyboard shortcut "/" or Ctrl+K / Cmd+K to launch Site Search
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      if (siteSearchModal && !siteSearchModal.hidden) closeSiteSearch();
+      if (traineePortalModal && !traineePortalModal.hidden) closeTraineePortalGate();
+      return;
+    }
+    const activeTag = document.activeElement?.tagName?.toLowerCase();
+    const isTyping =
+      activeTag === "input" ||
+      activeTag === "textarea" ||
+      activeTag === "select" ||
+      document.activeElement?.isContentEditable;
+    if (!isTyping && (event.key === "/" || ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k"))) {
+      event.preventDefault();
+      openSiteSearch();
+    }
+  });
+
+  // Automatically open Site Search if URL contains ?q= or ?search= or #site-search
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const queryParam = urlParams.get("q") || urlParams.get("search");
+    if (queryParam !== null || window.location.hash === "#site-search") {
+      openSiteSearch(queryParam || "");
+    }
+  } catch {
+    // Ignore URL parsing issues
+  }
 });
+
 
 
