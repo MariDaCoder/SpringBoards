@@ -35,7 +35,10 @@ process.env.TZ = process.env.TZ || 'America/New_York';
 export const TIMEZONE = process.env.TZ || 'America/New_York';
 export const TIMEZONE_LABEL = 'Eastern Standard Time (EST)';
 
-export const PORT = Number(process.env.PORT || 3000);
+const isAiStudioContainer = ROOT_DIR.startsWith('/app/applet');
+export const PORT = Number(
+  isAiStudioContainer && process.env.PORT === '8080' ? 3000 : process.env.PORT || 3000
+);
 export const NODE_ENV = process.env.NODE_ENV || 'production';
 export const APP_URL = (process.env.APP_URL || 'https://springboardsfcd.org').replace(/\/+$/, '');
 

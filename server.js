@@ -2372,6 +2372,17 @@ app.use((req, res) => {
   }
 });
 
-app.listen(PORT, '0.0.0.0', () => {
+const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running at http://0.0.0.0:${PORT}`);
+});
+
+server.on('error', (err) => {
+  if (err && err.code === 'EADDRINUSE' && PORT !== 3000) {
+    console.warn(`Port ${PORT} is in use; falling back to port 3000...`);
+    app.listen(3000, '0.0.0.0', () => {
+      console.log('Server running at http://0.0.0.0:3000');
+    });
+  } else {
+    console.error('Server listen error:', err);
+  }
 });

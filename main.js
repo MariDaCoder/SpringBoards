@@ -265,6 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const inquiryConfirmationScreen = document.getElementById("inquiryConfirmationScreen");
   const inquiryForm = document.getElementById("programInquiryForm");
   const inquiryDetails = {
+    General: "Have questions about our tuition-free trade training, workshop schedule, or enrollment? Share one way to reach you and our team will follow up directly.",
     Learn: "Ready to start trade training and certifications? Share one way to reach you and we will follow up about enrollment.",
     Train: "To begin Transitional Jobs or OJT, participants must first be verified through a career center and referred to a participating worksite. Share one way to reach you and we will help point you to the next step.",
     Build: "Interested in apprenticeship? Share one way to reach you and we will follow up with current pathway information and next steps."
@@ -277,9 +278,10 @@ document.addEventListener("DOMContentLoaded", () => {
         inquiryFormView.hidden = false;
         inquiryConfirmationScreen.hidden = true;
         inquiryForm.querySelectorAll(".is-invalid").forEach(el => el.classList.remove("is-invalid"));
-        inquiryForm.elements.program.value = button.dataset.program;
-        inquiryModalTitle.textContent = `${button.dataset.program} program inquiry`;
-        inquiryModalDescription.textContent = inquiryDetails[button.dataset.program] || "Share your contact details.";
+        const prog = button.dataset.program || "General";
+        inquiryForm.elements.program.value = prog;
+        inquiryModalTitle.textContent = prog === "General" ? "Request Program Information" : `${prog} program inquiry`;
+        inquiryModalDescription.textContent = inquiryDetails[prog] || "Share your contact details.";
         const status = inquiryForm.querySelector(".form-status");
         status.textContent = "";
         status.classList.remove("is-error");
