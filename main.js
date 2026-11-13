@@ -177,9 +177,68 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Helper to announce form validation errors with non-color indicator + screen reader alert
-  const setFormError = (statusEl, message, invalidFields = []) => {
+  // ACCESSIBLE FORM VALIDATION, INLINE FIELD FEEDBACK & STATE HELPERS
+  const getOrCreateFieldFeedback = (field) => {
+    if (!field || !field.parentElement) return null;
+    let feedback = field.parentElement.querySelector(".field-feedback");
+    if (!feedback) {
+      feedback = document.createElement("span");
+      feedback.className = "field-feedback";
+      const baseId = field.id || field.name || `field-${Math.random().toString(36).slice(2, 7)}`;
+      feedback.id = `${baseId}-feedback`;
+      feedback.hidden = true;
+      field.parentElement.appendChild(feedback);
+    }
+    if (feedback.id) {
+      const existing = (field.getAttribute("aria-describedby") || "").split(/\s+/).filter(Boolean);
+      if (!existing.includes(feedback.id)) {
+        existing.push(feedback.id);
+        field.setAttribute("aria-describedby", existing.join(" "));
+      }
+    }
+    return feedback;
+  };
+
+  const setFieldFeedback = (field, message = "", state = "neutral") => {
+    if (!field) return;
+    const feedback = getOrCreateFieldFeedback(field);
+    if (state === "error") {
+      field.classList.add("is-invalid");
+      field.classList.remove("is-valid");
+      field.setAttribute("aria-invalid", "true");
+      if (feedback && message) {
+        feedback.className = "field-feedback is-error";
+        feedback.textContent = `⚠ ${message}`;
+        feedback.hidden = false;
+      }
+    } else if (state === "valid") {
+      field.classList.remove("is-invalid");
+      field.classList.add("is-valid");
+      field.setAttribute("aria-invalid", "false");
+      if (feedback) {
+        if (message) {
+          feedback.className = "field-feedback is-valid";
+          feedback.textContent = `✓ ${message}`;
+          feedback.hidden = false;
+        } else {
+          feedback.textContent = "";
+          feedback.hidden = true;
+        }
+      }
+    } else {
+      field.classList.remove("is-invalid", "is-valid");
+      field.removeAttribute("aria-invalid");
+      if (feedback) {
+        feedback.textContent = "";
+        feedback.hidden = true;
+        feedback.className = "field-feedback";
+      }
+    }
+  };
+
+  const setFormError = (statusEl, message, invalidFields = [], fieldMessages = {}) => {
     if (statusEl) {
+      statusEl.classList.remove("is-loading", "is-success");
       statusEl.classList.add("is-error");
       statusEl.setAttribute("role", "alert");
       statusEl.setAttribute("aria-live", "assertive");
@@ -191,8 +250,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     invalidFields.forEach((field, idx) => {
       if (field) {
-        field.classList.add("is-invalid");
-        field.setAttribute("aria-invalid", "true");
+        const specificMsg = fieldMessages[field.name] || message;
+        setFieldFeedback(field, specificMsg, "error");
         if (idx === 0 && typeof field.focus === "function") {
           field.focus();
         }
@@ -200,16 +259,50 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  const clearFormErrorState = (formEl, statusEl) => {
+  const setFormLoading = (formEl, submitBtn, statusEl, message) => {
+    if (formEl) {
+      formEl.dataset.submitting = "true";
+      formEl.setAttribute("aria-busy", "true");
+    }
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.classList.add("is-loading");
+      submitBtn.setAttribute("aria-busy", "true");
+    }
     if (statusEl) {
-      statusEl.classList.remove("is-error");
+      statusEl.classList.remove("is-error", "is-success");
+      statusEl.classList.add("is-loading");
       statusEl.setAttribute("role", "status");
       statusEl.setAttribute("aria-live", "polite");
+      statusEl.textContent = message;
+    }
+  };
+
+  const clearFormBusyState = (formEl, submitBtn, statusEl) => {
+    if (formEl) {
+      delete formEl.dataset.submitting;
+      formEl.removeAttribute("aria-busy");
+    }
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.classList.remove("is-loading");
+      submitBtn.removeAttribute("aria-busy");
+    }
+    if (statusEl) {
+      statusEl.classList.remove("is-loading");
+    }
+  };
+
+  const clearFormErrorState = (formEl, statusEl) => {
+    if (statusEl) {
+      statusEl.classList.remove("is-error", "is-loading", "is-success");
+      statusEl.setAttribute("role", "status");
+      statusEl.setAttribute("aria-live", "polite");
+      statusEl.textContent = "";
     }
     if (formEl) {
-      formEl.querySelectorAll(".is-invalid, [aria-invalid='true']").forEach((el) => {
-        el.classList.remove("is-invalid");
-        el.removeAttribute("aria-invalid");
+      formEl.querySelectorAll("input, select, textarea").forEach((el) => {
+        setFieldFeedback(el, "", "neutral");
       });
     }
   };
@@ -237,22 +330,74 @@ document.addEventListener("DOMContentLoaded", () => {
     return digits.length === 10 || (digits.length === 11 && digits.startsWith("1"));
   };
 
-  // Attach phone formatting mask to all tel inputs
+  const syncFormStatusAfterFieldFix = (field) => {
+    const form = field?.closest("form");
+    if (!form) return;
+    if (!form.querySelector(".is-invalid, [aria-invalid='true']")) {
+      const status = form.querySelector(".form-status");
+      if (status && status.classList.contains("is-error")) {
+        status.classList.remove("is-error");
+        status.textContent = "";
+      }
+    }
+  };
+
+  // Attach phone formatting mask & real-time validation feedback to all tel inputs
   document.querySelectorAll('input[type="tel"]').forEach((input) => {
     input.addEventListener("input", (e) => {
       const formatted = formatPhoneNumber(e.target.value);
       e.target.value = formatted;
-      e.target.classList.remove("is-invalid");
+      if (isValidPhone(formatted)) {
+        setFieldFeedback(e.target, "Valid 10-digit phone number", "valid");
+        const form = e.target.closest("form");
+        const emailField = form?.elements?.email;
+        if (emailField && emailField.classList.contains("is-invalid") && !emailField.value.trim()) {
+          setFieldFeedback(emailField, "", "neutral");
+        }
+        syncFormStatusAfterFieldFix(e.target);
+      } else if (!formatted.trim()) {
+        setFieldFeedback(e.target, "", "neutral");
+      }
+    });
+    input.addEventListener("blur", (e) => {
+      const val = e.target.value.trim();
+      if (val && !isValidPhone(val)) {
+        setFieldFeedback(e.target, "Enter a 10-digit phone number (e.g. 334-555-0199).", "error");
+      }
     });
   });
 
   document.querySelectorAll('input[type="email"], input[type="text"]').forEach((input) => {
     input.addEventListener("input", (e) => {
-      e.target.classList.remove("is-invalid");
-      const form = e.target.closest("form");
-      if (form) {
-        const status = form.querySelector(".form-status");
-        if (status) status.textContent = "";
+      const val = e.target.value.trim();
+      if (e.target.type === "email") {
+        if (isValidEmail(val)) {
+          setFieldFeedback(e.target, "Valid email address", "valid");
+          const form = e.target.closest("form");
+          const phoneField = form?.elements?.phone;
+          if (phoneField && phoneField.classList.contains("is-invalid") && !phoneField.value.trim()) {
+            setFieldFeedback(phoneField, "", "neutral");
+          }
+          syncFormStatusAfterFieldFix(e.target);
+        } else if (!val) {
+          setFieldFeedback(e.target, "", "neutral");
+        }
+      } else if (["name", "donorName", "companyName", "contactName"].includes(e.target.name)) {
+        if (val.length >= 2) {
+          setFieldFeedback(e.target, "", "valid");
+          syncFormStatusAfterFieldFix(e.target);
+        } else if (!val) {
+          setFieldFeedback(e.target, "", "neutral");
+        }
+      } else {
+        setFieldFeedback(e.target, "", "neutral");
+        syncFormStatusAfterFieldFix(e.target);
+      }
+    });
+    input.addEventListener("blur", (e) => {
+      const val = e.target.value.trim();
+      if (e.target.type === "email" && val && !isValidEmail(val)) {
+        setFieldFeedback(e.target, "Format email as name@example.com.", "error");
       }
     });
   });
@@ -277,14 +422,11 @@ document.addEventListener("DOMContentLoaded", () => {
         inquiryForm.reset();
         inquiryFormView.hidden = false;
         inquiryConfirmationScreen.hidden = true;
-        inquiryForm.querySelectorAll(".is-invalid").forEach(el => el.classList.remove("is-invalid"));
+        clearFormErrorState(inquiryForm, inquiryForm.querySelector(".form-status"));
         const prog = button.dataset.program || "General";
         inquiryForm.elements.program.value = prog;
         inquiryModalTitle.textContent = prog === "General" ? "Request Program Information" : `${prog} program inquiry`;
         inquiryModalDescription.textContent = inquiryDetails[prog] || "Share your contact details.";
-        const status = inquiryForm.querySelector(".form-status");
-        status.textContent = "";
-        status.classList.remove("is-error");
         openModalWithFocus(inquiryModal, inquiryForm.elements.name);
       });
     });
@@ -310,25 +452,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 1. Validate Name
       if (!name || name.length < 2) {
-        setFormError(status, "Please enter your full name, minimum 2 characters.", [inquiryForm.elements.name]);
+        setFormError(status, "Please enter your full name, minimum 2 characters.", [inquiryForm.elements.name], {
+          name: "Enter your first and last name (at least 2 characters)."
+        });
         return;
       }
 
       // 2. Validate at least one contact method
       if (!phone && !email) {
-        setFormError(status, "Please provide either a phone number or email address.", [inquiryForm.elements.phone, inquiryForm.elements.email]);
+        setFormError(status, "Please provide either a phone number or email address.", [inquiryForm.elements.phone, inquiryForm.elements.email], {
+          phone: "Add a 10-digit phone number or enter an email address below.",
+          email: "Add an email address or enter a 10-digit phone number above."
+        });
         return;
       }
 
       // 3. Validate Phone format if provided
       if (phone && !isValidPhone(phone)) {
-        setFormError(status, "Please enter a valid 10-digit phone number (e.g. 555-123-4567).", [inquiryForm.elements.phone]);
+        setFormError(status, "Please enter a valid 10-digit phone number (e.g. 555-123-4567).", [inquiryForm.elements.phone], {
+          phone: "Include area code and 7 digits (e.g. 334-555-0199)."
+        });
         return;
       }
 
       // 4. Validate Email format if provided
       if (email && !isValidEmail(email)) {
-        setFormError(status, "Please enter a valid email address, e.g. name@example.com.", [inquiryForm.elements.email]);
+        setFormError(status, "Please enter a valid email address, e.g. name@example.com.", [inquiryForm.elements.email], {
+          email: "Format as name@domain.com without spaces."
+        });
         return;
       }
 
@@ -341,9 +492,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      inquiryForm.dataset.submitting = "true";
-      submit.disabled = true;
-      status.textContent = "Sending your inquiry...";
+      setFormLoading(inquiryForm, submit, status, "Sending your inquiry...");
 
       try {
         let delivered = false;
@@ -407,13 +556,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (doneButton) doneButton.focus();
 
         inquiryForm.reset();
+        clearFormErrorState(inquiryForm, status);
       } catch (error) {
         console.error(error);
-        status.classList.add("is-error");
-        status.textContent = "We could not deliver this inquiry right now. Please try again or email info@springboardsfcd.org.";
+        setFormError(status, "We could not deliver this inquiry right now. Please try again, call 731.388.WORK, or email info@springboardsfcd.org.");
       } finally {
-        delete inquiryForm.dataset.submitting;
-        submit.disabled = false;
+        clearFormBusyState(inquiryForm, submit, status);
       }
     });
   }
@@ -430,10 +578,7 @@ document.addEventListener("DOMContentLoaded", () => {
         volunteerSignupForm.reset();
         volunteerFormView.hidden = false;
         volunteerConfirmationScreen.hidden = true;
-        volunteerSignupForm.querySelectorAll(".is-invalid").forEach(el => el.classList.remove("is-invalid"));
-        const status = volunteerSignupForm.querySelector(".form-status");
-        status.textContent = "";
-        status.classList.remove("is-error");
+        clearFormErrorState(volunteerSignupForm, volunteerSignupForm.querySelector(".form-status"));
         const nameField = volunteerSignupForm.elements.name;
         openModalWithFocus(volunteerSignupModal, nameField);
       });
@@ -462,25 +607,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 1. Validate Name
       if (!name || name.length < 2) {
-        setFormError(status, "Please enter your full name, minimum 2 characters.", [volunteerSignupForm.elements.name]);
+        setFormError(status, "Please enter your full name, minimum 2 characters.", [volunteerSignupForm.elements.name], {
+          name: "Enter your first and last name (at least 2 characters)."
+        });
         return;
       }
 
       // 2. Validate at least one contact method
       if (!phone && !email) {
-        setFormError(status, "Please provide either a phone number or email address.", [volunteerSignupForm.elements.phone, volunteerSignupForm.elements.email]);
+        setFormError(status, "Please provide either a phone number or email address.", [volunteerSignupForm.elements.phone, volunteerSignupForm.elements.email], {
+          phone: "Add a 10-digit phone number or enter an email address below.",
+          email: "Add an email address or enter a 10-digit phone number above."
+        });
         return;
       }
 
       // 3. Validate Phone format if provided
       if (phone && !isValidPhone(phone)) {
-        setFormError(status, "Please enter a valid 10-digit phone number (e.g. 555-123-4567).", [volunteerSignupForm.elements.phone]);
+        setFormError(status, "Please enter a valid 10-digit phone number (e.g. 555-123-4567).", [volunteerSignupForm.elements.phone], {
+          phone: "Include area code and 7 digits (e.g. 334-555-0199)."
+        });
         return;
       }
 
       // 4. Validate Email format if provided
       if (email && !isValidEmail(email)) {
-        setFormError(status, "Please enter a valid email address, e.g. name@example.com.", [volunteerSignupForm.elements.email]);
+        setFormError(status, "Please enter a valid email address, e.g. name@example.com.", [volunteerSignupForm.elements.email], {
+          email: "Format as name@domain.com without spaces."
+        });
         return;
       }
 
@@ -493,9 +647,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      volunteerSignupForm.dataset.submitting = "true";
-      submit.disabled = true;
-      status.textContent = "Submitting your volunteer interest...";
+      setFormLoading(volunteerSignupForm, submit, status, "Submitting your volunteer interest...");
 
       try {
         let delivered = false;
@@ -569,13 +721,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (doneButton) doneButton.focus();
 
         volunteerSignupForm.reset();
+        clearFormErrorState(volunteerSignupForm, status);
       } catch (error) {
         console.error(error);
-        status.classList.add("is-error");
-        status.textContent = "We could not save your submission. Please try again or email info@springboardsfcd.org.";
+        setFormError(status, "We could not save your submission right now. Please try again, call 731.388.WORK, or email info@springboardsfcd.org.");
       } finally {
-        delete volunteerSignupForm.dataset.submitting;
-        submit.disabled = false;
+        clearFormBusyState(volunteerSignupForm, submit, status);
       }
     });
   }
@@ -612,12 +763,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (candidateTitle) candidateTitle.textContent = "Transitional Jobs Pre-Qualification";
       if (candidateIntro) candidateIntro.textContent = "Answer a few questions so our team can help identify your next steps toward training and work.";
     }
-    candidateForm.querySelectorAll(".is-invalid").forEach(el => el.classList.remove("is-invalid"));
-    const status = candidateForm.querySelector(".form-status");
-    if (status) {
-      status.textContent = "";
-      status.classList.remove("is-error");
-    }
+    clearFormErrorState(candidateForm, candidateForm.querySelector(".form-status"));
     if (defaultTrade && candidateForm.elements.trade) {
       candidateForm.elements.trade.value = defaultTrade;
     }
@@ -671,28 +817,35 @@ document.addEventListener("DOMContentLoaded", () => {
       clearFormErrorState(candidateForm, status);
 
       if (!name || name.length < 2) {
-        setFormError(status, "Please enter your full legal name (minimum 2 characters).", [candidateForm.elements.name]);
+        setFormError(status, "Please enter your full legal name (minimum 2 characters).", [candidateForm.elements.name], {
+          name: "Enter your full legal name (at least 2 characters)."
+        });
         return;
       }
 
       if (!phone && !email) {
-        setFormError(status, "Please provide either a phone number or email address so we can reach you.", [candidateForm.elements.phone, candidateForm.elements.email]);
+        setFormError(status, "Please provide either a phone number or email address so we can reach you.", [candidateForm.elements.phone, candidateForm.elements.email], {
+          phone: "Provide a 10-digit phone number or enter an email address.",
+          email: "Provide an email address or enter a 10-digit phone number."
+        });
         return;
       }
 
       if (phone && !isValidPhone(phone)) {
-        setFormError(status, "Please enter a valid 10-digit phone number, e.g. (334) 556-1234.", [candidateForm.elements.phone]);
+        setFormError(status, "Please enter a valid 10-digit phone number, e.g. (334) 556-1234.", [candidateForm.elements.phone], {
+          phone: "Include area code and 7 digits (e.g. 334-555-0199)."
+        });
         return;
       }
 
       if (email && !isValidEmail(email)) {
-        setFormError(status, "Please enter a valid email address (e.g. name@example.com).", [candidateForm.elements.email]);
+        setFormError(status, "Please enter a valid email address (e.g. name@example.com).", [candidateForm.elements.email], {
+          email: "Format as name@domain.com without spaces."
+        });
         return;
       }
 
-      candidateForm.dataset.submitting = "true";
-      submit.disabled = true;
-      status.textContent = "Submitting candidate application...";
+      setFormLoading(candidateForm, submit, status, "Submitting candidate application...");
 
       try {
         let delivered = false;
@@ -751,13 +904,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const doneBtn = candidateConfirmationScreen.querySelector(".confirmation-done-button");
         if (doneBtn) doneBtn.focus();
         candidateForm.reset();
+        clearFormErrorState(candidateForm, status);
       } catch (err) {
         console.error(err);
-        status.classList.add("is-error");
-        status.textContent = "Could not submit application. Please call 731.388.WORK or email info@springboardsfcd.org.";
+        setFormError(status, "Could not submit application right now. Please try again, call 731.388.WORK, or email info@springboardsfcd.org.");
       } finally {
-        delete candidateForm.dataset.submitting;
-        submit.disabled = false;
+        clearFormBusyState(candidateForm, submit, status);
       }
     });
   }
@@ -773,12 +925,7 @@ document.addEventListener("DOMContentLoaded", () => {
     partnerForm.reset();
     partnerFormView.hidden = false;
     partnerConfirmationScreen.hidden = true;
-    partnerForm.querySelectorAll(".is-invalid").forEach(el => el.classList.remove("is-invalid"));
-    const status = partnerForm.querySelector(".form-status");
-    if (status) {
-      status.textContent = "";
-      status.classList.remove("is-error");
-    }
+    clearFormErrorState(partnerForm, partnerForm.querySelector(".form-status"));
     const companyField = partnerForm.elements.companyName;
     openModalWithFocus(partnerModal, companyField);
   };
@@ -822,33 +969,42 @@ document.addEventListener("DOMContentLoaded", () => {
       clearFormErrorState(partnerForm, status);
 
       if (!companyName || companyName.length < 2) {
-        setFormError(status, "Please provide your company or organization name.", [partnerForm.elements.companyName]);
+        setFormError(status, "Please provide your company or organization name.", [partnerForm.elements.companyName], {
+          companyName: "Enter your business, municipality, or organization name."
+        });
         return;
       }
 
       if (!contactName || contactName.length < 2) {
-        setFormError(status, "Please provide a contact person name.", [partnerForm.elements.contactName]);
+        setFormError(status, "Please provide a contact person name.", [partnerForm.elements.contactName], {
+          contactName: "Enter the primary contact's first and last name."
+        });
         return;
       }
 
       if (!phone && !email) {
-        setFormError(status, "Please provide either a phone number or business email address.", [partnerForm.elements.phone, partnerForm.elements.email]);
+        setFormError(status, "Please provide either a phone number or business email address.", [partnerForm.elements.phone, partnerForm.elements.email], {
+          phone: "Provide a 10-digit business phone number or enter an email.",
+          email: "Provide a business email address or enter a 10-digit phone number."
+        });
         return;
       }
 
       if (phone && !isValidPhone(phone)) {
-        setFormError(status, "Please enter a valid 10-digit phone number.", [partnerForm.elements.phone]);
+        setFormError(status, "Please enter a valid 10-digit phone number.", [partnerForm.elements.phone], {
+          phone: "Include area code and 7 digits (e.g. 334-555-0199)."
+        });
         return;
       }
 
       if (email && !isValidEmail(email)) {
-        setFormError(status, "Please enter a valid business email address.", [partnerForm.elements.email]);
+        setFormError(status, "Please enter a valid business email address.", [partnerForm.elements.email], {
+          email: "Format as name@company.com without spaces."
+        });
         return;
       }
 
-      partnerForm.dataset.submitting = "true";
-      submit.disabled = true;
-      status.textContent = "Submitting partnership inquiry...";
+      setFormLoading(partnerForm, submit, status, "Submitting partnership inquiry...");
 
       try {
         let serverValidationError = null;
@@ -882,13 +1038,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (doneBtn) doneBtn.focus();
 
         partnerForm.reset();
+        clearFormErrorState(partnerForm, status);
       } catch (err) {
         console.error(err);
-        status.classList.add("is-error");
-        status.textContent = "Could not submit inquiry. Please call 731.388.WORK or email info@springboardsfcd.org.";
+        setFormError(status, "Could not submit inquiry right now. Please try again, call 731.388.WORK, or email info@springboardsfcd.org.");
       } finally {
-        delete partnerForm.dataset.submitting;
-        submit.disabled = false;
+        clearFormBusyState(partnerForm, submit, status);
       }
     });
   }
@@ -904,12 +1059,7 @@ document.addEventListener("DOMContentLoaded", () => {
     donateForm.reset();
     donateFormView.hidden = false;
     donateConfirmationScreen.hidden = true;
-    donateForm.querySelectorAll(".is-invalid").forEach(el => el.classList.remove("is-invalid"));
-    const status = donateForm.querySelector(".form-status");
-    if (status) {
-      status.textContent = "";
-      status.classList.remove("is-error");
-    }
+    clearFormErrorState(donateForm, donateForm.querySelector(".form-status"));
     const donorField = donateForm.elements.donorName;
     openModalWithFocus(donateModal, donorField);
   };
@@ -953,23 +1103,27 @@ document.addEventListener("DOMContentLoaded", () => {
       clearFormErrorState(donateForm, status);
 
       if (!donorName || donorName.length < 2) {
-        setFormError(status, "Please enter your full name or organization name.", [donateForm.elements.donorName]);
+        setFormError(status, "Please enter your full name or organization name.", [donateForm.elements.donorName], {
+          donorName: "Enter your full name or sponsoring organization (at least 2 characters)."
+        });
         return;
       }
 
       if (!email || !isValidEmail(email)) {
-        setFormError(status, "Please provide a valid email address so we can issue your tax acknowledgment.", [donateForm.elements.email]);
+        setFormError(status, "Please provide a valid email address so we can issue your tax acknowledgment.", [donateForm.elements.email], {
+          email: "Enter a valid email address (e.g. donor@example.com) for your 501(c)(3) receipt."
+        });
         return;
       }
 
       if (phone && !isValidPhone(phone)) {
-        setFormError(status, "Please enter a valid 10-digit phone number.", [donateForm.elements.phone]);
+        setFormError(status, "Please enter a valid 10-digit phone number.", [donateForm.elements.phone], {
+          phone: "Include area code and 7 digits (e.g. 334-555-0199)."
+        });
         return;
       }
 
-      donateForm.dataset.submitting = "true";
-      submit.disabled = true;
-      status.textContent = "Recording your pledge...";
+      setFormLoading(donateForm, submit, status, "Recording your pledge...");
 
       try {
         let serverValidationError = null;
@@ -1001,13 +1155,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (doneBtn) doneBtn.focus();
 
         donateForm.reset();
+        clearFormErrorState(donateForm, status);
       } catch (err) {
         console.error(err);
-        status.classList.add("is-error");
-        status.textContent = "Could not record pledge. Please contact info@springboardsfcd.org.";
+        setFormError(status, "Could not record pledge right now. Please try again, call 731.388.WORK, or email info@springboardsfcd.org.");
       } finally {
-        delete donateForm.dataset.submitting;
-        submit.disabled = false;
+        clearFormBusyState(donateForm, submit, status);
       }
     });
   }

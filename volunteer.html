@@ -142,7 +142,7 @@
     </section>
 
     <section class="section mission-section subpage-form-section">
-      <div class="container" style="max-width: 760px;">
+      <div class="container container--narrow">
         <span class="section-eyebrow">SIGN UP TO SERVE</span>
         <h2 class="section-title">Express Volunteer Interest</h2>
         <p class="section-subtitle" style="margin-bottom: 2rem;">Share your availability and area of interest below. Our coordinator will follow up to confirm your scheduled block.</p>
@@ -230,9 +230,34 @@
         const status = document.getElementById('volStatus');
         const fd = new FormData(form);
 
+        const clearSubpageValidation = () => {
+          form.querySelectorAll('input, select, textarea').forEach((el) => {
+            el.classList.remove('is-invalid', 'is-valid');
+            el.removeAttribute('aria-invalid');
+          });
+          status.classList.remove('is-error', 'is-success', 'is-loading');
+          status.setAttribute('role', 'status');
+        };
+
+        const markInvalid = (fields, message) => {
+          status.classList.remove('is-success', 'is-loading');
+          status.classList.add('is-error');
+          status.setAttribute('role', 'alert');
+          status.textContent = message;
+          const list = Array.isArray(fields) ? fields.filter(Boolean) : [fields].filter(Boolean);
+          list.forEach((field) => {
+            field.classList.remove('is-valid');
+            field.classList.add('is-invalid');
+            field.setAttribute('aria-invalid', 'true');
+          });
+          if (list[0]) list[0].focus();
+        };
+
+        clearSubpageValidation();
+
         if (fd.get('website_url')) {
-          status.classList.remove('is-error');
-          status.textContent = '✓ Thank you! Your volunteer availability has been recorded.';
+          status.classList.add('is-success');
+          status.textContent = '✓ Volunteer Sign-Up Received: Thank you! Our coordinator will contact you within 2 business days with upcoming mentor and workshop dates.';
           form.reset();
           return;
         }
@@ -241,39 +266,32 @@
         const phone = String(fd.get('phone') || '').trim();
         const email = String(fd.get('email') || '').trim();
 
-        status.classList.remove('is-error');
         if (!name || name.length < 2) {
-          status.classList.add('is-error');
-          status.setAttribute('role', 'alert');
-          status.textContent = '⚠ Error: Please enter your full name (minimum 2 characters).';
-          form.elements.name.focus();
+          markInvalid(form.elements.name, '⚠ Action Required: Please enter your full name (at least 2 characters).');
           return;
         }
         if (!phone && !email) {
-          status.classList.add('is-error');
-          status.setAttribute('role', 'alert');
-          status.textContent = '⚠ Error: Please provide a phone number or email address.';
-          form.elements.phone.focus();
+          markInvalid([form.elements.phone, form.elements.email], '⚠ Action Required: Please provide either a phone number or an email address so our volunteer coordinator can reach you.');
           return;
         }
         if (phone && !/^\+?1?\d{10}$/.test(phone.replace(/[\s\-\(\)\.]/g, ''))) {
-          status.classList.add('is-error');
-          status.setAttribute('role', 'alert');
-          status.textContent = '⚠ Error: Please enter a valid 10-digit phone number.';
-          form.elements.phone.focus();
+          markInvalid(form.elements.phone, '⚠ Action Required: Please enter a valid 10-digit phone number (for example: (555) 234-5678).');
           return;
         }
         if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
-          status.classList.add('is-error');
-          status.setAttribute('role', 'alert');
-          status.textContent = '⚠ Error: Please enter a valid email address.';
-          form.elements.email.focus();
+          markInvalid(form.elements.email, '⚠ Action Required: Please enter a valid email address (for example: name@example.com).');
           return;
         }
 
         form.dataset.submitting = 'true';
-        if (submitBtn) submitBtn.disabled = true;
-        status.textContent = 'Submitting your volunteer interest...';
+        form.setAttribute('aria-busy', 'true');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.classList.add('is-loading');
+          submitBtn.setAttribute('aria-busy', 'true');
+        }
+        status.classList.add('is-loading');
+        status.textContent = 'Submitting your volunteer availability…';
         try {
           const res = await fetch('/api/volunteer-signups', {
             method: 'POST',
@@ -281,15 +299,25 @@
             body: JSON.stringify(Object.fromEntries(fd.entries()))
           });
           const data = await res.json();
-          if (!res.ok) throw new Error(data.error || 'Submission failed.');
-          status.textContent = '✓ Thank you! Your volunteer availability has been recorded.';
+          if (!res.ok) throw new Error(data.error || 'Submission failed. Please check your connection and try again.');
+          clearSubpageValidation();
+          status.classList.add('is-success');
+          status.textContent = '✓ Volunteer Sign-Up Received: Thank you! Your volunteer availability has been recorded and our coordinator will follow up within 2 business days.';
           form.reset();
         } catch (err) {
+          status.classList.remove('is-loading', 'is-success');
           status.classList.add('is-error');
-          status.textContent = '⚠ Error: ' + err.message;
+          status.setAttribute('role', 'alert');
+          status.textContent = '⚠ Unable to Submit Volunteer Sign-Up: ' + err.message;
         } finally {
           delete form.dataset.submitting;
-          if (submitBtn) submitBtn.disabled = false;
+          form.removeAttribute('aria-busy');
+          status.classList.remove('is-loading');
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('is-loading');
+            submitBtn.removeAttribute('aria-busy');
+          }
         }
       });
     })();

@@ -1024,10 +1024,12 @@
     if (!isMultiChoice(question)) return;
     const selected = Array.from(questionForm.querySelectorAll(`input[name="${question.name}"]:checked`)).map((input) => input.value);
     if (!selected.length) {
-      questionError.textContent = "Choose the answer that feels closest to your situation to keep going.";
+      questionError.setAttribute("role", "alert");
+      questionError.textContent = "⚠ Action Required: Please select at least one option that fits your situation (or choose \"None of these\" / \"I’m not sure\") to continue.";
       questionForm.querySelector("input")?.focus();
       return;
     }
+    questionError.textContent = "";
     answers[question.name] = selected;
     const questions = getQuestions();
     if (currentQuestion < questions.length - 1) {
@@ -1050,29 +1052,52 @@
     resultTitle.focus();
   });
 
+  startingAddress.addEventListener("input", () => {
+    if (startingAddress.value.trim().length >= 3) {
+      startingAddress.classList.remove("is-invalid");
+      startingAddress.removeAttribute("aria-invalid");
+      if (addressSearchStatus.classList.contains("is-error")) {
+        addressSearchStatus.classList.remove("is-error");
+        addressSearchStatus.textContent = "";
+      }
+    }
+  });
+
   addressSearchForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const address = startingAddress.value.trim();
+    addressSearchStatus.classList.remove("is-error", "is-success");
     if (address.length < 3) {
-      addressSearchStatus.textContent = "Enter a street address, city, or ZIP code to find the closest center.";
+      startingAddress.classList.add("is-invalid");
+      startingAddress.setAttribute("aria-invalid", "true");
+      addressSearchStatus.classList.add("is-error");
+      addressSearchStatus.setAttribute("role", "alert");
+      addressSearchStatus.textContent = "⚠ Action Required: Enter a street address, city, or 5-digit ZIP code (at least 3 characters) to find the closest Career Center.";
       startingAddress.focus();
       return;
     }
+    startingAddress.classList.remove("is-invalid");
+    startingAddress.setAttribute("aria-invalid", "false");
     const submitButton = addressSearchForm.querySelector('button[type="submit"]');
-    if (submitButton) submitButton.disabled = true;
-    addressSearchStatus.textContent = "Finding the closest center…";
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.classList.add("is-loading");
+      submitButton.setAttribute("aria-busy", "true");
+    }
+    addressSearchStatus.setAttribute("role", "status");
+    addressSearchStatus.textContent = "Finding the closest Career Center…";
 
     fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&country=United%20States&q=${encodeURIComponent(address)}`, {
       headers: { Accept: "application/json" }
     })
       .then((response) => {
-        if (!response.ok) throw new Error("Address lookup is unavailable.");
+        if (!response.ok) throw new Error("Address lookup service is temporarily unavailable.");
         return response.json();
       })
       .then((matches) => {
         const match = matches[0];
         if (!match || !Number.isFinite(Number(match.lat)) || !Number.isFinite(Number(match.lon))) {
-          throw new Error("We couldn’t match that address.");
+          throw new Error("We couldn’t match that address or ZIP code.");
         }
         const latitude = Number(match.lat);
         const longitude = Number(match.lon);
@@ -1088,17 +1113,26 @@
         selectedAppointmentDate = "";
         selectedAppointmentTime = "";
         showCenterOnMap(nearest.center);
-        addressSearchStatus.textContent = `Approximate closest match: ${nearest.center.name}, based on city location. Choose a sample visit time below.`;
+        addressSearchStatus.classList.remove("is-error");
+        addressSearchStatus.classList.add("is-success");
+        addressSearchStatus.textContent = `✓ Closest Match Found: ${nearest.center.name} (approx. ${nearest.miles.toFixed(1)} miles away). Choose a sample visit time below or open turn-by-turn directions.`;
         renderCareerCenters();
         renderAppointmentCalendar();
       })
       .catch((error) => {
         directionsOrigin = address;
-        addressSearchStatus.textContent = `${error.message} You can still compare the centers below or open directions from your address.`;
+        addressSearchStatus.classList.remove("is-success");
+        addressSearchStatus.classList.add("is-error");
+        addressSearchStatus.setAttribute("role", "alert");
+        addressSearchStatus.textContent = `⚠ ${error.message} Try entering a 5-digit ZIP code or city name, or select any Career Center directly from the list below.`;
         renderCareerCenters();
       })
       .finally(() => {
-        if (submitButton) submitButton.disabled = false;
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.classList.remove("is-loading");
+          submitButton.removeAttribute("aria-busy");
+        }
       });
   });
 
@@ -1106,7 +1140,9 @@
     if (!selectedAppointmentDate || !selectedAppointmentTime) return;
     const chosenDate = new Date(`${selectedAppointmentDate}T12:00:00`);
     const formattedDate = chosenDate.toLocaleDateString("en-US", { timeZone: WEBSITE_TIMEZONE, weekday: "long", month: "long", day: "numeric" });
-    calendarStatus.textContent = `You selected ${selectedAppointmentTime} on ${formattedDate} at ${selectedCareerCenter.name}. This preview has not booked or reserved a visit. Call ${selectedCareerCenter.phone} to confirm.`;
+    calendarStatus.classList.remove("is-error");
+    calendarStatus.classList.add("is-success");
+    calendarStatus.textContent = `✓ Sample Visit Time Selected: ${selectedAppointmentTime} on ${formattedDate} at ${selectedCareerCenter.name}. Note: This preview does not reserve an appointment—please call ${selectedCareerCenter.phone} to confirm your visit.`;
   });
 
   backButton.addEventListener("click", () => {
@@ -1124,7 +1160,11 @@
     currentQuestion = 0;
     youthWorkHistoryApplies = false;
     startingAddress.value = "";
+    startingAddress.classList.remove("is-invalid", "is-valid");
+    startingAddress.removeAttribute("aria-invalid");
+    addressSearchStatus.classList.remove("is-error", "is-success");
     addressSearchStatus.textContent = "";
+    calendarStatus.classList.remove("is-error", "is-success");
     directionsOrigin = "";
     nearestCenterId = "";
     selectedAppointmentDate = "";

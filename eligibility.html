@@ -61,8 +61,8 @@
     button:focus-visible, a:focus-visible { outline: 3px solid var(--wizard-orange-hover); outline-offset: 3px; }
     [hidden] { display: none !important; }
 
-    .wizard-page { min-height: 100vh; padding: 1rem clamp(1rem, 4vw, 3.5rem) 3rem; }
-    .wizard-topbar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; max-width: 1200px; margin: 0 auto 1.25rem; }
+    .wizard-page { min-height: 100vh; padding: 1rem var(--container-pad-x, clamp(1.25rem, 4vw, 2rem)) 3rem; }
+    .wizard-topbar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; max-width: var(--container-max, 1240px); margin: 0 auto 1.25rem; }
     .wizard-logo { display: block; width: min(210px, 43vw); height: auto; }
     .wizard-home-link { color: var(--wizard-ink); font-weight: 750; text-decoration: none; }
     .wizard-home-link:hover { color: var(--wizard-orange-hover); }
@@ -70,7 +70,7 @@
     .wizard-hero {
       display: grid;
       grid-template-columns: 1.02fr 0.98fr;
-      max-width: 1200px;
+      max-width: var(--container-max, 1240px);
       min-height: 340px;
       margin: 0 auto 1.5rem;
       overflow: hidden;
@@ -89,7 +89,7 @@
     .wizard-hero-image img { display: block; width: 100%; height: 100%; min-height: 280px; object-fit: cover; object-position: 53% 40%; }
     .wizard-hero-caption { position: absolute; z-index: 1; right: 1.1rem; bottom: 1.1rem; padding: 0.55rem 0.85rem; border: 1px solid rgba(255,255,255,0.32); border-radius: 999px; background: rgba(24,22,19,0.78); color: #fffaf0; font-size: 0.78rem; font-weight: 700; }
 
-    .wizard-main { max-width: 900px; margin: 0 auto; }
+    .wizard-main { max-width: var(--container-narrow, 840px); margin: 0 auto; }
     .wizard-panel { padding: var(--space-fluid, clamp(1.5rem, 4vw, 2.4rem)); border: 1.5px solid var(--wizard-line); border-radius: var(--radius-md); background: var(--wizard-card); box-shadow: var(--shadow-sm); }
     .wizard-progress-row { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: 0.65rem; color: var(--wizard-muted); font-size: 0.85rem; font-weight: 750; }
     .wizard-progress-track { height: 0.55rem; overflow: hidden; border-radius: 999px; background: #eee8dd; }
@@ -131,14 +131,14 @@
 
     .wizard-actions { display: flex; justify-content: space-between; gap: 0.75rem; margin-top: 1rem; }
 
-    .wizard-result { max-width: 900px; margin: 0 auto; }
+    .wizard-result { max-width: var(--container-narrow, 840px); margin: 0 auto; }
     .wizard-result-card { overflow: hidden; border: 1.5px solid var(--wizard-line); border-radius: var(--radius-md); background: var(--wizard-card); box-shadow: var(--shadow-sm); }
     .wizard-result-top { padding: clamp(1.5rem, 4vw, 2.75rem); background: #211e19; color: #fffaf0; }
     .wizard-result-top[data-outcome="not-eligible"] { background: #342620; }
     .wizard-result-top[data-outcome="review"] { background: #302b21; }
     .wizard-result-top .wizard-eyebrow { margin-bottom: 0.7rem; }
     .wizard-result-top h2 { margin: 0; font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.12; letter-spacing: -0.04em; }
-    .wizard-result-top p { max-width: 68ch; margin: 0.8rem 0 0; color: #e7dfd3; line-height: 1.7; }
+    .wizard-result-top p { max-width: var(--container-prose, 65ch); margin: 0.8rem 0 0; color: #e7dfd3; line-height: 1.7; }
     .wizard-profile { padding: clamp(1.5rem, 4vw, 2.4rem); }
     .wizard-code { display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.1rem; padding: 0.55rem 0.8rem; border-radius: 999px; background: #f7ead2; color: #4e3518; font-size: 0.8rem; font-weight: 850; letter-spacing: 0.04em; }
     .wizard-profile h3 { margin: 0 0 0.35rem; font-size: 1.25rem; }
@@ -153,9 +153,9 @@
     .wizard-review-note { margin: 1.4rem 0 0; padding: 1rem; border-left: 4px solid var(--wizard-gold); border-radius: 0.35rem; background: #faf4e6; color: #554b3e; line-height: 1.65; }
     .wizard-result-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.5rem; }
     .wizard-result-actions a { text-decoration: none; }
-    .wizard-centers { max-width: 1080px; margin: 0 auto; }
+    .wizard-centers { max-width: var(--container-max, 1240px); margin: 0 auto; }
     .wizard-center-heading { margin: 0.5rem 0; font-size: clamp(1.8rem, 4vw, 2.7rem); line-height: 1.15; letter-spacing: -0.04em; }
-    .wizard-center-intro { max-width: 65ch; margin: 0 0 1.25rem; color: var(--wizard-muted); line-height: 1.65; }
+    .wizard-center-intro { max-width: var(--container-prose, 65ch); margin: 0 0 1.25rem; color: var(--wizard-muted); line-height: 1.65; }
     .wizard-center-search { margin-bottom: 1.2rem; padding: 1.2rem; border: 1px solid var(--wizard-line); border-radius: 1rem; background: var(--wizard-card); }
     .wizard-center-search label { display: block; margin-bottom: 0.5rem; font-weight: 800; }
     .wizard-address-row { display: flex; gap: 0.65rem; }

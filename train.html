@@ -71,11 +71,11 @@
       .prequal-shell {
         display: flex;
         flex-direction: column;
-        max-width: 1200px;
+        max-width: var(--container-max, 1240px);
         min-height: 100vh;
         min-height: 100svh;
         margin: 0 auto;
-        padding: clamp(1rem, 3vw, 2.25rem);
+        padding: clamp(1rem, 3vw, 2.25rem) var(--container-pad-x, clamp(1.25rem, 4vw, 2rem));
       }
 
       .prequal-back-link {
@@ -109,7 +109,7 @@
         flex-direction: column;
         align-items: center;
         width: 100%;
-        max-width: 1040px;
+        max-width: var(--container-content, 960px);
       }
 
       .prequal-heading {

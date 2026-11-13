@@ -226,10 +226,10 @@ export function executeMcpTool(toolName, args = {}) {
     const category = args.category || 'all';
     const categoryMatchers = {
       colors: /^--(color|rgb|primary-navy|secondary-navy|navy-|accent-|bg-|border-|text-dark|text-body|text-muted|text-light|admin-|wizard-|train-page-)/,
-      typography: /^--(font-|text-xs|text-sm|text-base|text-lg|text-xl|text-2xl|text-3xl|text-display|leading-|tracking-)/,
-      spacing: /^--(space-|section-pad-|container-pad-)/,
-      sizing: /^--(size-|container-max|container-narrow|container-prose|nav-height|radius-)/,
-      layout: /^--(bp-|container-|size-grid-|shadow-|z-|transition-)/
+      typography: /^--(font-|text-xs|text-sm|text-label|text-base|text-lg|text-h4|text-xl|text-2xl|text-3xl|text-display|text-numeral|leading-|tracking-|flow-)/,
+      spacing: /^--(space-|section-pad-|section-band-|container-pad-)/,
+      sizing: /^--(size-|container-max|container-content|container-narrow|container-prose|container-prose-compact|container-heading|nav-height|radius-)/,
+      layout: /^--(bp-|container-|size-grid-|shadow-|z-|transition-|state-)/
     };
 
     const filteredTokens =
