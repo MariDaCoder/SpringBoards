@@ -1766,6 +1766,18 @@ document.addEventListener("DOMContentLoaded", () => {
       keywords: "donate donation partner employer sponsor volunteer tools lumber materials gift tax deductible",
       href: "/partner",
       actionLabel: "Explore Partnerships & Giving →"
+    },
+    {
+      id: "doc-style-guide",
+      category: "documents",
+      categoryLabel: "Design System",
+      breadcrumb: "springboardsfcd.org › /style-guide",
+      title: "Living Style Guide, Design Tokens & Global Utility Classes Reference",
+      snippet: "Centralized design system documentation showing responsive typography, 3-tier color tokens, 8px spacing, buttons, form validation states, and .u-* utility classes.",
+      tags: ["3-Tier CSS Tokens", "WCAG 2.2 AA", "Global Utilities"],
+      keywords: "style guide design system tokens colors typography buttons forms utility classes css variables",
+      href: "/style-guide",
+      actionLabel: "Open Living Style Guide →"
     }
   ];
 

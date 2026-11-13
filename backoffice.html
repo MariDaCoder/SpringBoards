@@ -466,41 +466,41 @@
       </div>
 
       <form id="form-auth-passcode" onsubmit="loginWithPasscode(event)" novalidate>
-        <div style="text-align: left; margin-bottom: 1rem;">
-          <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-dark); display: block; margin-bottom: 0.35rem;" for="input-passcode">
-            Executive Passcode <span style="color: #dc2626;" aria-hidden="true">*</span>
+        <div class="u-text-left u-mb-4">
+          <label class="u-text-xs u-weight-bold u-color-primary u-mb-1" style="display: block;" for="input-passcode">
+            Executive Passcode <span class="u-color-danger" aria-hidden="true">*</span>
           </label>
           <div class="protected-input-wrap">
-            <input type="password" id="input-passcode" class="form-input" autocomplete="current-password" placeholder="Enter authorized passcode" required aria-describedby="passcode-help-hint auth-error-alert" style="width: 100%; padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: var(--radius-sm); font-size: 1rem;">
+            <input type="password" id="input-passcode" class="form-input u-w-full" autocomplete="current-password" placeholder="Enter authorized passcode" required aria-describedby="passcode-help-hint auth-error-alert" style="padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: var(--radius-sm); font-size: 1rem;">
             <button type="button" class="protected-toggle-visibility" id="btn-toggle-passcode" aria-pressed="false" aria-label="Show passcode characters" onclick="togglePasscodeVisibility('input-passcode', 'btn-toggle-passcode')">Show</button>
           </div>
-          <span id="passcode-help-hint" style="display: block; font-size: 0.76rem; color: var(--text-muted); margin-top: 0.35rem;">Case-sensitive administrative passcode issued to leadership and WIOA reviewers.</span>
+          <span id="passcode-help-hint" class="u-text-xs u-color-muted u-mt-1" style="display: block;">Case-sensitive administrative passcode issued to leadership and WIOA reviewers.</span>
           <div id="auth-caps-warning" class="protected-caps-warning" hidden>
             <span aria-hidden="true">⚠️</span> Caps Lock is turned on — passcodes are case-sensitive.
           </div>
         </div>
-        <button type="submit" id="btn-submit-passcode" class="btn-cta" style="width: 100%; padding: 0.85rem; font-size: 1rem;">
+        <button type="submit" id="btn-submit-passcode" class="btn-cta u-w-full" style="padding: 0.85rem; font-size: 1rem;">
           Unlock Protected Portal &rarr;
         </button>
       </form>
 
       <form id="form-auth-staff" onsubmit="loginWithStaffPin(event)" novalidate hidden>
-        <div style="text-align: left; margin-bottom: 0.85rem;">
-          <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-dark); display: block; margin-bottom: 0.35rem;" for="input-staff-phone">
-            Registered Mobile Phone <span style="color: #dc2626;" aria-hidden="true">*</span>
+        <div class="u-text-left u-mb-3">
+          <label class="u-text-xs u-weight-bold u-color-primary u-mb-1" style="display: block;" for="input-staff-phone">
+            Registered Mobile Phone <span class="u-color-danger" aria-hidden="true">*</span>
           </label>
-          <input type="tel" id="input-staff-phone" class="form-input" autocomplete="tel" inputmode="tel" placeholder="(334) 556-0000" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: var(--radius-sm); font-size: 1rem;">
+          <input type="tel" id="input-staff-phone" class="form-input u-w-full" autocomplete="tel" inputmode="tel" placeholder="(334) 556-0000" required style="padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: var(--radius-sm); font-size: 1rem;">
         </div>
-        <div style="text-align: left; margin-bottom: 1rem;">
-          <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-dark); display: block; margin-bottom: 0.35rem;" for="input-staff-pin">
-            4-Digit Staff PIN <span style="color: #dc2626;" aria-hidden="true">*</span>
+        <div class="u-text-left u-mb-4">
+          <label class="u-text-xs u-weight-bold u-color-primary u-mb-1" style="display: block;" for="input-staff-pin">
+            4-Digit Staff PIN <span class="u-color-danger" aria-hidden="true">*</span>
           </label>
           <div class="protected-input-wrap">
-            <input type="password" id="input-staff-pin" class="form-input" inputmode="numeric" maxlength="8" autocomplete="one-time-code" placeholder="Enter 4-digit PIN" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: var(--radius-sm); font-size: 1rem;">
+            <input type="password" id="input-staff-pin" class="form-input u-w-full" inputmode="numeric" maxlength="8" autocomplete="one-time-code" placeholder="Enter 4-digit PIN" required style="padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: var(--radius-sm); font-size: 1rem;">
             <button type="button" class="protected-toggle-visibility" id="btn-toggle-staff-pin" aria-pressed="false" aria-label="Show staff PIN" onclick="togglePasscodeVisibility('input-staff-pin', 'btn-toggle-staff-pin')">Show</button>
           </div>
         </div>
-        <button type="submit" id="btn-submit-staff" class="btn-cta" style="width: 100%; padding: 0.85rem; font-size: 1rem;">
+        <button type="submit" id="btn-submit-staff" class="btn-cta u-w-full" style="padding: 0.85rem; font-size: 1rem;">
           Verify Staff Roster Access &rarr;
         </button>
       </form>
@@ -508,7 +508,7 @@
       <div id="auth-error-alert" class="protected-error-banner" role="alert" aria-live="assertive" style="display: none;"></div>
 
       <div class="protected-help-footer">
-        <strong>Need access or locked out?</strong> Contact Technical Publisher Marilynn Ward or Executive Director Marvin Thompson at <a href="mailto:info@springboardsfcd.org">info@springboardsfcd.org</a> or call <a href="tel:731.388.WORK">731.388.WORK</a>. Looking for public trade programs? <a href="/">Return to Public Homepage &rarr;</a>
+        <strong>Need access or locked out?</strong> Contact Technical Publisher Marilynn Ward or Executive Director Marvin Thompson at <a href="mailto:info@springboardsfcd.org">info@springboardsfcd.org</a> or call <a href="tel:731.388.WORK">731.388.WORK</a>. Looking for public trade programs or the design reference? <a href="/">Public Homepage</a> &bull; <a href="/style-guide">Living Style Guide &rarr;</a>
       </div>
     </div>
   </div>

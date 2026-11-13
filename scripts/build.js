@@ -76,7 +76,8 @@ const publicPages = [
   'eligibility.html',
   'volunteer.html',
   'partner.html',
-  'donate.html'
+  'donate.html',
+  'style-guide.html'
 ];
 
 let hasErrors = false;

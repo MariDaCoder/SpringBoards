@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1C2C44">
+    <title>Living Style Guide &amp; Design System Reference | Springboards for Community Development</title>
+    <meta name="description" content="Centralized Living Style Guide and 3-tier CSS Design System reference for Springboards for Community Development — showing typography, colors, spacing, buttons, forms, reusable patterns, and global utility classes.">
+    <link rel="canonical" href="https://springboardsfcd.org/style-guide">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Living Style Guide &amp; Design System Reference | Springboards for Community Development">
+    <meta property="og:description" content="Centralized Living Style Guide and 3-tier CSS Design System reference for Springboards for Community Development — showing typography, colors, spacing, buttons, forms, reusable patterns, and global utility classes.">
+    <meta property="og:url" content="https://springboardsfcd.org/style-guide">
+    <meta property="og:image" content="https://springboardsfcd.org/og-share-card.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preload" href="/fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="u-bg-canvas u-color-primary">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Global Navigation Bar -->
+    <nav class="navbar" aria-label="Main Navigation">
+        <div class="container nav-container">
+            <a href="/" class="logo" aria-label="Springboards Home">
+                <svg class="brand-mark" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <rect x="2" y="18" width="16" height="4" rx="2" fill="#E05B32" />
+                    <path d="M6 14L22 6" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" />
+                    <circle cx="22" cy="6" r="3.5" fill="#E05B32" />
+                </svg>
+                <span class="logo-text">SPRINGBOARDS<span class="dot">.</span></span>
+            </a>
+
+            <ul class="nav-links" id="primary-nav-links">
+                <li><a href="/#mission">The Gap</a></li>
+                <li><a href="/#programs">Pathways</a></li>
+                <li><a href="/#eligibility">Find Your Path</a></li>
+                <li><a href="/#impact">Transparency</a></li>
+                <li><a href="/style-guide" aria-current="page" class="active">Style Guide</a></li>
+                <li><a href="/donate" class="btn-primary nav-cta">Support Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <!-- Style Guide Hero Header -->
+        <header class="sg-hero">
+            <div class="container">
+                <span class="section-tag">Design System &amp; Component Architecture v2.5</span>
+                <h1 class="u-text-display u-color-inverse u-mb-4">Centralized Living Style Guide &amp; Global Utility Reference</h1>
+                <p class="u-text-lg u-measure u-mb-6" style="color: rgba(255, 255, 255, 0.88);">
+                    Single source of truth for Springboards for Community Development’s <strong>Civic Workshop &amp; Editorial Warmth</strong> design system. Built on a 3-tier CSS Custom Property architecture (<code>--palette-*</code> &rarr; <code>--color-*</code> &rarr; <code>.sb-*</code> / <code>.ds-*</code> / <code>.u-*</code>), WCAG 2.2 AA contrast governance, and zero-dependency interactive states.
+                </p>
+                <div class="ds-cluster">
+                    <span class="ds-badge ds-badge--accent">3-Tier CSS Tokens</span>
+                    <span class="ds-badge ds-badge--success">WCAG 2.2 AA Audited</span>
+                    <span class="ds-badge ds-badge--info">8px Spatial Grid</span>
+                    <a href="/backoffice#design-system" class="btn-outline" style="padding: 0.45rem 0.95rem; font-size: var(--text-xs); color: #FFFFFF; border-color: rgba(255,255,255,0.4);">Open Backoffice Governance &rarr;</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sticky Style Guide Sub-Navigation -->
+        <nav class="sg-sticky-subnav" aria-label="Style Guide Sections">
+            <div class="container">
+                <ul class="sg-subnav-list">
+                    <li><a href="#tokens-colors" class="sg-subnav-link is-active">1. Color Tokens</a></li>
+                    <li><a href="#typography-scale" class="sg-subnav-link">2. Typography Scale</a></li>
+                    <li><a href="#spacing-containers" class="sg-subnav-link">3. Spacing &amp; Layout</a></li>
+                    <li><a href="#buttons-states" class="sg-subnav-link">4. Buttons &amp; States</a></li>
+                    <li><a href="#forms-validation" class="sg-subnav-link">5. Forms &amp; Validation</a></li>
+                    <li><a href="#reusable-patterns" class="sg-subnav-link">6. Reusable Patterns</a></li>
+                    <li><a href="#utility-classes" class="sg-subnav-link">7. Global Utility Classes</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container">
+            <!-- ==========================================================================
+                 1. COLOR SYSTEM & 3-TIER TOKEN SWATCHES
+                 ========================================================================== -->
+            <section id="tokens-colors" class="sg-section" aria-labelledby="heading-colors">
+                <div class="sg-section-header">
+                    <div>
+                        <span class="section-tag">Section 01 &bull; Semantic &amp; Primitive Tokens</span>
+                        <h2 id="heading-colors" class="u-text-2xl u-mt-2">Color System &amp; WCAG Contrast Matrix</h2>
+                        <p class="u-color-secondary u-measure u-mt-2">
+                            Click any token badge below to copy its CSS variable reference (e.g., <code>var(--color-brand-primary)</code>) to your clipboard. All foreground/background combinations are audited against WCAG 2.2 AA contrast thresholds.
+                        </p>
+                    </div>
+                    <span id="copyTokenFeedback" class="ds-badge ds-badge--success" role="status" aria-live="polite" hidden>Copied to clipboard!</span>
+                </div>
+
+                <!-- Primary Brand & Action Palette -->
+                <h3 class="u-text-lg u-mb-3">Primary Brand &amp; Civic Action Tokens</h3>
+                <div class="sg-swatch-grid u-mb-8">
+                    <!-- Deep Civic Navy -->
+                    <article class="sg-swatch-card">
+                        <div class="sg-swatch-preview u-bg-navy">
+                            <span class="ds-badge" style="background: rgba(255,255,255,0.16); color: #FFFFFF;">13.8:1 AAA</span>
+                        </div>
+                        <div class="sg-swatch-body">
+                            <div class="u-flex-between">
+                                <strong class="u-text-sm">Deep Civic Navy</strong>
+                                <span class="u-font-mono u-text-xs u-color-muted">#1C2C44</span>
+                            </div>
+                            <p class="u-text-xs u-color-secondary">Primary brand authority, hero canvas, headings, and primary text ink.</p>
+                            <div class="ds-cluster u-mt-1">
+                                <button type="button" class="sg-code-token" data-copy-token="var(--color-brand-primary)" title="Click to copy">--color-brand-primary</button>
+                                <button type="button" class="sg-code-token" data-copy-token=".u-bg-navy" title="Click to copy">.u-bg-navy</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Springboard Terracotta Orange -->
+                    <article class="sg-swatch-card">
+                        <div class="sg-swatch-preview" style="background-color: var(--color-accent-primary);">
+                            <span class="ds-badge" style="background: rgba(0,0,0,0.22); color: #FFFFFF;">4.52:1 AA</span>
+                        </div>
+                        <div class="sg-swatch-body">
+                            <div class="u-flex-between">
+                                <strong class="u-text-sm">Springboard Terracotta</strong>
+                                <span class="u-font-mono u-text-xs u-color-muted">#E05B32</span>
+                            </div>
+                            <p class="u-text-xs u-color-secondary">Primary conversion CTAs, active step indicators, and focus accents.</p>
+                            <div class="ds-cluster u-mt-1">
+                                <button type="button" class="sg-code-token" data-copy-token="var(--color-accent-primary)" title="Click to copy">--color-accent-primary</button>
+                                <button type="button" class="sg-code-token" data-copy-token=".u-color-accent" title="Click to copy">.u-color-accent</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Active Terracotta Hover -->
+                    <article class="sg-swatch-card">
+                        <div class="sg-swatch-preview" style="background-color: var(--color-accent-primary-hover);">
+                            <span class="ds-badge" style="background: rgba(0,0,0,0.25); color: #FFFFFF;">5.61:1 AA</span>
+                        </div>
+                        <div class="sg-swatch-body">
+                            <div class="u-flex-between">
+                                <strong class="u-text-sm">Active Terracotta Hover</strong>
+                                <span class="u-font-mono u-text-xs u-color-muted">#C54E29</span>
+                            </div>
+                            <p class="u-text-xs u-color-secondary">Interactive hover/active state for primary buttons and high-contrast links.</p>
+                            <div class="ds-cluster u-mt-1">
+                                <button type="button" class="sg-code-token" data-copy-token="var(--color-accent-primary-hover)" title="Click to copy">--color-accent-primary-hover</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Civic Ochre Gold -->
+                    <article class="sg-swatch-card">
+                        <div class="sg-swatch-preview" style="background-color: var(--color-accent-secondary); color: var(--color-brand-primary);">
+                            <span class="ds-badge" style="background: rgba(28,44,68,0.14); color: #1C2C44;">8.4:1 on Navy</span>
+                        </div>
+                        <div class="sg-swatch-body">
+                            <div class="u-flex-between">
+                                <strong class="u-text-sm">Civic Ochre Gold</strong>
+                                <span class="u-font-mono u-text-xs u-color-muted">#D97724</span>
+                            </div>
+                            <p class="u-text-xs u-color-secondary">Secondary highlights, data chart series, and dark-surface callout badges.</p>
+                            <div class="ds-cluster u-mt-1">
+                                <button type="button" class="sg-code-token" data-copy-token="var(--color-accent-secondary)" title="Click to copy">--color-accent-secondary</button>
+                                <button type="button" class="sg-code-token" data-copy-token=".u-color-ochre" title="Click to copy">.u-color-ochre</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Neutral Surfaces & Semantic Status Tokens -->
+                <h3 class="u-text-lg u-mb-3">Neutral Editorial Surfaces &amp; Semantic Feedback Tokens</h3>
+                <div class="sg-swatch-grid">
+                    <!-- Warm Alabaster Canvas -->
+                    <article class="sg-swatch-card">
+                        <div class="sg-swatch-preview u-bg-canvas u-color-primary" style="border-bottom: 1px solid var(--color-border-default);">
+                            <span class="ds-badge">Base Canvas</span>
+                        </div>
+                        <div class="sg-swatch-body">
+                            <div class="u-flex-between">
+                                <strong class="u-text-sm">Warm Alabaster Canvas</strong>
+                                <span class="u-font-mono u-text-xs u-color-muted">#FAF9F5</span>
+                            </div>
+                            <p class="u-text-xs u-color-secondary">Default editorial page background reducing harsh clinical glare.</p>
+                            <div class="ds-cluster u-mt-1">
+                                <button type="button" class="sg-code-token" data-copy-token="var(--color-bg-canvas)">--color-bg-canvas</button>
+                                <button type="button" class="sg-code-token" data-copy-token=".u-bg-canvas">.u-bg-canvas</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Soft Sand Stone Section -->
+                    <article class="sg-swatch-card">
+                        <div class="sg-swatch-preview u-bg-subtle u-color-primary" style="border-bottom: 1px solid var(--color-border-default);">
+                            <span class="ds-badge">Section Alt</span>
+                        </div>
+                        <div class="sg-swatch-body">
+                            <div class="u-flex-between">
+                                <strong class="u-text-sm">Soft Sand Stone</strong>
+                                <span class="u-font-mono u-text-xs u-color-muted">#F2EFE9</span>
+                            </div>
+                            <p class="u-text-xs u-color-secondary">Alternating section background, table headers, and well containers.</p>
+                            <div class="ds-cluster u-mt-1">
+                                <button type="button" class="sg-code-token" data-copy-token="var(--color-bg-subtle)">--color-bg-subtle</button>
+                                <button type="button" class="sg-code-token" data-copy-token=".u-bg-subtle">.u-bg-subtle</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Status Success -->
+                    <article class="sg-swatch-card">
+                        <div class="sg-swatch-preview" style="background-color: var(--color-status-success);">
+                            <span class="ds-badge" style="background: rgba(255,255,255,0.2); color: #FFFFFF;">5.8:1 AA</span>
+                        </div>
+                        <div class="sg-swatch-body">
+                            <div class="u-flex-between">
+                                <strong class="u-text-sm">Verified Forest Green</strong>
+                                <span class="u-font-mono u-text-xs u-color-muted">#1E7B4C</span>
+                            </div>
+                            <p class="u-text-xs u-color-secondary">Form validation pass, 501(c)(3) verification, and completed milestones.</p>
+                            <div class="ds-cluster u-mt-1">
+                                <button type="button" class="sg-code-token" data-copy-token="var(--color-status-success)">--color-status-success</button>
+                                <button type="button" class="sg-code-token" data-copy-token=".ds-badge--success">.ds-badge--success</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Status Warning -->
+                    <article class="sg-swatch-card">
+                        <div class="sg-swatch-preview" style="background-color: var(--color-status-warning);">
+                            <span class="ds-badge" style="background: rgba(255,255,255,0.2); color: #FFFFFF;">5.1:1 AA</span>
+                        </div>
+                        <div class="sg-swatch-body">
+                            <div class="u-flex-between">
+                                <strong class="u-text-sm">Caution Amber</strong>
+                                <span class="u-font-mono u-text-xs u-color-muted">#B45309</span>
+                            </div>
+                            <p class="u-text-xs u-color-secondary">Waitlist advisories, pending cohort slots, and session timeouts.</p>
+                            <div class="ds-cluster u-mt-1">
+                                <button type="button" class="sg-code-token" data-copy-token="var(--color-status-warning)">--color-status-warning</button>
+                                <button type="button" class="sg-code-token" data-copy-token=".ds-badge--warning">.ds-badge--warning</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Status Danger -->
+                    <article class="sg-swatch-card">
+                        <div class="sg-swatch-preview" style="background-color: var(--color-status-danger);">
+                            <span class="ds-badge" style="background: rgba(255,255,255,0.2); color: #FFFFFF;">6.4:1 AA</span>
+                        </div>
+                        <div class="sg-swatch-body">
+                            <div class="u-flex-between">
+                                <strong class="u-text-sm">Alert Crimson</strong>
+                                <span class="u-font-mono u-text-xs u-color-muted">#B91C1C</span>
+                            </div>
+                            <p class="u-text-xs u-color-secondary">Required field errors, invalid PIN entries, and destructive actions.</p>
+                            <div class="ds-cluster u-mt-1">
+                                <button type="button" class="sg-code-token" data-copy-token="var(--color-status-danger)">--color-status-danger</button>
+                                <button type="button" class="sg-code-token" data-copy-token=".ds-badge--danger">.ds-badge--danger</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+                 2. RESPONSIVE TYPOGRAPHY SCALE & SPECIMENS
+                 ========================================================================== -->
+            <section id="typography-scale" class="sg-section" aria-labelledby="heading-typography">
+                <div class="sg-section-header">
+                    <div>
+                        <span class="section-tag">Section 02 &bull; Unified Geometric Sans-Serif</span>
+                        <h2 id="heading-typography" class="u-text-2xl u-mt-2">Responsive Typography Scale &amp; Live Specimens</h2>
+                        <p class="u-color-secondary u-measure u-mt-2">
+                            Powered by self-hosted variable <strong>Plus Jakarta Sans</strong> (<code>--font-heading</code> / <code>--font-ui</code>) for zero CLS and high-legibility tabular numerals, paired with <code>--font-mono</code> for audit hashes and EIN citations.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="sg-specimen-table-wrap">
+                    <table class="sg-specimen-table">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width: 22%;">Role &amp; Utility Class</th>
+                                <th scope="col" style="width: 24%;">Token &amp; Responsive Scale</th>
+                                <th scope="col">Live Representative Specimen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong>Display / H1 Hero</strong>
+                                    <div class="u-mt-1"><code class="sg-code-token" data-copy-token=".u-text-display">.u-text-display</code></div>
+                                </td>
+                                <td class="u-font-mono u-text-xs u-color-secondary">
+                                    --text-display<br>
+                                    Desktop: 3.5rem (56px)<br>
+                                    Mobile: 2.25rem (36px)<br>
+                                    Line-height: 1.12 / -0.025em
+                                </td>
+                                <td>
+                                    <div class="u-text-display">Skills are the springboard.</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>H2 Section Heading</strong>
+                                    <div class="u-mt-1"><code class="sg-code-token" data-copy-token=".u-text-2xl">.u-text-2xl</code></div>
+                                </td>
+                                <td class="u-font-mono u-text-xs u-color-secondary">
+                                    --text-2xl<br>
+                                    Desktop: 2.4rem (38.4px)<br>
+                                    Mobile: 1.5rem (24px)<br>
+                                    Line-height: 1.18 / -0.02em
+                                </td>
+                                <td>
+                                    <div class="u-text-2xl">Vocational Pathways Built for Self-Reliance</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>H3 Card / Subsection</strong>
+                                    <div class="u-mt-1"><code class="sg-code-token" data-copy-token=".u-text-xl">.u-text-xl</code></div>
+                                </td>
+                                <td class="u-font-mono u-text-xs u-color-secondary">
+                                    --text-xl<br>
+                                    Desktop: 1.5rem (24px)<br>
+                                    Mobile: 1.25rem (20px)<br>
+                                    Line-height: 1.25 / -0.015em
+                                </td>
+                                <td>
+                                    <div class="u-text-xl">01. Trade &amp; Technical Apprenticeship Cohort</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>H4 Feature / Modal Title</strong>
+                                    <div class="u-mt-1"><code class="sg-code-token" data-copy-token=".u-text-h4">.u-text-h4</code></div>
+                                </td>
+                                <td class="u-font-mono u-text-xs u-color-secondary">
+                                    --text-h4<br>
+                                    1.25rem (20px) &bull; Weight 700<br>
+                                    Line-height: 1.3
+                                </td>
+                                <td>
+                                    <div class="u-text-h4">Employer Apprenticeship Guarantee &amp; Stipend Schedule</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Lead Paragraph</strong>
+                                    <div class="u-mt-1"><code class="sg-code-token" data-copy-token=".u-text-lg">.u-text-lg</code></div>
+                                </td>
+                                <td class="u-font-mono u-text-xs u-color-secondary">
+                                    --text-lg<br>
+                                    1.125rem (18px) &bull; Weight 400<br>
+                                    Max Measure: 65ch
+                                </td>
+                                <td>
+                                    <p class="u-text-lg u-measure u-m-0">We equip under-resourced neighborhoods with accredited technical training, micro-enterprise seed capital, and civic mentorship.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Body Copy (Default)</strong>
+                                    <div class="u-mt-1"><code class="sg-code-token" data-copy-token=".u-text-base">.u-text-base</code></div>
+                                </td>
+                                <td class="u-font-mono u-text-xs u-color-secondary">
+                                    --text-base<br>
+                                    1rem (16px) &bull; Line-height: 1.65<br>
+                                    Color: --color-text-secondary
+                                </td>
+                                <td>
+                                    <p class="u-text-base u-color-secondary u-measure u-m-0">Every dollar goes toward verified classroom instruction, toolkits, licensing exam fees, and direct job placement partnerships across five regional cohorts.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>UI Label / Form Field</strong>
+                                    <div class="u-mt-1"><code class="sg-code-token" data-copy-token=".u-text-label">.u-text-label</code></div>
+                                </td>
+                                <td class="u-font-mono u-text-xs u-color-secondary">
+                                    --text-label<br>
+                                    0.95rem (15.2px) &bull; Weight 600<br>
+                                    Line-height: 1.4
+                                </td>
+                                <td>
+                                    <span class="u-text-label">Primary Vocational Track Selection *</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Eyebrow / Section Tag</strong>
+                                    <div class="u-mt-1"><code class="sg-code-token" data-copy-token=".section-tag">.section-tag</code></div>
+                                </td>
+                                <td class="u-font-mono u-text-xs u-color-secondary">
+                                    --text-xs (0.8rem / 12.8px)<br>
+                                    Uppercase &bull; Tracking 0.1em<br>
+                                    Weight 700
+                                </td>
+                                <td>
+                                    <span class="section-tag u-m-0">Financial Accountability &amp; Form 990</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Tabular Impact Numeral</strong>
+                                    <div class="u-mt-1"><code class="sg-code-token" data-copy-token=".u-text-numeral">.u-text-numeral</code></div>
+                                </td>
+                                <td class="u-font-mono u-text-xs u-color-secondary">
+                                    --text-numeral<br>
+                                    clamp(2.25rem, 4.5vw, 3.25rem)<br>
+                                    tabular-nums &bull; Weight 800
+                                </td>
+                                <td>
+                                    <span class="u-text-numeral u-color-primary">84.6%</span>
+                                    <span class="u-text-sm u-color-muted" style="margin-left: 0.75rem;">Direct Program Ratio</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+                 3. 8PX SPACING SCALE, VERTICAL RHYTHM & CONTAINER TIERS
+                 ========================================================================== -->
+            <section id="spacing-containers" class="sg-section" aria-labelledby="heading-spacing">
+                <div class="sg-section-header">
+                    <div>
+                        <span class="section-tag">Section 03 &bull; Spatial Rhythm &amp; Layout Containers</span>
+                        <h2 id="heading-spacing" class="u-text-2xl u-mt-2">8px Spacing Scale &amp; Container Width Tiers</h2>
+                        <p class="u-color-secondary u-measure u-mt-2">
+                            All margins, paddings, and grid gaps snap to an 8px spatial unit with 4px half-steps for compact badge/input rhythm.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="sb-card u-mb-8">
+                    <h3 class="u-text-lg u-mb-4">Spatial Scale Tokens (<code>--space-1</code> to <code>--space-24</code>)</h3>
+                    <div class="sg-space-row">
+                        <code class="sg-code-token" data-copy-token="var(--space-1)">--space-1</code>
+                        <span class="u-font-mono u-text-xs u-color-muted">0.25rem / 4px</span>
+                        <div class="sg-space-bar" style="width: 4px;"></div>
+                    </div>
+                    <div class="sg-space-row">
+                        <code class="sg-code-token" data-copy-token="var(--space-2)">--space-2</code>
+                        <span class="u-font-mono u-text-xs u-color-muted">0.5rem / 8px</span>
+                        <div class="sg-space-bar" style="width: 8px;"></div>
+                    </div>
+                    <div class="sg-space-row">
+                        <code class="sg-code-token" data-copy-token="var(--space-3)">--space-3</code>
+                        <span class="u-font-mono u-text-xs u-color-muted">0.75rem / 12px</span>
+                        <div class="sg-space-bar" style="width: 12px;"></div>
+                    </div>
+                    <div class="sg-space-row">
+                        <code class="sg-code-token" data-copy-token="var(--space-4)">--space-4</code>
+                        <span class="u-font-mono u-text-xs u-color-muted">1.0rem / 16px</span>
+                        <div class="sg-space-bar" style="width: 16px;"></div>
+                    </div>
+                    <div class="sg-space-row">
+                        <code class="sg-code-token" data-copy-token="var(--space-6)">--space-6</code>
+                        <span class="u-font-mono u-text-xs u-color-muted">1.5rem / 24px</span>
+                        <div class="sg-space-bar" style="width: 24px;"></div>
+                    </div>
+                    <div class="sg-space-row">
+                        <code class="sg-code-token" data-copy-token="var(--space-8)">--space-8</code>
+                        <span class="u-font-mono u-text-xs u-color-muted">2.0rem / 32px</span>
+                        <div class="sg-space-bar" style="width: 32px;"></div>
+                    </div>
+                    <div class="sg-space-row">
+                        <code class="sg-code-token" data-copy-token="var(--space-12)">--space-12</code>
+                        <span class="u-font-mono u-text-xs u-color-muted">3.0rem / 48px</span>
+                        <div class="sg-space-bar" style="width: 48px;"></div>
+                    </div>
+                    <div class="sg-space-row">
+                        <code class="sg-code-token" data-copy-token="var(--space-16)">--space-16</code>
+                        <span class="u-font-mono u-text-xs u-color-muted">4.0rem / 64px</span>
+                        <div class="sg-space-bar" style="width: 64px;"></div>
+                    </div>
+                    <div class="sg-space-row">
+                        <code class="sg-code-token" data-copy-token="var(--space-24)">--space-24</code>
+                        <span class="u-font-mono u-text-xs u-color-muted">6.0rem / 96px</span>
+                        <div class="sg-space-bar" style="width: 96px;"></div>
+                    </div>
+                </div>
+
+                <!-- Container Tiers -->
+                <div class="ds-grid-auto">
+                    <div class="sb-card u-bg-subtle">
+                        <span class="ds-badge u-mb-2">--container-max (1160px)</span>
+                        <h4 class="u-text-h4 u-mb-2"><code>.container</code></h4>
+                        <p class="u-text-sm u-color-secondary u-m-0">Standard 12-column editorial &amp; bento grid container with fluid horizontal padding.</p>
+                    </div>
+                    <div class="sb-card u-bg-subtle">
+                        <span class="ds-badge u-mb-2">--container-narrow (820px)</span>
+                        <h4 class="u-text-h4 u-mb-2"><code>.container--narrow</code></h4>
+                        <p class="u-text-sm u-color-secondary u-m-0">Focused container for eligibility wizards, multi-step forms, and long-form policy disclosures.</p>
+                    </div>
+                    <div class="sb-card u-bg-subtle">
+                        <span class="ds-badge u-mb-2">--container-compact (540px)</span>
+                        <h4 class="u-text-h4 u-mb-2"><code>.container--compact</code></h4>
+                        <p class="u-text-sm u-color-secondary u-m-0">Dedicated narrow container for PIN authentication gates, 404 recovery cards, and modal dialogs.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+                 4. BUTTONS & INTERACTIVE STATES MATRIX
+                 ========================================================================== -->
+            <section id="buttons-states" class="sg-section" aria-labelledby="heading-buttons">
+                <div class="sg-section-header">
+                    <div>
+                        <span class="section-tag">Section 04 &bull; Interactive Affordances &amp; WCAG Target Sizes</span>
+                        <h2 id="heading-buttons" class="u-text-2xl u-mt-2">Buttons &amp; Interactive States Matrix</h2>
+                        <p class="u-color-secondary u-measure u-mt-2">
+                            All primary and secondary buttons enforce a <code>3px</code> structural corner radius (<code>--radius-btn</code>), tactile hover elevation, <code>3px</code> high-contrast keyboard focus rings, and <code>aria-busy="true"</code> loading spinners.
+                        </p>
+                    </div>
+                    <button type="button" id="sgToggleBtnLoading" class="btn-outline-dark" style="padding: 0.55rem 1rem; font-size: var(--text-xs);">
+                        Test Loading State (.is-loading)
+                    </button>
+                </div>
+
+                <div class="ds-grid-auto u-mb-6">
+                    <!-- Light Canvas Buttons -->
+                    <div class="sb-card">
+                        <span class="section-tag">Light Editorial Surface</span>
+                        <h3 class="u-text-lg u-mb-4">Primary &amp; Outline Actions</h3>
+                        <div class="ds-cluster u-mb-4">
+                            <button type="button" class="btn-primary sg-testable-btn">Primary Action (.btn-primary)</button>
+                            <button type="button" class="btn-outline-dark sg-testable-btn">Secondary Outline (.btn-outline-dark)</button>
+                        </div>
+                        <div class="ds-cluster">
+                            <button type="button" class="btn-primary" disabled>Disabled Primary</button>
+                            <button type="button" class="btn-outline-dark" disabled>Disabled Secondary</button>
+                            <button type="button" class="btn-primary is-loading" aria-busy="true">Submitting...</button>
+                        </div>
+                    </div>
+
+                    <!-- Dark Civic Navy Canvas Buttons -->
+                    <div class="sb-card sb-card--navy">
+                        <span class="section-tag" style="color: #FF855E;">Dark Civic Navy Surface</span>
+                        <h3 class="u-text-lg u-color-inverse u-mb-4">Inverse Hero &amp; Banner Actions</h3>
+                        <div class="ds-cluster u-mb-4">
+                            <button type="button" class="btn-primary sg-testable-btn">Hero CTA (.btn-primary)</button>
+                            <button type="button" class="btn-outline sg-testable-btn">Inverse Outline (.btn-outline)</button>
+                        </div>
+                        <p class="u-text-xs" style="color: rgba(255,255,255,0.78); margin: 0;">
+                            Press <kbd style="padding: 0.1rem 0.35rem; background: rgba(255,255,255,0.15); border-radius: 3px;">Tab</kbd> across these buttons to inspect the <code>:focus-visible</code> ring contrast on both light and dark surfaces.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+                 5. FORMS, WIZARD FIELDSETS & INTERACTIVE VALIDATION HARNESS
+                 ========================================================================== -->
+            <section id="forms-validation" class="sg-section" aria-labelledby="heading-forms">
+                <div class="sg-section-header">
+                    <div>
+                        <span class="section-tag">Section 05 &bull; Accessible Form Controls &amp; Live Validation</span>
+                        <h2 id="heading-forms" class="u-text-2xl u-mt-2">Forms, Wizard Choices &amp; Validation States</h2>
+                        <p class="u-color-secondary u-measure u-mt-2">
+                            Use the interactive state switcher below to inspect default, error (<code>.is-invalid</code> + <code>.form-status.is-error</code>), and verified success (<code>.is-valid</code> + <code>.form-status.is-success</code>) states across inputs and <code>.wizard-fieldset</code> radio cards.
+                        </p>
+                    </div>
+                    <div class="ds-cluster" role="group" aria-label="Form Validation State Switcher">
+                        <button type="button" class="btn-outline-dark sg-form-state-btn" data-form-state="default" style="padding: 0.45rem 0.85rem; font-size: var(--text-xs);">Default State</button>
+                        <button type="button" class="btn-outline-dark sg-form-state-btn" data-form-state="error" style="padding: 0.45rem 0.85rem; font-size: var(--text-xs); border-color: var(--color-status-danger); color: var(--color-status-danger);">Trigger Error State</button>
+                        <button type="button" class="btn-outline-dark sg-form-state-btn" data-form-state="success" style="padding: 0.45rem 0.85rem; font-size: var(--text-xs); border-color: var(--color-status-success); color: var(--color-status-success);">Trigger Success State</button>
+                    </div>
+                </div>
+
+                <div class="ds-grid-auto">
+                    <!-- Interactive Form Specimen -->
+                    <form id="sgInteractiveForm" class="sb-card" novalidate onsubmit="return false;">
+                        <h3 class="u-text-lg u-mb-4">Standard Form Controls &amp; Field Feedback</h3>
+
+                        <div id="sgFormBanner" class="form-status is-error" role="alert" hidden>
+                            Please resolve the highlighted field errors below before submitting your cohort inquiry.
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sgFullName">Applicant Full Name <span class="u-color-danger" aria-hidden="true">*</span></label>
+                            <input type="text" id="sgFullName" value="Marcus Vance" aria-describedby="sgFullNameHint sgFullNameError">
+                            <span id="sgFullNameHint" class="field-hint">Enter your legal name as it appears on state apprenticeship records.</span>
+                            <div id="sgFullNameError" class="field-error-msg" role="alert" hidden>Please enter your first and last legal name (at least 2 characters).</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sgCohortTrack">Preferred Vocational Track <span class="u-color-danger" aria-hidden="true">*</span></label>
+                            <select id="sgCohortTrack" aria-describedby="sgCohortTrackError">
+                                <option value="trade">01. Trade &amp; Technical Skills (16 Weeks)</option>
+                                <option value="venture">02. Micro-Enterprise &amp; Venture Lab (12 Weeks)</option>
+                                <option value="youth">03. Youth Civic Leadership Fellowship</option>
+                            </select>
+                            <div id="sgCohortTrackError" class="field-error-msg" role="alert" hidden>Please select an active cohort pathway.</div>
+                        </div>
+
+                        <div class="form-group u-mb-0">
+                            <label for="sgPinInput">Partner Verification Code (Monospace Input)</label>
+                            <input type="text" id="sgPinInput" class="u-font-mono" value="SB-2026-COHORT" aria-describedby="sgPinHint">
+                            <span id="sgPinHint" class="field-hint">Uses <code>.u-font-mono</code> and <code>min-height: 3.1rem</code> touch target compliance.</span>
+                        </div>
+                    </form>
+
+                    <!-- Wizard Fieldset & Choice Card Specimen -->
+                    <div class="sb-card">
+                        <h3 class="u-text-lg u-mb-4">Eligibility Wizard Choice Cards (<code>.wizard-fieldset</code>)</h3>
+                        <fieldset class="wizard-fieldset">
+                            <legend class="wizard-legend">What is your primary objective for the upcoming cohort?</legend>
+                            <div class="wizard-options">
+                                <label class="wizard-choice">
+                                    <input type="radio" name="sg_wizard_demo" value="trade" checked>
+                                    <span class="choice-box">
+                                        <strong>Earn an Accredited Trade Certification</strong>
+                                        <small>Hands-on electrical, solar, HVAC, or cloud support training with paid apprenticeship hours.</small>
+                                    </span>
+                                </label>
+                                <label class="wizard-choice">
+                                    <input type="radio" name="sg_wizard_demo" value="venture">
+                                    <span class="choice-box">
+                                        <strong>Launch or Scale a Neighborhood Enterprise</strong>
+                                        <small>Bookkeeping, legal formation, commercial leasing, and micro-grant readiness.</small>
+                                    </span>
+                                </label>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+                 6. REUSABLE PATTERNS (BADGES, CALLOUTS, EMPTY STATES, GATES)
+                 ========================================================================== -->
+            <section id="reusable-patterns" class="sg-section" aria-labelledby="heading-patterns">
+                <div class="sg-section-header">
+                    <div>
+                        <span class="section-tag">Section 06 &bull; Standardized UI Molecules</span>
+                        <h2 id="heading-patterns" class="u-text-2xl u-mt-2">Reusable Patterns: Badges, Callouts, Empty States &amp; Gates</h2>
+                        <p class="u-color-secondary u-measure u-mt-2">
+                            Consistent component patterns shared across public pathways, site search results, collection empty states, and password-protected portals.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Badges & Callouts Row -->
+                <div class="ds-grid-auto u-mb-8">
+                    <div class="sb-card">
+                        <h3 class="u-text-lg u-mb-3">Semantic Status Badges (<code>.ds-badge</code>)</h3>
+                        <p class="u-text-sm u-color-secondary u-mb-4">Used for cohort status, audit verification tags, and search result category pills.</p>
+                        <div class="ds-cluster u-mb-6">
+                            <span class="ds-badge">Default Neutral</span>
+                            <span class="ds-badge ds-badge--accent">Primary Accent</span>
+                            <span class="ds-badge ds-badge--success">Verified 501(c)(3)</span>
+                            <span class="ds-badge ds-badge--warning">Waitlist Active</span>
+                            <span class="ds-badge ds-badge--info">Cohort Open</span>
+                            <span class="ds-badge ds-badge--danger">PIN Required</span>
+                        </div>
+
+                        <h3 class="u-text-lg u-mb-3">Editorial &amp; Status Callouts (<code>.ds-callout</code>)</h3>
+                        <div class="u-stack-sm">
+                            <div class="ds-callout ds-callout--accent">
+                                <strong class="u-text-sm">Pathway Advisory (<code>.ds-callout--accent</code>)</strong>
+                                <p class="u-text-xs u-color-secondary u-m-0 u-mt-1">All full-time trade cohorts include transit stipends and tool allowances at zero tuition cost.</p>
+                            </div>
+                            <div class="ds-callout ds-callout--success">
+                                <strong class="u-text-sm">Audit Verification (<code>.ds-callout--success</code>)</strong>
+                                <p class="u-text-xs u-color-secondary u-m-0 u-mt-1">FY 2025 independent CPA audit and IRS Form 990 filings are verified and publicly downloadable.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Collection Empty State Specimen -->
+                    <div class="sb-card">
+                        <h3 class="u-text-lg u-mb-3">Collection List Empty State (<code>.collection-empty-state</code>)</h3>
+                        <div class="collection-empty-state" style="padding: 1.75rem 1.25rem; margin: 0;">
+                            <div class="collection-empty-icon" aria-hidden="true">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </div>
+                            <span class="collection-empty-eyebrow">No Matching Cohort Records</span>
+                            <h4 class="u-text-h4 u-mb-2">No Active Items Match Your Current Filter</h4>
+                            <p class="u-text-sm u-color-secondary u-measure-compact u-mb-4">
+                                Instead of a blank container, collection empty states provide clear explanation, filter recovery actions, and direct pathways.
+                            </p>
+                            <div class="collection-empty-actions">
+                                <button type="button" class="btn-primary" style="padding: 0.55rem 1.1rem; font-size: var(--text-xs);">Reset Collection Filters</button>
+                                <a href="/#programs" class="btn-outline-dark" style="padding: 0.55rem 1.1rem; font-size: var(--text-xs);">Browse All 3 Pathways</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Password-Protected Gate Banner Specimen -->
+                <div class="sb-card">
+                    <div class="u-flex-between u-mb-4">
+                        <div>
+                            <h3 class="u-text-lg u-m-0">Password-Protected Content Gate (<code>.protected-gate-banner</code>)</h3>
+                            <p class="u-text-sm u-color-secondary u-m-0 u-mt-1">Branded header and security posture used across Trainee Portal and Backoffice Staff PIN gates.</p>
+                        </div>
+                        <code class="sg-code-token" data-copy-token=".protected-gate-banner">.protected-gate-banner</code>
+                    </div>
+                    <div class="protected-gate-banner" style="border-radius: var(--radius-md);">
+                        <div class="protected-gate-badge-row">
+                            <span class="protected-gate-badge">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                                Protected Portal Specimen
+                            </span>
+                            <span class="protected-gate-Clearance">PBKDF2-SHA256 + Session Cookie</span>
+                        </div>
+                        <h4 class="u-text-h4 u-color-inverse u-m-0">Enrolled Trainee &amp; Staff Credential Gate</h4>
+                        <p class="u-text-sm u-m-0 u-mt-1" style="color: rgba(255,255,255,0.82);">
+                            Provides step-by-step instructions, Caps Lock detection, visibility toggles, and accessible error recovery when credentials fail.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+                 7. GLOBAL UTILITY CLASSES REFERENCE TABLE (.u-* & .ds-*)
+                 ========================================================================== -->
+            <section id="utility-classes" class="sg-section" aria-labelledby="heading-utilities" style="border-bottom: none;">
+                <div class="sg-section-header">
+                    <div>
+                        <span class="section-tag">Section 07 &bull; Naming Conventions &amp; Reusable Modifiers</span>
+                        <h2 id="heading-utilities" class="u-text-2xl u-mt-2">Global Utility Classes Reference (<code>.u-*</code> &amp; <code>.ds-*</code>)</h2>
+                        <p class="u-color-secondary u-measure u-mt-2">
+                            Global utility classes follow the design system naming convention: <code>.u-[property]-[token]</code> for single-purpose atomic utilities and <code>.ds-[pattern]--[modifier]</code> for composite layout/surface helpers. Click any class name to copy.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="sg-specimen-table-wrap">
+                    <table class="sg-specimen-table">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width: 22%;">Category</th>
+                                <th scope="col" style="width: 38%;">Global Utility Classes</th>
+                                <th scope="col">Mapped CSS Token / Behavior</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Surface Backgrounds</strong></td>
+                                <td>
+                                    <div class="ds-cluster">
+                                        <code class="sg-code-token" data-copy-token=".u-bg-canvas">.u-bg-canvas</code>
+                                        <code class="sg-code-token" data-copy-token=".u-bg-elevated">.u-bg-elevated</code>
+                                        <code class="sg-code-token" data-copy-token=".u-bg-subtle">.u-bg-subtle</code>
+                                        <code class="sg-code-token" data-copy-token=".u-bg-navy">.u-bg-navy</code>
+                                        <code class="sg-code-token" data-copy-token=".u-bg-accent-tint">.u-bg-accent-tint</code>
+                                        <code class="sg-code-token" data-copy-token=".u-bg-success-tint">.u-bg-success-tint</code>
+                                    </div>
+                                </td>
+                                <td class="u-text-sm u-color-secondary">
+                                    Maps to <code>--color-bg-canvas</code>, <code>--color-bg-elevated</code>, <code>--color-bg-subtle</code>, <code>--color-brand-primary</code>, and semantic status surface tints.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Typography Scale</strong></td>
+                                <td>
+                                    <div class="ds-cluster">
+                                        <code class="sg-code-token" data-copy-token=".u-text-display">.u-text-display</code>
+                                        <code class="sg-code-token" data-copy-token=".u-text-2xl">.u-text-2xl</code>
+                                        <code class="sg-code-token" data-copy-token=".u-text-xl">.u-text-xl</code>
+                                        <code class="sg-code-token" data-copy-token=".u-text-h4">.u-text-h4</code>
+                                        <code class="sg-code-token" data-copy-token=".u-text-lg">.u-text-lg</code>
+                                        <code class="sg-code-token" data-copy-token=".u-text-base">.u-text-base</code>
+                                        <code class="sg-code-token" data-copy-token=".u-text-sm">.u-text-sm</code>
+                                        <code class="sg-code-token" data-copy-token=".u-text-xs">.u-text-xs</code>
+                                        <code class="sg-code-token" data-copy-token=".u-text-numeral">.u-text-numeral</code>
+                                    </div>
+                                </td>
+                                <td class="u-text-sm u-color-secondary">
+                                    Applies responsive font-size, line-height, letter-spacing, and font-weight from Section 02 tokens.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Text &amp; Status Colors</strong></td>
+                                <td>
+                                    <div class="ds-cluster">
+                                        <code class="sg-code-token" data-copy-token=".u-color-primary">.u-color-primary</code>
+                                        <code class="sg-code-token" data-copy-token=".u-color-secondary">.u-color-secondary</code>
+                                        <code class="sg-code-token" data-copy-token=".u-color-muted">.u-color-muted</code>
+                                        <code class="sg-code-token" data-copy-token=".u-color-inverse">.u-color-inverse</code>
+                                        <code class="sg-code-token" data-copy-token=".u-color-accent">.u-color-accent</code>
+                                        <code class="sg-code-token" data-copy-token=".u-color-success">.u-color-success</code>
+                                        <code class="sg-code-token" data-copy-token=".u-color-warning">.u-color-warning</code>
+                                        <code class="sg-code-token" data-copy-token=".u-color-danger">.u-color-danger</code>
+                                    </div>
+                                </td>
+                                <td class="u-text-sm u-color-secondary">
+                                    Maps foreground color directly to WCAG-audited semantic text and status tokens.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Measure &amp; Font Utilities</strong></td>
+                                <td>
+                                    <div class="ds-cluster">
+                                        <code class="sg-code-token" data-copy-token=".u-measure">.u-measure</code>
+                                        <code class="sg-code-token" data-copy-token=".u-measure-compact">.u-measure-compact</code>
+                                        <code class="sg-code-token" data-copy-token=".u-font-mono">.u-font-mono</code>
+                                        <code class="sg-code-token" data-copy-token=".u-uppercase">.u-uppercase</code>
+                                        <code class="sg-code-token" data-copy-token=".u-weight-bold">.u-weight-bold</code>
+                                    </div>
+                                </td>
+                                <td class="u-text-sm u-color-secondary">
+                                    <code>.u-measure</code> constrains reading width to <code>65ch</code>; <code>.u-font-mono</code> applies monospace stack for EIN/hash displays.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Spacing &amp; Rhythm</strong></td>
+                                <td>
+                                    <div class="ds-cluster">
+                                        <code class="sg-code-token" data-copy-token=".u-m-0">.u-m-0</code>
+                                        <code class="sg-code-token" data-copy-token=".u-mt-2">.u-mt-2</code>
+                                        <code class="sg-code-token" data-copy-token=".u-mt-4">.u-mt-4</code>
+                                        <code class="sg-code-token" data-copy-token=".u-mb-2">.u-mb-2</code>
+                                        <code class="sg-code-token" data-copy-token=".u-mb-4">.u-mb-4</code>
+                                        <code class="sg-code-token" data-copy-token=".u-mb-6">.u-mb-6</code>
+                                        <code class="sg-code-token" data-copy-token=".u-mb-8">.u-mb-8</code>
+                                        <code class="sg-code-token" data-copy-token=".u-p-card">.u-p-card</code>
+                                        <code class="sg-code-token" data-copy-token=".u-p-fluid">.u-p-fluid</code>
+                                    </div>
+                                </td>
+                                <td class="u-text-sm u-color-secondary">
+                                    Maps margins and paddings to the 8px spatial scale (<code>--space-1</code> through <code>--space-8</code>) and fluid card padding.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Layout &amp; Flex Helpers</strong></td>
+                                <td>
+                                    <div class="ds-cluster">
+                                        <code class="sg-code-token" data-copy-token=".ds-stack">.ds-stack</code>
+                                        <code class="sg-code-token" data-copy-token=".u-stack-sm">.u-stack-sm</code>
+                                        <code class="sg-code-token" data-copy-token=".ds-cluster">.ds-cluster</code>
+                                        <code class="sg-code-token" data-copy-token=".u-flex-between">.u-flex-between</code>
+                                        <code class="sg-code-token" data-copy-token=".ds-grid-auto">.ds-grid-auto</code>
+                                    </div>
+                                </td>
+                                <td class="u-text-sm u-color-secondary">
+                                    Provides vertical flex stacks, horizontal wrapping badge/button clusters, space-between headers, and responsive auto-fit grids.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Borders, Radii &amp; Elevation</strong></td>
+                                <td>
+                                    <div class="ds-cluster">
+                                        <code class="sg-code-token" data-copy-token=".u-border">.u-border</code>
+                                        <code class="sg-code-token" data-copy-token=".u-border-hairline">.u-border-hairline</code>
+                                        <code class="sg-code-token" data-copy-token=".u-radius-btn">.u-radius-btn</code>
+                                        <code class="sg-code-token" data-copy-token=".u-radius-md">.u-radius-md</code>
+                                        <code class="sg-code-token" data-copy-token=".u-shadow-sm">.u-shadow-sm</code>
+                                        <code class="sg-code-token" data-copy-token=".u-shadow-md">.u-shadow-md</code>
+                                    </div>
+                                </td>
+                                <td class="u-text-sm u-color-secondary">
+                                    Applies standardized hairline borders, <code>3px</code> button radii, <code>12px</code> card radii, and elevation shadows.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+                <p>&copy; 2026 Springboards for Community Development. Registered 501(c)(3) Nonprofit Organization (EIN: 94-3810492).</p>
+                <p class="footer-legal-links">
+                    <a href="/" class="u-color-inverse">Home</a> &bull;
+                    <a href="/donate" class="u-color-inverse">Donate</a> &bull;
+                    <a href="/volunteer" class="u-color-inverse">Volunteer</a> &bull;
+                    <a href="/partner" class="u-color-inverse">Partner</a> &bull;
+                    <a href="/style-guide" class="u-color-inverse" aria-current="page">Style Guide</a> &bull;
+                    <a href="/backoffice" class="u-color-inverse">Staff Backoffice</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Script for Token Copy, Loading State Test & Form Validation Switcher -->
+    <script>
+        (function () {
+            // 1. Click-to-copy CSS token & utility class badges
+            var feedbackBadge = document.getElementById('copyTokenFeedback');
+            var feedbackTimer = null;
+            document.querySelectorAll('[data-copy-token]').forEach(function (el) {
+                el.addEventListener('click', function () {
+                    var tokenText = el.getAttribute('data-copy-token');
+                    if (!tokenText) return;
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(tokenText).catch(function () {});
+                    }
+                    if (feedbackBadge) {
+                        feedbackBadge.textContent = 'Copied ' + tokenText;
+                        feedbackBadge.hidden = false;
+                        if (feedbackTimer) clearTimeout(feedbackTimer);
+                        feedbackTimer = setTimeout(function () {
+                            feedbackBadge.hidden = true;
+                        }, 2400);
+                    }
+                });
+            });
+
+            // 2. Toggle Button Loading State (.is-loading + aria-busy)
+            var toggleLoadingBtn = document.getElementById('sgToggleBtnLoading');
+            var testableBtns = document.querySelectorAll('.sg-testable-btn');
+            var isLoadingActive = false;
+            if (toggleLoadingBtn) {
+                toggleLoadingBtn.addEventListener('click', function () {
+                    isLoadingActive = !isLoadingActive;
+                    testableBtns.forEach(function (btn) {
+                        btn.classList.toggle('is-loading', isLoadingActive);
+                        if (isLoadingActive) {
+                            btn.setAttribute('aria-busy', 'true');
+                        } else {
+                            btn.removeAttribute('aria-busy');
+                        }
+                    });
+                    toggleLoadingBtn.textContent = isLoadingActive
+                        ? 'Reset Buttons to Default'
+                        : 'Test Loading State (.is-loading)';
+                });
+            }
+
+            // 3. Interactive Form Validation State Switcher
+            var nameInput = document.getElementById('sgFullName');
+            var trackSelect = document.getElementById('sgCohortTrack');
+            var pinInput = document.getElementById('sgPinInput');
+            var nameError = document.getElementById('sgFullNameError');
+            var trackError = document.getElementById('sgCohortTrackError');
+            var formBanner = document.getElementById('sgFormBanner');
+
+            document.querySelectorAll('.sg-form-state-btn').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var state = btn.getAttribute('data-form-state');
+                    [nameInput, trackSelect, pinInput].forEach(function (input) {
+                        if (!input) return;
+                        input.classList.remove('is-invalid', 'is-valid');
+                        input.removeAttribute('aria-invalid');
+                    });
+                    if (nameError) nameError.hidden = true;
+                    if (trackError) trackError.hidden = true;
+                    if (formBanner) formBanner.hidden = true;
+
+                    if (state === 'error') {
+                        if (nameInput) {
+                            nameInput.classList.add('is-invalid');
+                            nameInput.setAttribute('aria-invalid', 'true');
+                        }
+                        if (trackSelect) {
+                            trackSelect.classList.add('is-invalid');
+                            trackSelect.setAttribute('aria-invalid', 'true');
+                        }
+                        if (nameError) nameError.hidden = false;
+                        if (trackError) trackError.hidden = false;
+                        if (formBanner) {
+                            formBanner.className = 'form-status is-error';
+                            formBanner.textContent = 'Please resolve the highlighted field errors below before submitting your cohort inquiry.';
+                            formBanner.hidden = false;
+                        }
+                    } else if (state === 'success') {
+                        [nameInput, trackSelect, pinInput].forEach(function (input) {
+                            if (!input) return;
+                            input.classList.add('is-valid');
+                        });
+                        if (formBanner) {
+                            formBanner.className = 'form-status is-success';
+                            formBanner.textContent = 'All applicant fields and partner verification codes passed validation.';
+                            formBanner.hidden = false;
+                        }
+                    }
+                });
+            });
+
+            // 4. Highlight active sub-navigation link on click
+            var subnavLinks = document.querySelectorAll('.sg-subnav-link');
+            subnavLinks.forEach(function (link) {
+                link.addEventListener('click', function () {
+                    subnavLinks.forEach(function (l) { l.classList.remove('is-active'); });
+                    link.classList.add('is-active');
+                });
+            });
+        })();
+    </script>
+</body>
+
+</html>

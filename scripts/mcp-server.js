@@ -225,10 +225,10 @@ export function executeMcpTool(toolName, args = {}) {
 
     const category = args.category || 'all';
     const categoryMatchers = {
-      colors: /^--(color|rgb|primary-navy|secondary-navy|navy-|accent-|bg-|border-|text-dark|text-body|text-muted|text-light|admin-|wizard-|train-page-)/,
+      colors: /^--(palette-|color-|rgb-|primary-navy|secondary-navy|navy-|accent-|bg-|border-|text-dark|text-body|text-muted|text-light|admin-|wizard-|train-page-)/,
       typography: /^--(font-|text-xs|text-sm|text-label|text-base|text-lg|text-h4|text-xl|text-2xl|text-3xl|text-display|text-numeral|leading-|tracking-|flow-)/,
       spacing: /^--(space-|section-pad-|section-band-|container-pad-)/,
-      sizing: /^--(size-|container-max|container-content|container-narrow|container-prose|container-prose-compact|container-heading|nav-height|radius-)/,
+      sizing: /^--(size-|container-max|container-content|container-narrow|container-prose|container-prose-compact|container-heading|nav-height|radius-|btn-|card-|field-|badge-)/,
       layout: /^--(bp-|container-|size-grid-|shadow-|z-|transition-|state-)/
     };
 
@@ -253,7 +253,10 @@ export function executeMcpTool(toolName, args = {}) {
         spaceFluid: tokens['--space-fluid'],
         sizeTouchMin: tokens['--size-touch-min'],
         radiusBtn: tokens['--radius-btn'],
-        radiusMd: tokens['--radius-md']
+        radiusMd: tokens['--radius-md'],
+        btnBg: tokens['--btn-bg'],
+        cardBg: tokens['--card-bg'],
+        fieldMinHeight: tokens['--field-min-height']
       },
       tokens: filteredTokens
     };
@@ -261,7 +264,9 @@ export function executeMcpTool(toolName, args = {}) {
 
   if (toolName === 'design_system_audit_compliance') {
     const checks = [
-      { id: 'semantic_root_tokens', label: 'Centralized :root semantic color variables', passed: /--color-brand-primary:\s*#0B192C/i.test(stylesContent) },
+      { id: 'primitive_palette_tokens', label: 'Tier 1 primitive color palette variables (--palette-*)', passed: /--palette-navy-900:\s*#0B192C/i.test(stylesContent) },
+      { id: 'semantic_root_tokens', label: 'Tier 2 centralized :root semantic color variables', passed: /--color-brand-primary:\s*#0B192C/i.test(stylesContent) },
+      { id: 'component_scoped_tokens', label: 'Tier 3 reusable component variables (--btn-*, --card-*, --field-*, --badge-*)', passed: /--btn-bg:\s*var\(--color-accent-cta\)/i.test(stylesContent) && /--card-bg:\s*var\(--color-surface-elevated\)/i.test(stylesContent) },
       { id: 'accent_safety_orange', label: 'Accent Primary Safety Orange (#E05B32)', passed: /--color-accent-primary:\s*#E05B32/i.test(stylesContent) },
       { id: 'accent_deep_amber_hover', label: 'Accent Primary Hover Deep Amber (#C54E29)', passed: /--color-accent-primary-hover:\s*#C54E29/i.test(stylesContent) },
       { id: 'self_hosted_font_swap', label: 'Self-hosted Plus Jakarta Sans WOFF2 with font-display: swap & fallback', passed: /font-family:\s*'Plus Jakarta Sans Fallback'/i.test(stylesContent) && /font-display:\s*swap/i.test(stylesContent) },

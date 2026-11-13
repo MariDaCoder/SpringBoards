@@ -87,6 +87,7 @@ const cleanPageRedirects = new Map([
   ['/partner.html', '/partner'],
   ['/donate.html', '/donate'],
   ['/backoffice.html', '/backoffice'],
+  ['/style-guide.html', '/style-guide'],
   ['/404.html', '/404']
 ]);
 
@@ -2334,6 +2335,11 @@ app.get('/partner', (req, res) => {
 app.get('/donate', (req, res) => {
   res.setHeader('Cache-Control', 'no-cache, must-revalidate');
   res.sendFile(path.join(__dirname, 'donate.html'));
+});
+
+app.get('/style-guide', (req, res) => {
+  res.setHeader('Cache-Control', 'no-cache, must-revalidate');
+  res.sendFile(path.join(__dirname, 'style-guide.html'));
 });
 
 // Private Executive Admin Portal (strictly separated with no-store & noindex)
