@@ -32,7 +32,7 @@
     <nav class="navbar" aria-label="Main Navigation">
       <div class="nav-left">
         <a href="/" class="nav-logo-link" aria-label="Springboards Home">
-          <img src="/public/assets/aistudio/springboards_logo_white_text.png" alt="Springboards for Community Development logo" class="nav-logo oversized-logo" width="260" height="52" fetchpriority="high" decoding="async">
+          <img src="/assets/aistudio/springboards_logo_white_text.png" alt="Springboards for Community Development logo" class="nav-logo oversized-logo" width="260" height="52" fetchpriority="high" decoding="async">
         </a>
       </div>
 
@@ -74,36 +74,36 @@
           </div>
         </div>
 
-        <h1 id="errorPageTitle" class="section-title" style="color: #ffffff; margin: 0 0 0.75rem;">We couldn’t find that page—let’s get you to the right pathway.</h1>
-        <p style="color: #e2e8f0; font-size: var(--text-lg); line-height: var(--leading-relaxed); max-width: 64ch; margin: 0 0 1.5rem;">
+        <h1 id="errorPageTitle" class="section-title t-h1 c-text-inverse u-mt-0 u-mb-3">We couldn’t find that page—let’s get you to the right pathway.</h1>
+        <p class="t-lead s-max-w-prose c-text-inverse-muted u-mt-0 u-mb-6">
           The link you followed may be outdated, moved, or mistyped. All of Springboards’ tuition-free construction trade programs, WIOA eligibility checks, and community resources are active and available below.
         </p>
 
-        <div style="display: flex; flex-wrap: wrap; gap: 0.85rem; align-items: center;">
+        <div class="ds-cluster u-gap-3">
           <a href="/" class="btn-cta">Return to Homepage →</a>
-          <a href="/eligibility" class="btn-cta" style="background-color: #15803d; border-color: #166534; color: #ffffff;">Start 2-Minute Eligibility Check →</a>
-          <button type="button" id="errorGoBackBtn" class="collection-empty-btn-secondary" style="background: rgba(255, 255, 255, 0.1); color: #ffffff; border-color: rgba(255, 255, 255, 0.45);">← Go Back to Previous Page</button>
+          <a href="/eligibility" class="btn-cta is-success">Start 2-Minute Eligibility Check →</a>
+          <button type="button" id="errorGoBackBtn" class="collection-empty-btn-secondary c-text-inverse c-border-inverse-subtle" style="background: rgba(255, 255, 255, 0.1);">← Go Back to Previous Page</button>
         </div>
 
         <!-- Smart Route Match Callout (Populated automatically when broken URL matches a known topic) -->
         <div id="smartRouteSuggestion" class="error-suggestion-callout" hidden>
           <div>
-            <span style="display: block; font-size: var(--text-xs); font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #86efac; margin-bottom: 0.2rem;">RECOMMENDED MATCH BASED ON YOUR LINK</span>
-            <strong id="smartRouteTitle" style="font-size: var(--text-lg); color: #ffffff;">Looking for WIOA Eligibility &amp; Career Centers?</strong>
-            <p id="smartRouteDesc" style="margin: 0.2rem 0 0; font-size: var(--text-sm); color: #dcfce7;">Check your eligibility for paid Transitional Jobs and find your closest Alabama Career Center.</p>
+            <span class="t-eyebrow u-mb-1" style="color: #86efac;">RECOMMENDED MATCH BASED ON YOUR LINK</span>
+            <strong id="smartRouteTitle" class="t-lead u-weight-bold c-text-inverse">Looking for WIOA Eligibility &amp; Career Centers?</strong>
+            <p id="smartRouteDesc" class="t-body-sm u-mt-1 u-mb-0" style="color: #dcfce7;">Check your eligibility for paid Transitional Jobs and find your closest Alabama Career Center.</p>
           </div>
-          <a id="smartRouteLink" href="/eligibility" class="btn-cta" style="background: #ffffff; color: #0b192c; border-color: #ffffff; flex-shrink: 0;">Open Recommended Page →</a>
+          <a id="smartRouteLink" href="/eligibility" class="btn-cta c-bg-elevated c-text-brand c-border-default u-shrink-0">Open Recommended Page →</a>
         </div>
       </section>
 
       <!-- 2. Interactive Site Directory & Recovery Collection -->
       <section class="error-directory-section" aria-labelledby="recoveryDirectoryHeading">
-        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 1.25rem;">
+        <div class="u-flex-between-end u-mb-5">
           <div>
-            <span class="section-eyebrow" style="color: var(--accent-orange); display: block; margin-bottom: 0.35rem;">SITE RECOVERY DIRECTORY</span>
-            <h2 id="recoveryDirectoryHeading" class="section-title" style="margin: 0; font-size: var(--text-2xl);">Where would you like to go next?</h2>
+            <span class="section-eyebrow t-eyebrow c-text-accent u-mb-1">SITE RECOVERY DIRECTORY</span>
+            <h2 id="recoveryDirectoryHeading" class="section-title t-h2 u-m-0">Where would you like to go next?</h2>
           </div>
-          <p id="directoryCountStatus" style="margin: 0; font-size: var(--text-sm); font-weight: 700; color: var(--text-muted);" aria-live="polite">Showing all 6 verified destinations</p>
+          <p id="directoryCountStatus" class="t-body-sm u-weight-bold c-text-muted u-m-0" aria-live="polite">Showing all 6 verified destinations</p>
         </div>
 
         <!-- Filter & Search Bar for Recovery Collection -->

@@ -69,14 +69,14 @@
   <link rel="preload" href="/assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/styles.css">
 </head>
-<body id="top">
+<body id="top" class="c-bg-canvas c-text-primary">
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <header class="navbar-wrapper" id="navigation">
     <nav class="navbar" aria-label="Main Navigation">
       <div class="nav-left">
         <a href="/" class="nav-logo-link" aria-label="Springboards Home">
-          <img src="/public/assets/aistudio/springboards_logo_dark_bg.png" alt="Springboards Logo" class="nav-logo oversized-logo" width="220" height="48" decoding="async">
+          <img src="/assets/aistudio/springboards_logo_white_text.png" alt="Springboards Logo" class="nav-logo oversized-logo" width="220" height="48" decoding="async">
         </a>
       </div>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
@@ -104,18 +104,18 @@
   </header>
 
   <main id="main-content" tabindex="-1">
-    <section class="section problem-section subpage-hero-section" style="padding-top: clamp(4rem, 8vw, 6.5rem);">
+    <section class="section problem-section subpage-hero-section is-subpage-hero">
       <div class="container">
         <div class="problem-header-grid">
           <div>
             <span class="section-eyebrow problem-eyebrow">INVEST IN SECOND CHANCES &amp; SKILLED WORK</span>
-            <h1 class="section-title problem-title" style="font-size: clamp(2.1rem, 4.5vw, 3.5rem);">Keep Trade Training 100% Tuition-Free in East Alabama</h1>
+            <h1 class="section-title problem-title is-display">Keep Trade Training 100% Tuition-Free in East Alabama</h1>
             <p class="problem-intro">Every dollar and tool donated removes financial barriers for young adults, returning citizens, and jobseekers working toward stable construction careers.</p>
           </div>
           <aside class="problem-callout-right" aria-label="Direct giving methods">
-            <div class="problem-supporting-quote" style="font-style: normal;">
-              <strong style="display: block; color: #fdba74; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem;">Direct Giving Options</strong>
-              <p style="font-style: normal; margin-bottom: 0.65rem;"><strong>Electronic / Zelle:</strong> info@springboardsfcd.org<br><strong>Checks Payable To:</strong> Springboards for Community Development<br><strong>Mail:</strong> 2269 15th Ave. S.W., Lanett, AL 36863</p>
+            <div class="problem-supporting-quote is-upright">
+              <strong class="section-eyebrow is-ochre-light u-mb-2" style="display: block;">Direct Giving Options</strong>
+              <p class="u-mb-3" style="font-style: normal;"><strong>Electronic / Zelle:</strong> info@springboardsfcd.org<br><strong>Checks Payable To:</strong> Springboards for Community Development<br><strong>Mail:</strong> 2269 15th Ave. S.W., Lanett, AL 36863</p>
               <footer>100% of contributions support trainee tools, safety gear, and instruction</footer>
             </div>
           </aside>
@@ -145,9 +145,9 @@
       <div class="container container--narrow">
         <span class="section-eyebrow">PLEDGE SUPPORT OR REQUEST RECEIPT</span>
         <h2 class="section-title">Record a Donation Pledge</h2>
-        <p class="section-subtitle" style="margin-bottom: 2rem;">Complete the form below to coordinate a contribution or request an official tax acknowledgment receipt.</p>
+        <p class="section-subtitle u-mb-8">Complete the form below to coordinate a contribution or request an official tax acknowledgment receipt.</p>
 
-        <form class="program-inquiry-form" id="dedicatedDonateForm" novalidate style="background: var(--bg-light); padding: clamp(1.5rem, 4vw, 2.5rem); border: 1px solid var(--border-color); border-radius: var(--radius-lg);">
+        <form class="program-inquiry-form is-boxed-panel c-bg-subtle c-border-default" id="dedicatedDonateForm" novalidate>
           <input type="text" name="website_url" class="sr-only-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" aria-label="Leave this field blank">
           <div class="form-grid-row">
             <label>Your Name or Organization
@@ -173,9 +173,9 @@
             <input name="pledgeAmount" type="text" placeholder="e.g. $150 Tool Belt Sponsorship or 5 cordless drill kits">
           </label>
           <label>Notes or Dedication (optional)
-            <textarea name="message" rows="2" class="form-input" style="width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.75rem; font-family: inherit;" placeholder="In honor of someone, or delivery coordination details..."></textarea>
+            <textarea name="message" rows="2" class="form-input is-textarea c-border-default" placeholder="In honor of someone, or delivery coordination details..."></textarea>
           </label>
-          <button type="submit" class="btn-cta program-submit" style="margin-top: 1rem;">Submit Pledge &amp; Receipt Request</button>
+          <button type="submit" class="btn-cta program-submit u-mt-4">Submit Pledge &amp; Receipt Request</button>
           <p class="form-status" id="donStatus" role="status" aria-live="polite"></p>
         </form>
       </div>

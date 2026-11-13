@@ -13,10 +13,10 @@
     <meta property="og:description" content="Centralized Living Style Guide and 3-tier CSS Design System reference for Springboards for Community Development — showing typography, colors, spacing, buttons, forms, reusable patterns, and global utility classes.">
     <meta property="og:url" content="https://springboardsfcd.org/style-guide">
     <meta property="og:image" content="https://springboardsfcd.org/og-share-card.png">
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="preload" href="/fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/svg+xml" href="/icon.svg">
+    <link rel="preload" href="/assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body class="u-bg-canvas u-color-primary">
@@ -57,8 +57,8 @@
                 <div class="ds-cluster">
                     <span class="ds-badge ds-badge--accent">3-Tier CSS Tokens</span>
                     <span class="ds-badge ds-badge--success">WCAG 2.2 AA Audited</span>
-                    <span class="ds-badge ds-badge--info">8px Spatial Grid</span>
-                    <a href="/backoffice#design-system" class="btn-outline" style="padding: 0.45rem 0.95rem; font-size: var(--text-xs); color: #FFFFFF; border-color: rgba(255,255,255,0.4);">Open Backoffice Governance &rarr;</a>
+                    <span class="ds-badge ds-badge--info">Combo &amp; Color Classes</span>
+                    <a href="/backoffice#design-system" class="btn-outline is-sm c-text-inverse c-border-inverse-subtle">Open Backoffice Governance &rarr;</a>
                 </div>
             </div>
         </header>
@@ -68,12 +68,14 @@
             <div class="container">
                 <ul class="sg-subnav-list">
                     <li><a href="#tokens-colors" class="sg-subnav-link is-active">1. Color Tokens</a></li>
-                    <li><a href="#typography-scale" class="sg-subnav-link">2. Typography Scale</a></li>
-                    <li><a href="#spacing-containers" class="sg-subnav-link">3. Spacing &amp; Layout</a></li>
-                    <li><a href="#buttons-states" class="sg-subnav-link">4. Buttons &amp; States</a></li>
-                    <li><a href="#forms-validation" class="sg-subnav-link">5. Forms &amp; Validation</a></li>
-                    <li><a href="#reusable-patterns" class="sg-subnav-link">6. Reusable Patterns</a></li>
-                    <li><a href="#utility-classes" class="sg-subnav-link">7. Global Utility Classes</a></li>
+                    <li><a href="#typography-scale" class="sg-subnav-link">2. Typography</a></li>
+                    <li><a href="#spacing-containers" class="sg-subnav-link">3. Spacing</a></li>
+                    <li><a href="#buttons-states" class="sg-subnav-link">4. Buttons</a></li>
+                    <li><a href="#forms-validation" class="sg-subnav-link">5. Forms</a></li>
+                    <li><a href="#reusable-patterns" class="sg-subnav-link">6. Patterns</a></li>
+                    <li><a href="#utility-classes" class="sg-subnav-link">7. Utilities</a></li>
+                    <li><a href="#combo-classes" class="sg-subnav-link">8. Combo Classes</a></li>
+                    <li><a href="#color-styles" class="sg-subnav-link">9. Color Styles</a></li>
                 </ul>
             </div>
         </nav>
@@ -290,132 +292,169 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <strong>Display / H1 Hero</strong>
-                                    <div class="u-mt-1"><code class="sg-code-token" data-copy-token=".u-text-display">.u-text-display</code></div>
+                                    <strong>Display / Hero</strong>
+                                    <div class="ds-cluster u-gap-1 u-mt-1">
+                                        <code class="sg-code-token" data-copy-token=".t-display">.t-display</code>
+                                        <code class="sg-code-token" data-copy-token=".u-text-display">.u-text-display</code>
+                                    </div>
                                 </td>
-                                <td class="u-font-mono u-text-xs u-color-secondary">
-                                    --text-display<br>
-                                    Desktop: 3.5rem (56px)<br>
-                                    Mobile: 2.25rem (36px)<br>
+                                <td class="t-mono c-text-secondary">
+                                    --text-display &bull; --font-display<br>
+                                    Desktop: 3.5rem (56px) / Mobile: 2.25rem<br>
                                     Line-height: 1.12 / -0.025em
                                 </td>
                                 <td>
-                                    <div class="u-text-display">Skills are the springboard.</div>
+                                    <div class="t-display">Skills are the springboard.</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>H1 Page Heading</strong>
+                                    <div class="ds-cluster u-gap-1 u-mt-1">
+                                        <code class="sg-code-token" data-copy-token=".t-h1">.t-h1</code>
+                                        <code class="sg-code-token" data-copy-token=".u-text-3xl">.u-text-3xl</code>
+                                    </div>
+                                </td>
+                                <td class="t-mono c-text-secondary">
+                                    --text-3xl &bull; --font-heading<br>
+                                    clamp(2rem, 4.5vw, 3rem)<br>
+                                    Line-height: 1.12 / -0.025em
+                                </td>
+                                <td>
+                                    <div class="t-h1">Tuition-Free Trade Training That Opens Career Paths</div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <strong>H2 Section Heading</strong>
-                                    <div class="u-mt-1"><code class="sg-code-token" data-copy-token=".u-text-2xl">.u-text-2xl</code></div>
+                                    <div class="ds-cluster u-gap-1 u-mt-1">
+                                        <code class="sg-code-token" data-copy-token=".t-h2">.t-h2</code>
+                                        <code class="sg-code-token" data-copy-token=".u-text-2xl">.u-text-2xl</code>
+                                    </div>
                                 </td>
-                                <td class="u-font-mono u-text-xs u-color-secondary">
-                                    --text-2xl<br>
-                                    Desktop: 2.4rem (38.4px)<br>
-                                    Mobile: 1.5rem (24px)<br>
+                                <td class="t-mono c-text-secondary">
+                                    --text-2xl &bull; --font-heading<br>
+                                    Desktop: 2.4rem (38.4px) / Mobile: 1.5rem<br>
                                     Line-height: 1.18 / -0.02em
                                 </td>
                                 <td>
-                                    <div class="u-text-2xl">Vocational Pathways Built for Self-Reliance</div>
+                                    <div class="t-h2">Vocational Pathways Built for Self-Reliance</div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <strong>H3 Card / Subsection</strong>
-                                    <div class="u-mt-1"><code class="sg-code-token" data-copy-token=".u-text-xl">.u-text-xl</code></div>
+                                    <div class="ds-cluster u-gap-1 u-mt-1">
+                                        <code class="sg-code-token" data-copy-token=".t-h3">.t-h3</code>
+                                        <code class="sg-code-token" data-copy-token=".u-text-xl">.u-text-xl</code>
+                                    </div>
                                 </td>
-                                <td class="u-font-mono u-text-xs u-color-secondary">
-                                    --text-xl<br>
-                                    Desktop: 1.5rem (24px)<br>
-                                    Mobile: 1.25rem (20px)<br>
+                                <td class="t-mono c-text-secondary">
+                                    --text-xl &bull; --font-heading<br>
+                                    Desktop: 1.5rem (24px) / Mobile: 1.25rem<br>
                                     Line-height: 1.25 / -0.015em
                                 </td>
                                 <td>
-                                    <div class="u-text-xl">01. Trade &amp; Technical Apprenticeship Cohort</div>
+                                    <div class="t-h3">01. Trade &amp; Technical Apprenticeship Cohort</div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <strong>H4 Feature / Modal Title</strong>
-                                    <div class="u-mt-1"><code class="sg-code-token" data-copy-token=".u-text-h4">.u-text-h4</code></div>
+                                    <strong>H4–H6 Subheadings</strong>
+                                    <div class="ds-cluster u-gap-1 u-mt-1">
+                                        <code class="sg-code-token" data-copy-token=".t-h4">.t-h4</code>
+                                        <code class="sg-code-token" data-copy-token=".t-h5">.t-h5</code>
+                                        <code class="sg-code-token" data-copy-token=".t-h6">.t-h6</code>
+                                    </div>
                                 </td>
-                                <td class="u-font-mono u-text-xs u-color-secondary">
-                                    --text-h4<br>
-                                    1.25rem (20px) &bull; Weight 700<br>
-                                    Line-height: 1.3
+                                <td class="t-mono c-text-secondary">
+                                    --text-h4 (1.25rem) &bull; --text-h5 (1.0625rem)<br>
+                                    --text-h6 (0.875rem uppercase)
                                 </td>
                                 <td>
-                                    <div class="u-text-h4">Employer Apprenticeship Guarantee &amp; Stipend Schedule</div>
+                                    <div class="t-h4">Employer Apprenticeship Guarantee &amp; Stipend Schedule</div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <strong>Lead Paragraph</strong>
-                                    <div class="u-mt-1"><code class="sg-code-token" data-copy-token=".u-text-lg">.u-text-lg</code></div>
+                                    <div class="ds-cluster u-gap-1 u-mt-1">
+                                        <code class="sg-code-token" data-copy-token=".t-lead">.t-lead</code>
+                                        <code class="sg-code-token" data-copy-token=".u-text-lg">.u-text-lg</code>
+                                    </div>
                                 </td>
-                                <td class="u-font-mono u-text-xs u-color-secondary">
-                                    --text-lg<br>
-                                    1.125rem (18px) &bull; Weight 400<br>
-                                    Max Measure: 65ch
+                                <td class="t-mono c-text-secondary">
+                                    --text-lg (1.125rem / 18px)<br>
+                                    --leading-relaxed &bull; .s-max-w-prose (65ch)
                                 </td>
                                 <td>
-                                    <p class="u-text-lg u-measure u-m-0">We equip under-resourced neighborhoods with accredited technical training, micro-enterprise seed capital, and civic mentorship.</p>
+                                    <p class="t-lead s-max-w-prose u-m-0">We equip under-resourced neighborhoods with accredited technical training, micro-enterprise seed capital, and civic mentorship.</p>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <strong>Body Copy (Default)</strong>
-                                    <div class="u-mt-1"><code class="sg-code-token" data-copy-token=".u-text-base">.u-text-base</code></div>
+                                    <strong>Body Copy &amp; Small Prose</strong>
+                                    <div class="ds-cluster u-gap-1 u-mt-1">
+                                        <code class="sg-code-token" data-copy-token=".t-body">.t-body</code>
+                                        <code class="sg-code-token" data-copy-token=".t-body-sm">.t-body-sm</code>
+                                    </div>
                                 </td>
-                                <td class="u-font-mono u-text-xs u-color-secondary">
-                                    --text-base<br>
-                                    1rem (16px) &bull; Line-height: 1.65<br>
-                                    Color: --color-text-secondary
+                                <td class="t-mono c-text-secondary">
+                                    --text-base (1rem) / --text-sm (0.875rem)<br>
+                                    --leading-normal (1.65)
                                 </td>
                                 <td>
-                                    <p class="u-text-base u-color-secondary u-measure u-m-0">Every dollar goes toward verified classroom instruction, toolkits, licensing exam fees, and direct job placement partnerships across five regional cohorts.</p>
+                                    <p class="t-body c-text-secondary s-max-w-prose u-m-0">Every dollar goes toward verified classroom instruction, toolkits, licensing exam fees, and direct job placement partnerships across five regional cohorts.</p>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <strong>UI Label / Form Field</strong>
-                                    <div class="u-mt-1"><code class="sg-code-token" data-copy-token=".u-text-label">.u-text-label</code></div>
+                                    <strong>UI Label &amp; Caption</strong>
+                                    <div class="ds-cluster u-gap-1 u-mt-1">
+                                        <code class="sg-code-token" data-copy-token=".t-label">.t-label</code>
+                                        <code class="sg-code-token" data-copy-token=".t-caption">.t-caption</code>
+                                    </div>
                                 </td>
-                                <td class="u-font-mono u-text-xs u-color-secondary">
-                                    --text-label<br>
-                                    0.95rem (15.2px) &bull; Weight 600<br>
-                                    Line-height: 1.4
+                                <td class="t-mono c-text-secondary">
+                                    --text-label (0.95rem) &bull; Weight 600<br>
+                                    --text-xs (0.8rem) &bull; --leading-label
                                 </td>
                                 <td>
-                                    <span class="u-text-label">Primary Vocational Track Selection *</span>
+                                    <span class="t-label">Primary Vocational Track Selection *</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <strong>Eyebrow / Section Tag</strong>
-                                    <div class="u-mt-1"><code class="sg-code-token" data-copy-token=".section-tag">.section-tag</code></div>
+                                    <strong>Eyebrow &amp; Pullquote</strong>
+                                    <div class="ds-cluster u-gap-1 u-mt-1">
+                                        <code class="sg-code-token" data-copy-token=".t-eyebrow">.t-eyebrow</code>
+                                        <code class="sg-code-token" data-copy-token=".t-quote">.t-quote</code>
+                                    </div>
                                 </td>
-                                <td class="u-font-mono u-text-xs u-color-secondary">
-                                    --text-xs (0.8rem / 12.8px)<br>
-                                    Uppercase &bull; Tracking 0.1em<br>
-                                    Weight 700
+                                <td class="t-mono c-text-secondary">
+                                    --text-xs &bull; Uppercase &bull; --tracking-caps<br>
+                                    Weight 800
                                 </td>
                                 <td>
-                                    <span class="section-tag u-m-0">Financial Accountability &amp; Form 990</span>
+                                    <span class="t-eyebrow c-text-accent u-m-0">Financial Accountability &amp; Form 990</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <strong>Tabular Impact Numeral</strong>
-                                    <div class="u-mt-1"><code class="sg-code-token" data-copy-token=".u-text-numeral">.u-text-numeral</code></div>
+                                    <strong>Tabular Metric Numeral</strong>
+                                    <div class="ds-cluster u-gap-1 u-mt-1">
+                                        <code class="sg-code-token" data-copy-token=".t-metric">.t-metric</code>
+                                        <code class="sg-code-token" data-copy-token=".u-text-numeral">.u-text-numeral</code>
+                                    </div>
                                 </td>
-                                <td class="u-font-mono u-text-xs u-color-secondary">
+                                <td class="t-mono c-text-secondary">
                                     --text-numeral<br>
                                     clamp(2.25rem, 4.5vw, 3.25rem)<br>
                                     tabular-nums &bull; Weight 800
                                 </td>
                                 <td>
-                                    <span class="u-text-numeral u-color-primary">84.6%</span>
-                                    <span class="u-text-sm u-color-muted" style="margin-left: 0.75rem;">Direct Program Ratio</span>
+                                    <span class="t-metric c-text-primary">84.6%</span>
+                                    <span class="t-body-sm c-text-muted u-mt-0" style="margin-left: 0.75rem;">Direct Program Ratio</span>
                                 </td>
                             </tr>
                         </tbody>
@@ -486,22 +525,27 @@
                     </div>
                 </div>
 
-                <!-- Container Tiers -->
+                <!-- Container & Dimension Classes -->
                 <div class="ds-grid-auto">
                     <div class="sb-card u-bg-subtle">
                         <span class="ds-badge u-mb-2">--container-max (1160px)</span>
-                        <h4 class="u-text-h4 u-mb-2"><code>.container</code></h4>
-                        <p class="u-text-sm u-color-secondary u-m-0">Standard 12-column editorial &amp; bento grid container with fluid horizontal padding.</p>
+                        <h4 class="t-h4 u-mb-2"><code>.container</code> / <code>.s-max-w-container</code></h4>
+                        <p class="t-body-sm c-text-secondary u-m-0">Standard 12-column editorial &amp; bento grid container with fluid horizontal padding (<code>.u-px-container</code>).</p>
                     </div>
                     <div class="sb-card u-bg-subtle">
                         <span class="ds-badge u-mb-2">--container-narrow (820px)</span>
-                        <h4 class="u-text-h4 u-mb-2"><code>.container--narrow</code></h4>
-                        <p class="u-text-sm u-color-secondary u-m-0">Focused container for eligibility wizards, multi-step forms, and long-form policy disclosures.</p>
+                        <h4 class="t-h4 u-mb-2"><code>.container--narrow</code> / <code>.s-max-w-narrow</code></h4>
+                        <p class="t-body-sm c-text-secondary u-m-0">Focused container for eligibility wizards, multi-step forms, and long-form policy disclosures.</p>
                     </div>
                     <div class="sb-card u-bg-subtle">
                         <span class="ds-badge u-mb-2">--container-compact (540px)</span>
-                        <h4 class="u-text-h4 u-mb-2"><code>.container--compact</code></h4>
-                        <p class="u-text-sm u-color-secondary u-m-0">Dedicated narrow container for PIN authentication gates, 404 recovery cards, and modal dialogs.</p>
+                        <h4 class="t-h4 u-mb-2"><code>.container--compact</code> / <code>.s-max-w-compact</code></h4>
+                        <p class="t-body-sm c-text-secondary u-m-0">Dedicated narrow container for PIN authentication gates, 404 recovery cards, and modal dialogs.</p>
+                    </div>
+                    <div class="sb-card u-bg-subtle">
+                        <span class="ds-badge u-mb-2">Spacer-Free Rhythm</span>
+                        <h4 class="t-h4 u-mb-2"><code>.u-py-section</code> &amp; <code>.u-scroll-mt-nav</code></h4>
+                        <p class="t-body-sm c-text-secondary u-m-0">Connects section padding, gaps (<code>.u-gap-1</code>–<code>.u-gap-8</code>), and sticky-nav scroll offsets directly to elements without empty spacer divs.</p>
                     </div>
                 </div>
             </section>
@@ -518,7 +562,7 @@
                             All primary and secondary buttons enforce a <code>3px</code> structural corner radius (<code>--radius-btn</code>), tactile hover elevation, <code>3px</code> high-contrast keyboard focus rings, and <code>aria-busy="true"</code> loading spinners.
                         </p>
                     </div>
-                    <button type="button" id="sgToggleBtnLoading" class="btn-outline-dark" style="padding: 0.55rem 1rem; font-size: var(--text-xs);">
+                    <button type="button" id="sgToggleBtnLoading" class="btn-outline-dark is-sm">
                         Test Loading State (.is-loading)
                     </button>
                 </div>
@@ -540,14 +584,14 @@
                     </div>
 
                     <!-- Dark Civic Navy Canvas Buttons -->
-                    <div class="sb-card sb-card--navy">
-                        <span class="section-tag" style="color: #FF855E;">Dark Civic Navy Surface</span>
+                    <div class="sb-card is-navy">
+                        <span class="section-tag is-ochre-light">Dark Civic Navy Surface</span>
                         <h3 class="u-text-lg u-color-inverse u-mb-4">Inverse Hero &amp; Banner Actions</h3>
                         <div class="ds-cluster u-mb-4">
                             <button type="button" class="btn-primary sg-testable-btn">Hero CTA (.btn-primary)</button>
                             <button type="button" class="btn-outline sg-testable-btn">Inverse Outline (.btn-outline)</button>
                         </div>
-                        <p class="u-text-xs" style="color: rgba(255,255,255,0.78); margin: 0;">
+                        <p class="u-text-xs c-text-inverse-muted u-m-0">
                             Press <kbd style="padding: 0.1rem 0.35rem; background: rgba(255,255,255,0.15); border-radius: 3px;">Tab</kbd> across these buttons to inspect the <code>:focus-visible</code> ring contrast on both light and dark surfaces.
                         </p>
                     </div>
@@ -567,9 +611,9 @@
                         </p>
                     </div>
                     <div class="ds-cluster" role="group" aria-label="Form Validation State Switcher">
-                        <button type="button" class="btn-outline-dark sg-form-state-btn" data-form-state="default" style="padding: 0.45rem 0.85rem; font-size: var(--text-xs);">Default State</button>
-                        <button type="button" class="btn-outline-dark sg-form-state-btn" data-form-state="error" style="padding: 0.45rem 0.85rem; font-size: var(--text-xs); border-color: var(--color-status-danger); color: var(--color-status-danger);">Trigger Error State</button>
-                        <button type="button" class="btn-outline-dark sg-form-state-btn" data-form-state="success" style="padding: 0.45rem 0.85rem; font-size: var(--text-xs); border-color: var(--color-status-success); color: var(--color-status-success);">Trigger Success State</button>
+                        <button type="button" class="btn-outline-dark is-sm sg-form-state-btn" data-form-state="default">Default State</button>
+                        <button type="button" class="btn-outline-dark is-sm c-border-danger c-text-danger sg-form-state-btn" data-form-state="error">Trigger Error State</button>
+                        <button type="button" class="btn-outline-dark is-sm c-border-success c-text-success sg-form-state-btn" data-form-state="success">Trigger Success State</button>
                     </div>
                 </div>
 
@@ -727,7 +771,7 @@
             <!-- ==========================================================================
                  7. GLOBAL UTILITY CLASSES REFERENCE TABLE (.u-* & .ds-*)
                  ========================================================================== -->
-            <section id="utility-classes" class="sg-section" aria-labelledby="heading-utilities" style="border-bottom: none;">
+            <section id="utility-classes" class="sg-section" aria-labelledby="heading-utilities">
                 <div class="sg-section-header">
                     <div>
                         <span class="section-tag">Section 07 &bull; Naming Conventions &amp; Reusable Modifiers</span>
@@ -870,6 +914,256 @@
                     </table>
                 </div>
             </section>
+
+            <!-- ==========================================================================
+                 8. COMBO CLASSES (EXTENDING BASE CLASSES WITHOUT DUPLICATING STYLES)
+                 ========================================================================== -->
+            <section id="combo-classes" class="sg-section" aria-labelledby="heading-combo-classes">
+                <div class="sg-section-header">
+                    <div>
+                        <span class="section-tag">Section 08 &bull; Base + Modifier Architecture</span>
+                        <h2 id="heading-combo-classes" class="u-text-2xl u-mt-2">Combo Classes: Extending Base Classes Without Duplication</h2>
+                        <p class="u-color-secondary u-measure u-mt-2">
+                            Combo classes chain a lightweight modifier (<code>.is-*</code> or <code>--*</code>) onto an existing base class (<code>.sb-card</code>, <code>.btn-primary</code>, <code>.btn-cta</code>, <code>.section-tag</code>, <code>.ds-callout</code>, <code>.program-inquiry-form</code>, <code>.form-input</code>). The base class owns structure, padding, radius, and transitions while the combo class overrides only the specific variation delta.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Interactive Combo Class Composer -->
+                <div class="sb-card is-featured u-mb-8">
+                    <div class="u-flex-between u-mb-4">
+                        <div>
+                            <span class="section-tag">Interactive Testing Harness</span>
+                            <h3 class="u-text-lg u-m-0">Live Card Combo Class Composer (<code>.sb-card</code> + Modifiers)</h3>
+                            <p class="u-text-sm c-text-secondary u-m-0 u-mt-1">Toggle modifier classes below to see how multiple combo classes compose onto the base <code>.sb-card</code> element without duplicating CSS rules.</p>
+                        </div>
+                        <button type="button" class="sg-code-token" id="sgComboPreviewCode" data-copy-token="sb-card is-featured" style="width: auto;">class="sb-card is-featured"</button>
+                    </div>
+
+                    <div class="ds-cluster u-mb-6" role="group" aria-label="Toggle .sb-card combo classes">
+                        <button type="button" class="btn-outline-dark is-sm sg-combo-toggle" data-combo-mod="is-navy" data-combo-group="surface">.is-navy</button>
+                        <button type="button" class="btn-outline-dark is-sm sg-combo-toggle" data-combo-mod="is-warm" data-combo-group="surface">.is-warm</button>
+                        <button type="button" class="btn-outline-dark is-sm sg-combo-toggle" data-combo-mod="is-accent-tint" data-combo-group="surface">.is-accent-tint</button>
+                        <button type="button" class="btn-outline-dark is-sm sg-combo-toggle" data-combo-mod="is-success-tint" data-combo-group="surface">.is-success-tint</button>
+                        <button type="button" class="btn-primary is-sm sg-combo-toggle" data-combo-mod="is-featured" aria-pressed="true">.is-featured</button>
+                        <button type="button" class="btn-outline-dark is-sm sg-combo-toggle" data-combo-mod="is-interactive">.is-interactive</button>
+                        <button type="button" class="btn-outline-dark is-sm sg-combo-toggle" data-combo-mod="is-compact">.is-compact</button>
+                    </div>
+
+                    <article id="sgComboLiveCard" class="sb-card is-featured">
+                        <span class="section-tag">Base Class: .sb-card</span>
+                        <h4 class="u-text-h4 u-mt-1 u-mb-2">Chambers County Carpentry &amp; Electrical Cohort</h4>
+                        <p class="u-text-sm u-mb-4" style="opacity: 0.9;">
+                            This card inherits its border-radius (<code>--card-radius</code>), box-shadow, and responsive flex layout from <code>.sb-card</code>, while combo modifiers adjust surface tokens, top accent bar, padding density, and hover elevation.
+                        </p>
+                        <div class="ds-cluster">
+                            <span class="ds-badge is-success">100% Tuition-Free</span>
+                            <span class="ds-badge is-accent">390 Paid Hours</span>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Button & Callout Combo Variations Grid -->
+                <div class="ds-grid-auto">
+                    <div class="sb-card">
+                        <h3 class="u-text-lg u-mb-3">Button Combo Variations (<code>.btn-primary</code> / <code>.btn-cta</code>)</h3>
+                        <p class="u-text-sm c-text-secondary u-mb-4">Size, surface color, and layout modifiers extend base button geometry and focus rings.</p>
+                        <div class="ds-cluster u-mb-4">
+                            <button type="button" class="btn-primary is-sm" data-copy-token="btn-primary is-sm">.btn-primary.is-sm</button>
+                            <button type="button" class="btn-primary" data-copy-token="btn-primary">.btn-primary (Base)</button>
+                            <button type="button" class="btn-primary is-lg" data-copy-token="btn-primary is-lg">.btn-primary.is-lg</button>
+                        </div>
+                        <div class="ds-cluster u-mb-4">
+                            <button type="button" class="btn-primary is-navy" data-copy-token="btn-primary is-navy">.is-navy</button>
+                            <button type="button" class="btn-primary is-success" data-copy-token="btn-primary is-success">.is-success</button>
+                            <button type="button" class="btn-primary is-ochre" data-copy-token="btn-primary is-ochre">.is-ochre</button>
+                            <button type="button" class="btn-primary is-ghost" data-copy-token="btn-primary is-ghost">.is-ghost</button>
+                        </div>
+                        <button type="button" class="btn-primary is-navy is-full" data-copy-token="btn-primary is-navy is-full">.btn-primary.is-navy.is-full (Full-Width Combo)</button>
+                    </div>
+
+                    <div class="sb-card">
+                        <h3 class="u-text-lg u-mb-3">Callout, Eyebrow &amp; Form Input Combos</h3>
+                        <p class="u-text-sm c-text-secondary u-mb-4">Chained modifiers adapt callouts, section tags, and form controls across light and dark containers.</p>
+                        <div class="u-stack-sm">
+                            <div class="ds-callout is-navy is-compact">
+                                <span class="section-tag is-ochre-light u-m-0">.ds-callout.is-navy.is-compact + .section-tag.is-ochre-light</span>
+                                <p class="u-text-xs c-text-inverse-muted u-m-0 u-mt-1">Combines dark civic navy surface, compact padding, and high-contrast ochre eyebrow text.</p>
+                            </div>
+                            <div class="ds-callout is-info is-compact">
+                                <span class="section-tag is-success u-m-0">.ds-callout.is-info.is-compact + .section-tag.is-success</span>
+                                <p class="u-text-xs c-text-secondary u-m-0 u-mt-1">Info surface tint paired with compact callout spacing for inline WIOA guidance.</p>
+                            </div>
+                            <div>
+                                <label class="u-text-xs u-weight-bold c-text-brand" for="sgComboMonoInput">Input Combo: <code>.form-input.is-mono.is-sm</code></label>
+                                <input id="sgComboMonoInput" type="text" class="form-input is-mono is-sm u-w-full c-border-default u-mt-1" readonly value="WIOA-ACT220-LANETT-36863">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+                 9. REUSABLE COLOR STYLES CONNECTED TO CSS COLOR VARIABLES (.c-*)
+                 ========================================================================== -->
+            <section id="color-styles" class="sg-section" aria-labelledby="heading-color-styles" style="border-bottom: none;">
+                <div class="sg-section-header">
+                    <div>
+                        <span class="section-tag">Section 09 &bull; Semantic Color Classes</span>
+                        <h2 id="heading-color-styles" class="u-text-2xl u-mt-2">Reusable Color Styles: Text, Background, Border &amp; Accent Classes</h2>
+                        <p class="u-color-secondary u-measure u-mt-2">
+                            Every <code>.c-*</code> class links directly to a semantic CSS custom property (<code>var(--color-*)</code>) so palette updates propagate automatically across text, surfaces, borders, form accents, focus rings, and SVG icons. Click any class pill to copy.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 9A. Text & Link Color Classes -->
+                <div class="ds-grid-auto u-mb-8">
+                    <div class="sb-card">
+                        <h3 class="u-text-lg u-mb-3">1. Text Color Classes (<code>.c-text-*</code>)</h3>
+                        <div class="u-stack-sm">
+                            <div class="u-flex-between u-p-3 c-bg-subtle u-radius-sm">
+                                <span class="c-text-primary u-weight-bold">Primary Ink (var(--color-text-primary))</span>
+                                <button type="button" class="sg-code-token" data-copy-token=".c-text-primary" style="width: auto;">.c-text-primary</button>
+                            </div>
+                            <div class="u-flex-between u-p-3 c-bg-subtle u-radius-sm">
+                                <span class="c-text-secondary u-weight-semibold">Secondary Body (var(--color-text-secondary))</span>
+                                <button type="button" class="sg-code-token" data-copy-token=".c-text-secondary" style="width: auto;">.c-text-secondary</button>
+                            </div>
+                            <div class="u-flex-between u-p-3 c-bg-subtle u-radius-sm">
+                                <span class="c-text-muted u-weight-semibold">Muted Metadata (var(--color-text-muted))</span>
+                                <button type="button" class="sg-code-token" data-copy-token=".c-text-muted" style="width: auto;">.c-text-muted</button>
+                            </div>
+                            <div class="u-flex-between u-p-3 c-bg-subtle u-radius-sm">
+                                <span class="c-text-accent u-weight-bold">Springboard Terracotta (var(--color-accent-primary))</span>
+                                <button type="button" class="sg-code-token" data-copy-token=".c-text-accent" style="width: auto;">.c-text-accent</button>
+                            </div>
+                            <div class="u-flex-between u-p-3 c-bg-subtle u-radius-sm">
+                                <span class="c-text-success u-weight-bold">Verified Forest Green (var(--color-status-success))</span>
+                                <button type="button" class="sg-code-token" data-copy-token=".c-text-success" style="width: auto;">.c-text-success</button>
+                            </div>
+                            <div class="u-flex-between u-p-3 c-bg-subtle u-radius-sm">
+                                <span class="c-text-warning u-weight-bold">Caution Amber (var(--color-status-warning))</span>
+                                <button type="button" class="sg-code-token" data-copy-token=".c-text-warning" style="width: auto;">.c-text-warning</button>
+                            </div>
+                            <div class="u-flex-between u-p-3 c-bg-subtle u-radius-sm">
+                                <span class="c-text-danger u-weight-bold">Alert Crimson (var(--color-status-danger))</span>
+                                <button type="button" class="sg-code-token" data-copy-token=".c-text-danger" style="width: auto;">.c-text-danger</button>
+                            </div>
+                            <div class="u-flex-between u-p-3 c-bg-navy u-radius-sm">
+                                <span class="c-text-ochre-light u-weight-bold">Ochre Highlight on Dark Navy</span>
+                                <button type="button" class="sg-code-token" data-copy-token=".c-text-ochre-light" style="width: auto;">.c-text-ochre-light</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 9B. Background & Surface Color Classes -->
+                    <div class="sb-card">
+                        <h3 class="u-text-lg u-mb-3">2. Background Color Classes (<code>.c-bg-*</code>)</h3>
+                        <div class="u-stack-sm">
+                            <div class="u-flex-between u-p-3 c-bg-canvas u-border c-border-default u-radius-sm">
+                                <span class="u-text-sm u-weight-bold">Warm Alabaster Canvas</span>
+                                <button type="button" class="sg-code-token" data-copy-token=".c-bg-canvas" style="width: auto;">.c-bg-canvas</button>
+                            </div>
+                            <div class="u-flex-between u-p-3 c-bg-subtle u-border c-border-subtle u-radius-sm">
+                                <span class="u-text-sm u-weight-bold">Soft Sand Subtle Surface</span>
+                                <button type="button" class="sg-code-token" data-copy-token=".c-bg-subtle" style="width: auto;">.c-bg-subtle</button>
+                            </div>
+                            <div class="u-flex-between u-p-3 c-bg-warm u-border c-border-default u-radius-sm">
+                                <span class="u-text-sm u-weight-bold">Warm Stone Highlight Surface</span>
+                                <button type="button" class="sg-code-token" data-copy-token=".c-bg-warm" style="width: auto;">.c-bg-warm</button>
+                            </div>
+                            <div class="u-flex-between u-p-3 c-bg-navy u-radius-sm">
+                                <span class="u-text-sm u-weight-bold c-text-inverse">Deep Civic Navy Surface</span>
+                                <button type="button" class="sg-code-token" data-copy-token=".c-bg-navy" style="width: auto;">.c-bg-navy</button>
+                            </div>
+                            <div class="u-flex-between u-p-3 c-bg-accent-tint u-border c-border-accent-subtle u-radius-sm">
+                                <span class="u-text-sm u-weight-bold c-text-accent">Terracotta Accent Tint</span>
+                                <button type="button" class="sg-code-token" data-copy-token=".c-bg-accent-tint" style="width: auto;">.c-bg-accent-tint</button>
+                            </div>
+                            <div class="u-flex-between u-p-3 c-bg-success-tint u-border c-border-success u-radius-sm">
+                                <span class="u-text-sm u-weight-bold c-text-success">Verified Success Tint</span>
+                                <button type="button" class="sg-code-token" data-copy-token=".c-bg-success-tint" style="width: auto;">.c-bg-success-tint</button>
+                            </div>
+                            <div class="u-flex-between u-p-3 c-bg-warning-tint u-border c-border-warning u-radius-sm">
+                                <span class="u-text-sm u-weight-bold c-text-warning">Advisory Warning Tint</span>
+                                <button type="button" class="sg-code-token" data-copy-token=".c-bg-warning-tint" style="width: auto;">.c-bg-warning-tint</button>
+                            </div>
+                            <div class="u-flex-between u-p-3 c-bg-danger-tint u-border c-border-danger u-radius-sm">
+                                <span class="u-text-sm u-weight-bold c-text-danger">Alert Danger Tint</span>
+                                <button type="button" class="sg-code-token" data-copy-token=".c-bg-danger-tint" style="width: auto;">.c-bg-danger-tint</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9C. Border, Directional Border, Accent, SVG Fill & Link Color Classes -->
+                <div class="ds-grid-auto">
+                    <div class="sb-card">
+                        <h3 class="u-text-lg u-mb-3">3. Border &amp; Directional Border Colors (<code>.c-border-*</code>)</h3>
+                        <p class="u-text-sm c-text-secondary u-mb-4">Combine <code>.u-border</code> with semantic border color classes or directional 4px accent bars.</p>
+                        <div class="u-stack-sm">
+                            <div class="u-flex-between u-p-3 c-bg-elevated u-border c-border-brand c-border-l-brand u-radius-sm">
+                                <span class="u-text-sm u-weight-bold c-text-brand">Brand Navy Border + Left Bar</span>
+                                <button type="button" class="sg-code-token" data-copy-token=".c-border-brand .c-border-l-brand" style="width: auto;">.c-border-l-brand</button>
+                            </div>
+                            <div class="u-flex-between u-p-3 c-bg-elevated u-border c-border-accent-subtle c-border-l-accent u-radius-sm">
+                                <span class="u-text-sm u-weight-bold c-text-accent">Terracotta Border + Left Bar</span>
+                                <button type="button" class="sg-code-token" data-copy-token=".c-border-accent-subtle .c-border-l-accent" style="width: auto;">.c-border-l-accent</button>
+                            </div>
+                            <div class="u-flex-between u-p-3 c-bg-elevated u-border c-border-success c-border-l-success u-radius-sm">
+                                <span class="u-text-sm u-weight-bold c-text-success">Verified Green Border + Left Bar</span>
+                                <button type="button" class="sg-code-token" data-copy-token=".c-border-success .c-border-l-success" style="width: auto;">.c-border-l-success</button>
+                            </div>
+                            <div class="u-flex-between u-p-3 c-bg-elevated u-border c-border-default c-border-t-accent u-radius-sm">
+                                <span class="u-text-sm u-weight-bold c-text-primary">Top Terracotta Feature Border</span>
+                                <button type="button" class="sg-code-token" data-copy-token=".c-border-t-accent" style="width: auto;">.c-border-t-accent</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sb-card">
+                        <h3 class="u-text-lg u-mb-3">4. Form Accent, SVG Fill, Ring &amp; Link Colors</h3>
+                        <p class="u-text-sm c-text-secondary u-mb-4">Native checkbox/radio <code>accent-color</code>, SVG icon fills, keyboard focus rings, and semantic text links.</p>
+
+                        <div class="ds-cluster u-mb-4 u-p-3 c-bg-subtle u-radius-sm">
+                            <label class="ds-cluster u-text-xs u-weight-bold" style="cursor: pointer;">
+                                <input type="checkbox" checked class="c-accent-brand" style="width: 18px; height: 18px;">
+                                <span>.c-accent-brand</span>
+                            </label>
+                            <label class="ds-cluster u-text-xs u-weight-bold" style="cursor: pointer;">
+                                <input type="checkbox" checked class="c-accent-terracotta" style="width: 18px; height: 18px;">
+                                <span>.c-accent-terracotta</span>
+                            </label>
+                            <label class="ds-cluster u-text-xs u-weight-bold" style="cursor: pointer;">
+                                <input type="checkbox" checked class="c-accent-success" style="width: 18px; height: 18px;">
+                                <span>.c-accent-success</span>
+                            </label>
+                        </div>
+
+                        <div class="ds-cluster u-mb-4 u-p-3 c-bg-subtle u-radius-sm">
+                            <span class="ds-cluster u-text-xs u-weight-bold">
+                                <svg class="c-fill-brand" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>
+                                <code>.c-fill-brand</code>
+                            </span>
+                            <span class="ds-cluster u-text-xs u-weight-bold">
+                                <svg class="c-fill-accent" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>
+                                <code>.c-fill-accent</code>
+                            </span>
+                            <span class="ds-cluster u-text-xs u-weight-bold">
+                                <svg class="c-fill-success" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>
+                                <code>.c-fill-success</code>
+                            </span>
+                        </div>
+
+                        <div class="ds-cluster u-p-3 c-bg-subtle u-radius-sm">
+                            <a href="#color-styles" class="c-link-brand c-ring-accent u-text-sm">.c-link-brand</a>
+                            <a href="#color-styles" class="c-link-accent c-ring-accent u-text-sm">.c-link-accent</a>
+                            <a href="#color-styles" class="c-link-success c-ring-accent u-text-sm">.c-link-success</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     </main>
 
@@ -879,18 +1173,18 @@
             <div class="footer-bottom" style="border-top: none; padding-top: 0;">
                 <p>&copy; 2026 Springboards for Community Development. Registered 501(c)(3) Nonprofit Organization (EIN: 94-3810492).</p>
                 <p class="footer-legal-links">
-                    <a href="/" class="u-color-inverse">Home</a> &bull;
-                    <a href="/donate" class="u-color-inverse">Donate</a> &bull;
-                    <a href="/volunteer" class="u-color-inverse">Volunteer</a> &bull;
-                    <a href="/partner" class="u-color-inverse">Partner</a> &bull;
-                    <a href="/style-guide" class="u-color-inverse" aria-current="page">Style Guide</a> &bull;
-                    <a href="/backoffice" class="u-color-inverse">Staff Backoffice</a>
+                    <a href="/" class="c-link-inverse">Home</a> &bull;
+                    <a href="/donate" class="c-link-inverse">Donate</a> &bull;
+                    <a href="/volunteer" class="c-link-inverse">Volunteer</a> &bull;
+                    <a href="/partner" class="c-link-inverse">Partner</a> &bull;
+                    <a href="/style-guide" class="c-link-inverse" aria-current="page">Style Guide</a> &bull;
+                    <a href="/backoffice" class="c-link-inverse">Staff Backoffice</a>
                 </p>
             </div>
         </div>
     </footer>
 
-    <!-- Interactive Script for Token Copy, Loading State Test & Form Validation Switcher -->
+    <!-- Interactive Script for Token Copy, Loading State Test, Form Validation Switcher & Combo Composer -->
     <script>
         (function () {
             // 1. Click-to-copy CSS token & utility class badges
@@ -985,7 +1279,46 @@
                 });
             });
 
-            // 4. Highlight active sub-navigation link on click
+            // 4. Interactive Combo Class Composer (.sb-card + modifiers)
+            var comboLiveCard = document.getElementById('sgComboLiveCard');
+            var comboPreviewCode = document.getElementById('sgComboPreviewCode');
+            var comboToggles = document.querySelectorAll('.sg-combo-toggle');
+            var surfaceModifiers = ['is-navy', 'is-warm', 'is-accent-tint', 'is-success-tint'];
+
+            comboToggles.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    if (!comboLiveCard) return;
+                    var mod = btn.getAttribute('data-combo-mod');
+                    var group = btn.getAttribute('data-combo-group');
+                    var isAlreadyActive = comboLiveCard.classList.contains(mod);
+
+                    if (group === 'surface' && !isAlreadyActive) {
+                        surfaceModifiers.forEach(function (sMod) {
+                            comboLiveCard.classList.remove(sMod);
+                        });
+                        comboToggles.forEach(function (otherBtn) {
+                            if (otherBtn.getAttribute('data-combo-group') === 'surface') {
+                                otherBtn.classList.remove('btn-primary');
+                                otherBtn.classList.add('btn-outline-dark');
+                                otherBtn.setAttribute('aria-pressed', 'false');
+                            }
+                        });
+                    }
+
+                    comboLiveCard.classList.toggle(mod, !isAlreadyActive);
+                    btn.classList.toggle('btn-primary', !isAlreadyActive);
+                    btn.classList.toggle('btn-outline-dark', isAlreadyActive);
+                    btn.setAttribute('aria-pressed', String(!isAlreadyActive));
+
+                    var classStr = comboLiveCard.className;
+                    if (comboPreviewCode) {
+                        comboPreviewCode.textContent = 'class="' + classStr + '"';
+                        comboPreviewCode.setAttribute('data-copy-token', classStr);
+                    }
+                });
+            });
+
+            // 5. Highlight active sub-navigation link on click
             var subnavLinks = document.querySelectorAll('.sg-subnav-link');
             subnavLinks.forEach(function (link) {
                 link.addEventListener('click', function () {

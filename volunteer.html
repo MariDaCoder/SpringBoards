@@ -69,14 +69,14 @@
   <link rel="preload" href="/assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/styles.css">
 </head>
-<body id="top">
+<body id="top" class="c-bg-canvas c-text-primary">
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <header class="navbar-wrapper" id="navigation">
     <nav class="navbar" aria-label="Main Navigation">
       <div class="nav-left">
         <a href="/" class="nav-logo-link" aria-label="Springboards Home">
-          <img src="/public/assets/aistudio/springboards_logo_dark_bg.png" alt="Springboards Logo" class="nav-logo oversized-logo" width="220" height="48" decoding="async">
+          <img src="/assets/aistudio/springboards_logo_white_text.png" alt="Springboards Logo" class="nav-logo oversized-logo" width="220" height="48" decoding="async">
         </a>
       </div>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
@@ -104,18 +104,18 @@
   </header>
 
   <main id="main-content" tabindex="-1">
-    <section class="section problem-section subpage-hero-section" style="padding-top: clamp(4rem, 8vw, 6.5rem);">
+    <section class="section problem-section subpage-hero-section is-subpage-hero">
       <div class="container">
         <div class="problem-header-grid">
           <div>
             <span class="section-eyebrow problem-eyebrow">COMMUNITY SERVICE • SHAWMUT &amp; LANETT, AL</span>
-            <h1 class="section-title problem-title" style="font-size: clamp(2.1rem, 4.5vw, 3.5rem);">Volunteer at the Springboards Community Center</h1>
+            <h1 class="section-title problem-title is-display">Volunteer at the Springboards Community Center</h1>
             <p class="problem-intro">Neighbors, skilled tradespeople, churches, and civic groups help keep our training workshops safe, organized, and ready for East Alabama trainees.</p>
           </div>
           <aside class="problem-callout-right" aria-label="Volunteer schedule summary">
-            <div class="problem-supporting-quote" style="font-style: normal;">
-              <strong style="display: block; color: #fdba74; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem;">Work Block Schedule</strong>
-              <p style="font-style: normal; margin-bottom: 0.65rem;"><strong>Days:</strong> Monday through Thursday<br><strong>Morning Block:</strong> 8:00 AM – 12:00 PM EST<br><strong>Afternoon Block:</strong> 12:00 PM – 4:00 PM EST</p>
+            <div class="problem-supporting-quote is-upright">
+              <strong class="section-eyebrow is-ochre-light u-mb-2" style="display: block;">Work Block Schedule</strong>
+              <p class="u-mb-3" style="font-style: normal;"><strong>Days:</strong> Monday through Thursday<br><strong>Morning Block:</strong> 8:00 AM – 12:00 PM EST<br><strong>Afternoon Block:</strong> 12:00 PM – 4:00 PM EST</p>
               <footer>Location: 2269 15th Ave. S.W., Lanett, AL 36863</footer>
             </div>
           </aside>
@@ -145,9 +145,9 @@
       <div class="container container--narrow">
         <span class="section-eyebrow">SIGN UP TO SERVE</span>
         <h2 class="section-title">Express Volunteer Interest</h2>
-        <p class="section-subtitle" style="margin-bottom: 2rem;">Share your availability and area of interest below. Our coordinator will follow up to confirm your scheduled block.</p>
+        <p class="section-subtitle u-mb-8">Share your availability and area of interest below. Our coordinator will follow up to confirm your scheduled block.</p>
 
-        <form class="program-inquiry-form" id="dedicatedVolunteerForm" novalidate style="background: var(--bg-light); padding: clamp(1.5rem, 4vw, 2.5rem); border: 1px solid var(--border-color); border-radius: var(--radius-lg);">
+        <form class="program-inquiry-form is-boxed-panel c-bg-subtle c-border-default" id="dedicatedVolunteerForm" novalidate>
           <input type="text" name="website_url" class="sr-only-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" aria-label="Leave this field blank">
           <label>Full Name
             <input name="name" type="text" autocomplete="name" placeholder="Your full name" minlength="2" maxlength="80" required>
@@ -180,7 +180,7 @@
               </select>
             </label>
           </div>
-          <button type="submit" class="btn-cta program-submit" style="margin-top: 1rem;">Submit Volunteer Interest</button>
+          <button type="submit" class="btn-cta program-submit u-mt-4">Submit Volunteer Interest</button>
           <p class="form-status" id="volStatus" role="status" aria-live="polite"></p>
         </form>
       </div>

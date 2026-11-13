@@ -196,7 +196,7 @@
       <!-- Left: Oversized Logo -->
       <div class="nav-left">
         <a href="#top" class="nav-logo-link" aria-label="Springboards Home">
-          <img src="/public/assets/aistudio/springboards_logo_white_text.png" alt="Springboards for Community Development logo" class="nav-logo oversized-logo" width="260" height="52" fetchpriority="high" decoding="async">
+          <img src="/assets/aistudio/springboards_logo_white_text.png" alt="Springboards for Community Development logo" class="nav-logo oversized-logo" width="260" height="52" fetchpriority="high" decoding="async">
         </a>
       </div>
 
@@ -822,14 +822,13 @@
     </section>
   </main>
 
-  <!-- SECTION 10: FOOTER & CONTACT -->
-  <div id="contact" style="scroll-margin-top: calc(var(--nav-height) + 1rem);"></div>
-  <footer class="footer-section" id="footer" data-flow-step="10" data-flow-section="footer">
-    <div class="container footer-grid">
+  <!-- SECTION 10: FOOTER & CONTACT (No empty spacer element; uses .u-scroll-mt-nav) -->
+  <footer class="footer-section u-scroll-mt-nav" id="footer" data-flow-step="10" data-flow-section="footer">
+    <div id="contact" class="container footer-grid u-scroll-mt-nav">
       <div class="footer-col footer-brand">
         <a href="#top" class="footer-brand-lockup" aria-label="Springboards for Community Development — Empower, Elevate, Build, Together">
           <span class="footer-logo-emblem-wrap" aria-hidden="true">
-            <img src="/assets/aistudio/springboards_logo_icon.png" alt="" class="footer-logo" width="84" height="62" loading="lazy" decoding="async">
+            <img src="/assets/aistudio/springboards_logo_icon.png?v=20261113-dark" alt="" class="footer-logo" width="116" height="86" loading="lazy" decoding="async">
           </span>
           <div class="footer-wordmark-group">
             <span class="footer-wordmark">
@@ -1155,7 +1154,7 @@
             </label>
           </div>
           <label>Prior Experience, Certifications, or Questions (optional)
-            <textarea name="notes" rows="3" class="form-input" style="width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.75rem; font-family: inherit;" placeholder="Tell us about any past construction experience or specific scheduling needs..."></textarea>
+            <textarea name="notes" rows="3" class="form-input is-textarea c-border-default" placeholder="Tell us about any past construction experience or specific scheduling needs..."></textarea>
           </label>
           <button type="submit" class="btn-cta program-submit">Submit Candidate Application</button>
           <p class="form-status" role="status" aria-live="polite"></p>
@@ -1233,7 +1232,7 @@
             </label>
           </div>
           <label>Resource Description or Items Offered
-            <textarea name="message" rows="3" class="form-input" style="width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.75rem; font-family: inherit;" placeholder="Describe materials, lumber, tools, or equipment you wish to contribute to the training facility..."></textarea>
+            <textarea name="message" rows="3" class="form-input is-textarea c-border-default" placeholder="Describe materials, lumber, tools, or equipment you wish to contribute to the training facility..."></textarea>
           </label>
           <button type="submit" class="btn-cta program-submit">Submit Resource Partnership</button>
           <p class="form-status" role="status" aria-live="polite"></p>
@@ -1346,13 +1345,13 @@
             <label>Pledge Amount or Items Description
               <input name="pledgeAmount" type="text" placeholder="e.g. $150 Tool Belt or 5 sets of drills">
             </label>
-            <label style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1.75rem; cursor: pointer;">
-              <input type="checkbox" name="taxReceiptRequested" value="yes" checked style="width: 18px; height: 18px; accent-color: var(--accent-green);">
-              <span style="font-size: 0.9rem; color: var(--text-dark);">Please send me a deductible receipt</span>
+            <label class="ds-cluster u-mt-6" style="cursor: pointer;">
+              <input type="checkbox" name="taxReceiptRequested" value="yes" checked class="c-accent-success" style="width: 18px; height: 18px;">
+              <span class="u-text-sm c-text-primary">Please send me a deductible receipt</span>
             </label>
           </div>
           <label>Notes or Dedication
-            <textarea name="message" rows="2" class="form-input" style="width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.75rem; font-family: inherit;" placeholder="In honor of someone, or details on your delivery schedule..."></textarea>
+            <textarea name="message" rows="2" class="form-input is-textarea c-border-default" placeholder="In honor of someone, or details on your delivery schedule..."></textarea>
           </label>
           <button type="submit" class="btn-cta program-submit">Submit Pledge &amp; Receipt Request</button>
           <p class="form-status" role="status" aria-live="polite"></p>
@@ -1448,7 +1447,7 @@
           <img id="docPreviewImg" src="/springboards-community-flyer.webp" alt="Springboards Community Flyer Preview" class="document-preview-image" width="1200" height="2150" loading="lazy" decoding="async">
           <div class="ds-cluster u-mt-3">
             <a id="docPreviewDownloadBtn" href="/springboards-community-flyer.webp" download="Springboards_Community_Flyer.webp" class="btn-cta">Download Full High-Resolution File ↓</a>
-            <button type="button" id="closeDocPreviewBtn" class="btn-cta u-bg-navy u-color-inverse">Close Preview</button>
+            <button type="button" id="closeDocPreviewBtn" class="btn-cta is-navy">Close Preview</button>
           </div>
         </div>
       </div>
@@ -1527,9 +1526,9 @@
       </div>
 
       <div id="traineePortalUnlockedView" class="protected-unlocked-panel" hidden>
-        <span class="section-eyebrow" style="color: #15803d;">✓ Passcode Verified • Session Unlocked</span>
-        <h3 style="color: var(--primary-navy); margin: 0.25rem 0 0.4rem;">390-Hour Worksite Milestone Tracker &amp; Protected Documents</h3>
-        <p style="font-size: 0.88rem; color: #334155; margin: 0;">Active trainees enrolled through the Career Center log daily worksite hours and review retention milestones with their supervisor.</p>
+        <span class="section-eyebrow is-success">✓ Passcode Verified • Session Unlocked</span>
+        <h3 class="c-text-brand u-mt-1 u-mb-2">390-Hour Worksite Milestone Tracker &amp; Protected Documents</h3>
+        <p class="u-text-sm c-text-secondary u-m-0">Active trainees enrolled through the Career Center log daily worksite hours and review retention milestones with their supervisor.</p>
 
         <div class="protected-milestone-grid">
           <div class="protected-milestone-card">

@@ -69,14 +69,14 @@
   <link rel="preload" href="/assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/styles.css">
 </head>
-<body id="top">
+<body id="top" class="c-bg-canvas c-text-primary">
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <header class="navbar-wrapper" id="navigation">
     <nav class="navbar" aria-label="Main Navigation">
       <div class="nav-left">
         <a href="/" class="nav-logo-link" aria-label="Springboards Home">
-          <img src="/public/assets/aistudio/springboards_logo_dark_bg.png" alt="Springboards Logo" class="nav-logo oversized-logo" width="220" height="48" decoding="async">
+          <img src="/assets/aistudio/springboards_logo_white_text.png" alt="Springboards Logo" class="nav-logo oversized-logo" width="220" height="48" decoding="async">
         </a>
       </div>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
@@ -104,18 +104,18 @@
   </header>
 
   <main id="main-content" tabindex="-1">
-    <section class="section problem-section subpage-hero-section" style="padding-top: clamp(4rem, 8vw, 6.5rem);">
+    <section class="section problem-section subpage-hero-section is-subpage-hero">
       <div class="container">
         <div class="problem-header-grid">
           <div>
             <span class="section-eyebrow problem-eyebrow">WORKFORCE &amp; INDUSTRY COLLABORATION</span>
-            <h1 class="section-title problem-title" style="font-size: clamp(2.1rem, 4.5vw, 3.5rem);">Partner With Springboards to Build East Alabama’s Skilled Workforce</h1>
+            <h1 class="section-title problem-title is-display">Partner With Springboards to Build East Alabama’s Skilled Workforce</h1>
             <p class="problem-intro">We connect regional contractors, building supply leaders, and civic institutions with motivated, safety-trained trade candidates across Chambers County and East Alabama.</p>
           </div>
           <aside class="problem-callout-right" aria-label="Employer partnership highlights">
-            <div class="problem-supporting-quote" style="font-style: normal;">
-              <strong style="display: block; color: #fdba74; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem;">Why Contractors Partner With Us</strong>
-              <p style="font-style: normal; margin-bottom: 0.65rem;">• Pre-screened trainees with OSHA safety &amp; NCCER fundamentals<br>• WIOA Transitional Jobs &amp; OJT wage reimbursement pathways<br>• Tax-deductible tool &amp; material sponsorships</p>
+            <div class="problem-supporting-quote is-upright">
+              <strong class="section-eyebrow is-ochre-light u-mb-2" style="display: block;">Why Contractors Partner With Us</strong>
+              <p class="u-mb-3" style="font-style: normal;">• Pre-screened trainees with OSHA safety &amp; NCCER fundamentals<br>• WIOA Transitional Jobs &amp; OJT wage reimbursement pathways<br>• Tax-deductible tool &amp; material sponsorships</p>
               <footer>Direct Partner Line: 731.388.WORK • info@springboardsfcd.org</footer>
             </div>
           </aside>
@@ -145,9 +145,9 @@
       <div class="container container--narrow">
         <span class="section-eyebrow">CONNECT YOUR ORGANIZATION</span>
         <h2 class="section-title">Submit a Partnership Inquiry</h2>
-        <p class="section-subtitle" style="margin-bottom: 2rem;">Complete the form below and Executive Director Marvin Thompson and our workforce team will follow up directly.</p>
+        <p class="section-subtitle u-mb-8">Complete the form below and Executive Director Marvin Thompson and our workforce team will follow up directly.</p>
 
-        <form class="program-inquiry-form" id="dedicatedPartnerForm" novalidate style="background: var(--bg-light); padding: clamp(1.5rem, 4vw, 2.5rem); border: 1px solid var(--border-color); border-radius: var(--radius-lg);">
+        <form class="program-inquiry-form is-boxed-panel c-bg-subtle c-border-default" id="dedicatedPartnerForm" novalidate>
           <input type="text" name="website_url" class="sr-only-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" aria-label="Leave this field blank">
           <div class="form-grid-row">
             <label>Company / Organization Name
@@ -185,9 +185,9 @@
             </label>
           </div>
           <label>How would you like to collaborate?
-            <textarea name="message" rows="3" class="form-input" style="width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.75rem; font-family: inherit;" placeholder="Tell us about your hiring needs, OJT interest, or materials/tools available..."></textarea>
+            <textarea name="message" rows="3" class="form-input is-textarea c-border-default" placeholder="Tell us about your hiring needs, OJT interest, or materials/tools available..."></textarea>
           </label>
-          <button type="submit" class="btn-cta program-submit" style="margin-top: 1rem;">Submit Partnership Inquiry</button>
+          <button type="submit" class="btn-cta program-submit u-mt-4">Submit Partnership Inquiry</button>
           <p class="form-status" id="partStatus" role="status" aria-live="polite"></p>
         </form>
       </div>

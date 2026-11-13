@@ -39,35 +39,23 @@ for (const existingFont of fs.readdirSync(FONTS_DIR)) {
   }
 }
 
-// 1. Static Asset Hashing for 1-Year Immutable Cache-Control
-const hashTargets = ['styles.css', 'main.js', 'eligibility.js', 'analytics.js'];
-const manifest = {
-  generatedAt: new Date().toISOString(),
-  assets: {}
-};
-
-const activeHashedFiles = new Set();
-for (const file of hashTargets) {
-  const srcPath = path.join(ROOT, file);
-  if (!fs.existsSync(srcPath)) continue;
-  const content = fs.readFileSync(srcPath);
-  const hash = crypto.createHash('sha256').update(content).digest('hex').slice(0, 10);
-  const ext = path.extname(file);
-  const base = path.basename(file, ext);
-  const hashedFile = `${base}.${hash}${ext}`;
-  fs.writeFileSync(path.join(ASSETS_DIR, hashedFile), content);
-  manifest.assets[file] = `/assets/${hashedFile}`;
-  activeHashedFiles.add(hashedFile);
-}
-
-// Prune superseded hashed bundles in /assets
+// 1. Prune Any Duplicate Hashed Bundles or Redundant Build Artifacts
 for (const entry of fs.readdirSync(ASSETS_DIR)) {
-  if (/^(styles|main|eligibility|analytics)\.[a-f0-9]{10}\.(css|js)$/.test(entry) && !activeHashedFiles.has(entry)) {
+  if (/^(styles|main|eligibility|analytics)\.[a-f0-9]{8,}\.(css|js)$/.test(entry)) {
     fs.unlinkSync(path.join(ASSETS_DIR, entry));
   }
 }
-
-fs.writeFileSync(path.join(ROOT, 'dist-manifest.json'), JSON.stringify(manifest, null, 2), 'utf8');
+const redundantPaths = [
+  path.join(ROOT, 'dist-manifest.json'),
+  path.join(ROOT, 'bun.lock'),
+  path.join(ROOT, 'springboards_logo_icon.png'),
+  path.join(ROOT, 'favicon-dark.png')
+];
+for (const redundantPath of redundantPaths) {
+  if (fs.existsSync(redundantPath)) {
+    fs.unlinkSync(redundantPath);
+  }
+}
 
 // 2. SEO & Accessibility Structure Verification across all public intent pages
 const publicPages = [
@@ -255,10 +243,10 @@ if (hasErrors) {
   process.exit(1);
 }
 
-console.log('[Build Pipeline] Asset hashing complete:', manifest.assets);
+console.log('[Build Pipeline] Verified zero duplicate build artifacts or redundant assets.');
 console.log('[Build Pipeline] Verified native styles.css custom variable architecture (zero external CSS framework bloat).');
 console.log('[Build Pipeline] Verified MCP servers (.mcp.json, .vscode/mcp.json, scripts/mcp-server.js) & RBAC workflow permissions.');
 console.log('[Build Pipeline] Verified package-lock.json (lockfileVersion 3), apphosting.yaml (NODE_ENV=RUNTIME only), and Node >=20.0.0 LTS engine.');
-console.log('[Build Pipeline] SEO, canonical, OpenGraph, H1, and backend security separation verified for all 6 intent pages.');
+console.log('[Build Pipeline] SEO, canonical, OpenGraph, H1, and backend security separation verified for all 7 intent pages.');
 
 
