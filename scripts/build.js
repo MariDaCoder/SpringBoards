@@ -167,9 +167,38 @@ if (pkgJson.engines?.node === '24.x') {
   console.error('[PACKAGE AUDIT FAIL] Do not force "node": "24.x" in package.json engines; use ">=20.0.0" for LTS runner compatibility.');
   hasErrors = true;
 }
-if (fs.existsSync(path.join(ROOT, '.github', 'workflows'))) {
-  console.error('[WORKFLOW AUDIT FAIL] .github/workflows directory detected; remove GitHub Actions workflows to prevent 0s startup_failure billing blocks.');
-  hasErrors = true;
+// Ensure deprecated QA workflows/actions are removed and validate .github/workflows/firebase-deploy.yml
+const deprecatedWorkflowPaths = [
+  path.join(ROOT, '.github', 'workflows', 'ci-qa.yml'),
+  path.join(ROOT, '.github', 'actions', 'springboards-qa-gate', 'action.yml'),
+  path.join(ROOT, '.github', 'actions', 'springboards-qa-gate'),
+  path.join(ROOT, '.github', 'actions')
+];
+for (const depPath of deprecatedWorkflowPaths) {
+  if (fs.existsSync(depPath)) {
+    fs.rmSync(depPath, { recursive: true, force: true });
+  }
+}
+
+const deployWorkflowPath = path.join(ROOT, '.github', 'workflows', 'firebase-deploy.yml');
+if (fs.existsSync(deployWorkflowPath)) {
+  const workflowYaml = fs.readFileSync(deployWorkflowPath, 'utf8');
+  if (/FORCE_JAVASCRIPT_ACTIONS_TO_NODE24/.test(workflowYaml)) {
+    console.error('[WORKFLOW AUDIT FAIL] firebase-deploy.yml must not include FORCE_JAVASCRIPT_ACTIONS_TO_NODE24.');
+    hasErrors = true;
+  }
+  if (/NODE_ENV:\s*production/.test(workflowYaml)) {
+    console.error('[WORKFLOW AUDIT FAIL] firebase-deploy.yml must not set NODE_ENV: production at top-level env.');
+    hasErrors = true;
+  }
+  if (/springboards-qa-gate|ci-qa/i.test(workflowYaml)) {
+    console.error('[WORKFLOW AUDIT FAIL] firebase-deploy.yml must not reference removed QA check.');
+    hasErrors = true;
+  }
+  if (!/npx --yes firebase-tools@latest apphosting:rollouts:create "\$APPHOSTING_BACKEND_ID" \\\s*\n\s*--git-commit "\$GITHUB_SHA" \\/.test(workflowYaml)) {
+    console.error('[WORKFLOW AUDIT FAIL] firebase-deploy.yml is missing npx --yes firebase-tools@latest apphosting:rollouts:create "$APPHOSTING_BACKEND_ID" \\ above --git-commit "$GITHUB_SHA" \\.');
+    hasErrors = true;
+  }
 }
 
 const lockfilePath = path.join(ROOT, 'package-lock.json');
@@ -224,7 +253,7 @@ for (const fw of forbiddenCssFrameworks) {
 }
 
 // Verify consolidated external stylesheet linkage & zero inline <style> blocks across all HTML files
-const htmlFilesToAuditCss = [...publicPages, 'backoffice.html'];
+const htmlFilesToAuditCss = [...publicPages, '404.html', 'backoffice.html'];
 for (const htmlFile of htmlFilesToAuditCss) {
   const htmlPath = path.join(ROOT, htmlFile);
   if (!fs.existsSync(htmlPath)) continue;

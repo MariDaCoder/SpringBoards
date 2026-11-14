@@ -8634,6 +8634,53 @@ summary:focus-visible,
   gap: var(--space-4);
 }
 
+.error-support-strip__title {
+  display: block;
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-navy);
+}
+
+.error-support-strip__meta {
+  font-size: var(--text-sm);
+  color: var(--text-body);
+}
+
+.c-bg-inverse-glass {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.c-bg-inverse-glass:hover,
+.c-bg-inverse-glass:focus-visible {
+  background-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+.c-text-success-light {
+  color: #86efac !important;
+}
+
+.c-text-success-tint {
+  color: #dcfce7 !important;
+}
+
+.privacy-modal-scroll {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.doc-preview-panel {
+  display: none;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.25rem;
+}
+
+.checkbox-inline-control {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
 @media (max-width: 900px) {
   .error-directory-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));

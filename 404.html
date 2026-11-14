@@ -23,12 +23,12 @@
   <link rel="preload" href="/assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/styles.css">
 </head>
-<body id="top">
+<body id="top" class="c-bg-canvas c-text-primary">
   <!-- Accessibility Skip Link -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- Navigation Bar (Consistent with Main Site) -->
-  <header class="navbar-wrapper" id="navigation">
+  <header class="navbar-wrapper" id="navigation" data-component="site-navbar" data-prop-active-route="/404">
     <nav class="navbar" aria-label="Main Navigation">
       <div class="nav-left">
         <a href="/" class="nav-logo-link" aria-label="Springboards Home">
@@ -82,15 +82,15 @@
         <div class="ds-cluster u-gap-3">
           <a href="/" class="btn-cta">Return to Homepage →</a>
           <a href="/eligibility" class="btn-cta is-success">Start 2-Minute Eligibility Check →</a>
-          <button type="button" id="errorGoBackBtn" class="collection-empty-btn-secondary c-text-inverse c-border-inverse-subtle" style="background: rgba(255, 255, 255, 0.1);">← Go Back to Previous Page</button>
+          <button type="button" id="errorGoBackBtn" class="collection-empty-btn-secondary c-text-inverse c-border-inverse-subtle c-bg-inverse-glass">← Go Back to Previous Page</button>
         </div>
 
         <!-- Smart Route Match Callout (Populated automatically when broken URL matches a known topic) -->
         <div id="smartRouteSuggestion" class="error-suggestion-callout" hidden>
           <div>
-            <span class="t-eyebrow u-mb-1" style="color: #86efac;">RECOMMENDED MATCH BASED ON YOUR LINK</span>
+            <span class="t-eyebrow c-text-success-light u-mb-1">RECOMMENDED MATCH BASED ON YOUR LINK</span>
             <strong id="smartRouteTitle" class="t-lead u-weight-bold c-text-inverse">Looking for WIOA Eligibility &amp; Career Centers?</strong>
-            <p id="smartRouteDesc" class="t-body-sm u-mt-1 u-mb-0" style="color: #dcfce7;">Check your eligibility for paid Transitional Jobs and find your closest Alabama Career Center.</p>
+            <p id="smartRouteDesc" class="t-body-sm c-text-success-tint u-mt-1 u-mb-0">Check your eligibility for paid Transitional Jobs and find your closest Alabama Career Center.</p>
           </div>
           <a id="smartRouteLink" href="/eligibility" class="btn-cta c-bg-elevated c-text-brand c-border-default u-shrink-0">Open Recommended Page →</a>
         </div>
@@ -99,10 +99,10 @@
       <!-- 2. Interactive Site Directory & Recovery Collection -->
       <section class="error-directory-section" aria-labelledby="recoveryDirectoryHeading">
         <div class="u-flex-between-end u-mb-5">
-          <div>
-            <span class="section-eyebrow t-eyebrow c-text-accent u-mb-1">SITE RECOVERY DIRECTORY</span>
-            <h2 id="recoveryDirectoryHeading" class="section-title t-h2 u-m-0">Where would you like to go next?</h2>
-          </div>
+          <header class="c-section-header u-m-0" data-component="section-header" data-prop-eyebrow="SITE RECOVERY DIRECTORY" data-prop-title="Where would you like to go next?">
+            <span class="section-eyebrow c-section-header__eyebrow t-eyebrow c-text-accent u-mb-1">SITE RECOVERY DIRECTORY</span>
+            <h2 id="recoveryDirectoryHeading" class="section-title c-section-header__title t-h2 u-m-0">Where would you like to go next?</h2>
+          </header>
           <p id="directoryCountStatus" class="t-body-sm u-weight-bold c-text-muted u-m-0" aria-live="polite">Showing all 6 verified destinations</p>
         </div>
 
@@ -120,7 +120,7 @@
         </div>
 
         <!-- Collection List of Verified Destinations -->
-        <div class="error-directory-grid" id="recoveryDirectoryGrid" role="list" data-collection-list="recovery-directory">
+        <div class="error-directory-grid l-grid-3" id="recoveryDirectoryGrid" role="list" data-collection-list="recovery-directory">
           <a href="/#our-programs" class="error-directory-card link-block" role="listitem" data-category="training" data-keywords="programs skills carpentry electrical plumbing hvac osha nccer safety free trade training">
             <div>
               <span class="error-directory-meta link-block__meta">01 · SKILLED TRADES CURRICULUM</span>
@@ -199,12 +199,12 @@
         <!-- Direct Human Assistance Strip -->
         <div class="error-support-strip">
           <div>
-            <strong style="display: block; font-size: var(--text-base); color: var(--primary-navy);">Still can’t find what you need? Talk with our team in Shawmut.</strong>
-            <span style="font-size: var(--text-sm); color: var(--text-body);">
+            <strong class="error-support-strip__title">Still can’t find what you need? Talk with our team in Shawmut.</strong>
+            <span class="error-support-strip__meta">
               Springboards Community Center • 2269 15th Ave. S.W., Lanett, AL 36863 • Mon–Thu, 8:00 AM – 4:00 PM EST
             </span>
           </div>
-          <div style="display: flex; flex-wrap: wrap; gap: 0.65rem;">
+          <div class="l-cluster is-sm">
             <a href="tel:731.388.WORK" class="collection-empty-btn-secondary">Call 731.388.WORK</a>
             <a href="mailto:info@springboardsfcd.org?subject=Website%20Navigation%20Assistance" class="collection-empty-btn-secondary">Email info@springboardsfcd.org</a>
           </div>
@@ -213,20 +213,21 @@
     </div>
   </main>
 
-  <footer class="footer-section" id="footer">
-    <div class="container footer-bottom-flex" style="padding: 2rem 0;">
-      <p>&copy; <span id="current-year">2026</span> Springboards for Community Development • 2269 15th Ave. S.W., Lanett, AL 36863</p>
+  <footer class="footer-section" id="footer" data-component="site-footer" data-prop-active-route="/404">
+    <div class="container footer-bottom-flex u-py-8">
+      <p class="u-m-0">&copy; <span id="current-year">2026</span> Springboards for Community Development • 2269 15th Ave. S.W., Lanett, AL 36863</p>
       <div class="footer-legal-group">
-        <a href="/" class="footer-legal-link">Home</a>
-        <a href="/train" class="footer-legal-link">Training</a>
-        <a href="/eligibility" class="footer-legal-link">Eligibility</a>
-        <a href="/volunteer" class="footer-legal-link">Volunteer</a>
-        <a href="/partner" class="footer-legal-link">Partner</a>
-        <a href="/donate" class="footer-legal-link">Donate</a>
+        <a href="/" class="footer-legal-link link-text is-inverse is-underline-hover is-sm">Home</a>
+        <a href="/train" class="footer-legal-link link-text is-inverse is-underline-hover is-sm">Training</a>
+        <a href="/eligibility" class="footer-legal-link link-text is-inverse is-underline-hover is-sm">Eligibility</a>
+        <a href="/volunteer" class="footer-legal-link link-text is-inverse is-underline-hover is-sm">Volunteer</a>
+        <a href="/partner" class="footer-legal-link link-text is-inverse is-underline-hover is-sm">Partner</a>
+        <a href="/donate" class="footer-legal-link link-text is-inverse is-underline-hover is-sm">Donate</a>
       </div>
     </div>
   </footer>
 
+  <script src="/components.js" defer></script>
   <script src="/analytics.js" defer></script>
   <script>
     (() => {

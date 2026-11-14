@@ -1,0 +1,68 @@
+name: Firebase Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: firebase-deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FIREBASE_PROJECT_ID: springboards-community-dev
+  APPHOSTING_BACKEND_ID: springboards-backend
+  APPHOSTING_REGION: us-east4
+  FIRESTORE_DATABASE_ID: main
+  TZ: America/New_York
+
+jobs:
+  deploy:
+    name: Build & Deploy to Firebase
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20 LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run build verification
+        run: npm run build
+
+      - name: Authenticate to Google Cloud
+        if: env.GCP_SA_KEY != ''
+        uses: google-github-actions/auth@v2
+        env:
+          GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SPRINGBOARDS_COMMUNITY_DEV }}
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SPRINGBOARDS_COMMUNITY_DEV }}
+
+      - name: Deploy Firestore Rules & Firebase Hosting
+        if: env.GOOGLE_APPLICATION_CREDENTIALS != '' || env.FIREBASE_TOKEN != ''
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          npx --yes firebase-tools@latest deploy \
+            --only firestore:rules,hosting \
+            --project "$FIREBASE_PROJECT_ID"
+
+      - name: Create Firebase App Hosting Rollout
+        if: env.GOOGLE_APPLICATION_CREDENTIALS != '' || env.FIREBASE_TOKEN != ''
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          npx --yes firebase-tools@latest apphosting:rollouts:create "$APPHOSTING_BACKEND_ID" \
+            --git-commit "$GITHUB_SHA" \
+            --project "$FIREBASE_PROJECT_ID"

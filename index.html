@@ -219,7 +219,7 @@
           <li><a href="#footer" class="nav-link">Contact</a></li>
         </ul>
         <div class="mobile-cta-wrapper">
-          <button type="button" class="nav-search-trigger btn-site-search-trigger" style="width: 100%; justify-content: center; margin: 0 0 0.5rem;" aria-label="Search site programs, FAQs, and documents">
+          <button type="button" class="nav-search-trigger btn-site-search-trigger u-w-full u-justify-center u-mb-2" aria-label="Search site programs, FAQs, and documents">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <span>Search Site</span>
           </button>
@@ -1075,7 +1075,7 @@
       <button type="button" class="inquiry-modal-close" data-privacy-close aria-label="Close privacy notice">×</button>
       <span class="section-eyebrow">Legal &amp; Transparency</span>
       <h2 id="privacyModalTitle">Privacy Policy &amp; Terms</h2>
-      <div class="privacy-modal-body u-text-sm u-color-primary" style="max-height: 60vh; overflow-y: auto; padding-right: 0.5rem;">
+      <div class="privacy-modal-body privacy-modal-scroll u-text-sm u-color-primary">
         <p><strong>Effective Date:</strong> September 2026</p>
         <p>Springboards for Community Development is dedicated to protecting the privacy of prospective students, participants, volunteers, and donors.</p>
         
@@ -1318,7 +1318,7 @@
           </div>
         </div>
 
-        <h4 style="color: var(--primary-navy); margin-top: 1.5rem; margin-bottom: 0.5rem;">Pledge Support / Request Donation Receipt</h4>
+        <h4 class="c-text-brand u-mt-6 u-mb-2">Pledge Support / Request Donation Receipt</h4>
         <form class="program-inquiry-form" id="donationPledgeForm" novalidate>
           <input type="text" name="website_url" class="sr-only-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" aria-label="Leave this field blank">
           <div class="form-grid-row">
@@ -1346,8 +1346,8 @@
             <label>Pledge Amount or Items Description
               <input name="pledgeAmount" type="text" placeholder="e.g. $150 Tool Belt or 5 sets of drills">
             </label>
-            <label class="ds-cluster u-mt-6" style="cursor: pointer;">
-              <input type="checkbox" name="taxReceiptRequested" value="yes" checked class="c-accent-success" style="width: 18px; height: 18px;">
+            <label class="ds-cluster u-mt-6">
+              <input type="checkbox" name="taxReceiptRequested" value="yes" checked class="c-accent-success checkbox-inline-control">
               <span class="u-text-sm c-text-primary">Please send me a deductible receipt</span>
             </label>
           </div>
@@ -1386,7 +1386,7 @@
       <h2 id="documentModalTitle">Program Documents &amp; Downloads</h2>
       <p class="modal-subtext">Official overview documents, worksite guides, volunteer schedule flyers, and candidate requirements for download and printing.</p>
 
-      <div class="collection-filter-bar" id="docFilterBar" style="margin-bottom: 1rem;">
+      <div class="collection-filter-bar u-mb-4" id="docFilterBar">
         <div class="collection-filter-tabs" role="group" aria-label="Filter documents by audience">
           <button type="button" class="collection-filter-tab is-active" data-doc-filter="all" aria-pressed="true">All Documents (2)</button>
           <button type="button" class="collection-filter-tab" data-doc-filter="community" aria-pressed="false">Community &amp; Volunteer</button>
@@ -1401,11 +1401,11 @@
             <span class="document-badge">Community Flyer</span>
             <h4>Springboards Community Flyer &amp; Volunteer Schedule</h4>
             <p>Official community center flyer outlining Monday–Thursday work block hours (8:00 AM – 4:00 PM EST), dress code, tool prep, and civic service opportunities.</p>
-            <span style="font-size: 0.8rem; color: #64748b;">Optimized Web Asset (270 KB) • Original High-Res (2.3 MB)</span>
+            <span class="u-text-xs c-text-muted">Optimized Web Asset (270 KB) • Original High-Res (2.3 MB)</span>
           </div>
           <div class="document-actions">
             <button type="button" class="btn-cta btn-view-doc" data-doc-view="springboards-community-flyer">View Preview</button>
-            <a href="/springboards-community-flyer.webp" download="Springboards_Community_Flyer.webp" class="btn-cta btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 0.85rem; text-decoration: none;">Download File ↓</a>
+            <a href="/springboards-community-flyer.webp" download="Springboards_Community_Flyer.webp" class="btn-cta btn-secondary is-sm">Download File ↓</a>
           </div>
         </div>
 
@@ -1414,7 +1414,7 @@
             <span class="document-badge">Checklist</span>
             <h4>Trainee Intake Checklist &amp; Required Documents</h4>
             <p>Everything you need to bring to your enrollment session: Valid Government Photo ID, Social Security Card or Work Authorization, and Career Center registration.</p>
-            <span style="font-size: 0.8rem; color: #64748b;">Digital Intake Guide</span>
+            <span class="u-text-xs c-text-muted">Digital Intake Guide</span>
           </div>
           <div class="document-actions">
             <button type="button" class="btn-cta btn-candidate-trigger">Start Intake Now →</button>
@@ -1442,7 +1442,7 @@
       </div>
 
       <!-- Document Preview Sub-Panel -->
-      <div id="docPreviewContainer" class="u-mt-6" style="display: none; border-top: 1px solid var(--border-color); padding-top: 1.25rem;">
+      <div id="docPreviewContainer" class="u-mt-6 doc-preview-panel">
         <h4 id="docPreviewTitle" class="u-color-primary u-mb-2">Document Preview</h4>
         <div class="document-preview-modal-body">
           <img id="docPreviewImg" src="/springboards-community-flyer.webp" alt="Springboards Community Flyer Preview" class="document-preview-image" width="1200" height="2150" loading="lazy" decoding="async">
@@ -1467,7 +1467,7 @@
             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             Password-Protected Content • Enrolled Trainees &amp; Worksite Partners
           </span>
-          <h2 id="traineePortalModalTitle" style="color: #ffffff; font-size: 1.38rem; font-weight: 800; margin: 0 0 0.35rem;">Transitional Jobs Worksite &amp; Document Gate</h2>
+          <h2 id="traineePortalModalTitle" class="c-text-inverse t-h3 u-m-0 u-mb-1">Transitional Jobs Worksite &amp; Document Gate</h2>
           <p>Protected access for enrolled trainees, worksite supervisors, and career coaches to view the 390-hour milestone tracker and WIOA Host Worksite Agreement packet.</p>
         </div>
 
@@ -1484,20 +1484,20 @@
         </div>
 
         <form id="traineePortalAuthForm" class="program-inquiry-form" novalidate>
-          <div style="text-align: left; margin-bottom: 1rem;">
-            <label for="traineePortalPasscodeInput" style="font-size: 0.85rem; font-weight: 700; color: var(--primary-navy); display: block; margin-bottom: 0.35rem;">
-              Worksite Passcode or Staff PIN <span style="color: #dc2626;" aria-hidden="true">*</span>
+          <div class="form-group u-text-left u-mb-4">
+            <label for="traineePortalPasscodeInput" class="form-label">
+              Worksite Passcode or Staff PIN <span class="form-required" aria-hidden="true">*</span>
             </label>
             <div class="protected-input-wrap">
               <input
                 type="password"
                 id="traineePortalPasscodeInput"
                 name="passcode"
+                class="form-input"
                 autocomplete="current-password"
                 placeholder="Enter assigned worksite passcode"
                 required
                 aria-describedby="traineePortalHint traineePortalErrorAlert"
-                style="width: 100%; padding: 0.75rem; border: 1.5px solid #cbd5e1; border-radius: var(--radius-sm); font-size: 1rem;"
               >
               <button
                 type="button"
@@ -1507,13 +1507,13 @@
                 aria-label="Show worksite passcode"
               >Show</button>
             </div>
-            <span id="traineePortalHint" style="display: block; font-size: 0.78rem; color: #475569; margin-top: 0.35rem;">Passcodes are case-sensitive and issued upon WIOA Activity 220 or OJT placement verification.</span>
+            <span id="traineePortalHint" class="field-hint">Passcodes are case-sensitive and issued upon WIOA Activity 220 or OJT placement verification.</span>
             <div id="traineePortalCapsWarning" class="protected-caps-warning" hidden>
               <span aria-hidden="true">⚠️</span> Caps Lock is active — check capitalization before submitting.
             </div>
           </div>
 
-          <button type="submit" class="btn-cta program-submit" id="traineePortalSubmitBtn" style="width: 100%;">
+          <button type="submit" class="btn-cta program-submit u-w-full" id="traineePortalSubmitBtn">
             Unlock Worksite Portal &amp; Protected Documents &rarr;
           </button>
 
@@ -1561,8 +1561,8 @@
     <div class="inquiry-modal-dialog modal-large" role="dialog" aria-modal="true" aria-labelledby="siteSearchModalTitle">
       <button type="button" class="inquiry-modal-close" data-site-search-close aria-label="Close site search">×</button>
       <span class="section-eyebrow">Site-Wide Directory &amp; Instant Finder</span>
-      <h2 id="siteSearchModalTitle" style="margin-bottom: 0.35rem;">Search Springboards Programs, FAQs &amp; Resources</h2>
-      <p class="modal-subtext" style="margin-bottom: 1rem;">Search trade pathways, WIOA eligibility rules, Career Center locations, transitional jobs, or downloadable forms.</p>
+      <h2 id="siteSearchModalTitle" class="u-mb-1">Search Springboards Programs, FAQs &amp; Resources</h2>
+      <p class="modal-subtext u-mb-4">Search trade pathways, WIOA eligibility rules, Career Center locations, transitional jobs, or downloadable forms.</p>
 
       <div class="site-search-hero-bar">
         <form id="siteSearchForm" class="site-search-form" role="search" novalidate>
@@ -1581,7 +1581,7 @@
             >
             <button type="button" id="siteSearchClearBtn" class="site-search-clear" hidden aria-label="Clear search query">Clear</button>
           </div>
-          <button type="submit" class="btn-cta" style="min-height: 3.1rem; padding: 0 1.25rem;">Search</button>
+          <button type="submit" class="btn-cta">Search</button>
         </form>
       </div>
 
@@ -1625,7 +1625,7 @@
         </div>
 
         <div>
-          <span style="display: block; font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--primary-navy); margin-bottom: 0.4rem;">Try a Popular Search Topic:</span>
+          <span class="t-eyebrow c-text-brand u-mb-2">Try a Popular Search Topic:</span>
           <div class="search-suggestion-chips">
             <button type="button" class="search-suggestion-chip" data-suggest-query="Carpentry">Carpentry &amp; Framing</button>
             <button type="button" class="search-suggestion-chip" data-suggest-query="Electrical">Electrical &amp; Wiring</button>
@@ -1638,7 +1638,7 @@
           </div>
         </div>
 
-        <div class="collection-empty-actions" style="justify-content: flex-start; margin-top: 0.75rem;">
+        <div class="collection-empty-actions u-justify-start u-mt-3">
           <button type="button" class="btn-cta" id="resetSiteSearchBtn">Show All Site Resources</button>
           <button type="button" class="collection-empty-btn-secondary btn-candidate-trigger" data-site-search-close>Apply for Training</button>
           <a href="/eligibility" class="collection-empty-btn-secondary">Check WIOA Eligibility &rarr;</a>
