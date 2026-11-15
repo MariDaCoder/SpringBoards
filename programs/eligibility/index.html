@@ -6,7 +6,8 @@
   <meta name="theme-color" content="#171410">
   <title>Training &amp; WIOA Eligibility Check | Springboards East AL</title>
   <meta name="description" content="Check your eligibility for tuition-free construction trade training, WIOA Transitional Jobs, and Career Center placement support in East Alabama.">
-  <link rel="canonical" href="https://springboardsfcd.org/eligibility">
+  <link rel="canonical" href="https://springboardsfcd.org/programs/eligibility">
+  <meta name="google-site-verification" content="google-site-verification-springboards-fcd-2026">
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" media="(prefers-color-scheme: light)">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" media="(prefers-color-scheme: light)">
@@ -20,7 +21,7 @@
   <meta name="application-name" content="Springboards">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Springboards for Community Development">
-  <meta property="og:url" content="https://springboardsfcd.org/eligibility">
+  <meta property="og:url" content="https://springboardsfcd.org/programs/eligibility">
   <meta property="og:title" content="Training &amp; WIOA Eligibility Check | Springboards East AL">
   <meta property="og:description" content="Check your eligibility for tuition-free construction trade training, WIOA Transitional Jobs, and Career Center placement support in East Alabama.">
   <meta property="og:image" content="https://springboardsfcd.org/og-image.jpg">
@@ -33,7 +34,7 @@
     "@context": "https://schema.org",
     "@type": "WebPage",
     "name": "Springboards Trade Training & WIOA Eligibility Check",
-    "url": "https://springboardsfcd.org/eligibility",
+    "url": "https://springboardsfcd.org/programs/eligibility",
     "description": "Interactive pre-qualification and Alabama Career Center routing for free construction trade training and Transitional Jobs.",
     "isPartOf": {
       "@type": "WebSite",
@@ -53,7 +54,7 @@
   <a class="skip-link" href="#wizardContent">Skip to eligibility questions</a>
   <div class="wizard-page">
     <header class="wizard-topbar">
-      <a href="/" aria-label="Springboards home"><img class="wizard-logo" src="/springboards_logo.webp" alt="Springboards for Community Development" width="216" height="56" decoding="async"></a>
+      <a href="/" aria-label="Springboards home"><img class="wizard-logo" src="/assets/aistudio/springboards_logo_white_text.png?v=20261114-wordmark" alt="Springboards for Community Development" width="216" height="56" decoding="async"></a>
       <a class="wizard-home-link" href="/#our-programs">← Back to programs</a>
     </header>
 
@@ -104,7 +105,7 @@
             <p class="wizard-review-note">This quick check helps point you in the right direction. A local Career Center team will confirm your details and talk through next steps with you. You can still connect with Springboards about other ways to build skills and get support.</p>
             <div class="wizard-result-actions">
               <button class="wizard-button" id="seeNextStepButton" type="button" hidden>See next step →</button>
-              <a class="wizard-button" href="/train" data-track-cta="eligibility_apply_train">Apply for Training →</a>
+              <a class="wizard-button" href="/programs/train" data-track-cta="eligibility_apply_train">Apply for Training →</a>
               <a class="wizard-button secondary" id="contactButton" href="mailto:info@springboardsfcd.org?subject=Transitional%20Jobs%20next%20step">Talk with our team →</a>
               <button class="wizard-button secondary" id="restartButton" type="button">Start again</button>
               <a class="wizard-button secondary" href="/#our-programs">Explore other programs</a>
@@ -124,11 +125,12 @@
             <button class="wizard-button" type="submit">Find nearest center →</button>
           </div>
           <p class="wizard-address-status" id="addressSearchStatus" role="status" aria-live="polite"></p>
-          <p class="wizard-address-privacy">To estimate the closest center, your address is looked up through OpenStreetMap. It isn’t saved by this preview. Opening directions shares it with Google Maps.</p>
+          <p class="wizard-address-privacy">To estimate the closest center, your address is geocoded via the domain-restricted Google Maps Platform proxy (with local East Alabama coordinate fallback) and is never stored. Opening directions shares your route with Google Maps (<a href="https://maps.google.com/help/terms_maps/?utm_campaign=gmp_mcp_codeassist_v1_aistudio" target="_blank" rel="noopener noreferrer">Google Maps Additional Terms</a> · <a href="https://policies.google.com/privacy?utm_campaign=gmp_mcp_codeassist_v1_aistudio" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>).</p>
         </form>
         <div class="wizard-center-layout">
           <div class="wizard-center-list" id="centerList" aria-label="Career Center locations"></div>
-          <div class="wizard-map-card">
+          <div class="wizard-map-card" id="centerMapCard">
+            <div id="centerMapCanvas" class="wizard-map-canvas" aria-label="Interactive Google Map of Alabama Career Centers"></div>
             <iframe id="centerMap" title="Interactive map showing Valley Career Center" src="https://www.google.com/maps?q=Valley+Career+Center,+3300+23rd+Drive,+Valley,+AL+36854&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
             <p class="wizard-map-caption" id="centerMapCaption">Select a center to update the map. Use the map controls to zoom or explore nearby streets.</p>
           </div>
@@ -142,12 +144,12 @@
           <p class="wizard-calendar-status" id="calendarStatus" role="status" aria-live="polite">Choose a day to see sample appointment times.</p>
           <div class="wizard-result-actions">
             <button class="wizard-button wizard-calendar-confirm" id="previewAppointmentButton" type="button" disabled>Continue with this time →</button>
-            <a class="wizard-button secondary wizard-calendar-confirm" href="/train" data-track-cta="eligibility_center_apply_train">Submit Online Application →</a>
+            <a class="wizard-button secondary wizard-calendar-confirm" href="/programs/train" data-track-cta="eligibility_center_apply_train">Submit Online Application →</a>
           </div>
           <p class="wizard-calendar-disclaimer">These are sample times for preview only—not live availability. Choosing a time here does not book or reserve an appointment. Call the selected center to confirm a visit.</p>
         </section>
       </section>
-      <footer class="wizard-footer"><p>Your answers and address are not saved by this preview. An address is shared with OpenStreetMap for the closest-center estimate, and with Google Maps only if you choose directions. This eligibility check is a quick first look—not a final decision.</p></footer>
+      <footer class="wizard-footer"><p>Your answers and address are not saved by this preview. Address lookups use the domain-restricted Google Maps Platform Geocoding service subject to the <a href="https://maps.google.com/help/terms_maps/?utm_campaign=gmp_mcp_codeassist_v1_aistudio" target="_blank" rel="noopener noreferrer">Google Maps End User Additional Terms</a> and <a href="https://policies.google.com/privacy?utm_campaign=gmp_mcp_codeassist_v1_aistudio" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>. This eligibility check is a quick first look—not a final decision.</p></footer>
     </main>
   </div>
 </body>

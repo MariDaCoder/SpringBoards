@@ -1,21 +1,11 @@
 {
-  "apphosting": {
-    "backendId": "springboards-backend",
-    "rootDir": "/",
-    "ignore": [
-      "node_modules",
-      ".git",
-      "firebase-debug.log",
-      "firebase-debug.*.log",
-      "backup"
-    ]
-  },
   "hosting": {
     "site": "springboards-community-dev",
     "public": ".",
+    "cleanUrls": true,
+    "trailingSlash": false,
     "ignore": [
       "firebase.json",
-      "apphosting.yaml",
       "firestore.rules",
       "firestore.indexes.json",
       "server.js",
@@ -28,7 +18,8 @@
       "src/**",
       "scripts/**",
       "backup/**",
-      "program-readiness/**"
+      "program-readiness/**",
+      "reference_documents"
     ],
     "redirects": [
       {
@@ -37,74 +28,321 @@
         "type": 301
       },
       {
+        "source": "/programs",
+        "destination": "/programs/train",
+        "type": 301
+      },
+      {
+        "source": "/train",
+        "destination": "/programs/train",
+        "type": 301
+      },
+      {
         "source": "/train.html",
-        "destination": "/train",
+        "destination": "/programs/train",
+        "type": 301
+      },
+      {
+        "source": "/programs/train/index.html",
+        "destination": "/programs/train",
+        "type": 301
+      },
+      {
+        "source": "/eligibility",
+        "destination": "/programs/eligibility",
         "type": 301
       },
       {
         "source": "/eligibility.html",
-        "destination": "/eligibility",
+        "destination": "/programs/eligibility",
+        "type": 301
+      },
+      {
+        "source": "/programs/eligibility/index.html",
+        "destination": "/programs/eligibility",
+        "type": 301
+      },
+      {
+        "source": "/community",
+        "destination": "/community/volunteer",
+        "type": 301
+      },
+      {
+        "source": "/volunteer",
+        "destination": "/community/volunteer",
         "type": 301
       },
       {
         "source": "/volunteer.html",
-        "destination": "/volunteer",
+        "destination": "/community/volunteer",
+        "type": 301
+      },
+      {
+        "source": "/community/volunteer/index.html",
+        "destination": "/community/volunteer",
+        "type": 301
+      },
+      {
+        "source": "/partner",
+        "destination": "/community/partner",
         "type": 301
       },
       {
         "source": "/partner.html",
-        "destination": "/partner",
+        "destination": "/community/partner",
+        "type": 301
+      },
+      {
+        "source": "/community/partner/index.html",
+        "destination": "/community/partner",
+        "type": 301
+      },
+      {
+        "source": "/donate",
+        "destination": "/community/donate",
         "type": 301
       },
       {
         "source": "/donate.html",
-        "destination": "/donate",
+        "destination": "/community/donate",
+        "type": 301
+      },
+      {
+        "source": "/community/donate/index.html",
+        "destination": "/community/donate",
+        "type": 301
+      },
+      {
+        "source": "/resources",
+        "destination": "/resources/style-guide",
+        "type": 301
+      },
+      {
+        "source": "/style-guide",
+        "destination": "/resources/style-guide",
+        "type": 301
+      },
+      {
+        "source": "/style-guide.html",
+        "destination": "/resources/style-guide",
+        "type": 301
+      },
+      {
+        "source": "/resources/style-guide/index.html",
+        "destination": "/resources/style-guide",
+        "type": 301
+      },
+      {
+        "source": "/backoffice",
+        "destination": "/resources/backoffice",
         "type": 301
       },
       {
         "source": "/backoffice.html",
-        "destination": "/backoffice",
+        "destination": "/resources/backoffice",
+        "type": 301
+      },
+      {
+        "source": "/resources/backoffice/index.html",
+        "destination": "/resources/backoffice",
         "type": 301
       },
       {
         "source": "/portal",
-        "destination": "/backoffice",
+        "destination": "/resources/backoffice",
+        "type": 301
+      },
+      {
+        "source": "/cms-workflows",
+        "destination": "/resources/cms-workflows",
+        "type": 301
+      },
+      {
+        "source": "/cms-workflows.html",
+        "destination": "/resources/cms-workflows",
+        "type": 301
+      },
+      {
+        "source": "/resources/cms-workflows/index.html",
+        "destination": "/resources/cms-workflows",
+        "type": 301
+      },
+      {
+        "source": "/utility",
+        "destination": "/utility/search",
+        "type": 301
+      },
+      {
+        "source": "/search",
+        "destination": "/utility/search",
+        "type": 301
+      },
+      {
+        "source": "/search.html",
+        "destination": "/utility/search",
+        "type": 301
+      },
+      {
+        "source": "/utility/search/index.html",
+        "destination": "/utility/search",
+        "type": 301
+      },
+      {
+        "source": "/password",
+        "destination": "/utility/password",
+        "type": 301
+      },
+      {
+        "source": "/password.html",
+        "destination": "/utility/password",
+        "type": 301
+      },
+      {
+        "source": "/401",
+        "destination": "/utility/password",
+        "type": 301
+      },
+      {
+        "source": "/utility/password/index.html",
+        "destination": "/utility/password",
+        "type": 301
+      },
+      {
+        "source": "/privacy",
+        "destination": "/utility/privacy-terms",
+        "type": 301
+      },
+      {
+        "source": "/terms",
+        "destination": "/utility/privacy-terms",
+        "type": 301
+      },
+      {
+        "source": "/legal",
+        "destination": "/utility/privacy-terms",
+        "type": 301
+      },
+      {
+        "source": "/privacy-terms",
+        "destination": "/utility/privacy-terms",
+        "type": 301
+      },
+      {
+        "source": "/utility/privacy-terms/index.html",
+        "destination": "/utility/privacy-terms",
+        "type": 301
+      },
+      {
+        "source": "/pathways",
+        "destination": "/programs/pathways",
+        "type": 301
+      },
+      {
+        "source": "/programs/pathways/index.html",
+        "destination": "/programs/pathways",
+        "type": 301
+      },
+      {
+        "source": "/career-centers/**",
+        "destination": "/programs/eligibility",
+        "type": 301
+      },
+      {
+        "source": "/partners/**",
+        "destination": "/community/partner",
+        "type": 301
+      },
+      {
+        "source": "/faq/**",
+        "destination": "/programs/train",
+        "type": 301
+      },
+      {
+        "source": "/utility-pages/**",
+        "destination": "/resources/cms-workflows",
         "type": 301
       }
     ],
     "rewrites": [
       {
-        "source": "/train",
-        "destination": "/train.html"
-      },
-      {
-        "source": "/eligibility",
-        "destination": "/eligibility.html"
-      },
-      {
-        "source": "/volunteer",
-        "destination": "/volunteer.html"
-      },
-      {
-        "source": "/partner",
-        "destination": "/partner.html"
-      },
-      {
-        "source": "/donate",
-        "destination": "/donate.html"
-      },
-      {
-        "source": "/backoffice",
-        "destination": "/backoffice.html"
+        "source": "/programs/pathways/**",
+        "destination": "/programs/pathways/index.html"
       }
     ],
     "headers": [
+      {
+        "source": "**/*.@(webp|jpg|jpeg|png|svg|ico|woff2)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=604800, stale-while-revalidate=86400"
+          },
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(css|js)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=3600, stale-while-revalidate=86400"
+          },
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "Timing-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "/assets/cms/*.json",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=300, stale-while-revalidate=3600"
+          },
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
       {
         "source": "**",
         "headers": [
           {
             "key": "Cache-Control",
             "value": "no-cache, no-store, must-revalidate"
+          },
+          {
+            "key": "Strict-Transport-Security",
+            "value": "max-age=31536000; includeSubDomains; preload"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "SAMEORIGIN"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "strict-origin-when-cross-origin"
           }
         ]
       }

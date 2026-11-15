@@ -482,11 +482,144 @@
 
   const isMultiChoice = (question) => question.type === "multiple";
 
+  const centerMapCard = document.getElementById("centerMapCard");
+  const centerMapCanvas = document.getElementById("centerMapCanvas");
+  let gmpMapInstance = null;
+  let gmpInfoWindow = null;
+  let gmpMarkersById = new Map();
+  let gmpInitializationPromise = null;
+
+  const ensureGoogleMapsJsLoaded = (apiKey) => {
+    if (window.google && window.google.maps && typeof window.google.maps.importLibrary === "function") {
+      return Promise.resolve();
+    }
+    if (window.__SPRINGBOARDS_GMP_LOADER__) {
+      return window.__SPRINGBOARDS_GMP_LOADER__;
+    }
+    window.__SPRINGBOARDS_GMP_LOADER__ = new Promise((resolve, reject) => {
+      const existingScript = document.querySelector('script[data-sb-gmp-js="true"]');
+      if (existingScript) {
+        existingScript.addEventListener("load", () => resolve());
+        existingScript.addEventListener("error", () => reject(new Error("Google Maps JS script failed to load")));
+        return;
+      }
+      ((g) => {
+        var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window;
+        b = b[c] || (b[c] = {});
+        var d = b.maps || (b.maps = {}), r = new Set(), e = new URLSearchParams(),
+          u = () => h || (h = new Promise(async (f, n) => {
+            await (a = m.createElement("script"));
+            a.setAttribute("data-sb-gmp-js", "true");
+            e.set("libraries", [...r] + "");
+            for (k in g) e.set(k.replace(/[A-Z]/g, (t) => "_" + t[0].toLowerCase()), g[k]);
+            e.set("callback", c + ".maps." + q);
+            a.src = `https://maps.${c}apis.com/maps/api/js?` + e;
+            d[q] = f;
+            a.onerror = () => (h = n(Error(p + " could not load.")));
+            a.nonce = m.querySelector("script[nonce]")?.nonce || "";
+            m.head.append(a);
+          }));
+        d[l] ? console.warn(p + " only loads once.") : (d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)));
+      })({
+        key: apiKey,
+        v: "weekly"
+      });
+      resolve();
+    });
+    return window.__SPRINGBOARDS_GMP_LOADER__;
+  };
+
+  const initInteractiveGoogleMap = async () => {
+    if (!centerMapCanvas || !centerMapCard) return null;
+    if (gmpMapInstance) return gmpMapInstance;
+    if (gmpInitializationPromise) return gmpInitializationPromise;
+
+    gmpInitializationPromise = (async () => {
+      try {
+        const res = await fetch("/api/maps/config", { headers: { Accept: "application/json" } });
+        if (!res.ok) return null;
+        const cfg = await res.json();
+        if (!cfg || !cfg.enabled || !cfg.apiKey) return null;
+
+        await ensureGoogleMapsJsLoaded(cfg.apiKey);
+        const { Map, InfoWindow } = await window.google.maps.importLibrary("maps");
+        const { AdvancedMarkerElement, PinElement } = await window.google.maps.importLibrary("marker");
+
+        gmpMapInstance = new Map(centerMapCanvas, {
+          center: { lat: selectedCareerCenter.latitude, lng: selectedCareerCenter.longitude },
+          zoom: 11,
+          mapId: cfg.mapId || "DEMO_MAP_ID",
+          gestureHandling: "cooperative",
+          mapTypeControl: false,
+          streetViewControl: false,
+          fullscreenControl: true,
+          internalUsageAttributionIds: ["gmp_mcp_codeassist_v1_aistudio"]
+        });
+
+        gmpInfoWindow = new InfoWindow();
+
+        careerCenters.forEach((center) => {
+          const isSelected = center.id === selectedCareerCenter.id;
+          const pin = new PinElement({
+            background: isSelected ? "#E05B32" : "#0B192C",
+            borderColor: "#FFFFFF",
+            glyphColor: "#FFFFFF",
+            scale: isSelected ? 1.15 : 1.0
+          });
+          const marker = new AdvancedMarkerElement({
+            map: gmpMapInstance,
+            position: { lat: center.latitude, lng: center.longitude },
+            title: `${center.name} — ${center.address}`,
+            content: pin.element,
+            gmpClickable: true
+          });
+
+          marker.addEventListener("gmp-click", () => {
+            showCenterOnMap(center);
+            renderCareerCenters();
+            renderAppointmentCalendar();
+          });
+
+          gmpMarkersById.set(center.id, { marker, PinElement });
+        });
+
+        centerMapCard.classList.add("has-js-map");
+        return gmpMapInstance;
+      } catch {
+        // Fallback to standard embed iframe if Maps JS is blocked or unconfigured
+        centerMapCard.classList.remove("has-js-map");
+        return null;
+      }
+    })();
+
+    return gmpInitializationPromise;
+  };
+
   const showCenterOnMap = (center) => {
     selectedCareerCenter = center;
     centerMap.src = `https://www.google.com/maps?q=${encodeURIComponent(`${center.name}, ${center.address}`)}&output=embed`;
     centerMap.title = `Interactive map showing ${center.name}`;
-    centerMapCaption.textContent = `Map showing ${center.name}. Use the map controls to zoom or explore nearby streets.`;
+    centerMapCaption.textContent = `Map showing ${center.name} (${center.address}). Use the map controls to zoom or explore nearby streets.`;
+
+    if (gmpMapInstance) {
+      gmpMapInstance.panTo({ lat: center.latitude, lng: center.longitude });
+      gmpMapInstance.setZoom(13);
+      if (gmpInfoWindow) {
+        const entry = gmpMarkersById.get(center.id);
+        if (entry && entry.marker) {
+          gmpInfoWindow.setContent(
+            `<div style="font-family:sans-serif;max-width:240px;padding:2px 4px;">` +
+            `<strong style="color:#0B192C;display:block;margin-bottom:2px;">${center.name}</strong>` +
+            `<span style="font-size:12px;color:#334155;display:block;margin-bottom:4px;">${center.address}</span>` +
+            `<a href="${center.callLink}" style="font-size:12px;font-weight:700;color:#E05B32;text-decoration:none;">Call ${center.phone}</a>` +
+            `</div>`
+          );
+          gmpInfoWindow.open({ anchor: entry.marker, map: gmpMapInstance });
+        }
+      }
+    } else {
+      initInteractiveGoogleMap();
+    }
   };
 
   const distanceInMiles = (latitudeA, longitudeA, latitudeB, longitudeB) => {
@@ -1100,6 +1233,7 @@
   seeNextStepButton.addEventListener("click", () => {
     resultScreen.hidden = true;
     centerScreen.hidden = false;
+    initInteractiveGoogleMap();
     centerHeading.focus();
   });
 
@@ -1142,22 +1276,21 @@
       submitButton.setAttribute("aria-busy", "true");
     }
     addressSearchStatus.setAttribute("role", "status");
-    addressSearchStatus.textContent = "Finding the closest Career Center…";
+    addressSearchStatus.textContent = "Finding the closest Career Center via Google Maps Platform…";
 
-    fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&country=United%20States&q=${encodeURIComponent(address)}`, {
+    fetch(`/api/maps/geocode?address=${encodeURIComponent(address)}`, {
       headers: { Accept: "application/json" }
     })
       .then((response) => {
         if (!response.ok) throw new Error("Address lookup service is temporarily unavailable.");
         return response.json();
       })
-      .then((matches) => {
-        const match = matches[0];
-        if (!match || !Number.isFinite(Number(match.lat)) || !Number.isFinite(Number(match.lon))) {
+      .then((payload) => {
+        if (!payload || !Number.isFinite(Number(payload.latitude)) || !Number.isFinite(Number(payload.longitude))) {
           throw new Error("We couldn’t match that address or ZIP code.");
         }
-        const latitude = Number(match.lat);
-        const longitude = Number(match.lon);
+        const latitude = Number(payload.latitude);
+        const longitude = Number(payload.longitude);
         const rankedCenters = careerCenters
           .map((center) => ({
             center,
@@ -1165,14 +1298,14 @@
           }))
           .sort((first, second) => first.miles - second.miles);
         const nearest = rankedCenters[0];
-        directionsOrigin = address;
+        directionsOrigin = payload.formattedAddress || address;
         nearestCenterId = nearest.center.id;
         selectedAppointmentDate = "";
         selectedAppointmentTime = "";
         showCenterOnMap(nearest.center);
         addressSearchStatus.classList.remove("is-error");
         addressSearchStatus.classList.add("is-success");
-        addressSearchStatus.textContent = `✓ Closest Match Found: ${nearest.center.name} (approx. ${nearest.miles.toFixed(1)} miles away). Choose a sample visit time below or open turn-by-turn directions.`;
+        addressSearchStatus.textContent = `✓ Closest Match Found: ${nearest.center.name} (approx. ${nearest.miles.toFixed(1)} miles from ${payload.formattedAddress || address}). Choose a sample visit time below or open turn-by-turn Google Maps directions.`;
         renderCareerCenters();
         renderAppointmentCalendar();
       })
@@ -1181,7 +1314,7 @@
         addressSearchStatus.classList.remove("is-success");
         addressSearchStatus.classList.add("is-error");
         addressSearchStatus.setAttribute("role", "alert");
-        addressSearchStatus.textContent = `⚠ ${error.message} Try entering a 5-digit ZIP code or city name, or select any Career Center directly from the list below.`;
+        addressSearchStatus.textContent = `⚠ ${error.message} Try entering a 5-digit ZIP code or city name (e.g., Valley, Lanett, Opelika, Phenix City), or select any Career Center directly from the list below.`;
         renderCareerCenters();
       })
       .finally(() => {

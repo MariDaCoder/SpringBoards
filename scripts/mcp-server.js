@@ -200,6 +200,31 @@ export const MCP_TOOLS = [
       },
       required: ['operation']
     }
+  },
+  {
+    name: 'cms_import_and_publishing_manage',
+    description: 'Prepares dynamic CMS content for import (mapping CSV/JSON/API sources to schema), audits Collection template page publishing settings (disabling empty/internal/reference collection templates), and verifies logical dynamic folder URL structures (/programs/pathways/{slug}).',
+    requiredPermission: 'mcp:content_workflow',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        operation: {
+          type: 'string',
+          enum: ['inspect_manifest', 'map_and_validate_import', 'audit_template_publishing'],
+          description: 'CMS import or template publishing operation to execute.'
+        },
+        collectionId: {
+          type: 'string',
+          enum: ['tradePrograms', 'careerCenters', 'partnerDirectory', 'faqItems', 'utilityPages'],
+          description: 'Target CMS Collection ID.'
+        },
+        records: {
+          type: 'array',
+          description: 'Optional raw source records to map and validate against the target Collection schema.'
+        }
+      },
+      required: ['operation']
+    }
   }
 ];
 
@@ -289,7 +314,22 @@ export function executeMcpTool(toolName, args = {}) {
   }
 
   if (toolName === 'pages_list_and_inspect') {
-    const pages = ['index.html', 'train.html', 'eligibility.html', 'volunteer.html', 'partner.html', 'donate.html', '404.html', 'backoffice.html'];
+    const pages = [
+      'index.html',
+      'programs/train/index.html',
+      'programs/pathways/index.html',
+      'programs/eligibility/index.html',
+      'community/volunteer/index.html',
+      'community/partner/index.html',
+      'community/donate/index.html',
+      'resources/style-guide/index.html',
+      'resources/cms-workflows/index.html',
+      'utility/search/index.html',
+      'utility/password/index.html',
+      'utility/privacy-terms/index.html',
+      '404.html',
+      'resources/backoffice/index.html'
+    ];
     const targetPages = args.page ? pages.filter((p) => p === args.page) : pages;
 
     const results = targetPages.map((page) => {
@@ -324,7 +364,7 @@ export function executeMcpTool(toolName, args = {}) {
     const title = args.title || 'Springboards Workforce Module';
     const bodyText = args.bodyText || 'Structured trade training and WIOA-aligned career pathway support in East Alabama.';
     const ctaLabel = args.ctaLabel || 'Check Eligibility';
-    const ctaHref = args.ctaHref || '/eligibility';
+    const ctaHref = args.ctaHref || '/programs/eligibility';
 
     let htmlSnippet = '';
     if (pattern === 'wizard-fieldset') {
@@ -427,6 +467,72 @@ export function executeMcpTool(toolName, args = {}) {
       totalWorkflows: workflows.length,
       workflows: workflows.slice(0, 10),
       capabilitiesAndPermissions: MCP_CAPABILITIES_AND_PERMISSIONS
+    };
+  }
+
+  if (toolName === 'cms_import_and_publishing_manage') {
+    const manifestPath = path.join(ROOT, 'assets', 'cms', 'collections-import.json');
+    const manifest = fs.existsSync(manifestPath)
+      ? JSON.parse(fs.readFileSync(manifestPath, 'utf8'))
+      : { importSources: [], collectionPublishingSettings: {} };
+    const operation = args.operation || 'inspect_manifest';
+    const collectionId = args.collectionId || 'tradePrograms';
+
+    if (operation === 'audit_template_publishing') {
+      const settings = manifest.collectionPublishingSettings || {};
+      const enabledCollections = Object.values(settings).filter((c) => c.publishTemplatePages);
+      const disabledCollections = Object.values(settings).filter((c) => !c.publishTemplatePages);
+      return {
+        server: MCP_SERVER_INFO.name,
+        tool: toolName,
+        operation,
+        enabledTemplateCollections: enabledCollections.map((c) => ({
+          collectionId: c.collectionId,
+          urlPattern: c.urlPattern,
+          folderPrefix: c.folderPrefix
+        })),
+        disabledTemplateCollections: disabledCollections.map((c) => ({
+          collectionId: c.collectionId,
+          canonicalParent: c.canonicalParent,
+          governanceNote: c.governanceNote
+        })),
+        allInlineCollectionsProtected:
+          disabledCollections.length >= 4 &&
+          enabledCollections.length === 1 &&
+          enabledCollections[0].collectionId === 'tradePrograms'
+      };
+    }
+
+    if (operation === 'map_and_validate_import') {
+      const sourceDef = (manifest.importSources || []).find((s) => s.targetCollection === collectionId);
+      const fieldMap = sourceDef ? sourceDef.fieldMap : {};
+      const inputRecords = Array.isArray(args.records) ? args.records : [];
+      const mappedRecords = inputRecords.map((row) => {
+        const out = {};
+        for (const [k, v] of Object.entries(row || {})) {
+          const targetKey = fieldMap[k] || k;
+          out[targetKey] = v;
+        }
+        return out;
+      });
+      return {
+        server: MCP_SERVER_INFO.name,
+        tool: toolName,
+        operation,
+        collectionId,
+        fieldMapUsed: fieldMap,
+        mappedCount: mappedRecords.length,
+        mappedRecords
+      };
+    }
+
+    return {
+      server: MCP_SERVER_INFO.name,
+      tool: toolName,
+      operation: 'inspect_manifest',
+      manifestVersion: manifest.manifestVersion,
+      importSources: manifest.importSources,
+      collectionPublishingSettings: manifest.collectionPublishingSettings
     };
   }
 

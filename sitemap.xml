@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://springboardsfcd.org/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://springboardsfcd.org/" />
+    <xhtml:link rel="alternate" hreflang="es-US" href="https://springboardsfcd.org/?lang=es-US" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://springboardsfcd.org/" />
+    <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -13,33 +17,105 @@
     </image:image>
   </url>
   <url>
-    <loc>https://springboardsfcd.org/train</loc>
-    <lastmod>2026-10-29</lastmod>
+    <loc>https://springboardsfcd.org/programs/train</loc>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://springboardsfcd.org/programs/train" />
+    <xhtml:link rel="alternate" hreflang="es-US" href="https://springboardsfcd.org/programs/train?lang=es-US" />
+    <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://springboardsfcd.org/eligibility</loc>
-    <lastmod>2026-10-29</lastmod>
+    <loc>https://springboardsfcd.org/programs/pathways</loc>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://springboardsfcd.org/programs/pathways" />
+    <xhtml:link rel="alternate" hreflang="es-US" href="https://springboardsfcd.org/programs/pathways?lang=es-US" />
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://springboardsfcd.org/programs/pathways/carpentry-framing</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://springboardsfcd.org/programs/pathways/electrical-fundamentals</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://springboardsfcd.org/programs/pathways/plumbing-pipefitting</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://springboardsfcd.org/programs/pathways/hvac-mechanical</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://springboardsfcd.org/programs/pathways/jobsite-safety-osha</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://springboardsfcd.org/programs/pathways/work-readiness-ojt</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://springboardsfcd.org/programs/eligibility</loc>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://springboardsfcd.org/programs/eligibility" />
+    <xhtml:link rel="alternate" hreflang="es-US" href="https://springboardsfcd.org/programs/eligibility?lang=es-US" />
+    <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://springboardsfcd.org/volunteer</loc>
-    <lastmod>2026-10-29</lastmod>
+    <loc>https://springboardsfcd.org/community/volunteer</loc>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://springboardsfcd.org/community/volunteer" />
+    <xhtml:link rel="alternate" hreflang="es-US" href="https://springboardsfcd.org/community/volunteer?lang=es-US" />
+    <lastmod>2026-11-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://springboardsfcd.org/partner</loc>
-    <lastmod>2026-10-29</lastmod>
+    <loc>https://springboardsfcd.org/community/partner</loc>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://springboardsfcd.org/community/partner" />
+    <xhtml:link rel="alternate" hreflang="es-US" href="https://springboardsfcd.org/community/partner?lang=es-US" />
+    <lastmod>2026-11-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://springboardsfcd.org/donate</loc>
-    <lastmod>2026-10-29</lastmod>
+    <loc>https://springboardsfcd.org/community/donate</loc>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://springboardsfcd.org/community/donate" />
+    <xhtml:link rel="alternate" hreflang="es-US" href="https://springboardsfcd.org/community/donate?lang=es-US" />
+    <lastmod>2026-11-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://springboardsfcd.org/resources/style-guide</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://springboardsfcd.org/resources/cms-workflows</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://springboardsfcd.org/utility/privacy-terms</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
 </urlset>

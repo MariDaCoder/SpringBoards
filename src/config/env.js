@@ -164,12 +164,52 @@ export const ADMIN_ALLOWED_EMAILS = new Set([
     .filter(Boolean)
 ]);
 
-// 6. Analytics & Telemetry Keys
+// 6. Analytics, Search Console Verification & Google Maps Platform (Domain-Restricted)
 export const ANALYTICS_ENABLED =
   String(process.env.ANALYTICS_ENABLED ?? 'true').toLowerCase() !== 'false';
 export const ANALYTICS_WRITE_KEY = resolveEnvValue(
   process.env.ANALYTICS_WRITE_KEY,
   deriveProjectSecret('analytics-write-key-v1', 32)
+);
+export const GA_MEASUREMENT_ID = resolveEnvValue(
+  process.env.GA_MEASUREMENT_ID,
+  'G-SBFCD2026'
+);
+export const GTM_CONTAINER_ID = resolveEnvValue(
+  process.env.GTM_CONTAINER_ID,
+  'GTM-SBFCD26'
+);
+export const META_PIXEL_ID = resolveEnvValue(
+  process.env.META_PIXEL_ID,
+  '849203194618204'
+);
+export const WEBHOOK_SIGNING_SECRET = resolveEnvValue(
+  process.env.WEBHOOK_SIGNING_SECRET,
+  deriveProjectSecret('webhook-hmac-signing-secret-v1', 48)
+);
+export const GOOGLE_SITE_VERIFICATION = resolveEnvValue(
+  process.env.GOOGLE_SITE_VERIFICATION,
+  'google-site-verification-springboards-fcd-2026'
+);
+export const GOOGLE_SITE_VERIFICATION_FILE = 'google651964189612fcd.html';
+export const GOOGLE_MAPS_API_KEY = resolveEnvValue(
+  process.env.GOOGLE_MAPS_API_KEY || process.env.VITE_GOOGLE_MAPS_API_KEY,
+  ''
+);
+export const GOOGLE_MAPS_MAP_ID = resolveEnvValue(
+  process.env.GOOGLE_MAPS_MAP_ID,
+  'DEMO_MAP_ID'
+);
+export const GOOGLE_MAPS_ALLOWED_REFERRERS = Array.from(
+  new Set(
+    (
+      process.env.GOOGLE_MAPS_ALLOWED_REFERRERS ||
+      `https://springboardsfcd.org/*,https://www.springboardsfcd.org/*,https://springboards-community-dev.web.app/*,https://springboards-community-dev--staging.web.app/*,https://springboards-community-dev.firebaseapp.com/*,${DEV_APP_URL}/*,${SHARED_APP_URL}/*,http://localhost:3000/*`
+    )
+      .split(',')
+      .map((r) => r.trim())
+      .filter(Boolean)
+  )
 );
 
 // 7. SMTP / Email Transport Configuration

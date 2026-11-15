@@ -1,8 +1,36 @@
 import crypto from 'crypto';
 import helmet from 'helmet';
-import rateLimit from 'express-rate-limit';
 import cors from 'cors';
-import { ADMIN_SESSION_SECRET, ALLOWED_ORIGINS } from '../config/env.js';
+import { ADMIN_SESSION_SECRET, ALLOWED_ORIGINS, GOOGLE_MAPS_ALLOWED_REFERRERS } from '../config/env.js';
+
+function rateLimit({ windowMs = 60000, max = 100, keyGenerator, message }) {
+  const hits = new Map();
+  const cleanupInterval = setInterval(() => {
+    const now = Date.now();
+    for (const [key, entry] of hits.entries()) {
+      if (now >= entry.resetAt) hits.delete(key);
+    }
+  }, Math.min(windowMs, 60000));
+  if (typeof cleanupInterval.unref === 'function') cleanupInterval.unref();
+
+  return (req, res, next) => {
+    const now = Date.now();
+    const key = typeof keyGenerator === 'function' ? keyGenerator(req) : (req.ip || req.socket?.remoteAddress || '127.0.0.1');
+    let entry = hits.get(key);
+    if (!entry || now >= entry.resetAt) {
+      entry = { count: 0, resetAt: now + windowMs };
+      hits.set(key, entry);
+    }
+    entry.count += 1;
+    res.setHeader('RateLimit-Limit', String(max));
+    res.setHeader('RateLimit-Remaining', String(Math.max(0, max - entry.count)));
+    res.setHeader('RateLimit-Reset', String(Math.ceil((entry.resetAt - now) / 1000)));
+    if (entry.count > max) {
+      return res.status(429).json(message || { error: 'Too many requests. Please try again later.' });
+    }
+    return next();
+  };
+}
 
 // 1. Helmet Security Headers & Content Security Policy (CSP)
 export const cspAndSecurityHeaders = helmet({
@@ -20,11 +48,14 @@ export const cspAndSecurityHeaders = helmet({
         'https://apis.google.com',
         'https://accounts.google.com',
         'https://www.gstatic.com',
-        'https://maps.googleapis.com'
+        'https://maps.googleapis.com',
+        'https://www.googletagmanager.com',
+        'https://www.google-analytics.com',
+        'https://connect.facebook.net'
       ],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      fontSrc: ["'self'", 'data:'],
-      imgSrc: ["'self'", 'data:', 'https:'],
+      styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+      fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com'],
+      imgSrc: ["'self'", 'data:', 'blob:', 'https:'],
       frameSrc: [
         "'self'",
         'https://www.google.com',
@@ -41,8 +72,15 @@ export const cspAndSecurityHeaders = helmet({
         'https://identitytoolkit.googleapis.com',
         'https://securetoken.googleapis.com',
         'https://www.gstatic.com',
+        'https://maps.gstatic.com',
+        'https://www.google-analytics.com',
+        'https://analytics.google.com',
+        'https://www.googletagmanager.com',
+        'https://connect.facebook.net',
+        'https://www.facebook.com',
         'https://nominatim.openstreetmap.org'
       ],
+      workerSrc: ["'self'", 'blob:'],
       objectSrc: ["'none'"],
       baseUri: ["'self'"],
       formAction: ["'self'"],
@@ -51,6 +89,56 @@ export const cspAndSecurityHeaders = helmet({
   },
   referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
 });
+
+// 1B. Domain Referrer Restriction Validator for Google Maps Platform API Key & Proxy
+export function isAllowedMapsReferrer(req) {
+  const originHeader = String(req.headers.origin || '').trim();
+  const refererHeader = String(req.headers.referer || '').trim();
+  const hostHeader = String(req.headers.host || '').trim();
+
+  // Same-origin browser requests without cross-origin header are verified against host
+  if (!originHeader && !refererHeader) {
+    return (
+      !hostHeader ||
+      hostHeader.includes('springboardsfcd.org') ||
+      hostHeader.includes('springboards-community-dev') ||
+      hostHeader.includes('localhost') ||
+      hostHeader.includes('127.0.0.1') ||
+      hostHeader.endsWith('.run.app') ||
+      hostHeader.endsWith('.hosted.app') ||
+      hostHeader.endsWith('.web.app')
+    );
+  }
+
+  const candidateUrl = refererHeader || originHeader;
+  try {
+    const parsed = new URL(candidateUrl);
+    const originClean = parsed.origin.toLowerCase();
+    const hostClean = parsed.hostname.toLowerCase();
+
+    if (
+      ALLOWED_ORIGINS.some((o) => o.toLowerCase() === originClean) ||
+      hostClean === 'springboardsfcd.org' ||
+      hostClean.endsWith('.springboardsfcd.org') ||
+      hostClean.endsWith('.run.app') ||
+      hostClean.endsWith('.web.app') ||
+      hostClean.endsWith('.firebaseapp.com') ||
+      hostClean.endsWith('.hosted.app') ||
+      hostClean.endsWith('.ai.studio') ||
+      hostClean === 'localhost' ||
+      hostClean === '127.0.0.1'
+    ) {
+      return true;
+    }
+
+    return GOOGLE_MAPS_ALLOWED_REFERRERS.some((pattern) => {
+      const normalized = pattern.toLowerCase().replace(/\/\*$/, '');
+      return originClean === normalized;
+    });
+  } catch {
+    return false;
+  }
+}
 
 // 2. Restricted CORS Middleware for API Routes
 export const apiCorsMiddleware = cors({

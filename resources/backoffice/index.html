@@ -26,7 +26,7 @@
   <header class="admin-header">
     <div class="admin-header-inner">
       <a href="/" class="admin-brand">
-        <img src="/springboards_logo.webp" alt="Springboards Logo" class="admin-logo" width="160" height="42" decoding="async">
+        <img src="/assets/aistudio/springboards_logo_white_text.png?v=20261114-wordmark" alt="Springboards Logo" class="admin-logo" width="160" height="42" decoding="async">
         <div>
           <div style="font-weight: 800; font-size: 1.05rem; letter-spacing: -0.02em;">SPRINGBOARDS</div>
           <div style="font-size: 0.72rem; color: #94A3B8; font-weight: 600;">Executive Administrator Portal</div>
@@ -49,7 +49,7 @@
   <!-- Branded Password-Protected Gate (when unauthenticated) -->
   <div id="section-auth" class="login-wrapper">
     <div class="login-card" style="max-width: 520px; width: 100%; padding: 2rem;">
-      <img src="/springboards_logo.webp" alt="Springboards Logo" class="login-logo" width="198" height="52" decoding="async" style="margin-bottom: 1rem;">
+      <img src="/assets/aistudio/springboards_logo_white_text.png?v=20261114-wordmark" alt="Springboards Logo" class="login-logo" width="198" height="52" decoding="async" style="margin-bottom: 1rem;">
 
       <div class="protected-gate-banner">
         <span class="protected-gate-badge">
@@ -146,7 +146,7 @@
       <div id="auth-error-alert" class="protected-error-banner" role="alert" aria-live="assertive" style="display: none;"></div>
 
       <div class="protected-help-footer">
-        <strong>Need access or locked out?</strong> Contact Technical Publisher Marilynn Ward or Executive Director Marvin Thompson at <a href="mailto:info@springboardsfcd.org">info@springboardsfcd.org</a> or call <a href="tel:731.388.WORK">731.388.WORK</a>. Looking for public trade programs or the design reference? <a href="/">Public Homepage</a> &bull; <a href="/style-guide">Living Style Guide &rarr;</a>
+        <strong>Need access or locked out?</strong> Contact Technical Publisher Marilynn Ward or Executive Director Marvin Thompson at <a href="mailto:info@springboardsfcd.org">info@springboardsfcd.org</a> or call <a href="tel:731.388.WORK">731.388.WORK</a>. Looking for public trade programs or the design reference? <a href="/">Public Homepage</a> &bull; <a href="/resources/style-guide">Living Style Guide &rarr;</a>
       </div>
     </div>
   </div>
@@ -611,11 +611,11 @@
           <input type="text" id="wf-input-title" placeholder="Change or program update title..." required style="grid-column: span 2; padding: 0.45rem 0.65rem; border: 1px solid var(--admin-border); border-radius: 3px; font-size: 0.82rem;">
           <select id="wf-input-route" style="padding: 0.45rem 0.65rem; border: 1px solid var(--admin-border); border-radius: 3px; font-size: 0.82rem;">
             <option value="/">/ (Homepage)</option>
-            <option value="/train">/train (Training &amp; Pathways)</option>
-            <option value="/eligibility">/eligibility (Eligibility &amp; Career Centers)</option>
-            <option value="/partner">/partner (Employer Partnerships)</option>
-            <option value="/volunteer">/volunteer (Community &amp; Volunteers)</option>
-            <option value="/donate">/donate (Donor &amp; Sponsorships)</option>
+            <option value="/programs/train">/programs/train (Training &amp; Pathways)</option>
+            <option value="/programs/eligibility">/programs/eligibility (Eligibility &amp; Career Centers)</option>
+            <option value="/community/partner">/community/partner (Employer Partnerships)</option>
+            <option value="/community/volunteer">/community/volunteer (Community &amp; Volunteers)</option>
+            <option value="/community/donate">/community/donate (Donor &amp; Sponsorships)</option>
           </select>
           <select id="wf-input-actor" style="padding: 0.45rem 0.65rem; border: 1px solid var(--admin-border); border-radius: 3px; font-size: 0.82rem;">
             <option value="Marilynn Ward">Author: Marilynn Ward (Design/Dev/Publisher)</option>
@@ -1462,7 +1462,7 @@
                 <div class="collection-empty-actions">
                   ${hasActiveFilter ? `<button type="button" class="btn-cta" onclick="document.getElementById('cand-search-input').value=''; document.getElementById('cand-stage-filter').value='ALL'; filterCandidates();">Reset Search &amp; Stage Filter</button>` : ''}
                   <button type="button" class="collection-empty-btn-secondary" onclick="refreshData()">↻ Refresh Pipeline Data</button>
-                  <a href="/eligibility" target="_blank" rel="noopener" class="collection-empty-btn-secondary">Open Public Eligibility Check ↗</a>
+                  <a href="/programs/eligibility" target="_blank" rel="noopener" class="collection-empty-btn-secondary">Open Public Eligibility Check ↗</a>
                 </div>
               </div>
             </td>

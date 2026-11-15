@@ -1,11 +1,16 @@
 {
   "projects": {
-    "default": "springboards-community-dev"
+    "default": "springboards-community-dev",
+    "staging": "springboards-community-dev",
+    "production": "springboards-community-dev"
   },
   "targets": {
     "springboards-community-dev": {
       "hosting": {
         "landing": [
+          "springboards-community-dev"
+        ],
+        "production": [
           "springboards-community-dev"
         ]
       }

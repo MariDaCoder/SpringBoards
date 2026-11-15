@@ -1,26 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Springboards for Community Development Icon">
   <style>
-    .badge-bg { fill: #FFFFFF; stroke: #0B2545; stroke-width: 2.5; }
-    .badge-ring { stroke: #0B2545; }
-    .navy-fill { fill: #0B2545; }
-    .navy-stroke { stroke: #0B2545; }
-    .green-fill { fill: #5B8C2A; }
-    .green-stroke { stroke: #5B8C2A; }
-    .gold-fill { fill: #E89923; }
-    .orange-fill { fill: #D96B27; }
+    .badge-bg { fill: #FFFFFF; stroke: #093057; stroke-width: 2.2; }
+    .badge-ring { stroke: #093057; }
+    .navy-fill { fill: #093057; }
+    .navy-stroke { stroke: #093057; }
+    .green-fill { fill: #6BAA3C; }
+    .green-stroke { stroke: #6BAA3C; }
+    .gold-fill { fill: #F9A825; }
+    .orange-fill { fill: #F9A825; }
     .house-window { fill: #FFFFFF; }
-
-    @media (prefers-color-scheme: dark) {
-      .badge-bg { fill: #0B192C; stroke: #E89923; stroke-width: 2.5; }
-      .badge-ring { stroke: #93C5FD; }
-      .navy-fill { fill: #60A5FA; }
-      .navy-stroke { stroke: #93C5FD; }
-      .green-fill { fill: #74B836; }
-      .green-stroke { stroke: #74B836; }
-      .gold-fill { fill: #FBBF24; }
-      .orange-fill { fill: #F97316; }
-      .house-window { fill: #0B192C; }
-    }
   </style>
 
   <!-- Shaped Squircle/Circular Badge -->

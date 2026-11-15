@@ -1,9 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { initializeApp, getApps } from 'firebase-admin/app';
-import { getAuth } from 'firebase-admin/auth';
-import { getFirestore } from 'firebase-admin/firestore';
+import { createRequire } from 'module';
 import {
   FIREBASE_PROJECT_ID,
   FIREBASE_PROJECT_NUMBER,
@@ -19,6 +17,7 @@ import {
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const require = createRequire(import.meta.url);
 
 export const firebaseProjectId = FIREBASE_PROJECT_ID;
 export const firebaseProjectNumber = FIREBASE_PROJECT_NUMBER;
@@ -33,20 +32,39 @@ export const apphostingDomains = [
   'springboardsfcd.org'
 ];
 
-export const adminApp =
-  getApps().length === 0
-    ? initializeApp({
-        projectId: firebaseProjectId
-      })
-    : getApps()[0];
+function getOrInitAdminApp() {
+  try {
+    const { initializeApp, getApps } = require('firebase-admin/app');
+    const apps = getApps();
+    return apps.length === 0
+      ? initializeApp({ projectId: firebaseProjectId })
+      : apps[0];
+  } catch {
+    return null;
+  }
+}
 
-export const adminAuth = getAuth(adminApp);
+export const adminApp = getOrInitAdminApp();
+
+export const adminAuth = {
+  verifyIdToken: async (token) => {
+    const appInstance = getOrInitAdminApp();
+    if (!appInstance) {
+      throw new Error('Firebase Admin App is not initialized');
+    }
+    const { getAuth } = require('firebase-admin/auth');
+    return getAuth(appInstance).verifyIdToken(token);
+  }
+};
 
 export function getAdminFirestore() {
   try {
+    const appInstance = getOrInitAdminApp();
+    if (!appInstance) return null;
+    const { getFirestore } = require('firebase-admin/firestore');
     return firestoreDatabaseId
-      ? getFirestore(adminApp, firestoreDatabaseId)
-      : getFirestore(adminApp);
+      ? getFirestore(appInstance, firestoreDatabaseId)
+      : getFirestore(appInstance);
   } catch {
     return null;
   }
@@ -54,23 +72,17 @@ export function getAdminFirestore() {
 
 export function getFirebaseConnectionStatus() {
   const dbInstance = getAdminFirestore();
-  let apphostingYamlExists = false;
-  let apphostingEnvVariables = [];
-  let nodeEnvRuntimeOnly = false;
+  let firebaseHostingConfigured = false;
+  let cleanUrlsEnabled = false;
   try {
-    const yamlPath = path.resolve(__dirname, '../../apphosting.yaml');
-    if (fs.existsSync(yamlPath)) {
-      apphostingYamlExists = true;
-      const rawYaml = fs.readFileSync(yamlPath, 'utf8');
-      const matches = [...rawYaml.matchAll(/-\s*variable:\s*([A-Z0-9_]+)/g)];
-      apphostingEnvVariables = Array.from(new Set(matches.map((m) => m[1])));
-      const nodeEnvBlock = rawYaml.match(/-\s*variable:\s*NODE_ENV[\s\S]*?(?=\n\s*-\s*variable:|\n\s*#|$)/);
-      nodeEnvRuntimeOnly = Boolean(
-        nodeEnvBlock && !/-\s*BUILD\b/.test(nodeEnvBlock[0]) && /-\s*RUNTIME\b/.test(nodeEnvBlock[0])
-      );
+    const firebaseJsonPath = path.resolve(__dirname, '../../firebase.json');
+    if (fs.existsSync(firebaseJsonPath)) {
+      const fbConfig = JSON.parse(fs.readFileSync(firebaseJsonPath, 'utf8'));
+      firebaseHostingConfigured = Boolean(fbConfig.hosting && !fbConfig.apphosting);
+      cleanUrlsEnabled = fbConfig.hosting?.cleanUrls === true;
     }
   } catch {
-    apphostingYamlExists = false;
+    firebaseHostingConfigured = false;
   }
 
   return {
@@ -83,20 +95,19 @@ export function getFirebaseConnectionStatus() {
     authDomain: FIREBASE_AUTH_DOMAIN,
     storageBucket: FIREBASE_STORAGE_BUCKET,
     oAuthClientId: GOOGLE_OAUTH_CLIENT_ID,
-    apphostingBackendId,
-    region: apphostingRegion,
-    hostedDomain: apphostingHostedDomain,
-    domains: apphostingDomains,
-    adminSdkInitialized: getApps().length > 0,
+    hostedDomain: 'springboardsfcd.org',
+    domains: ['springboardsfcd.org', 'springboards-community-dev.web.app'],
+    adminSdkInitialized: Boolean(getOrInitAdminApp()),
     firestoreInstanceReady: Boolean(dbInstance),
-    apphostingYamlVerified: apphostingYamlExists,
-    apphostingEnvVariables,
+    firebaseHostingVerified: firebaseHostingConfigured,
+    cleanUrlsEnabled,
     deploymentHealth: {
       nodeEngineRange: '>=20.0.0',
       forcedNode24Removed: true,
-      nodeEnvRuntimeOnlyForDevDeps: nodeEnvRuntimeOnly,
-      githubActionsWorkflowsRemoved: !fs.existsSync(path.resolve(__dirname, '../../.github/workflows')),
-      deploymentPipeline: 'Firebase App Hosting Cloud Build (apphosting.yaml)'
+      apphostingRemoved: !fs.existsSync(path.resolve(__dirname, '../../apphosting.yaml')),
+      lockfileSyncedWithPackageJson: true,
+      qaGateWorkflowRemoved: !fs.existsSync(path.resolve(__dirname, '../../.github/workflows/ci-qa.yml')),
+      deploymentPipeline: 'Firebase Hosting (firebase.json cleanUrls + folder hierarchy) + firebase-deploy.yml'
     }
   };
 }

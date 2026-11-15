@@ -115,7 +115,8 @@ export function createAdminRouter({
       design_system_audit_compliance: 'mcp:audit_read',
       pages_list_and_inspect: 'mcp:audit_read',
       pages_scaffold_component: 'mcp:page_editor',
-      content_workflow_manage: 'mcp:content_workflow'
+      content_workflow_manage: 'mcp:content_workflow',
+      cms_import_and_publishing_manage: 'mcp:content_workflow'
     };
     const requiredPerm = toolPermissionMap[toolName] || 'mcp:design_system';
     if (
@@ -138,6 +139,38 @@ export function createAdminRouter({
       });
     } catch (err) {
       return res.status(400).json({ error: err.message || 'MCP tool execution failed.' });
+    }
+  });
+
+  // CMS Dynamic Content Import & Collection Publishing Governance API Endpoints
+  router.get('/cms/collections', (req, res) => {
+    try {
+      const result = executeMcpTool('cms_import_and_publishing_manage', {
+        operation: 'inspect_manifest'
+      });
+      return res.status(200).json({
+        success: true,
+        manifest: result
+      });
+    } catch (err) {
+      return res.status(500).json({ error: err.message || 'Failed to read CMS collections manifest.' });
+    }
+  });
+
+  router.post('/cms/import', (req, res) => {
+    try {
+      const { collectionId = 'tradePrograms', records = [] } = req.body || {};
+      const result = executeMcpTool('cms_import_and_publishing_manage', {
+        operation: 'map_and_validate_import',
+        collectionId,
+        records: Array.isArray(records) ? records : [records]
+      });
+      return res.status(200).json({
+        success: true,
+        ...result
+      });
+    } catch (err) {
+      return res.status(400).json({ error: err.message || 'CMS content import failed.' });
     }
   });
 

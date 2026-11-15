@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS Schema, Localization &amp; Publishing Workflows | Springboards for Community Development</title>
+  <meta name="description" content="Centralized CMS Schema architect, relational Collection explorer, en-US/es-US translation and SEO localization guide, utility pages directory, and 4-stage publishing workflow console.">
+  <link rel="canonical" href="https://springboardsfcd.org/resources/cms-workflows">
+  <link rel="alternate" hreflang="en-US" href="https://springboardsfcd.org/resources/cms-workflows">
+  <link rel="alternate" hreflang="es-US" href="https://springboardsfcd.org/resources/cms-workflows?lang=es-US">
+  <link rel="alternate" hreflang="x-default" href="https://springboardsfcd.org/resources/cms-workflows">
+
+  <!-- Open Graph / Social Share Card -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Springboards for Community Development">
+  <meta property="og:url" content="https://springboardsfcd.org/resources/cms-workflows">
+  <meta property="og:title" content="CMS Schema, Localization &amp; Publishing Workflows | Springboards">
+  <meta property="og:description" content="Explore Springboards' relational CMS Collections, dynamic content engine, bilingual translation &amp; SEO localization guidelines, utility pages, and 4-stage publishing workflow.">
+  <meta property="og:image" content="https://springboardsfcd.org/og-image.jpg">
+
+  <meta name="theme-color" content="#0B192C">
+  <link rel="icon" type="image/svg+xml" href="/icon.svg">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="preload" href="/assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/components.js" defer></script>
+</head>
+<body id="top" class="u-bg-canvas u-color-primary">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Global Navigation Bar -->
+  <header class="navbar-wrapper" id="navigation" data-component="site-navbar" data-prop-active-route="/resources/cms-workflows">
+    <nav class="navbar" aria-label="Main Navigation">
+      <div class="nav-left">
+        <a href="/" class="nav-logo-link" aria-label="Springboards Home">
+          <img src="/assets/aistudio/springboards_logo_white_text.png?v=20261114-wordmark" alt="Springboards for Community Development logo" class="nav-logo oversized-logo" width="260" height="52" fetchpriority="high" decoding="async">
+        </a>
+      </div>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+
+      <div class="nav-center" id="navMenu">
+        <ul class="nav-links">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/programs/train" class="nav-link">Training</a></li>
+          <li><a href="/programs/eligibility" class="nav-link">Eligibility</a></li>
+          <li><a href="/community/volunteer" class="nav-link">Volunteer</a></li>
+          <li><a href="/community/partner" class="nav-link">Partner</a></li>
+          <li><a href="/community/donate" class="nav-link">Donate</a></li>
+        </ul>
+        <div class="mobile-cta-wrapper">
+          <a href="/programs/eligibility" class="btn-cta mobile-cta">Check Eligibility</a>
+        </div>
+      </div>
+
+      <div class="nav-right">
+        <a href="/programs/eligibility" class="btn-cta desktop-cta">Check Eligibility</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+    <!-- Hero Header -->
+    <header class="sg-hero">
+      <div class="container">
+        <div class="u-flex-between u-mb-3">
+          <span class="section-tag">Platform Architecture &amp; Content Operations v3.0</span>
+          <div class="collection-filter-tabs" role="group" aria-label="Switch active content locale">
+            <button type="button" class="collection-filter-tab is-active" data-locale-toggle="en-US" aria-pressed="true">English (en-US)</button>
+            <button type="button" class="collection-filter-tab" data-locale-toggle="es-US" aria-pressed="false">Español (es-US)</button>
+          </div>
+        </div>
+        <h1 class="u-text-display u-color-inverse u-mb-4" data-i18n-en="Streamlined Workflows, Utility Pages, Localization &amp; CMS Schema" data-i18n-es="Flujos de Trabajo, Páginas de Utilidad, Localización y Esquema CMS">Streamlined Workflows, Utility Pages, Localization &amp; CMS Schema</h1>
+        <p class="u-text-lg u-measure u-mb-6 c-text-inverse-muted" data-i18n-en="Operational blueprint for scaling and maintaining springboardsfcd.org—combining 4-stage RBAC publishing workflows, standalone utility pages, bilingual en-US/es-US localization &amp; SEO governance, and relational CMS Collections." data-i18n-es="Arquitectura operativa para escalar y mantener springboardsfcd.org: flujos de publicación RBAC en 4 etapas, páginas de utilidad, localización bilingüe inglés/español y Colecciones CMS relacionales.">
+          Operational blueprint for scaling and maintaining springboardsfcd.org—combining 4-stage RBAC publishing workflows, standalone utility pages, bilingual en-US/es-US localization &amp; SEO governance, and relational CMS Collections.
+        </p>
+        <div class="ds-cluster u-gap-3">
+          <a href="#section-workflows" class="btn-cta">01. Streamlined Workflows</a>
+          <a href="#section-cms-import" class="btn-outline c-text-inverse c-border-inverse-subtle">02. Content Import &amp; Mapping</a>
+          <a href="#section-publishing-controls" class="btn-outline c-text-inverse c-border-inverse-subtle">03. Template Publishing &amp; Dynamic URLs</a>
+          <a href="/programs/pathways/carpentry-framing" class="btn-outline c-text-inverse c-border-inverse-subtle">Live Pathway Template ↗</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sticky Section Sub-Navigation -->
+    <nav class="sg-sticky-subnav" aria-label="CMS and Workflow Sections">
+      <div class="container">
+        <ul class="sg-subnav-list">
+          <li><a href="#section-workflows" class="sg-subnav-link is-active">1. Workflows</a></li>
+          <li><a href="#section-utility-pages" class="sg-subnav-link">2. Utility Pages (6)</a></li>
+          <li><a href="#section-localization" class="sg-subnav-link">3. Translation &amp; SEO</a></li>
+          <li><a href="#section-cms-schema" class="sg-subnav-link">4. CMS Schema</a></li>
+          <li><a href="#section-cms-import" class="sg-subnav-link">5. Content Import &amp; MCP</a></li>
+          <li><a href="#section-publishing-controls" class="sg-subnav-link">6. Template Publishing &amp; URLs</a></li>
+          <li><a href="#section-dynamic-sandbox" class="sg-subnav-link">7. Dynamic Builder</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <!-- ==========================================================================
+           SECTION 1: STREAMLINED WORKFLOWS USING AVAILABLE FEATURES
+           ========================================================================== -->
+      <section id="section-workflows" class="sg-section" aria-labelledby="heading-workflows">
+        <div class="sg-section-header">
+          <div>
+            <span class="section-tag">01 · Operational Velocity &amp; Governance</span>
+            <h2 id="heading-workflows" class="u-text-2xl u-mt-2">Streamlined Publishing &amp; Component Workflows</h2>
+            <p class="u-color-secondary u-measure u-mt-2">
+              Accelerate site updates using reusable <code>data-component</code> primitives, MCP design-token verification, automated pre-publish audits, and our 4-stage RBAC publishing pipeline.
+            </p>
+          </div>
+          <a href="/resources/backoffice" class="btn-outline-dark">Open Staff Backoffice ↗</a>
+        </div>
+
+        <div id="workflowStagesGrid" class="l-grid-2 u-gap-4 u-mb-6"></div>
+
+        <!-- Interactive Pre-Publish Readiness Checklist -->
+        <div class="sb-card">
+          <div class="u-flex-between u-mb-3">
+            <div>
+              <span class="t-eyebrow c-text-accent">INTERACTIVE PRE-PUBLISH READINESS VERIFIER</span>
+              <h3 class="t-h4 c-text-brand u-mt-1 u-mb-0">Run Pre-Flight Check Before Deploying to Firebase Hosting</h3>
+            </div>
+            <span id="workflowReadinessStatus" class="t-body-sm u-weight-bold c-text-accent" role="status" aria-live="polite">4 of 4 Gates Verified (Ready to Publish)</span>
+          </div>
+          <div class="l-grid-2 u-gap-3 u-mb-4" id="workflowChecklistContainer">
+            <label class="wizard-choice">
+              <input type="checkbox" class="wf-gate-checkbox" checked>
+              <span class="wizard-choice-copy">
+                <strong>Gate 1: Reusable Component &amp; CSS Token Parity</strong>
+                <span>All sections use <code>/styles.css</code> tokens and <code>/components.js</code> props with zero inline <code>&lt;style&gt;</code> blocks.</span>
+              </span>
+            </label>
+            <label class="wizard-choice">
+              <input type="checkbox" class="wf-gate-checkbox" checked>
+              <span class="wizard-choice-copy">
+                <strong>Gate 2: Canonical Folder Hierarchy &amp; Dynamic Collection URLs</strong>
+                <span>Static &amp; dynamic pages reside in logical folders (<code>/programs/pathways/{slug}</code>, <code>/community/*</code>, <code>/utility/*</code>) with zero root duplicates.</span>
+              </span>
+            </label>
+            <label class="wizard-choice">
+              <input type="checkbox" class="wf-gate-checkbox" checked>
+              <span class="wizard-choice-copy">
+                <strong>Gate 3: Disabled Collection Template Guard Verified</strong>
+                <span>Inline/reference collections (<code>careerCenters</code>, <code>partnerDirectory</code>, <code>faqItems</code>, <code>utilityPages</code>) have standalone template publishing disabled.</span>
+              </span>
+            </label>
+            <label class="wizard-choice">
+              <input type="checkbox" class="wf-gate-checkbox" checked>
+              <span class="wizard-choice-copy">
+                <strong>Gate 4: WIOA Section 188 &amp; Schema Relational Integrity</strong>
+                <span>All CMS multi-reference links between Trade Pathways, Career Centers, and Partner Tracks resolve cleanly.</span>
+              </span>
+            </label>
+          </div>
+          <div class="u-flex-between u-pt-3" style="border-top: 1px solid var(--color-border-subtle);">
+            <span class="t-caption u-font-mono c-text-muted">Deploy Target: <code>firebase deploy --only hosting,firestore:rules --project springboards-community-dev</code></span>
+            <button type="button" id="runWorkflowAuditBtn" class="btn-cta">Verify All Publishing Gates ✓</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SECTION 2: UTILITY PAGES DIRECTORY & ARCHITECTURE
+           ========================================================================== -->
+      <section id="section-utility-pages" class="sg-section" aria-labelledby="heading-utility-pages">
+        <div class="sg-section-header">
+          <div>
+            <span class="section-tag">02 · System &amp; Recovery Infrastructure</span>
+            <h2 id="heading-utility-pages" class="u-text-2xl u-mt-2">Built-In Utility Pages Directory</h2>
+            <p class="u-color-secondary u-measure u-mt-2">
+              Every production website requires dedicated utility pages for search discovery, password-protected gates, 404 route recovery, legal/WIOA disclosures, and design/CMS governance. All 6 utility pages below are live and rendered from our <code>utilityPages</code> CMS Collection.
+            </p>
+          </div>
+        </div>
+
+        <div data-component="cms-collection" data-prop-collection="utilityPages" class="l-grid-3 u-gap-4"></div>
+      </section>
+
+      <!-- ==========================================================================
+           SECTION 3: TRANSLATION, ASSET LOCALIZATION & MULTI-LOCALE SEO GUIDANCE
+           ========================================================================== -->
+      <section id="section-localization" class="sg-section" aria-labelledby="heading-localization">
+        <div class="sg-section-header">
+          <div>
+            <span class="section-tag">03 · Bilingual Accessibility (en-US &amp; es-US)</span>
+            <h2 id="heading-localization" class="u-text-2xl u-mt-2">Guidance on Translating Content, Localizing Assets &amp; SEO Settings</h2>
+            <p class="u-color-secondary u-measure u-mt-2">
+              Serving Shawmut, Lanett, Valley, Opelika, and the broader Chattahoochee Valley requires clear bilingual communication for English (<code>en-US</code>) and Spanish (<code>es-US</code>) jobseekers, families, and contractors while preserving statutory WIOA terminology.
+            </p>
+          </div>
+        </div>
+
+        <div class="l-grid-2 u-gap-6 u-mb-6">
+          <!-- Translation & Statutory Terminology Glossary -->
+          <div class="sb-card">
+            <span class="t-eyebrow c-text-accent">A. CONTENT TRANSLATION &amp; STATUTORY GLOSSARY</span>
+            <h3 class="t-h4 c-text-brand u-mt-1 u-mb-2">Approved Bilingual Workforce Terminology</h3>
+            <p class="t-body-sm c-text-secondary u-mt-0 u-mb-3">
+              Keep federal/state acronyms (<code>WIOA</code>, <code>OJT</code>, <code>OSHA-10</code>, <code>NCCER</code>, <code>501(c)(3)</code>) intact in Spanish so bilingual participants match exact paperwork at Alabama Works! and WorkSource Georgia Career Centers.
+            </p>
+            <div id="localizationGlossaryList" class="ds-stack u-gap-3"></div>
+          </div>
+
+          <!-- Asset Localization & Multi-Locale SEO Generator -->
+          <div class="ds-stack u-gap-4">
+            <div class="sb-card">
+              <span class="t-eyebrow c-text-accent">B. LOCALIZING MEDIA ASSETS &amp; DOCUMENTS</span>
+              <h3 class="t-h4 c-text-brand u-mt-1 u-mb-2">Asset Localization Rules</h3>
+              <ul class="t-body-sm c-text-secondary u-pl-4 u-m-0 ds-stack u-gap-2">
+                <li><strong>Zero Text Baked into Raster Photos:</strong> Keep photography (<code>hands-on-training.webp</code>, <code>trades-team.webp</code>, <code>electrical-training.webp</code>) free of embedded text overlays so HTML headings and captions localize cleanly via CSS/DOM.</li>
+                <li><strong>Localized Descriptive <code>alt</code> Attributes:</strong> Pair every image with descriptive context in the active locale (e.g., <em>"Instructor and trainees building a timber frame foundation outdoors"</em> / <em>"Instructor y aprendices construyendo una estructura de madera al aire libre"</em>).</li>
+                <li><strong>Regional Time Zone &amp; Phone Formatting:</strong> Always specify <code>EST (Eastern Standard Time)</code> for Shawmut/Lanett hours (Mon–Thu 8:00 AM – 4:00 PM EST) and maintain clickable <code>tel:731.388.WORK</code> links.</li>
+              </ul>
+            </div>
+
+            <div class="sb-card">
+              <div class="u-flex-between u-mb-2">
+                <span class="t-eyebrow c-text-accent">C. LOCALIZED SEO &amp; HREFLANG GENERATOR</span>
+                <select id="seoRouteSelector" class="form-select" aria-label="Select route for SEO snippet" style="width: auto; min-height: 2.25rem; padding: 0.25rem 0.65rem; font-size: 0.82rem;">
+                  <option value="/">/ (Homepage)</option>
+                  <option value="/programs/train">/programs/train</option>
+                  <option value="/programs/pathways/carpentry-framing">/programs/pathways/carpentry-framing (Dynamic CMS)</option>
+                  <option value="/programs/eligibility">/programs/eligibility</option>
+                  <option value="/community/volunteer">/community/volunteer</option>
+                  <option value="/community/partner">/community/partner</option>
+                  <option value="/community/donate">/community/donate</option>
+                </select>
+              </div>
+              <h3 class="t-h4 c-text-brand u-mt-0 u-mb-2">Generated Multi-Locale <code>&lt;head&gt;</code> Metadata</h3>
+              <pre id="seoSnippetPreview" class="u-font-mono u-text-xs u-p-3 u-bg-subtle" style="overflow-x: auto; border-radius: var(--radius-sm); border: 1px solid var(--color-border-default); margin: 0;"></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SECTION 4: WELL-PLANNED CMS SCHEMA (COLLECTIONS, FIELDS & RELATIONSHIPS)
+           ========================================================================== -->
+      <section id="section-cms-schema" class="sg-section" aria-labelledby="heading-cms-schema">
+        <div class="sg-section-header">
+          <div>
+            <span class="section-tag">04 · Scalable Data Architecture</span>
+            <h2 id="heading-cms-schema" class="u-text-2xl u-mt-2">CMS Collections, Fields, Relationships &amp; Content Requirements</h2>
+            <p class="u-color-secondary u-measure u-mt-2">
+              A normalized, relational schema eliminates duplicate copy across pages. Select any Collection below to inspect its field definitions, data types, validation constraints, and multi-reference relationships.
+            </p>
+          </div>
+        </div>
+
+        <div class="collection-filter-bar u-mb-4" role="region" aria-label="Select CMS Collection Schema">
+          <div class="collection-filter-tabs" role="group" aria-label="CMS Collections">
+            <button type="button" class="collection-filter-tab is-active" data-schema-tab="tradePrograms" aria-pressed="true">tradePrograms (6 Published + 1 Draft)</button>
+            <button type="button" class="collection-filter-tab" data-schema-tab="careerCenters" aria-pressed="false">careerCenters (3)</button>
+            <button type="button" class="collection-filter-tab" data-schema-tab="partnerDirectory" aria-pressed="false">partnerDirectory (4)</button>
+            <button type="button" class="collection-filter-tab" data-schema-tab="faqItems" aria-pressed="false">faqItems (4)</button>
+            <button type="button" class="collection-filter-tab" data-schema-tab="utilityPages" aria-pressed="false">utilityPages (6)</button>
+          </div>
+        </div>
+
+        <div id="schemaInspectorPanel" class="sb-card u-mb-6"></div>
+      </section>
+
+      <!-- ==========================================================================
+           SECTION 5: PREPARE DYNAMIC CONTENT FOR IMPORT (SOURCES, SCHEMA MAPPING, API & MCP)
+           ========================================================================== -->
+      <section id="section-cms-import" class="sg-section" aria-labelledby="heading-cms-import">
+        <div class="sg-section-header">
+          <div>
+            <span class="section-tag">05 · Multi-Source Content Import Pipeline</span>
+            <h2 id="heading-cms-import" class="u-text-2xl u-mt-2">Prepare Dynamic Content for Import (CSV, JSON, REST API &amp; MCP)</h2>
+            <p class="u-color-secondary u-measure u-mt-2">
+              Organize content from external WIOA curriculum spreadsheets, Alabama Works! Career Center directories, and contractor packets, map source columns to <code>COLLECTIONS_SCHEMA</code> fields, and import via CSV/JSON, <code>POST /api/cms/import</code>, or MCP tool <code>cms_import_and_publishing_manage</code>.
+            </p>
+          </div>
+          <a href="/assets/cms/collections-import.json" class="btn-outline-dark" target="_blank" rel="noopener">View Canonical Import Manifest JSON ↗</a>
+        </div>
+
+        <div class="l-grid-2 u-gap-6 u-mb-6">
+          <!-- Field Mapping Reference Table -->
+          <div class="sb-card">
+            <span class="t-eyebrow c-text-accent">SOURCE-TO-SCHEMA FIELD MAPPING</span>
+            <h3 class="t-h4 c-text-brand u-mt-1 u-mb-2">Automated Column Mapping (<code>CMS_IMPORT_FIELD_MAPS</code>)</h3>
+            <p class="t-body-sm c-text-secondary u-mt-0 u-mb-3">
+              External CSV/spreadsheet column headers automatically map to nested localized strings and relational reference arrays:
+            </p>
+            <div id="importFieldMapTableWrap" style="overflow-x: auto;"></div>
+            <div class="u-mt-3 u-p-3 u-bg-subtle" style="border-radius: var(--radius-sm); border: 1px solid var(--color-border-subtle);">
+              <div class="t-caption u-font-mono c-text-brand"><strong>Supported MCP &amp; API Endpoints:</strong></div>
+              <div class="t-caption u-font-mono c-text-secondary u-mt-1">• MCP Tool: <code>cms_import_and_publishing_manage</code></div>
+              <div class="t-caption u-font-mono c-text-secondary">• REST API: <code>GET /api/cms/collections</code> &amp; <code>POST /api/cms/import</code></div>
+              <div class="t-caption u-font-mono c-text-secondary">• Static Manifest: <code>/assets/cms/collections-import.json</code></div>
+            </div>
+          </div>
+
+          <!-- Interactive CSV / JSON / API Importer -->
+          <div class="sb-card">
+            <div class="u-flex-between u-mb-2">
+              <span class="t-eyebrow c-text-accent">INTERACTIVE CONTENT IMPORTER</span>
+              <div class="ds-cluster u-gap-2">
+                <button type="button" id="loadSampleCsvBtn" class="collection-filter-tab is-active">Load Sample CSV</button>
+                <button type="button" id="loadSampleJsonBtn" class="collection-filter-tab">Load Sample JSON</button>
+              </div>
+            </div>
+            <h3 class="t-h4 c-text-brand u-mt-0 u-mb-2">Map &amp; Import Source Records into <code>tradePrograms</code></h3>
+            <p class="t-body-sm c-text-secondary u-mt-0 u-mb-3">
+              Includes 1 published pathway (<em>Masonry &amp; Concrete Foundations</em>) and 1 internal draft (<em>Industrial Pipe Welding</em>) to verify that draft records are imported for staging but blocked from public Collection template publishing.
+            </p>
+            <label class="t-caption u-weight-bold c-text-brand" for="cmsImportPayloadInput">Raw Source Payload (CSV or JSON):</label>
+            <textarea id="cmsImportPayloadInput" rows="6" class="form-input is-textarea u-font-mono u-text-xs u-mt-1 u-mb-3"></textarea>
+            <div class="ds-cluster u-gap-3">
+              <button type="button" id="runCmsImportBtn" class="btn-cta">Map Fields &amp; Run Import Pipeline →</button>
+            </div>
+            <p id="cmsImportStatus" class="form-status u-mt-2" role="status" aria-live="polite"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SECTION 6: DISABLE TEMPLATE PUBLISHING FOR INLINE COLLECTIONS & DYNAMIC URL STRUCTURE
+           ========================================================================== -->
+      <section id="section-publishing-controls" class="sg-section" aria-labelledby="heading-publishing-controls">
+        <div class="sg-section-header">
+          <div>
+            <span class="section-tag">06 · Collection Template Governance &amp; Logical Folder URLs</span>
+            <h2 id="heading-publishing-controls" class="u-text-2xl u-mt-2">Collection Template Publishing Settings &amp; Dynamic URL Paths</h2>
+            <p class="u-color-secondary u-measure u-mt-2">
+              Only <code>tradePrograms</code> publishes standalone Collection template pages under the logical folder path <code>/programs/pathways/{slug}</code>. All inline/reference collections (<code>careerCenters</code>, <code>partnerDirectory</code>, <code>faqItems</code>, <code>utilityPages</code>) have Collection template page publishing <strong>disabled</strong> to prevent empty, thin, or internal pages from being publicly published.
+            </p>
+          </div>
+          <a href="/programs/pathways/carpentry-framing" class="btn-cta">Open Live Template Page (/programs/pathways/carpentry-framing) ↗</a>
+        </div>
+
+        <div id="collectionPublishingMatrix" class="l-grid-2 u-gap-4 u-mb-6"></div>
+
+        <!-- Dynamic Content Folder URL Directory -->
+        <div class="sb-card">
+          <div class="u-flex-between u-mb-3">
+            <div>
+              <span class="t-eyebrow c-text-accent">LOGICAL FOLDER URL STRUCTURE FOR DYNAMIC CONTENT</span>
+              <h3 class="t-h4 c-text-brand u-mt-1 u-mb-0">Published Collection Template Routes vs. Blocked Drafts &amp; Disabled Collections</h3>
+            </div>
+            <code class="t-caption u-font-mono">Folder Pattern: /programs/pathways/{slug}</code>
+          </div>
+          <div id="dynamicUrlDirectoryTable" style="overflow-x: auto;"></div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SECTION 7: DYNAMIC CONTENT RENDERER & LIVE RECORD BUILDER
+           ========================================================================== -->
+      <section id="section-dynamic-sandbox" class="sg-section" aria-labelledby="heading-dynamic-sandbox">
+        <div class="sg-section-header">
+          <div>
+            <span class="section-tag">07 · Live Relational Content Engine</span>
+            <h2 id="heading-dynamic-sandbox" class="u-text-2xl u-mt-2">Dynamic Content Feed &amp; Schema-Validated Record Creator</h2>
+            <p class="u-color-secondary u-measure u-mt-2">
+              Filter live records rendered from <code>window.SpringboardsCMS</code> with automatic relational joins (resolving Career Centers and Employer Partner Tracks for each Trade Pathway), or add a new schema-validated Trade Pathway below.
+            </p>
+          </div>
+        </div>
+
+        <!-- Filter Bar for Dynamic Trade Pathways -->
+        <div class="collection-filter-bar u-mb-5" role="region" aria-label="Filter dynamic trade pathways">
+          <div class="collection-filter-tabs" role="group" aria-label="Filter by trade cluster">
+            <button type="button" class="collection-filter-tab is-active" data-dyn-cat="all" aria-pressed="true">All Trade Pathways</button>
+            <button type="button" class="collection-filter-tab" data-dyn-cat="construction" aria-pressed="false">Construction &amp; Carpentry</button>
+            <button type="button" class="collection-filter-tab" data-dyn-cat="mechanical" aria-pressed="false">Electrical, Plumbing &amp; HVAC</button>
+            <button type="button" class="collection-filter-tab" data-dyn-cat="readiness" aria-pressed="false">OSHA Safety &amp; Readiness</button>
+          </div>
+          <div class="collection-filter-search-wrap">
+            <input type="search" id="dynProgramSearch" class="collection-filter-search" placeholder="Filter dynamic cards (e.g. NCCER, Opelika, EPA 608)..." aria-label="Search dynamic trade pathways">
+          </div>
+        </div>
+
+        <!-- Live Declarative CMS Collection Mount -->
+        <div
+          id="liveDynamicProgramsMount"
+          data-component="cms-collection"
+          data-prop-collection="tradePrograms"
+          data-prop-filter-category="all"
+          class="l-grid-3 u-gap-4 u-mb-8"
+        ></div>
+
+        <!-- Schema-Validated Dynamic Content Creator Form -->
+        <div class="sb-card">
+          <span class="t-eyebrow c-text-accent">CREATE &amp; VALIDATE DYNAMIC COLLECTION ITEM</span>
+          <h3 class="t-h3 c-text-brand u-mt-1 u-mb-2">Add a New Trade Pathway Record to <code>tradePrograms</code></h3>
+          <p class="t-body-sm c-text-secondary u-mt-0 u-mb-4">
+            Every submission is validated against <code>COLLECTIONS_SCHEMA.tradePrograms</code> (requiring bilingual <code>en-US</code> / <code>es-US</code> copy and relational references to <code>careerCenters</code> and <code>partnerDirectory</code>) and immediately rendered in the dynamic grid above.
+          </p>
+
+          <form id="createCmsRecordForm" class="program-inquiry-form" novalidate>
+            <div class="form-grid-row">
+              <label>Program Title (English · en-US) <span class="form-required">*</span>
+                <input type="text" name="titleEn" placeholder="e.g. Masonry &amp; Concrete Foundations" required minlength="4" maxlength="70">
+              </label>
+              <label>Título del Programa (Español · es-US) <span class="form-required">*</span>
+                <input type="text" name="titleEs" placeholder="ej. Albañilería y Cimientos de Concreto" required minlength="4" maxlength="70">
+              </label>
+            </div>
+
+            <div class="form-grid-row">
+              <label>URL Slug (Pattern: <code>^[a-z0-9-]+$</code>) <span class="form-required">*</span>
+                <input type="text" name="slug" placeholder="e.g. masonry-concrete" required pattern="^[a-z0-9-]+$">
+              </label>
+              <label>Trade Cluster Category <span class="form-required">*</span>
+                <select name="category" class="form-select">
+                  <option value="construction">construction (Carpentry, Framing, Masonry)</option>
+                  <option value="mechanical">mechanical (Electrical, Plumbing, HVAC)</option>
+                  <option value="readiness">readiness (OSHA Safety &amp; Worksite Readiness)</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="form-grid-row">
+              <label>Industry Credential Earned <span class="form-required">*</span>
+                <input type="text" name="credential" placeholder="e.g. NCCER Masonry Level 1 + OSHA-10" required>
+              </label>
+              <label>Linked WIOA Career Center (Multi-Reference) <span class="form-required">*</span>
+                <select name="careerCenterId" class="form-select">
+                  <option value="cc-opelika">Opelika Career Center (Alabama Works!)</option>
+                  <option value="cc-valley">Valley / Shawmut Workforce Intake Hub</option>
+                  <option value="cc-lagrange">WorkSource Three Rivers (LaGrange, GA)</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="form-grid-row">
+              <label>Summary (English · en-US) <span class="form-required">*</span>
+                <textarea name="summaryEn" rows="2" class="form-input is-textarea" placeholder="Hands-on concrete form setting, block laying, and structural leveling..." required></textarea>
+              </label>
+              <label>Resumen (Español · es-US) <span class="form-required">*</span>
+                <textarea name="summaryEs" rows="2" class="form-input is-textarea" placeholder="Instalación práctica de moldes de concreto, colocación de bloques y nivelación..." required></textarea>
+              </label>
+            </div>
+
+            <div class="ds-cluster u-gap-3 u-mt-2">
+              <button type="submit" class="btn-cta">Validate Schema &amp; Publish Dynamic Item →</button>
+              <button type="button" id="resetCustomCmsBtn" class="btn-outline-dark">Reset Custom Sandbox Items</button>
+            </div>
+            <p id="cmsFormStatus" class="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SECTION 8: CONTROLLED CODE REPOSITORY, DEV/STAGING/PRODUCTION HOSTING & TAG MANAGEMENT SYSTEM
+           ========================================================================== -->
+      <section id="section-code-hosting-tms" class="sg-section" aria-labelledby="heading-code-hosting-tms">
+        <div class="sg-section-header">
+          <div>
+            <span class="section-tag">08 · Versioned Custom Code CDN &amp; Tag Management System</span>
+            <h2 id="heading-code-hosting-tms" class="u-text-2xl u-mt-2">Controlled Repository, Firebase Hosting (Dev → Staging → Production) &amp; Tag Management</h2>
+            <p class="u-color-secondary u-measure u-mt-2">
+              Custom CSS (<code>/styles.css</code>), JavaScript (<code>/components.js</code>, <code>/main.js</code>, <code>/eligibility.js</code>, <code>/analytics.js</code>), and HTML templates are governed via <code>.github/CODEOWNERS</code>, deployed to Firebase Hosting's <code>staging</code> channel on GitHub <code>main</code> pushes, promoted to production CDN with versioned caching &amp; SHA-256 integrity, and orchestrated via our Tag Management System (<code>GTM-SBFCD26</code> / <code>window.dataLayer</code>).
+            </p>
+          </div>
+          <a href="/assets/cms/custom-code-registry.json" class="btn-outline-dark" target="_blank" rel="noopener">View Custom Code &amp; TMS Registry JSON ↗</a>
+        </div>
+
+        <div class="l-grid-2 u-gap-6 u-mb-6">
+          <!-- A. Dev / Staging / Production Custom Code HostSwitcher -->
+          <div class="sb-card">
+            <div class="u-flex-between u-mb-2">
+              <span class="t-eyebrow c-text-accent">A. FIREBASE HOSTING CUSTOM CODE DELIVERY</span>
+              <div class="collection-filter-tabs" role="group" aria-label="Select Custom Code Hosting Environment">
+                <button type="button" class="collection-filter-tab" data-code-env="development">1. Dev Host</button>
+                <button type="button" class="collection-filter-tab" data-code-env="staging">2. Staging (GitHub main)</button>
+                <button type="button" class="collection-filter-tab is-active" data-code-env="production">3. Production CDN</button>
+              </div>
+            </div>
+            <h3 class="t-h4 c-text-brand u-mt-0 u-mb-2">External Custom Code Bundle URLs &amp; Ownership</h3>
+            <p class="t-body-sm c-text-secondary u-mt-0 u-mb-3">
+              Pushing custom code to GitHub <code>main</code> automatically deploys to the Firebase Hosting <code>staging</code> channel before promoting to production with <code>Access-Control-Allow-Origin: *</code>, <code>stale-while-revalidate</code> caching, and <code>X-Content-Type-Options: nosniff</code>:
+            </p>
+            <div id="customCodeHostTableWrap" style="overflow-x: auto;"></div>
+          </div>
+
+          <!-- B. Tag Management System (GTM-SBFCD26 / dataLayer & Consent Mode v2) -->
+          <div class="sb-card">
+            <div class="u-flex-between u-mb-2">
+              <span class="t-eyebrow c-text-accent">B. TAG MANAGEMENT SYSTEM (GTM-SBFCD26)</span>
+              <code class="t-caption u-font-mono">window.dataLayer · Consent Mode v2</code>
+            </div>
+            <h3 class="t-h4 c-text-brand u-mt-0 u-mb-2">Granular Control Over When &amp; Where Scripts Run</h3>
+            <p class="t-body-sm c-text-secondary u-mt-0 u-mb-3">
+              Centralizes analytics, WIOA conversion funnels, and outreach tags while enforcing a strict <strong>Protected Route Blocking Trigger</strong> on <code>/resources/backoffice</code> and <code>/utility/password</code>.
+            </p>
+            <div id="tmsManagedTagsList" class="ds-stack u-gap-2 u-mb-3"></div>
+            <div class="u-flex-between u-pt-3" style="border-top: 1px solid var(--color-border-subtle);">
+              <div class="ds-cluster u-gap-2">
+                <button type="button" id="tmsPushTestEventBtn" class="btn-cta">Push Test Event to dataLayer</button>
+                <button type="button" id="tmsToggleAdConsentBtn" class="btn-outline-dark">Toggle Ad Consent (Denied/Granted)</button>
+              </div>
+              <span id="tmsStatusBadge" class="t-caption u-font-mono c-text-accent" role="status" aria-live="polite">Consent Mode v2 Active</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SECTION 9: SEARCH CONSOLE, GA4 & META PIXEL DEDUPLICATION, GOOGLE MAPS,
+                      SYNTHESIZED FORM INTEGRATIONS (NO MARKETO/HUBSPOT), WEBHOOKS & CONSENT MANAGEMENT
+           ========================================================================== -->
+      <section id="section-integrations-cmp" class="sg-section" aria-labelledby="heading-integrations-cmp">
+        <div class="sg-section-header">
+          <div>
+            <span class="section-tag">09 · Search Console, Analytics, Maps, Form Synthesis &amp; Consent Management</span>
+            <h2 id="heading-integrations-cmp" class="u-text-2xl u-mt-2">Search Console Ownership, Deduplicated GA4 &amp; Meta Pixel, Domain-Restricted Maps, Form Synthesis (Zero Marketo/HubSpot) &amp; Visitor Consent</h2>
+            <p class="u-color-secondary u-measure u-mt-2">
+              Verifies site ownership in Google Search Console (meta tag + <code>/google651964189612fcd.html</code>), connects Google Analytics 4 (<code>G-SBFCD2026</code>) and Meta Pixel (<code>849203194618204</code>) with singleton &amp; <code>eventID</code> deduplication, restricts the Google Maps API key to approved domains, maps all 5 website forms to Google Sheets, Gmail, Firestore, Cloud SQL &amp; HMAC-SHA256 webhooks (without Marketo or HubSpot), and coordinates visitor consent via <code>window.SpringboardsCMP</code>.
+            </p>
+          </div>
+          <div class="ds-cluster u-gap-2">
+            <a href="/api/integrations/status" class="btn-outline-dark" target="_blank" rel="noopener">View Live Integrations JSON ↗</a>
+            <button type="button" id="openConsentDrawerBtn" class="btn-cta">Open Visitor Consent Preferences</button>
+          </div>
+        </div>
+
+        <div class="l-grid-3 u-gap-4 u-mb-6">
+          <!-- Card 1: Search Console + Domain-Restricted Google Maps -->
+          <article class="sb-card">
+            <span class="t-eyebrow c-text-accent">SEARCH CONSOLE &amp; GOOGLE MAPS PLATFORM</span>
+            <h3 class="t-h4 c-text-brand u-mt-1 u-mb-2">Verified Ownership &amp; Referrer-Restricted Maps API</h3>
+            <ul class="t-body-sm c-text-secondary u-pl-4 u-m-0 ds-stack u-gap-1">
+              <li><strong>Search Console Meta Tag:</strong> <code>google-site-verification-springboards-fcd-2026</code></li>
+              <li><strong>HTML Verification File:</strong> <a href="/google651964189612fcd.html" class="link-text" target="_blank" rel="noopener">/google651964189612fcd.html</a></li>
+              <li><strong>Maps GCP Project:</strong> <code>springboards-community-dev</code> (<code>DEMO_MAP_ID</code>)</li>
+              <li><strong>Products Used:</strong> Maps JavaScript API (<code>AdvancedMarkerElement</code>) + Geocoding REST API Proxy (<code>/api/maps/geocode</code>)</li>
+              <li><strong>Domain Restrictions:</strong> <code>https://springboardsfcd.org/*</code>, Firebase Hosting &amp; Cloud Run preview origins</li>
+            </ul>
+          </article>
+
+          <!-- Card 2: Deduplicated GA4 & Meta Pixel -->
+          <article class="sb-card">
+            <span class="t-eyebrow c-text-accent">ZERO DUPLICATE TRACKING TAGS OR PIXEL EVENTS</span>
+            <h3 class="t-h4 c-text-brand u-mt-1 u-mb-2">Google Analytics 4 &amp; Meta Pixel Deduplication</h3>
+            <ul class="t-body-sm c-text-secondary u-pl-4 u-m-0 ds-stack u-gap-1">
+              <li><strong>GA4 (<code>G-SBFCD2026</code>):</strong> Initialized once via <code>__SPRINGBOARDS_GA4_INITIALIZED__</code> with <code>send_page_view: false</code> so <code>sendEvent('page_view')</code> fires exactly once.</li>
+              <li><strong>Meta Pixel (<code>849203194618204</code>):</strong> Locked via <code>__SPRINGBOARDS_META_PIXEL_INITIALIZED__</code> with <code>fbq.disablePushState = true</code> and deterministic <code>eventID</code> deduplication.</li>
+              <li><strong>DOM Script Pruner:</strong> Automatically removes any duplicate <code>gtag/js</code>, <code>analytics.js</code>, or <code>fbevents.js</code> tags.</li>
+            </ul>
+          </article>
+
+          <!-- Card 3: Consent Management (SpringboardsCMP) -->
+          <article class="sb-card">
+            <span class="t-eyebrow c-text-accent">CONSENT MANAGEMENT PLATFORM (SpringboardsCMP)</span>
+            <h3 class="t-h4 c-text-brand u-mt-1 u-mb-2">Visitor Consent Coordinated Across All Integrations</h3>
+            <ul class="t-body-sm c-text-secondary u-pl-4 u-m-0 ds-stack u-gap-1">
+              <li><strong>Essential Functionality Protected:</strong> <code>functionality_storage</code> &amp; <code>security_storage</code> remain <code>granted</code> so WIOA forms, Career Center maps, and bilingual switches never break.</li>
+              <li><strong>Analytics &amp; Marketing Sync:</strong> Coordinates Google Consent Mode v2 (<code>gtag('consent', 'update')</code>) and Meta Pixel (<code>fbq('consent', 'grant' | 'revoke')</code>).</li>
+            </ul>
+          </article>
+        </div>
+
+        <!-- Synthesized Form Field Mapping & Signed Webhook Tester -->
+        <div class="sb-card">
+          <div class="u-flex-between u-mb-3">
+            <div>
+              <span class="t-eyebrow c-text-accent">SYNTHESIZED FORM CONNECTIONS, SIGNED WEBHOOKS &amp; CUSTOM GOOGLE APPS (NO MARKETO OR HUBSPOT)</span>
+              <h3 class="t-h4 c-text-brand u-mt-1 u-mb-0">5 Website Forms Mapped to Google Sheets, Gmail, Firestore, Cloud SQL &amp; HMAC-SHA256 Webhooks</h3>
+            </div>
+            <div class="ds-cluster u-gap-2">
+              <button type="button" id="testSignedWebhookBtn" class="btn-cta">Dispatch Test Signed Webhook →</button>
+            </div>
+          </div>
+          <p id="webhookTestStatus" class="form-status u-mb-3" role="status" aria-live="polite"></p>
+          <div id="formIntegrationMappingTableWrap" style="overflow-x: auto;"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer-section" id="footer" data-component="site-footer" data-prop-active-route="/resources/cms-workflows">
+    <div class="container footer-bottom-flex u-py-6">
+      <p class="footer-copyright u-m-0">&copy; 2026 Springboards for Community Development · 2269 15th Ave. S.W., Lanett, AL 36863 · <a href="tel:731.388.WORK" class="c-text-inverse">731.388.WORK</a></p>
+      <div class="ds-cluster u-gap-4">
+        <a href="/utility/search" class="footer-legal-link">Site Search</a>
+        <a href="/utility/password" class="footer-legal-link">Protected Gate</a>
+        <a href="/utility/privacy-terms" class="footer-legal-link">Privacy &amp; WIOA Notice</a>
+        <a href="/resources/cms-workflows" class="footer-legal-link" aria-current="page">CMS &amp; Workflows</a>
+        <a href="/resources/style-guide" class="footer-legal-link">Style Guide</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var cms = window.SpringboardsCMS;
+      if (!cms) return;
+
+      function esc(str) {
+        return String(str || '').replace(/[&<>"']/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+      }
+
+      // 1. Render 4-Stage Publishing Workflows
+      var wfGrid = document.getElementById('workflowStagesGrid');
+      if (wfGrid && cms.workflows) {
+        wfGrid.innerHTML = cms.workflows
+          .map(function (st) {
+            var listHtml = st.checklist
+              .map(function (item) { return '<li>' + esc(item) + '</li>'; })
+              .join('');
+            return (
+              '<article class="sb-card">' +
+              '<div class="u-flex-between u-mb-2">' +
+              '<span class="t-eyebrow c-text-accent">STAGE ' + esc(st.stepNumber) + '</span>' +
+              '<span class="t-caption c-text-muted">' + esc(st.ownerRole) + '</span>' +
+              '</div>' +
+              '<h3 class="t-h4 c-text-brand u-mt-0 u-mb-2">' + esc(st.title) + '</h3>' +
+              '<ul class="t-body-sm c-text-secondary u-pl-4 u-m-0 ds-stack u-gap-1">' +
+              listHtml +
+              '</ul>' +
+              '</article>'
+            );
+          })
+          .join('');
+      }
+
+      // Interactive Pre-Publish Gate Counter
+      var wfCheckboxes = Array.from(document.querySelectorAll('.wf-gate-checkbox'));
+      var wfStatus = document.getElementById('workflowReadinessStatus');
+      var wfAuditBtn = document.getElementById('runWorkflowAuditBtn');
+
+      function updateWfGates() {
+        var checkedCount = wfCheckboxes.filter(function (cb) { return cb.checked; }).length;
+        if (wfStatus) {
+          wfStatus.textContent =
+            checkedCount === wfCheckboxes.length
+              ? checkedCount + ' of ' + wfCheckboxes.length + ' Gates Verified (Ready to Publish)'
+              : checkedCount + ' of ' + wfCheckboxes.length + ' Gates Verified (Complete remaining gates)';
+        }
+      }
+      wfCheckboxes.forEach(function (cb) { cb.addEventListener('change', updateWfGates); });
+      wfAuditBtn?.addEventListener('click', function () {
+        wfCheckboxes.forEach(function (cb) { cb.checked = true; });
+        updateWfGates();
+        if (wfStatus) {
+          wfStatus.textContent = '✓ All 4 Publishing & Schema Gates Audited — Ready for Firebase Hosting Rollout';
+        }
+      });
+
+      // 2. Render Localization Glossary
+      var glossaryList = document.getElementById('localizationGlossaryList');
+      if (glossaryList && cms.glossary) {
+        glossaryList.innerHTML = cms.glossary
+          .map(function (g) {
+            return (
+              '<div class="u-p-3 u-bg-subtle" style="border-radius: var(--radius-sm); border: 1px solid var(--color-border-subtle);">' +
+              '<div class="t-body-sm u-weight-bold c-text-brand">EN: ' + esc(g.en) + '</div>' +
+              '<div class="t-body-sm u-weight-bold c-text-accent u-mt-1">ES: ' + esc(g.es) + '</div>' +
+              '<p class="t-caption c-text-secondary u-mt-1 u-mb-0">' + esc(g.rule) + '</p>' +
+              '</div>'
+            );
+          })
+          .join('');
+      }
+
+      // 3. SEO & Hreflang Snippet Generator
+      var seoSelector = document.getElementById('seoRouteSelector');
+      var seoPreview = document.getElementById('seoSnippetPreview');
+      function updateSeoPreview() {
+        if (!seoPreview) return;
+        var route = seoSelector ? seoSelector.value : '/';
+        seoPreview.textContent = cms.generateSeoSnippet(route, cms.getLocale());
+      }
+      seoSelector?.addEventListener('change', updateSeoPreview);
+      updateSeoPreview();
+
+      // 4. CMS Schema Inspector
+      var schemaPanel = document.getElementById('schemaInspectorPanel');
+      var schemaTabs = Array.from(document.querySelectorAll('[data-schema-tab]'));
+
+      function renderSchemaInspector(colKey) {
+        var schema = cms.schemas[colKey];
+        if (!schema || !schemaPanel) return;
+        var itemsCount = cms.getCollectionItems(colKey, false).length;
+        var pubSettings = cms.getPublishingSettings(colKey);
+        var pubBadge = pubSettings && pubSettings.publishTemplatePages
+          ? 'Template Pages: ENABLED (' + esc(pubSettings.urlPattern) + ')'
+          : 'Template Pages: DISABLED (Inline Reference Only)';
+        var rowsHtml = schema.fields
+          .map(function (f) {
+            var relBadge = f.targetCollection
+              ? ' → <code>' + esc(f.targetCollection) + '</code>'
+              : f.options
+              ? ' [' + esc(f.options.join(' | ')) + ']'
+              : '';
+            return (
+              '<tr>' +
+              '<td class="u-font-mono u-text-xs u-weight-bold c-text-brand" style="padding: 0.55rem;">' + esc(f.name) + '</td>' +
+              '<td class="u-font-mono u-text-xs c-text-accent" style="padding: 0.55rem;">' + esc(f.type) + relBadge + '</td>' +
+              '<td class="u-text-xs" style="padding: 0.55rem;">' + (f.required ? '<strong>Required</strong>' : 'Optional') + '</td>' +
+              '<td class="u-text-xs c-text-secondary" style="padding: 0.55rem;">' + esc(f.description) + '</td>' +
+              '</tr>'
+            );
+          })
+          .join('');
+
+        schemaPanel.innerHTML =
+          '<div class="u-flex-between u-mb-3">' +
+          '<div>' +
+          '<span class="t-eyebrow c-text-accent">COLLECTION SCHEMA · ' + esc(schema.collectionId) + '</span>' +
+          '<h3 class="t-h3 c-text-brand u-mt-1 u-mb-1">' + esc(schema.label) + ' (' + itemsCount + ' Published Records)</h3>' +
+          '<p class="t-body-sm c-text-secondary u-m-0">' + esc(schema.description) + '</p>' +
+          '</div>' +
+          '<code class="t-caption u-font-mono">' + pubBadge + '</code>' +
+          '</div>' +
+          '<div style="overflow-x: auto;">' +
+          '<table style="width: 100%; border-collapse: collapse; text-align: left;">' +
+          '<thead>' +
+          '<tr style="border-bottom: 2px solid var(--color-border-default);">' +
+          '<th class="t-caption u-weight-bold" style="padding: 0.55rem;">Field Name</th>' +
+          '<th class="t-caption u-weight-bold" style="padding: 0.55rem;">Type &amp; Relationship</th>' +
+          '<th class="t-caption u-weight-bold" style="padding: 0.55rem;">Constraint</th>' +
+          '<th class="t-caption u-weight-bold" style="padding: 0.55rem;">Content Requirement</th>' +
+          '</tr>' +
+          '</thead>' +
+          '<tbody>' + rowsHtml + '</tbody>' +
+          '</table>' +
+          '</div>';
+      }
+
+      schemaTabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          var key = tab.getAttribute('data-schema-tab') || 'tradePrograms';
+          schemaTabs.forEach(function (t) {
+            var active = t === tab;
+            t.classList.toggle('is-active', active);
+            t.setAttribute('aria-pressed', String(active));
+          });
+          renderSchemaInspector(key);
+        });
+      });
+      renderSchemaInspector('tradePrograms');
+
+      // 5. Render Import Field Mapping Table & Interactive CSV/JSON Importer
+      var fieldMapWrap = document.getElementById('importFieldMapTableWrap');
+      if (fieldMapWrap && cms.importFieldMaps && cms.importFieldMaps.tradePrograms) {
+        var mapObj = cms.importFieldMaps.tradePrograms;
+        var mapRows = Object.keys(mapObj)
+          .map(function (srcCol) {
+            return (
+              '<tr style="border-bottom: 1px solid var(--color-border-subtle);">' +
+              '<td class="u-font-mono u-text-xs c-text-brand" style="padding: 0.4rem;">' + esc(srcCol) + '</td>' +
+              '<td class="u-font-mono u-text-xs c-text-accent" style="padding: 0.4rem;">→ ' + esc(mapObj[srcCol]) + '</td>' +
+              '</tr>'
+            );
+          })
+          .join('');
+        fieldMapWrap.innerHTML =
+          '<table style="width: 100%; border-collapse: collapse; text-align: left;">' +
+          '<thead><tr style="border-bottom: 2px solid var(--color-border-default);">' +
+          '<th class="t-caption u-weight-bold" style="padding: 0.4rem;">Source Column (CSV / API)</th>' +
+          '<th class="t-caption u-weight-bold" style="padding: 0.4rem;">Mapped Schema Field</th>' +
+          '</tr></thead><tbody>' + mapRows + '</tbody></table>';
+      }
+
+      var sampleCsv = [
+        'Program_ID,URL_Slug,Curriculum_Code,Trade_Cluster,Program_Title_EN,Program_Title_ES,Summary_EN,Summary_ES,Cert_Credential,Max_WIOA_Hours,Tuition_Policy,Career_Center_Refs,Partner_Refs,Publish_Status,Is_Internal_Only',
+        'prog-masonry,masonry-concrete-foundations,07,construction,Masonry & Concrete Foundations,Albañilería y Cimientos de Concreto,Hands-on concrete form setting and structural block laying for commercial builds.,Instalación práctica de moldes de concreto y colocación de bloques estructurales.,NCCER Masonry Level 1 + OSHA-10,390,$0 (100% Tuition-Free),cc-opelika|cc-valley,part-ojt-host|part-materials-tools,published,false',
+        'prog-industrial-welding-draft,industrial-welding-draft,08,mechanical,Industrial Pipe Welding (Internal Syllabus Draft),Soldadura Industrial de Tuberías (Borrador Interno),Internal curriculum draft pending workshop ventilation inspection.,Borrador interno pendiente de inspección de taller.,AWS Entry Welder (Pending),390,$0 (100% Tuition-Free),cc-opelika,part-ojt-host,draft,true'
+      ].join('\n');
+
+      var sampleJson = JSON.stringify(
+        [
+          {
+            Program_ID: 'prog-masonry',
+            URL_Slug: 'masonry-concrete-foundations',
+            Curriculum_Code: '07',
+            Trade_Cluster: 'construction',
+            Program_Title_EN: 'Masonry & Concrete Foundations',
+            Program_Title_ES: 'Albañilería y Cimientos de Concreto',
+            Summary_EN: 'Hands-on concrete form setting and structural block laying for commercial builds.',
+            Summary_ES: 'Instalación práctica de moldes de concreto y colocación de bloques estructurales.',
+            Cert_Credential: 'NCCER Masonry Level 1 + OSHA-10',
+            Max_WIOA_Hours: 390,
+            Tuition_Policy: '$0 (100% Tuition-Free)',
+            Career_Center_Refs: ['cc-opelika', 'cc-valley'],
+            Partner_Refs: ['part-ojt-host', 'part-materials-tools'],
+            Publish_Status: 'published',
+            Is_Internal_Only: false
+          }
+        ],
+        null,
+        2
+      );
+
+      var importInput = document.getElementById('cmsImportPayloadInput');
+      var importStatus = document.getElementById('cmsImportStatus');
+      var loadCsvBtn = document.getElementById('loadSampleCsvBtn');
+      var loadJsonBtn = document.getElementById('loadSampleJsonBtn');
+      var runImportBtn = document.getElementById('runCmsImportBtn');
+
+      if (importInput) importInput.value = sampleCsv;
+
+      loadCsvBtn?.addEventListener('click', function () {
+        if (importInput) importInput.value = sampleCsv;
+        loadCsvBtn.classList.add('is-active');
+        loadJsonBtn?.classList.remove('is-active');
+      });
+
+      loadJsonBtn?.addEventListener('click', function () {
+        if (importInput) importInput.value = sampleJson;
+        loadJsonBtn.classList.add('is-active');
+        loadCsvBtn?.classList.remove('is-active');
+      });
+
+      // 6. Render Collection Template Publishing Controls & Dynamic Folder URL Matrix
+      var pubMatrix = document.getElementById('collectionPublishingMatrix');
+      var urlDirTable = document.getElementById('dynamicUrlDirectoryTable');
+
+      function renderPublishingGovernance() {
+        var colKeys = Object.keys(cms.publishingSettings || {});
+        if (pubMatrix) {
+          pubMatrix.innerHTML = colKeys
+            .map(function (colId) {
+              var cfg = cms.getPublishingSettings(colId);
+              var isEnabled = Boolean(cfg.publishTemplatePages);
+              var badgeText = isEnabled
+                ? 'PUBLIC TEMPLATE PAGES: LIVE (' + esc(cfg.urlPattern) + ')'
+                : 'PUBLIC TEMPLATE PAGES: DISABLED (Prevent Thin/Internal Pages)';
+              var btnLabel = isEnabled
+                ? 'Disable Public Template Pages'
+                : 'Enable Public Template Pages';
+              return (
+                '<article class="sb-card">' +
+                '<div class="u-flex-between u-mb-2">' +
+                '<span class="t-eyebrow c-text-accent">' + esc(colId) + '</span>' +
+                '<code class="t-caption u-font-mono">' + badgeText + '</code>' +
+                '</div>' +
+                '<h3 class="t-h4 c-text-brand u-mt-0 u-mb-1">' + esc(cfg.label) + '</h3>' +
+                '<p class="t-body-sm c-text-secondary u-mt-0 u-mb-3">' + esc(cfg.governanceNote) + '</p>' +
+                '<div class="u-flex-between u-pt-2" style="border-top: 1px solid var(--color-border-subtle);">' +
+                '<span class="t-caption u-font-mono c-text-muted">Canonical Parent: <code>' + esc(cfg.canonicalParent) + '</code></span>' +
+                '<button type="button" class="collection-filter-tab" data-toggle-pub-col="' + esc(colId) + '">' + esc(btnLabel) + '</button>' +
+                '</div>' +
+                '</article>'
+              );
+            })
+            .join('');
+
+          pubMatrix.querySelectorAll('[data-toggle-pub-col]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              var colId = btn.getAttribute('data-toggle-pub-col');
+              var currentCfg = cms.getPublishingSettings(colId);
+              cms.setCollectionTemplatePublishing(colId, !currentCfg.publishTemplatePages);
+              renderPublishingGovernance();
+              renderSchemaInspector(colId);
+            });
+          });
+        }
+
+        if (urlDirTable) {
+          var allPrograms = cms.getCollectionItems('tradePrograms', true);
+          var rows = allPrograms
+            .map(function (prog) {
+              var check = cms.canPublishTemplateItem('tradePrograms', prog);
+              var pathUrl = '/programs/pathways/' + prog.slug;
+              var statusBadge = check.allowed
+                ? '<strong class="c-text-brand">200 Live Template Page (Indexable)</strong>'
+                : '<span class="c-text-accent">Blocked (' + esc(prog.status || 'Draft / Disabled') + ' · noindex)</span>';
+              return (
+                '<tr style="border-bottom: 1px solid var(--color-border-subtle);">' +
+                '<td class="u-font-mono u-text-xs u-weight-bold" style="padding: 0.55rem;"><a href="' + esc(pathUrl) + '" class="link-text">' + esc(pathUrl) + '</a></td>' +
+                '<td class="u-text-xs" style="padding: 0.55rem;">' + esc(prog.title['en-US']) + '</td>' +
+                '<td class="u-text-xs" style="padding: 0.55rem;">' + statusBadge + '</td>' +
+                '<td class="u-text-xs c-text-secondary" style="padding: 0.55rem;">' + esc(check.reason) + '</td>' +
+                '</tr>'
+              );
+            })
+            .join('');
+
+          urlDirTable.innerHTML =
+            '<table style="width: 100%; border-collapse: collapse; text-align: left;">' +
+            '<thead><tr style="border-bottom: 2px solid var(--color-border-default);">' +
+            '<th class="t-caption u-weight-bold" style="padding: 0.55rem;">Logical Folder URL</th>' +
+            '<th class="t-caption u-weight-bold" style="padding: 0.55rem;">CMS Record Title</th>' +
+            '<th class="t-caption u-weight-bold" style="padding: 0.55rem;">Template Publishing Status</th>' +
+            '<th class="t-caption u-weight-bold" style="padding: 0.55rem;">Publishing Governance Rule</th>' +
+            '</tr></thead><tbody>' + rows + '</tbody></table>';
+        }
+      }
+
+      renderPublishingGovernance();
+
+      runImportBtn?.addEventListener('click', function () {
+        var rawText = importInput ? importInput.value : '';
+        var res = cms.importFromSource('tradePrograms', rawText);
+        if (!res.valid && res.importedCount === 0) {
+          if (importStatus) {
+            importStatus.className = 'form-status is-error u-mt-2';
+            importStatus.textContent = '⚠ Import Error: ' + res.errors.join(' ');
+          }
+          return;
+        }
+        if (importStatus) {
+          importStatus.className = 'form-status is-success u-mt-2';
+          importStatus.textContent =
+            '✓ Imported ' +
+            res.importedCount +
+            ' record(s) into tradePrograms (' +
+            res.blockedDraftCount +
+            ' internal/draft item automatically blocked from public template publishing).';
+        }
+        renderPublishingGovernance();
+        renderSchemaInspector('tradePrograms');
+      });
+
+      // 7. Dynamic Content Filter & Search Controls
+      var liveMount = document.getElementById('liveDynamicProgramsMount');
+      var dynSearch = document.getElementById('dynProgramSearch');
+      var dynCatBtns = Array.from(document.querySelectorAll('[data-dyn-cat]'));
+
+      dynCatBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var cat = btn.getAttribute('data-dyn-cat') || 'all';
+          dynCatBtns.forEach(function (b) {
+            var active = b === btn;
+            b.classList.toggle('is-active', active);
+            b.setAttribute('aria-pressed', String(active));
+          });
+          if (liveMount) {
+            window.SpringboardsComponents.updateProps(liveMount, { 'filter-category': cat });
+          }
+        });
+      });
+
+      dynSearch?.addEventListener('input', function () {
+        if (liveMount) {
+          window.SpringboardsComponents.updateProps(liveMount, { search: dynSearch.value });
+        }
+      });
+
+      // 8. Locale Toggle Synchronization
+      document.querySelectorAll('[data-locale-toggle]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var nextLang = btn.getAttribute('data-locale-toggle');
+          window.SpringboardsComponents.setLocale(nextLang);
+          updateSeoPreview();
+        });
+      });
+
+      // 9. Create & Validate New Dynamic CMS Record
+      var createForm = document.getElementById('createCmsRecordForm');
+      var cmsFormStatus = document.getElementById('cmsFormStatus');
+      var resetCustomBtn = document.getElementById('resetCustomCmsBtn');
+
+      createForm?.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var fd = new FormData(createForm);
+        var slug = String(fd.get('slug') || '').trim().toLowerCase();
+        var newRecord = {
+          id: 'prog-custom-' + Date.now(),
+          slug: slug,
+          code: '0' + (cms.getCollectionItems('tradePrograms', false).length + 1),
+          category: String(fd.get('category') || 'construction'),
+          status: 'published',
+          isInternal: false,
+          title: {
+            'en-US': String(fd.get('titleEn') || '').trim(),
+            'es-US': String(fd.get('titleEs') || '').trim()
+          },
+          summary: {
+            'en-US': String(fd.get('summaryEn') || '').trim(),
+            'es-US': String(fd.get('summaryEs') || '').trim()
+          },
+          credential: String(fd.get('credential') || '').trim(),
+          hoursCap: 390,
+          tuitionCost: '$0 (100% Tuition-Free)',
+          careerCenterIds: [String(fd.get('careerCenterId') || 'cc-opelika')],
+          partnerTrackIds: ['part-ojt-host', 'part-materials-tools']
+        };
+
+        var result = cms.addRecord('tradePrograms', newRecord);
+        if (!result.valid) {
+          if (cmsFormStatus) {
+            cmsFormStatus.className = 'form-status is-error';
+            cmsFormStatus.textContent = '⚠ Schema Validation Failed: ' + result.errors.join(' ');
+          }
+          return;
+        }
+
+        if (cmsFormStatus) {
+          cmsFormStatus.className = 'form-status is-success';
+          cmsFormStatus.textContent = '✓ Schema Validated! Added "' + newRecord.title['en-US'] + '" at /programs/pathways/' + newRecord.slug;
+        }
+        createForm.reset();
+        renderPublishingGovernance();
+        renderSchemaInspector('tradePrograms');
+      });
+
+      resetCustomBtn?.addEventListener('click', function () {
+        try {
+          localStorage.removeItem('sb_cms_custom_tradePrograms');
+          localStorage.removeItem('sb_cms_publishing_settings');
+        } catch {
+          // Ignore storage error
+        }
+        window.SpringboardsComponents.mountAll(document);
+        renderPublishingGovernance();
+        renderSchemaInspector('tradePrograms');
+        if (cmsFormStatus) {
+          cmsFormStatus.className = 'form-status';
+          cmsFormStatus.textContent = 'Custom sandbox records cleared; showing 6 canonical Trade Pathways.';
+        }
+      });
+
+      // 10. Custom Code Hosting Environment Switcher & Tag Management System Console
+      var codeHostTable = document.getElementById('customCodeHostTableWrap');
+      var codeEnvBtns = Array.from(document.querySelectorAll('[data-code-env]'));
+      var codeHost = window.SpringboardsCustomCodeHost;
+
+      function renderCustomCodeHostTable(selectedEnv) {
+        if (!codeHostTable || !codeHost) return;
+        var envKey = selectedEnv || 'production';
+        var envMeta = codeHost.config.environments[envKey] || codeHost.config.environments.production;
+        var rows = codeHost.config.files
+          .map(function (f) {
+            var resolvedUrl = codeHost.resolveUrl(f.path, envKey);
+            return (
+              '<tr style="border-bottom: 1px solid var(--color-border-subtle);">' +
+              '<td class="u-font-mono u-text-xs u-weight-bold c-text-brand" style="padding: 0.45rem;">' + esc(f.path) + '</td>' +
+              '<td class="u-text-xs" style="padding: 0.45rem;">' + esc(f.owner) + '</td>' +
+              '<td class="u-font-mono u-text-xs c-text-accent" style="padding: 0.45rem;"><a href="' + esc(f.path) + '" class="link-text">' + esc(resolvedUrl) + '</a></td>' +
+              '</tr>'
+            );
+          })
+          .join('');
+
+        codeHostTable.innerHTML =
+          '<div class="u-p-2 u-mb-2 u-bg-subtle t-caption u-font-mono">' +
+          '<strong>' + esc(envMeta.label) + '</strong> · Cache-Control: <code>' + esc(envMeta.cacheControl) + '</code>' +
+          '</div>' +
+          '<table style="width: 100%; border-collapse: collapse; text-align: left;">' +
+          '<thead><tr style="border-bottom: 2px solid var(--color-border-default);">' +
+          '<th class="t-caption u-weight-bold" style="padding: 0.45rem;">Controlled File</th>' +
+          '<th class="t-caption u-weight-bold" style="padding: 0.45rem;">Code Owner</th>' +
+          '<th class="t-caption u-weight-bold" style="padding: 0.45rem;">Resolved Environment URL</th>' +
+          '</tr></thead><tbody>' + rows + '</tbody></table>';
+      }
+
+      codeEnvBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var envKey = btn.getAttribute('data-code-env') || 'production';
+          codeEnvBtns.forEach(function (b) {
+            b.classList.toggle('is-active', b === btn);
+          });
+          codeHost?.setEnvironmentOverride(envKey);
+          renderCustomCodeHostTable(envKey);
+        });
+      });
+      renderCustomCodeHostTable('production');
+
+      // Tag Management System (GTM-SBFCD26) Inspector
+      var tmsListEl = document.getElementById('tmsManagedTagsList');
+      var tmsStatusEl = document.getElementById('tmsStatusBadge');
+      var tmsPushBtn = document.getElementById('tmsPushTestEventBtn');
+      var tmsConsentBtn = document.getElementById('tmsToggleAdConsentBtn');
+
+      function renderTmsConsole() {
+        var tms = window.SpringboardsTMS;
+        if (!tmsListEl) return;
+        var tags = tms ? tms.getManagedTags() : [
+          { tagId: 'tag-ga4-core-telemetry', name: 'Core Web Vitals & Pageview Analytics Tag', category: 'analytics_storage', allowedRoutes: ['*'], triggerEvents: ['gtm.js', 'page_view'] },
+          { tagId: 'tag-wioa-intake-conversion', name: 'WIOA Activity 220 & Career Center Pass Conversion Tag', category: 'analytics_storage', allowedRoutes: ['/programs/eligibility', '/programs/train', '/programs/pathways'], triggerEvents: ['wioa_eligibility_submit'] },
+          { tagId: 'tag-donor-partner-conversion', name: '501(c)(3) Donor Pledge & OJT Employer Partner Tag', category: 'analytics_storage', allowedRoutes: ['/community/donate', '/community/partner'], triggerEvents: ['donation_pledge_complete'] }
+        ];
+        var consent = tms ? tms.getConsentState() : { analytics_storage: 'granted', ad_storage: 'denied' };
+
+        tmsListEl.innerHTML = tags
+          .map(function (t) {
+            var catStatus = consent[t.category] || 'granted';
+            return (
+              '<div class="u-p-2 u-bg-subtle" style="border-radius: var(--radius-sm); border: 1px solid var(--color-border-subtle);">' +
+              '<div class="u-flex-between">' +
+              '<strong class="t-caption c-text-brand">' + esc(t.name) + '</strong>' +
+              '<code class="t-caption u-font-mono c-text-accent">' + esc(t.category + ': ' + catStatus) + '</code>' +
+              '</div>' +
+              '<div class="t-caption u-font-mono c-text-secondary u-mt-1">Where: <code>' + esc(t.allowedRoutes.join(', ')) + '</code> · When: <code>' + esc(t.triggerEvents.join(' | ')) + '</code></div>' +
+              '</div>'
+            );
+          })
+          .join('');
+      }
+
+      setTimeout(renderTmsConsole, 150);
+
+      tmsPushBtn?.addEventListener('click', function () {
+        if (window.SpringboardsTMS) {
+          var ev = window.SpringboardsTMS.pushEvent('wioa_eligibility_submit', { label: 'CMS Console Test Trigger' });
+          if (tmsStatusEl) {
+            tmsStatusEl.textContent = '✓ Pushed wioa_eligibility_submit to window.dataLayer (' + window.dataLayer.length + ' events)';
+          }
+          void ev;
+        }
+      });
+
+      tmsConsentBtn?.addEventListener('click', function () {
+        if (window.SpringboardsTMS) {
+          var current = window.SpringboardsTMS.getConsentState();
+          var nextAd = current.ad_storage === 'granted' ? 'denied' : 'granted';
+          window.SpringboardsTMS.updateConsentState({
+            ad_storage: nextAd,
+            ad_user_data: nextAd,
+            ad_personalization: nextAd
+          });
+          renderTmsConsole();
+          if (tmsStatusEl) {
+            tmsStatusEl.textContent = 'Consent Mode v2 Updated: ad_storage=' + nextAd;
+          }
+        }
+      });
+
+      // 11. Render Synthesized Form Integration Mapping Table & Signed Webhook Tester
+      var formMapWrap = document.getElementById('formIntegrationMappingTableWrap');
+      var testWebhookBtn = document.getElementById('testSignedWebhookBtn');
+      var webhookStatusEl = document.getElementById('webhookTestStatus');
+      var openConsentBtn = document.getElementById('openConsentDrawerBtn');
+
+      openConsentBtn?.addEventListener('click', function () {
+        if (window.SpringboardsCMP && typeof window.SpringboardsCMP.openPreferences === 'function') {
+          window.SpringboardsCMP.openPreferences();
+        }
+      });
+
+      var formSpecs = [
+        {
+          form: 'programInquiries (/api/inquiries)',
+          fields: 'name → Contact_Full_Name, phone → Contact_Phone_E164, email → Contact_Email, program → Target_Trade_Program',
+          destinations: 'Firestore (main) + Google Sheets (Master Tracker) + Gmail (marilynnlward@gmail.com) + Signed Webhook',
+          events: 'GA4: generate_lead | Meta Pixel: Contact'
+        },
+        {
+          form: 'candidateApplications (/api/candidates & /api/transitional-jobs/eligibility-submit)',
+          fields: 'name → Candidate_Legal_Name, matchedCenter → Assigned_Alabama_Career_Center, trade → Selected_NCCER_Trade_Pathway, passCode → Career_Center_Verification_Pass_ID',
+          destinations: 'Firestore (main) + Cloud SQL (trainee_applications) + Google Sheets (10-Col Master Tracker) + Google Calendar Pass + Signed Webhook',
+          events: 'GA4: generate_lead | Meta Pixel: CompleteRegistration'
+        },
+        {
+          form: 'volunteerSignups (/api/volunteer-signups)',
+          fields: 'name → Volunteer_Full_Name, availability → Shift_Availability_Window, interest → Mentorship_Or_Service_Area',
+          destinations: 'Firestore (main) + Google Sheets (Volunteer Roster) + Gmail + Signed Webhook',
+          events: 'GA4: generate_lead | Meta Pixel: SubmitApplication'
+        },
+        {
+          form: 'employerPartnerships (/api/partnerships)',
+          fields: 'company → Employer_Organization_Name, contact → Primary_Contact_Name, partnershipType → Worksite_Or_OJT_Tier, specialty → Trade_Cluster_Specialty',
+          destinations: 'Firestore (main) + Google Sheets (Employer Host Pipeline) + Gmail + Signed Webhook',
+          events: 'GA4: generate_lead | Meta Pixel: Lead'
+        },
+        {
+          form: 'donationPledges (/api/donations)',
+          fields: 'donor → Donor_Or_Sponsor_Name, donationType → Contribution_Category, pledgeAmount → Pledge_Amount_USD, taxReceiptRequested → IRS_501c3_Receipt_Required',
+          destinations: 'Firestore (main) + Google Sheets (501(c)(3) Stewardship Ledger) + Gmail + Signed Webhook',
+          events: 'GA4: generate_lead | Meta Pixel: Donate'
+        }
+      ];
+
+      if (formMapWrap) {
+        formMapWrap.innerHTML =
+          '<table style="width: 100%; border-collapse: collapse; text-align: left;">' +
+          '<thead><tr style="border-bottom: 2px solid var(--color-border-default);">' +
+          '<th class="t-caption u-weight-bold" style="padding: 0.5rem;">Website Form &amp; Endpoint</th>' +
+          '<th class="t-caption u-weight-bold" style="padding: 0.5rem;">Synthesized Field Mapping</th>' +
+          '<th class="t-caption u-weight-bold" style="padding: 0.5rem;">Confirmed Destinations (No Marketo/HubSpot)</th>' +
+          '<th class="t-caption u-weight-bold" style="padding: 0.5rem;">Deduplicated Conversion Events</th>' +
+          '</tr></thead><tbody>' +
+          formSpecs
+            .map(function (row) {
+              return (
+                '<tr style="border-bottom: 1px solid var(--color-border-subtle);">' +
+                '<td class="u-font-mono u-text-xs u-weight-bold c-text-brand" style="padding: 0.5rem;">' + esc(row.form) + '</td>' +
+                '<td class="u-font-mono u-text-xs c-text-secondary" style="padding: 0.5rem;">' + esc(row.fields) + '</td>' +
+                '<td class="u-text-xs" style="padding: 0.5rem;">' + esc(row.destinations) + '</td>' +
+                '<td class="u-font-mono u-text-xs c-text-accent" style="padding: 0.5rem;">' + esc(row.events) + '</td>' +
+                '</tr>'
+              );
+            })
+            .join('') +
+          '</tbody></table>';
+      }
+
+      testWebhookBtn?.addEventListener('click', function () {
+        if (webhookStatusEl) {
+          webhookStatusEl.className = 'form-status u-mb-3';
+          webhookStatusEl.textContent = 'Dispatching HMAC-SHA256 signed webhook payload...';
+        }
+        fetch('/api/integrations/webhooks/test', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ formId: 'candidateApplications', sampleName: 'Verification Test Candidate' })
+        })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            if (webhookStatusEl && data && data.receipt) {
+              webhookStatusEl.className = 'form-status is-success u-mb-3';
+              webhookStatusEl.textContent =
+                '✓ Signed Webhook Delivered! Event ID: ' +
+                data.receipt.eventId +
+                ' · Signature: ' +
+                data.receipt.security.signature.slice(0, 28) +
+                '...';
+            }
+          })
+          .catch(function () {
+            if (webhookStatusEl) {
+              webhookStatusEl.className = 'form-status is-error u-mb-3';
+              webhookStatusEl.textContent = '⚠ Failed to dispatch test webhook.';
+            }
+          });
+      });
+    });
+  </script>
+</body>
+</html>

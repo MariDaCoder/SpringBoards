@@ -1,0 +1,42 @@
+# ==============================================================================
+# Springboards for Community Development (springboardsfcd.org)
+# Controlled Repository Ownership & Mandatory Code Review Matrix (CODEOWNERS)
+# ==============================================================================
+# Every pull request modifying custom HTML, CSS, JavaScript, CMS schemas, Tag
+# Management rules, or Firebase Hosting configurations requires review from the
+# designated Code Owner before merging to the `main` branch.
+
+# Default Repository & Technical Architecture Owner (Marilynn Ward)
+*                                      @MariDaCoder
+
+# 1. Global Custom CSS & 3-Tier Design Token System
+/styles.css                            @MariDaCoder
+/resources/style-guide/**              @MariDaCoder
+
+# 2. Controlled Custom JavaScript & Reusable Component Engine
+/components.js                         @MariDaCoder
+/main.js                               @MariDaCoder
+/eligibility.js                        @MariDaCoder
+/workspace-sheets.js                   @MariDaCoder
+
+# 3. Tag Management System (GTM / dataLayer) & Analytics Telemetry
+/analytics.js                          @MariDaCoder
+
+# 4. Canonical Folder-Structured HTML Pages & Dynamic Collection Templates
+/index.html                            @MariDaCoder
+/404.html                              @MariDaCoder
+/programs/**                           @MariDaCoder
+/community/**                          @MariDaCoder
+/resources/**                          @MariDaCoder
+/utility/**                            @MariDaCoder
+
+# 5. CMS Schema, Content Import Manifests & Custom Code Version Registry
+/assets/cms/**                         @MariDaCoder
+/scripts/**                            @MariDaCoder
+
+# 6. Firebase Hosting (Dev/Staging/Production CDN) & Security Rules
+/firebase.json                         @MariDaCoder
+/.firebaserc                           @MariDaCoder
+/firestore.rules                       @MariDaCoder
+/firestore.indexes.json                @MariDaCoder
+/.github/workflows/**                  @MariDaCoder

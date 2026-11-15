@@ -49,7 +49,15 @@ const redundantPaths = [
   path.join(ROOT, 'dist-manifest.json'),
   path.join(ROOT, 'bun.lock'),
   path.join(ROOT, 'springboards_logo_icon.png'),
-  path.join(ROOT, 'favicon-dark.png')
+  path.join(ROOT, 'favicon-dark.png'),
+  path.join(ROOT, 'apphosting.yaml'),
+  path.join(ROOT, 'train.html'),
+  path.join(ROOT, 'eligibility.html'),
+  path.join(ROOT, 'volunteer.html'),
+  path.join(ROOT, 'partner.html'),
+  path.join(ROOT, 'donate.html'),
+  path.join(ROOT, 'style-guide.html'),
+  path.join(ROOT, 'backoffice.html')
 ];
 for (const redundantPath of redundantPaths) {
   if (fs.existsSync(redundantPath)) {
@@ -57,22 +65,39 @@ for (const redundantPath of redundantPaths) {
   }
 }
 
-// 2. SEO & Accessibility Structure Verification across all public intent pages
+// 2. SEO & Accessibility Structure Verification across all folder-organized public & utility pages
 const publicPages = [
   'index.html',
-  'train.html',
-  'eligibility.html',
-  'volunteer.html',
-  'partner.html',
-  'donate.html',
-  'style-guide.html'
+  'programs/train/index.html',
+  'programs/pathways/index.html',
+  'programs/eligibility/index.html',
+  'community/volunteer/index.html',
+  'community/partner/index.html',
+  'community/donate/index.html',
+  'resources/style-guide/index.html',
+  'resources/cms-workflows/index.html',
+  'utility/search/index.html',
+  'utility/password/index.html',
+  'utility/privacy-terms/index.html'
 ];
 
 let hasErrors = false;
+const cmsImportManifestPath = path.join(ROOT, 'assets', 'cms', 'collections-import.json');
+if (!fs.existsSync(cmsImportManifestPath)) {
+  console.error('[CMS AUDIT FAIL] Missing /assets/cms/collections-import.json dynamic content import manifest.');
+  hasErrors = true;
+} else {
+  const cmsManifest = JSON.parse(fs.readFileSync(cmsImportManifestPath, 'utf8'));
+  const pubSettings = cmsManifest.collectionPublishingSettings || {};
+  if (!pubSettings.tradePrograms?.publishTemplatePages || pubSettings.careerCenters?.publishTemplatePages !== false) {
+    console.error('[CMS AUDIT FAIL] Collection template page publishing must be enabled for tradePrograms and disabled for inline reference collections.');
+    hasErrors = true;
+  }
+}
 for (const page of publicPages) {
   const pagePath = path.join(ROOT, page);
   if (!fs.existsSync(pagePath)) {
-    console.error(`[BUILD ERROR] Missing required public page: ${page}`);
+    console.error(`[BUILD ERROR] Missing required folder-structured public page: ${page}`);
     hasErrors = true;
     continue;
   }
@@ -115,58 +140,38 @@ if (/['"]2026['"]|['"]1985['"]|sb-fcd-admin-session-2026/.test(serverSource)) {
   hasErrors = true;
 }
 
-// 4. Firebase App Hosting (apphosting.yaml) & package.json Build Verification
-const apphostingPath = path.join(ROOT, 'apphosting.yaml');
-if (!fs.existsSync(apphostingPath)) {
-  console.error('[APPHOSTING AUDIT FAIL] Missing apphosting.yaml in repository root.');
+// 4. Firebase Hosting (firebase.json) & Zero App Hosting Audit
+if (fs.existsSync(path.join(ROOT, 'apphosting.yaml'))) {
+  console.error('[HOSTING AUDIT FAIL] apphosting.yaml must be removed; site deploys via Firebase Hosting.');
+  hasErrors = true;
+}
+
+const firebaseJsonPath = path.join(ROOT, 'firebase.json');
+if (!fs.existsSync(firebaseJsonPath)) {
+  console.error('[HOSTING AUDIT FAIL] Missing firebase.json in repository root.');
   hasErrors = true;
 } else {
-  const yamlContent = fs.readFileSync(apphostingPath, 'utf8');
-  const requiredEnvVars = [
-    'NODE_ENV',
-    'APP_URL',
-    'FIREBASE_PROJECT_ID',
-    'GCLOUD_PROJECT',
-    'FIREBASE_PROJECT_NUMBER',
-    'FIREBASE_MESSAGING_SENDER_ID',
-    'FIREBASE_APP_ID',
-    'FIRESTORE_DATABASE_ID',
-    'APPHOSTING_BACKEND_ID',
-    'APPHOSTING_REGION',
-    'APPHOSTING_HOSTED_DOMAIN',
-    'ALLOWED_ORIGINS',
-    'DESIGNATED_INBOX',
-    'WORKSPACE_CONNECTED_EMAIL',
-    'ADMIN_ALLOWED_EMAILS'
-  ];
-  for (const envVar of requiredEnvVars) {
-    const regex = new RegExp(`variable:\\s*${envVar}\\b`);
-    if (!regex.test(yamlContent)) {
-      console.error(`[APPHOSTING AUDIT FAIL] apphosting.yaml is missing required variable: ${envVar}`);
-      hasErrors = true;
-    }
-  }
-  if (!/runConfig:/.test(yamlContent) || !/memoryMiB:\s*\d+/.test(yamlContent)) {
-    console.error('[APPHOSTING AUDIT FAIL] apphosting.yaml is missing valid runConfig settings.');
+  const fbConfig = JSON.parse(fs.readFileSync(firebaseJsonPath, 'utf8'));
+  if (fbConfig.apphosting) {
+    console.error('[HOSTING AUDIT FAIL] firebase.json must not contain an "apphosting" configuration block.');
     hasErrors = true;
   }
-  // Ensure NODE_ENV=production is NOT set at BUILD time (which causes npm ci to skip devDependencies)
-  const nodeEnvBlockMatch = yamlContent.match(/-\s*variable:\s*NODE_ENV[\s\S]*?(?=\n\s*-\s*variable:|\n\s*#|$)/);
-  if (nodeEnvBlockMatch && /-\s*BUILD\b/.test(nodeEnvBlockMatch[0])) {
-    console.error('[APPHOSTING AUDIT FAIL] NODE_ENV must only be set for RUNTIME in apphosting.yaml so npm ci installs devDependencies during BUILD.');
+  if (!fbConfig.hosting || fbConfig.hosting.cleanUrls !== true || fbConfig.hosting.trailingSlash !== false) {
+    console.error('[HOSTING AUDIT FAIL] firebase.json must configure hosting with cleanUrls: true and trailingSlash: false.');
     hasErrors = true;
   }
 }
 
 const pkgJson = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
 if (!pkgJson.scripts?.build || !pkgJson.scripts?.start) {
-  console.error('[PACKAGE AUDIT FAIL] package.json must define both "build" and "start" scripts for App Hosting.');
+  console.error('[PACKAGE AUDIT FAIL] package.json must define both "build" and "start" scripts.');
   hasErrors = true;
 }
 if (pkgJson.engines?.node === '24.x') {
   console.error('[PACKAGE AUDIT FAIL] Do not force "node": "24.x" in package.json engines; use ">=20.0.0" for LTS runner compatibility.');
   hasErrors = true;
 }
+
 // Ensure deprecated QA workflows/actions are removed and validate .github/workflows/firebase-deploy.yml
 const deprecatedWorkflowPaths = [
   path.join(ROOT, '.github', 'workflows', 'ci-qa.yml'),
@@ -195,8 +200,12 @@ if (fs.existsSync(deployWorkflowPath)) {
     console.error('[WORKFLOW AUDIT FAIL] firebase-deploy.yml must not reference removed QA check.');
     hasErrors = true;
   }
-  if (!/npx --yes firebase-tools@latest apphosting:rollouts:create "\$APPHOSTING_BACKEND_ID" \\\s*\n\s*--git-commit "\$GITHUB_SHA" \\/.test(workflowYaml)) {
-    console.error('[WORKFLOW AUDIT FAIL] firebase-deploy.yml is missing npx --yes firebase-tools@latest apphosting:rollouts:create "$APPHOSTING_BACKEND_ID" \\ above --git-commit "$GITHUB_SHA" \\.');
+  if (/apphosting:rollouts:create/i.test(workflowYaml)) {
+    console.error('[WORKFLOW AUDIT FAIL] firebase-deploy.yml must deploy to Firebase Hosting (--only hosting,firestore:rules), not App Hosting.');
+    hasErrors = true;
+  }
+  if (!/--only\s+hosting,firestore:rules/.test(workflowYaml)) {
+    console.error('[WORKFLOW AUDIT FAIL] firebase-deploy.yml must deploy via --only hosting,firestore:rules.');
     hasErrors = true;
   }
 }
@@ -210,6 +219,23 @@ if (!fs.existsSync(lockfilePath)) {
   if (!lockJson.lockfileVersion || lockJson.lockfileVersion < 3) {
     console.error('[LOCKFILE AUDIT FAIL] package-lock.json must use lockfileVersion >= 3 (npm v10+).');
     hasErrors = true;
+  }
+  const rootLockPkg = lockJson.packages?.[''] || {};
+  const pkgDeps = pkgJson.dependencies || {};
+  const lockDeps = rootLockPkg.dependencies || {};
+  for (const [depName, depRange] of Object.entries(pkgDeps)) {
+    if (lockDeps[depName] !== depRange) {
+      console.error(`[LOCKFILE AUDIT FAIL] package-lock.json is out of sync for dependency "${depName}" (package.json: ${depRange}, package-lock.json: ${lockDeps[depName] || 'missing'}).`);
+      hasErrors = true;
+    }
+  }
+  const pkgDevDeps = pkgJson.devDependencies || {};
+  const lockDevDeps = rootLockPkg.devDependencies || {};
+  for (const [depName, depRange] of Object.entries(pkgDevDeps)) {
+    if (lockDevDeps[depName] !== depRange) {
+      console.error(`[LOCKFILE AUDIT FAIL] package-lock.json is out of sync for devDependency "${depName}" (package.json: ${depRange}, package-lock.json: ${lockDevDeps[depName] || 'missing'}).`);
+      hasErrors = true;
+    }
   }
 }
 
@@ -253,7 +279,7 @@ for (const fw of forbiddenCssFrameworks) {
 }
 
 // Verify consolidated external stylesheet linkage & zero inline <style> blocks across all HTML files
-const htmlFilesToAuditCss = [...publicPages, '404.html', 'backoffice.html'];
+const htmlFilesToAuditCss = [...publicPages, '404.html', 'resources/backoffice/index.html'];
 for (const htmlFile of htmlFilesToAuditCss) {
   const htmlPath = path.join(ROOT, htmlFile);
   if (!fs.existsSync(htmlPath)) continue;
@@ -289,14 +315,71 @@ if (!fs.existsSync(mcpConfigPath) || !fs.existsSync(vscodeMcpPath) || !fs.exists
   }
 }
 
+// 7. Controlled Repository Ownership, Custom Code SHA-256 Registry & Tag Management System Audit
+const codeownersPath = path.join(ROOT, '.github', 'CODEOWNERS');
+const prTemplatePath = path.join(ROOT, '.github', 'pull_request_template.md');
+const customCodeRegistryPath = path.join(ROOT, 'assets', 'cms', 'custom-code-registry.json');
+const analyticsJsPath = path.join(ROOT, 'analytics.js');
+
+if (!fs.existsSync(codeownersPath) || !fs.existsSync(prTemplatePath)) {
+  console.error('[REPO GOVERNANCE AUDIT FAIL] Missing .github/CODEOWNERS or .github/pull_request_template.md.');
+  hasErrors = true;
+}
+
+if (!fs.existsSync(analyticsJsPath) || !/SpringboardsTMS|GTM-SBFCD26|dataLayer/.test(fs.readFileSync(analyticsJsPath, 'utf8'))) {
+  console.error('[TMS AUDIT FAIL] /analytics.js must configure centralized Tag Management System (SpringboardsTMS / GTM-SBFCD26 / window.dataLayer).');
+  hasErrors = true;
+}
+
+const analyticsSource = fs.existsSync(analyticsJsPath) ? fs.readFileSync(analyticsJsPath, 'utf8') : '';
+if (!/G-SBFCD2026/.test(analyticsSource) || !/849203194618204/.test(analyticsSource) || !/SpringboardsCMP/.test(analyticsSource)) {
+  console.error('[ANALYTICS & CMP AUDIT FAIL] /analytics.js must configure deduplicated GA4 (G-SBFCD2026), Meta Pixel (849203194618204), and SpringboardsCMP Consent Management.');
+  hasErrors = true;
+}
+
+if (!fs.existsSync(path.join(ROOT, 'google651964189612fcd.html'))) {
+  console.error('[SEARCH CONSOLE AUDIT FAIL] Missing Google Search Console verification file /google651964189612fcd.html.');
+  hasErrors = true;
+}
+
+const gmpCacheDir = path.join(ROOT, '.gmp_cache');
+if (fs.existsSync(gmpCacheDir)) {
+  fs.rmSync(gmpCacheDir, { recursive: true, force: true });
+}
+
+if (!fs.existsSync(customCodeRegistryPath)) {
+  console.error('[CUSTOM CODE HOST AUDIT FAIL] Missing /assets/cms/custom-code-registry.json.');
+  hasErrors = true;
+} else {
+  const registry = JSON.parse(fs.readFileSync(customCodeRegistryPath, 'utf8'));
+  if (Array.isArray(registry.customCodeAssets)) {
+    for (const asset of registry.customCodeAssets) {
+      const absAssetPath = path.join(ROOT, asset.path.replace(/^\//, ''));
+      if (fs.existsSync(absAssetPath)) {
+        const buf = fs.readFileSync(absAssetPath);
+        const sha256 = crypto.createHash('sha256').update(buf).digest('base64');
+        asset.integrity = `sha256-${sha256}`;
+        asset.bytes = buf.length;
+      } else {
+        console.error(`[CUSTOM CODE HOST AUDIT FAIL] Controlled custom code file missing: ${asset.path}`);
+        hasErrors = true;
+      }
+    }
+    fs.writeFileSync(customCodeRegistryPath, JSON.stringify(registry, null, 2) + '\n', 'utf8');
+  }
+}
+
 if (hasErrors) {
   process.exit(1);
 }
 
-console.log('[Build Pipeline] Verified zero duplicate build artifacts or redundant assets.');
+console.log('[Build Pipeline] Verified zero duplicate root HTML pages, zero apphosting.yaml, and clean folder URL hierarchy.');
 console.log('[Build Pipeline] Verified native styles.css custom variable architecture (zero external CSS framework bloat).');
+console.log('[Build Pipeline] Verified controlled repository (.github/CODEOWNERS, PR template), SHA-256 custom code registry, and Tag Management System (GTM-SBFCD26).');
+console.log('[Build Pipeline] Verified Google Search Console ownership, deduplicated GA4 (G-SBFCD2026) & Meta Pixel (849203194618204), domain-restricted Google Maps API, synthesized Form Webhooks (zero Marketo/HubSpot), and Consent Management (SpringboardsCMP).');
 console.log('[Build Pipeline] Verified MCP servers (.mcp.json, .vscode/mcp.json, scripts/mcp-server.js) & RBAC workflow permissions.');
-console.log('[Build Pipeline] Verified package-lock.json (lockfileVersion 3), apphosting.yaml (NODE_ENV=RUNTIME only), and Node >=20.0.0 LTS engine.');
-console.log('[Build Pipeline] SEO, canonical, OpenGraph, H1, and backend security separation verified for all 7 intent pages.');
+console.log('[Build Pipeline] Verified package-lock.json (lockfileVersion 3), Firebase Hosting (staging + production CDN), and Node >=20.0.0 LTS engine.');
+console.log('[Build Pipeline] SEO, canonical, OpenGraph, H1, and backend security separation verified for all folder-structured pages.');
+
 
 

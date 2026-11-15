@@ -2,6 +2,7 @@
   "name": "springboards",
   "version": "1.0.0",
   "type": "module",
+  "main": "server.js",
   "scripts": {
     "dev": "PORT=3000 node server.js",
     "start": "node server.js",

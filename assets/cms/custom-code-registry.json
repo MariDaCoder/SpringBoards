@@ -1,0 +1,238 @@
+{
+  "registryVersion": "3.2.0",
+  "updatedAt": "2026-11-14T12:00:00Z",
+  "repositoryGovernance": {
+    "provider": "GitHub Controlled Version Repository",
+    "defaultBranch": "main",
+    "codeownersPath": "/.github/CODEOWNERS",
+    "prTemplatePath": "/.github/pull_request_template.md",
+    "ciWorkflowPath": "/.github/workflows/firebase-deploy.yml",
+    "ownershipMatrix": [
+      {
+        "role": "Lead Designer, Developer & Technical Publisher",
+        "owner": "Marilynn Ward (@MariDaCoder)",
+        "email": "marilynnlward@gmail.com",
+        "scope": "Custom CSS (/styles.css), Custom JS (/components.js, /main.js, /eligibility.js, /analytics.js), HTML Templates, Firebase Hosting & Tag Management"
+      },
+      {
+        "role": "Executive Approver",
+        "owner": "Marvin Thompson",
+        "email": "mthompson@springboardsfcd.org",
+        "scope": "Production Rollout Sign-Off, Employer Partnerships & 501(c)(3) Stewardship"
+      },
+      {
+        "role": "WIOA Curriculum & Localization Reviewer",
+        "owner": "Giselle Campos",
+        "email": "info@springboardsfcd.org",
+        "scope": "Bilingual en-US/es-US Copy, WIOA Activity 220 & NCCER/OSHA Trade Pathways"
+      },
+      {
+        "role": "Policy & Equal Opportunity Custodian",
+        "owner": "Shamia Morgan",
+        "email": "info@springboardsfcd.org",
+        "scope": "WIOA Section 188 Compliance, Privacy & Data Governance"
+      }
+    ]
+  },
+  "hostingEnvironments": {
+    "development": {
+      "name": "Local & AI Studio Development Host",
+      "hostUrl": "https://ais-dev-qnd7dwpxy5lvvqlhyhakyp-11235862349.us-west2.run.app",
+      "gitBranch": "feature/* -> main",
+      "cachePolicy": "no-cache, must-revalidate (instant iterative feedback)",
+      "purpose": "Active development and live preview of custom CSS, JS, and dynamic CMS templates before pushing to GitHub main."
+    },
+    "staging": {
+      "name": "Firebase Hosting Staging Channel (GitHub main Auto-Deploy)",
+      "hostUrl": "https://springboards-community-dev--staging.web.app",
+      "mirrorUrl": "https://ais-pre-qnd7dwpxy5lvvqlhyhakyp-11235862349.us-west2.run.app",
+      "firebaseChannel": "staging",
+      "gitBranch": "main",
+      "cachePolicy": "public, max-age=300, stale-while-revalidate=600",
+      "corsPolicy": "Access-Control-Allow-Origin: *",
+      "purpose": "Receives custom code pushed to GitHub main so staging pages can load and verify external CSS/JS bundles prior to production promotion."
+    },
+    "production": {
+      "name": "Firebase Hosting Production Global CDN",
+      "hostUrl": "https://springboardsfcd.org",
+      "firebaseSite": "springboards-community-dev",
+      "firebaseChannel": "live",
+      "gitBranch": "main (Verified Release)",
+      "cachePolicy": "public, max-age=3600, stale-while-revalidate=86400 (Immutable 31536000s for versioned assets)",
+      "corsPolicy": "Access-Control-Allow-Origin: * | Timing-Allow-Origin: *",
+      "securityHeaders": [
+        "Strict-Transport-Security: max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options: nosniff",
+        "X-Frame-Options: SAMEORIGIN",
+        "Referrer-Policy: strict-origin-when-cross-origin"
+      ],
+      "purpose": "High-availability edge delivery of production custom code with versioned cache-busting, SHA-256 Subresource Integrity (SRI), and strict TLS."
+    }
+  },
+  "customCodeAssets": [
+    {
+      "id": "code-styles-css",
+      "path": "/styles.css",
+      "version": "3.2.0",
+      "type": "text/css",
+      "owner": "@MariDaCoder",
+      "stagingUrl": "https://springboards-community-dev--staging.web.app/styles.css?v=3.2.0",
+      "productionUrl": "https://springboardsfcd.org/styles.css?v=3.2.0",
+      "cacheControl": "public, max-age=3600, stale-while-revalidate=86400",
+      "corsEnabled": true,
+      "description": "Consolidated 3-tier custom CSS design system (primitive palette, semantic tokens, reusable layout & component classes)."
+    },
+    {
+      "id": "code-components-js",
+      "path": "/components.js",
+      "version": "3.2.0",
+      "type": "application/javascript",
+      "owner": "@MariDaCoder",
+      "stagingUrl": "https://springboards-community-dev--staging.web.app/components.js?v=3.2.0",
+      "productionUrl": "https://springboardsfcd.org/components.js?v=3.2.0",
+      "cacheControl": "public, max-age=3600, stale-while-revalidate=86400",
+      "corsEnabled": true,
+      "description": "Declarative UI component runtime, relational CMS schema engine, bilingual i18n switcher, and custom code host resolver."
+    },
+    {
+      "id": "code-main-js",
+      "path": "/main.js",
+      "version": "3.2.0",
+      "type": "application/javascript",
+      "owner": "@MariDaCoder",
+      "stagingUrl": "https://springboards-community-dev--staging.web.app/main.js?v=3.2.0",
+      "productionUrl": "https://springboardsfcd.org/main.js?v=3.2.0",
+      "cacheControl": "public, max-age=3600, stale-while-revalidate=86400",
+      "corsEnabled": true,
+      "description": "Interactive navigation, accessible modal dialogs, form validation states, and smart phone call/modal routing."
+    },
+    {
+      "id": "code-eligibility-js",
+      "path": "/eligibility.js",
+      "version": "3.2.0",
+      "type": "application/javascript",
+      "owner": "@MariDaCoder",
+      "stagingUrl": "https://springboards-community-dev--staging.web.app/eligibility.js?v=3.2.0",
+      "productionUrl": "https://springboardsfcd.org/eligibility.js?v=3.2.0",
+      "cacheControl": "public, max-age=3600, stale-while-revalidate=86400",
+      "corsEnabled": true,
+      "description": "WIOA Activity Code 220 & OJT multi-step eligibility wizard, Career Center matcher, and verification pass generator."
+    },
+    {
+      "id": "code-analytics-tms-js",
+      "path": "/analytics.js",
+      "version": "3.2.0",
+      "type": "application/javascript",
+      "owner": "@MariDaCoder",
+      "stagingUrl": "https://springboards-community-dev--staging.web.app/analytics.js?v=3.2.0",
+      "productionUrl": "https://springboardsfcd.org/analytics.js?v=3.2.0",
+      "cacheControl": "public, max-age=3600, stale-while-revalidate=86400",
+      "corsEnabled": true,
+      "description": "Centralized Tag Management System (GTM-SBFCD26 / window.dataLayer), Consent Mode v2 controller, Core Web Vitals, and conversion funnel telemetry."
+    }
+  ],
+  "tagManagementSystem": {
+    "platform": "Google Tag Manager (GTM) & Springboards Centralized Tag Orchestrator",
+    "containerId": "GTM-SBFCD26",
+    "ga4MeasurementId": "G-SBFCD2026",
+    "metaPixelId": "849203194618204",
+    "dataLayerObject": "window.dataLayer",
+    "consentModeVersion": "v2",
+    "deduplicationGuards": {
+      "ga4SingletonLock": "window.__SPRINGBOARDS_GA4_INITIALIZED__",
+      "ga4SendPageViewOnInit": false,
+      "metaPixelSingletonLock": "window.__SPRINGBOARDS_META_PIXEL_INITIALIZED__",
+      "metaPixelDisablePushState": true,
+      "metaPixelEventIdSet": "dispatchedMetaPixelEventIds",
+      "domDuplicateScriptPruner": "pruneDuplicateTrackingScripts()"
+    },
+    "defaultConsentState": {
+      "analytics_storage": "granted",
+      "functionality_storage": "granted",
+      "security_storage": "granted",
+      "ad_storage": "denied",
+      "ad_user_data": "denied",
+      "ad_personalization": "denied"
+    },
+    "managedTags": [
+      {
+        "tagId": "tag-ga4-core-telemetry",
+        "name": "Google Analytics 4 (G-SBFCD2026) & Core Web Vitals Tag",
+        "category": "analytics_storage",
+        "triggerEvent": "gtm.dom / page_view",
+        "whereToRun": "All public routes (/*) EXCEPT /resources/backoffice and /utility/password",
+        "status": "active"
+      },
+      {
+        "tagId": "tag-wioa-intake-conversion",
+        "name": "WIOA Activity 220 & Career Center Pass Conversion Tag",
+        "category": "analytics_storage",
+        "triggerEvent": "wioa_eligibility_submit | form_submit_success",
+        "whereToRun": "/programs/eligibility, /programs/train, /programs/pathways/*",
+        "status": "active"
+      },
+      {
+        "tagId": "tag-donor-partner-conversion",
+        "name": "501(c)(3) Donor Pledge & OJT Employer Partner Tag",
+        "category": "analytics_storage",
+        "triggerEvent": "donation_pledge_complete | partner_inquiry_complete",
+        "whereToRun": "/community/donate, /community/partner",
+        "status": "active"
+      },
+      {
+        "tagId": "tag-meta-pixel-conversions",
+        "name": "Meta Pixel (849203194618204) Deduplicated Outreach & Conversion Tag",
+        "category": "ad_storage",
+        "triggerEvent": "page_view | wioa_eligibility_submit | form_submit_success | donation_pledge_complete",
+        "whereToRun": "All public routes (/*) ONLY when ad_storage consent is granted",
+        "status": "active"
+      },
+      {
+        "tagId": "tag-protected-route-guard",
+        "name": "PII & Protected Portal Tag Suppression Rule",
+        "category": "security_storage",
+        "triggerEvent": "Blocking Trigger (Exception Rule)",
+        "whereToRun": "Blocks all 3rd-party marketing/analytics tags on /resources/backoffice and /utility/password",
+        "status": "enforced"
+      }
+    ]
+  },
+  "searchConsoleVerification": {
+    "domainProperty": "https://springboardsfcd.org",
+    "metaTagToken": "google-site-verification-springboards-fcd-2026",
+    "htmlVerificationFile": "/google651964189612fcd.html",
+    "sitemapUrl": "https://springboardsfcd.org/sitemap.xml",
+    "statusEndpoint": "/api/seo/search-console-status"
+  },
+  "googleMapsPlatform": {
+    "projectId": "springboards-community-dev",
+    "mapId": "DEMO_MAP_ID",
+    "attributionId": "gmp_mcp_codeassist_v1_aistudio",
+    "productsUsed": [
+      "Maps JavaScript API (importLibrary('maps'), importLibrary('marker'), AdvancedMarkerElement, PinElement)",
+      "Geocoding API REST Proxy (/api/maps/geocode with 24h TTL cache)"
+    ],
+    "domainRestrictions": [
+      "https://springboardsfcd.org/*",
+      "https://springboards-community-dev.web.app/*",
+      "https://springboards-community-dev.firebaseapp.com/*",
+      "https://springboards-community-dev--staging.web.app/*",
+      "https://*.run.app/*"
+    ]
+  },
+  "formSynthesisAndWebhooks": {
+    "crmPolicy": "First-Party Google Workspace + Firestore (main) + Cloud SQL + Signed Webhooks (Marketo & HubSpot Explicitly Prohibited)",
+    "prohibitedPlatforms": ["Marketo", "HubSpot"],
+    "webhookSigningHeader": "X-Springboards-Signature-256",
+    "webhookAlgorithm": "HMAC-SHA256",
+    "statusEndpoint": "/api/integrations/status",
+    "testWebhookEndpoint": "/api/integrations/webhooks/test"
+  },
+  "consentManagement": {
+    "platform": "SpringboardsCMP",
+    "bannerElementId": "sbConsentBanner",
+    "storageKey": "sb_visitor_consent_preferences_v2",
+    "essentialCategoriesAlwaysGranted": ["functionality_storage", "security_storage"],
+    "visitorControlledCategories": ["analytics_storage", "ad_storage", "ad_user_data", "ad_personalization"]
+  }
+}

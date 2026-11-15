@@ -1,0 +1,130 @@
+{
+  "manifestVersion": "3.1.0",
+  "generatedAt": "2026-11-14T12:00:00Z",
+  "canonicalDomain": "https://springboardsfcd.org",
+  "importSources": [
+    {
+      "sourceId": "src-wioa-curriculum-csv",
+      "name": "WIOA Activity 220 Curriculum & NCCER Syllabus Export (CSV / JSON)",
+      "targetCollection": "tradePrograms",
+      "supportedProtocols": ["CSV Import", "JSON Manifest", "REST API (/api/cms/import)", "MCP (cms_import_and_publishing_manage)"],
+      "fieldMap": {
+        "Program_ID": "id",
+        "URL_Slug": "slug",
+        "Curriculum_Code": "code",
+        "Trade_Cluster": "category",
+        "Program_Title_EN": "title.en-US",
+        "Program_Title_ES": "title.es-US",
+        "Summary_EN": "summary.en-US",
+        "Summary_ES": "summary.es-US",
+        "Cert_Credential": "credential",
+        "Max_WIOA_Hours": "hoursCap",
+        "Tuition_Policy": "tuitionCost",
+        "Career_Center_Refs": "careerCenterIds",
+        "Partner_Refs": "partnerTrackIds",
+        "Publish_Status": "status",
+        "Is_Internal_Only": "isInternal"
+      }
+    },
+    {
+      "sourceId": "src-alabama-works-directory",
+      "name": "Alabama Works! & WorkSource Georgia Regional Career Center Feed",
+      "targetCollection": "careerCenters",
+      "supportedProtocols": ["JSON Manifest", "REST API (/api/cms/import)", "MCP (cms_import_and_publishing_manage)"],
+      "fieldMap": {
+        "Center_ID": "id",
+        "Center_Slug": "slug",
+        "Center_Name_EN": "name.en-US",
+        "Center_Name_ES": "name.es-US",
+        "State_Code": "state",
+        "Workforce_Board": "wioaSystem",
+        "Counties_Covered": "countiesServed",
+        "Street_Address": "address",
+        "Direct_Phone": "phone",
+        "Funded_Program_IDs": "eligibleProgramIds"
+      }
+    },
+    {
+      "sourceId": "src-employer-partner-tracks",
+      "name": "East Alabama Contractor & OJT Host Partner Tracks",
+      "targetCollection": "partnerDirectory",
+      "supportedProtocols": ["CSV Import", "JSON Manifest", "REST API (/api/cms/import)", "MCP (cms_import_and_publishing_manage)"],
+      "fieldMap": {
+        "Track_ID": "id",
+        "Track_Slug": "slug",
+        "Track_Title_EN": "title.en-US",
+        "Track_Title_ES": "title.es-US",
+        "Partnership_Category": "partnershipType",
+        "Reimbursement_Terms": "reimbursementModel",
+        "Value_Prop_EN": "summary.en-US",
+        "Value_Prop_ES": "summary.es-US",
+        "Supported_Program_IDs": "tradeProgramIds"
+      }
+    }
+  ],
+  "collectionPublishingSettings": {
+    "tradePrograms": {
+      "collectionId": "tradePrograms",
+      "label": "Trade Training Pathways",
+      "publishTemplatePages": true,
+      "folderPrefix": "/programs/pathways",
+      "urlPattern": "/programs/pathways/{slug}",
+      "canonicalParent": "/programs/train",
+      "indexableBySearch": true,
+      "blockDraftsAndInternal": true,
+      "blockEmptyContent": true,
+      "governanceNote": "Public Collection template pages enabled under /programs/pathways/{slug} for published, non-empty trade curricula only."
+    },
+    "careerCenters": {
+      "collectionId": "careerCenters",
+      "label": "Regional WIOA Career Centers",
+      "publishTemplatePages": false,
+      "folderPrefix": null,
+      "urlPattern": "/programs/eligibility#{slug}",
+      "canonicalParent": "/programs/eligibility",
+      "indexableBySearch": false,
+      "blockDraftsAndInternal": true,
+      "blockEmptyContent": true,
+      "governanceNote": "Collection template publishing DISABLED. Career Centers render inline inside /programs/eligibility and Trade Pathway templates to prevent thin standalone pages."
+    },
+    "partnerDirectory": {
+      "collectionId": "partnerDirectory",
+      "label": "Employer & Resource Partner Tracks",
+      "publishTemplatePages": false,
+      "folderPrefix": null,
+      "urlPattern": "/community/partner#{slug}",
+      "canonicalParent": "/community/partner",
+      "indexableBySearch": false,
+      "blockDraftsAndInternal": true,
+      "blockEmptyContent": true,
+      "governanceNote": "Collection template publishing DISABLED. Partner tracks render inline on /community/partner and link relationally to Trade Pathways."
+    },
+    "faqItems": {
+      "collectionId": "faqItems",
+      "label": "Frequently Asked Questions",
+      "publishTemplatePages": false,
+      "folderPrefix": null,
+      "urlPattern": "/programs/train#faq",
+      "canonicalParent": "/programs/train",
+      "indexableBySearch": false,
+      "blockDraftsAndInternal": true,
+      "blockEmptyContent": true,
+      "governanceNote": "Collection template publishing DISABLED. FAQ items are embedded components and never generate standalone public URLs."
+    },
+    "utilityPages": {
+      "collectionId": "utilityPages",
+      "label": "System & Governance Utility Pages",
+      "publishTemplatePages": false,
+      "folderPrefix": null,
+      "urlPattern": "{canonicalPath}",
+      "canonicalParent": "/resources/cms-workflows",
+      "indexableBySearch": false,
+      "blockDraftsAndInternal": true,
+      "blockEmptyContent": true,
+      "governanceNote": "Collection template publishing DISABLED. Utility items reference dedicated static routes (/utility/search, /utility/password, /404.html) rather than dynamic CMS templates."
+    }
+  },
+  "sampleImportPayloads": {
+    "tradeProgramsCsv": "Program_ID,URL_Slug,Curriculum_Code,Trade_Cluster,Program_Title_EN,Program_Title_ES,Summary_EN,Summary_ES,Cert_Credential,Max_WIOA_Hours,Tuition_Policy,Career_Center_Refs,Partner_Refs,Publish_Status,Is_Internal_Only\nprog-masonry,masonry-concrete-foundations,07,construction,Masonry & Concrete Foundations,Albañilería y Cimientos de Concreto,Hands-on concrete form setting and structural block laying for commercial builds.,Instalación práctica de moldes de concreto y colocación de bloques estructurales.,NCCER Masonry Level 1 + OSHA-10,390,$0 (100% Tuition-Free),cc-opelika|cc-valley,part-ojt-host|part-materials-tools,published,false\nprog-industrial-welding-draft,industrial-welding-draft,08,mechanical,Industrial Pipe Welding (Internal Syllabus Draft),Soldadura Industrial de Tuberías (Borrador Interno),Internal curriculum draft pending workshop ventilation inspection.,Borrador interno pendiente de inspección de taller.,AWS Entry Welder (Pending),390,$0 (100% Tuition-Free),cc-opelika,part-ojt-host,draft,true"
+  }
+}
