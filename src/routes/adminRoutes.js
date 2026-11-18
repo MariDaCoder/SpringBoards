@@ -214,7 +214,7 @@ export function createAdminRouter({
     const { permissions } = resolveActorRoleAndPermissions(actor || 'Marilynn Ward');
     if (!permissions.has('rbac:manage')) {
       return res.status(403).json({
-        error: 'Granular Access Control Denied: Only roles with "rbac:manage" (Marilynn Ward — Lead Designer, Developer & Technical Publisher) can modify role assignments.'
+        error: 'Granular Access Control Denied: Only roles with "rbac:manage" (Marilynn Ward — Lead Site Designer, Developer, Content Manager, Principal Reviewer & Production Publisher) can modify role assignments.'
       });
     }
 
@@ -275,14 +275,14 @@ export function createAdminRouter({
         category: sanitizeInput(category || 'Content & Program Update', 80),
         authorName: actorDisplay,
         authorRole: actorInfo.role?.roleName || 'Contributor',
-        complianceReviewer: 'Giselle Campos (Education/WIOA) & Shamia Morgan (Policy)',
-        executiveApprover: 'Marvin Thompson (Executive Director)',
-        publisherName: 'Marilynn Ward (Technical Publisher)',
+        complianceReviewer: 'Marilynn Ward (Principal Reviewer) | Advisors: Giselle Campos & Shamia Morgan',
+        executiveApprover: 'Marilynn Ward (Principal Reviewer & Approver) | Co-Review: Marvin Thompson',
+        publisherName: 'Marilynn Ward (Sole Production Publisher)',
         driveEvidenceDoc: sanitizeInput(driveEvidenceDoc || 'Springboards Workforce Programs Tracker', 160),
         currentStage: 'stage_1_draft',
-        statusLabel: 'Stage 1: Draft Created — Ready for Domain & Compliance Review',
+        statusLabel: 'Stage 1: Private Staging Draft Created — Ready for Marilynn Ward Principal Review',
         updatedAt: new Date().toISOString(),
-        notes: sanitizeInput(notes || 'Submitted into 4-stage review & publishing pipeline.', 400)
+        notes: sanitizeInput(notes || 'Submitted into 4-stage review & publishing pipeline led by Marilynn Ward.', 400)
       };
       rbac.publishingWorkflowRequests.unshift(newReq);
       saveBackofficeData();
@@ -311,7 +311,7 @@ export function createAdminRouter({
     // Granular Access Control Gate Check per Stage
     if (nextStage === 'stage_2_domain_compliance_review') {
       wf.currentStage = 'stage_2_domain_compliance_review';
-      wf.statusLabel = `Stage 2: In Compliance & WIOA Review (Submitted by ${actorDisplay})`;
+      wf.statusLabel = `Stage 2: In Principal Change & WIOA Compliance Review (Marilynn Ward / Submitted by ${actorDisplay})`;
     } else if (nextStage === 'stage_3_executive_board_approval') {
       if (
         !actorInfo.permissions.has('workflow:review_compliance') &&
@@ -324,19 +324,19 @@ export function createAdminRouter({
       }
       wf.currentStage = 'stage_3_executive_board_approval';
       wf.complianceReviewer = actorDisplay;
-      wf.statusLabel = `Stage 3: Compliance Verified by ${actorDisplay} — Awaiting Executive Sign-Off (Marvin Thompson / Melvin M.L. Ward)`;
+      wf.statusLabel = `Stage 3: Compliance Reviewed by ${actorDisplay} — Ready for Final Pre-Publish Approval (Marilynn Ward)`;
     } else if (nextStage === 'stage_4_published') {
       if (
         !actorInfo.permissions.has('workflow:publish') &&
         !actorInfo.permissions.has('workflow:approve_executive')
       ) {
         return res.status(403).json({
-          error: `Access Control Gate: Only Executive Approvers (Marvin Thompson / Melvin M.L. Ward) or Technical Publisher (Marilynn Ward) can authorize Stage 4 Production Publishing.`
+          error: `Access Control Gate: Only Marilynn Ward (Principal Reviewer & Sole Production Publisher) can authorize Stage 4 Production Publishing.`
         });
       }
       wf.currentStage = 'stage_4_published';
       wf.publisherName = 'Marilynn Ward';
-      wf.statusLabel = `Stage 4: Approved & Published to Production (${actorDisplay})`;
+      wf.statusLabel = `Stage 4: Approved & Published to Production by Marilynn Ward (${actorDisplay})`;
     }
 
     if (notes) {

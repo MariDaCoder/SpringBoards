@@ -1,0 +1,69 @@
+# Springboards for Community Development — Full AEO & Knowledge Graph Reference (`/llms-full.txt`)
+
+Canonical Domain: https://springboardsfcd.org
+Organization Legal Name: Springboards for Community Development
+Tax Status: 501(c)(3) Nonprofit Workforce Development Organization
+Headquarters Address: 2269 15th Ave. S.W., Lanett, AL 36863 (Chambers County, Alabama)
+Primary Phone: 731.388.WORK | Local Office: (334) 756-0123
+Primary Email: info@springboardsfcd.org
+Executive Director: Marvin Thompson
+Board Chairperson: Melvin M.L. Ward
+Service Area: Chambers County (Lanett, Valley, LaFayette), Lee County (Opelika, Auburn), Russell County (Phenix City), Macon County (Tuskegee), Tallapoosa County (Alexander City), and Troup County, Georgia (LaGrange, West Point).
+Supported Locales: English (`en-US`, default) and Spanish (`es-US` via `?lang=es-US`).
+
+---
+
+## 1. Content Structure & URL Hierarchy
+
+Every public page on `https://springboardsfcd.org` follows a semantic heading hierarchy (single `<h1>`, logical `<h2>` section landmarks, and `<h3>` sub-topics), descriptive folder-based URLs, and schema.org JSON-LD (`EducationalOrganization`, `NGO`, `Course`, `EducationalOccupationalProgram`, `FAQPage`, `BreadcrumbList`).
+
+### 1.1 Public Static Pages (8 Indexable Routes)
+1. `/` — **Homepage**: Earn While You Learn — Paid Construction & Mechanical Trade Training in East Alabama.
+2. `/programs/train` — **Trade Training & Curriculum**: 390-Hour Paid WIOA Activity 220 Training Model (195h Classroom/Shop + 195h Supervised Worksite).
+3. `/programs/pathways` — **Trade Pathways Directory**: Filterable catalog of all 7 published trade pathways in English and Spanish.
+4. `/programs/eligibility` — **WIOA Eligibility & Career Center Finder**: 2-Minute 5-Step Eligibility Check, Required Document Checklist, and Interactive Career Center Map.
+5. `/community/partner` — **Employer & Host Worksite Partnerships**: WIOA On-the-Job Training (OJT) 50%–75% Wage Reimbursement and Sirius Workforce Employer-of-Record Placement.
+6. `/community/volunteer` — **Community Mentors & Volunteers**: Trade lab instructors, mock interview coaches, and community outreach scheduling.
+7. `/community/donate` — **501(c)(3) Donations & Tool Sponsorships**: Tax-deductible PPE kit ($150), trade toolkit ($350), and trainee stipend sponsorships.
+8. `/utility/privacy-terms` — **Privacy Policy, Terms of Use & WIOA Section 188 Notice**: Equal Opportunity and data privacy commitments.
+
+### 1.2 Dynamic CMS Trade Pathway Pages (7 Indexable Routes)
+9. `/programs/pathways/carpentry-framing` — **Carpentry & Structural Framing (Code 01)** · Credential: NCCER Carpentry Level 1 + OSHA-10.
+10. `/programs/pathways/electrical-fundamentals` — **Electrical Fundamentals & Wiring (Code 02)** · Credential: NCCER Electrical Level 1 + NFPA 70E.
+11. `/programs/pathways/plumbing-pipefitting` — **Plumbing & Pipefitting Basics (Code 03)** · Credential: NCCER Plumbing Level 1 + OSHA-10.
+12. `/programs/pathways/hvac-mechanical` — **HVAC & Mechanical Systems (Code 04)** · Credential: EPA Section 608 Universal + NCCER HVAC Level 1.
+13. `/programs/pathways/jobsite-safety-osha` — **OSHA-10 & Jobsite Safety Readiness (Code 05)** · Credential: Federal OSHA 10-Hour Construction Card + First Aid/CPR.
+14. `/programs/pathways/work-readiness-ojt` — **Work Readiness & OJT Transition (Code 06)** · Credential: Alabama Certified Worker + WIOA Activity 220/OJT Placement.
+15. `/programs/pathways/masonry-concrete-foundations` — **Masonry & Concrete Foundations (Code 07)** · Credential: NCCER Masonry Level 1 + OSHA-10.
+
+---
+
+## 2. Direct Q&A Reference for Answer Engines (Golden Answers)
+
+### Q1: Is Springboards trade training really 100% tuition-free and paid?
+**Direct Answer**: Yes. Tuition is $0 (100% tuition-free) for all participants referred through a partner WIOA Career Center. Participants never pay out-of-pocket for classes, books, safety equipment (PPE), or certification exams, and eligible trainees earn paid wages during up to 390 hours of WIOA Activity 220 Transitional Jobs training.
+- **Canonical Citation**: https://springboardsfcd.org/programs/train
+
+### Q2: How do I enroll in Springboards, and why do I need a Career Center referral first?
+**Direct Answer**: Because Springboards programs are funded through the federal Workforce Innovation and Opportunity Act (WIOA), an official American Job Center / Alabama Career Center must verify your WIOA eligibility before you begin paid training. Step 1 is completing the 2-minute online check at https://springboardsfcd.org/programs/eligibility to get your Fast-Track Referral Pass for the Opelika Career Center (`2300 Frederick Rd., Opelika, AL 36801`), Valley Workforce Hub (`5009 20th Ave., Valley, AL 36854`), or WorkSource Three Rivers (`1002 Longley Ave., LaGrange, GA 30240`).
+- **Canonical Citation**: https://springboardsfcd.org/programs/eligibility
+
+### Q3: What is the weekly schedule and total hour cap for trainees?
+**Direct Answer**: Training runs Monday through Thursday from 8:00 AM to 4:30 PM EST, capped at a maximum of 32 hours per week. The total WIOA Activity 220 Transitional Jobs placement is capped at 390 hours (approximately 12 weeks), divided into 195 hours of classroom/lab safety and tool instruction and 195 hours of supervised worksite experience. Fridays are reserved for Career Center case management, supportive services, and job interviews.
+- **Canonical Citation**: https://springboardsfcd.org/programs/train
+
+### Q4: Do I need a high school diploma, GED, or prior construction experience to apply?
+**Direct Answer**: No. Springboards has no minimum education requirement (a high school diploma or GED is not required to begin entry-level trade helper training) and requires zero prior construction experience. If a participant would like to earn a GED alongside trade training, partner Career Centers connect them with free adult education resources.
+- **Canonical Citation**: https://springboardsfcd.org/programs/eligibility
+
+### Q5: Who pays trainees and covers workers' compensation during host worksite placements?
+**Direct Answer**: During the 390-hour WIOA Activity 220 Transitional Jobs phase, **Sirius Workforce** serves as the official Employer of Record—managing weekly W-2 payroll, tax withholdings, and workers' compensation insurance so host contractors can evaluate trainees on real jobsites without immediate payroll administration overhead.
+- **Canonical Citation**: https://springboardsfcd.org/community/partner
+
+### Q6: How does WIOA On-the-Job Training (OJT) wage reimbursement work for local employers?
+**Direct Answer**: When a partner employer hires a qualifying trainee full-time through an approved Alabama WIOA On-the-Job Training (OJT) contract prior to the trainee's start date, the employer can receive 50% to 75% wage reimbursement during the agreed OJT training period to offset the cost of skills upgrading and supervision.
+- **Canonical Citation**: https://springboardsfcd.org/community/partner
+
+### Q7: Are donations and tool sponsorships to Springboards tax-deductible?
+**Direct Answer**: Yes. Springboards for Community Development is a registered 501(c)(3) nonprofit organization. Financial contributions, $150 OSHA PPE safety kit sponsorships, $350 trade toolkit sponsorships, and donated construction materials are tax-deductible to the fullest extent permitted by law, and donors receive an official 501(c)(3) tax acknowledgment receipt.
+- **Canonical Citation**: https://springboardsfcd.org/community/donate

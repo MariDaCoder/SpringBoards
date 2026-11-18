@@ -1,0 +1,10 @@
+# RFC 9116 Security Policy & Vulnerability Disclosure — Springboards for Community Development
+# Synced from Google Drive Pre-Launch Verification Folder (springboards-community-dev)
+Contact: mailto:security@springboardsfcd.org
+Contact: mailto:marilynnlward@gmail.com
+Contact: https://springboardsfcd.org/utility/privacy-terms#security-disclosure
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: en, es
+Canonical: https://springboardsfcd.org/.well-known/security.txt
+Policy: https://springboardsfcd.org/utility/privacy-terms
+Hiring: https://springboardsfcd.org/community/volunteer

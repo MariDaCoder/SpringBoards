@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US" data-timezone="America/New_York">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -109,7 +109,8 @@
           <p class="prequal-intro-copy c-section-header__desc">Your next step starts here. Watch or read this 10-slide orientation before starting your 2-minute WIOA pre-qualification.</p>
         </header>
 
-        <div class="prequal-deck-container">
+        <div class="prequal-deck-container" role="region" aria-labelledby="orientationDeckHeading">
+          <h2 id="orientationDeckHeading" class="sr-only">10-Slide WIOA Trade Training Orientation Deck</h2>
           <figure class="prequal-slide-figure u-m-0">
             <div class="prequal-slide-frame">
               <button class="prequal-slide-toggle" id="prequalSlideToggle" type="button" data-playing="false" aria-label="Play introduction (Slide 1 of 10)" aria-pressed="false" aria-describedby="prequalSlideCaption">
@@ -120,7 +121,9 @@
                   alt="Slide 1 of 10: Springboards for Community Development — Paid, tuition-free Transitional Jobs and skilled trade training in East Alabama."
                   width="1707"
                   height="960"
+                  loading="eager"
                   fetchpriority="high"
+                  decoding="async"
                 >
                 <span class="prequal-slide-control prequal-play-control" aria-hidden="true">
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>

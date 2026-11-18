@@ -1,0 +1,10 @@
+{
+  "name": "Springboards for Community Development — East Alabama WIOA Trade Training & Career Platform (springboardsfcd.org)",
+  "description": "Official 501(c)(3) non-profit workforce development, WIOA Title I ETPL tuition grant calculator, trade certification portal, and employer hiring hub for East Alabama (Phenix City, Russell County, Lee County, and Macon County).",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

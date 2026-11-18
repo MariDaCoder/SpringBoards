@@ -5,7 +5,39 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /backoffice
+Disallow: /resources/backoffice
+Disallow: /utility/password
 Disallow: /portal
+Disallow: /programs/pathways/industrial-welding-draft
+Disallow: /programs/pathways/ita-etpl-provider-track
+Disallow: /programs/pathways/registered-apprenticeship-future
+Disallow: /programs/pathways/staars-vendor-activation
 
-# Sitemap location for Googlebot, Bingbot, and search engines
+# Sitemap & Answer Engine Optimization (AEO / LLMs.txt) discovery for search & AI answer engines
 Sitemap: https://springboardsfcd.org/sitemap.xml
+LLMs-Txt: https://springboardsfcd.org/llms.txt
+LLMs-Full-Txt: https://springboardsfcd.org/llms-full.txt
+
+# Explicit permissions for Search & Answer Engine Crawlers (public pages allowed, private/draft disallowed)
+User-agent: Googlebot
+User-agent: Google-Extended
+User-agent: Bingbot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: GPTBot
+User-agent: PerplexityBot
+User-agent: ClaudeBot
+User-agent: Applebot-Extended
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /api/
+Disallow: /backoffice
+Disallow: /resources/backoffice
+Disallow: /utility/password
+Disallow: /portal
+Disallow: /programs/pathways/industrial-welding-draft
+Disallow: /programs/pathways/ita-etpl-provider-track
+Disallow: /programs/pathways/registered-apprenticeship-future
+Disallow: /programs/pathways/staars-vendor-activation
+

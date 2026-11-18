@@ -473,13 +473,13 @@ export function executeMcpTool(toolName, args = {}) {
         targetRoute: args.targetRoute || '/',
         category: 'MCP Content & Design System Workflow',
         authorName: args.actorName || 'Marilynn Ward',
-        authorRole: 'Lead Designer, Developer & Technical Publisher',
-        complianceReviewer: 'Giselle Campos (Education/WIOA) & Shamia Morgan (Policy)',
-        executiveApprover: 'Marvin Thompson (Executive Director)',
-        publisherName: 'Marilynn Ward (Technical Publisher)',
+        authorRole: 'Lead Site Designer, Full-Stack Developer, Content Manager, Principal Reviewer & Production Publisher',
+        complianceReviewer: 'Marilynn Ward (Principal Reviewer) | Advisors: Giselle Campos & Shamia Morgan',
+        executiveApprover: 'Marilynn Ward (Principal Reviewer & Approver) | Co-Review: Marvin Thompson',
+        publisherName: 'Marilynn Ward (Sole Production Publisher)',
         driveEvidenceDoc: 'Springboards Workforce Programs Tracker',
         currentStage: 'stage_1_draft',
-        statusLabel: 'Stage 1: MCP Draft Created — Ready for Domain & Compliance Review',
+        statusLabel: 'Stage 1: Private Staging Draft Created — Ready for Marilynn Ward Principal Review',
         updatedAt: new Date().toISOString(),
         notes: args.notes || 'Created via Springboards MCP content workflow tool.'
       };

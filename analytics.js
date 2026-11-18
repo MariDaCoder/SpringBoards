@@ -284,11 +284,29 @@
   }
 
   function getReferralSource() {
+    try {
+      const params = new URLSearchParams(window.location.search || '');
+      const utmSource = (params.get('utm_source') || '').toLowerCase();
+      const utmMedium = (params.get('utm_medium') || '').toLowerCase();
+      if (utmSource.includes('chatgpt') || utmSource.includes('openai')) return 'AI Answer Engine: ChatGPT';
+      if (utmSource.includes('perplexity')) return 'AI Answer Engine: Perplexity';
+      if (utmSource.includes('gemini') || utmSource.includes('google_ai')) return 'AI Answer Engine: Google Gemini / AI Overviews';
+      if (utmSource.includes('claude') || utmSource.includes('anthropic')) return 'AI Answer Engine: Claude';
+      if (utmSource.includes('copilot')) return 'AI Answer Engine: Microsoft Copilot';
+      if (utmMedium === 'aeo' || utmMedium === 'ai_citation') return 'AI Answer Engine Citation';
+    } catch {
+      // Ignore query parse errors
+    }
     const referrer = document.referrer || '';
     if (!referrer) return 'Direct / Bookmarks';
     try {
       const url = new URL(referrer);
       const host = url.hostname.toLowerCase();
+      if (host.includes('chatgpt.com') || host.includes('openai.com')) return 'AI Answer Engine: ChatGPT';
+      if (host.includes('perplexity.ai')) return 'AI Answer Engine: Perplexity';
+      if (host.includes('gemini.google.com')) return 'AI Answer Engine: Google Gemini / AI Overviews';
+      if (host.includes('claude.ai')) return 'AI Answer Engine: Claude';
+      if (host.includes('copilot.microsoft.com')) return 'AI Answer Engine: Microsoft Copilot';
       if (host.includes('google.')) return 'Google Search';
       if (host.includes('bing.')) return 'Bing Search';
       if (host.includes('facebook.') || host.includes('fb.me')) return 'Facebook';

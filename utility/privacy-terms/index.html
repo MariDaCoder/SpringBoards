@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US" data-timezone="America/New_York">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,6 +45,13 @@
 
   <meta name="theme-color" content="#0B192C">
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" media="(prefers-color-scheme: light)">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" media="(prefers-color-scheme: light)">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-dark-32x32.png" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-dark-16x16.png" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="manifest" href="/manifest.json">
   <link rel="preload" href="/assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/styles.css">
@@ -59,7 +66,11 @@
     <nav class="navbar" aria-label="Main Navigation">
       <div class="nav-left">
         <a href="/" class="nav-logo-link" aria-label="Springboards Home">
-          <img src="/assets/aistudio/springboards_logo_white_text.png?v=20261114-wordmark" alt="Springboards for Community Development logo" class="nav-logo oversized-logo" width="260" height="52" fetchpriority="high" decoding="async">
+          <picture>
+            <source srcset="/assets/aistudio/springboards_logo_white_text.avif" type="image/avif">
+            <source srcset="/assets/aistudio/springboards_logo_white_text.webp?v=20261118-opt" type="image/webp">
+            <img src="/assets/aistudio/springboards_logo_white_text.webp?v=20261118-opt" alt="Springboards for Community Development logo" class="nav-logo oversized-logo" width="260" height="52" loading="eager" fetchpriority="high" decoding="async">
+          </picture>
         </a>
       </div>
 

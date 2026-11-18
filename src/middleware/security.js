@@ -32,12 +32,32 @@ function rateLimit({ windowMs = 60000, max = 100, keyGenerator, message }) {
   };
 }
 
-// 1. Helmet Security Headers & Content Security Policy (CSP)
-export const cspAndSecurityHeaders = helmet({
-  frameguard: false, // Allow AI Studio preview iframe while protecting via CSP
+// 1. Helmet Security Headers, Frame Protection & Content Security Policy (CSP)
+export const FRAME_ANCESTOR_ALLOWLIST = [
+  "'self'",
+  'https://springboardsfcd.org',
+  'https://*.springboardsfcd.org',
+  'https://*.run.app',
+  'https://*.web.app',
+  'https://*.firebaseapp.com',
+  'https://*.hosted.app',
+  'https://*.ai.studio',
+  'https://aistudio.google.com',
+  'https://*.google.com'
+];
+
+const baseHelmetMiddleware = helmet({
+  frameguard: false, // Managed dynamically below alongside CSP frame-ancestors
   crossOriginResourcePolicy: false,
-  crossOriginOpenerPolicy: false,
+  crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' }, // Required for Google Workspace OAuth 2.0 popup flows
   crossOriginEmbedderPolicy: false,
+  originAgentCluster: true,
+  permittedCrossDomainPolicies: { permittedPolicies: 'none' },
+  strictTransportSecurity: {
+    maxAge: 31536000,
+    includeSubDomains: true,
+    preload: true
+  },
   contentSecurityPolicy: {
     useDefaults: false,
     directives: {
@@ -53,9 +73,10 @@ export const cspAndSecurityHeaders = helmet({
         'https://www.google-analytics.com',
         'https://connect.facebook.net'
       ],
-      styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
-      fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com'],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      fontSrc: ["'self'", 'data:'],
       imgSrc: ["'self'", 'data:', 'blob:', 'https:'],
+      mediaSrc: ["'self'", 'data:', 'blob:'],
       frameSrc: [
         "'self'",
         'https://www.google.com',
@@ -65,6 +86,7 @@ export const cspAndSecurityHeaders = helmet({
         'https://*.web.app',
         'https://*.hosted.app'
       ],
+      frameAncestors: FRAME_ANCESTOR_ALLOWLIST,
       connectSrc: [
         "'self'",
         'https://firestore.googleapis.com',
@@ -81,6 +103,7 @@ export const cspAndSecurityHeaders = helmet({
         'https://nominatim.openstreetmap.org'
       ],
       workerSrc: ["'self'", 'blob:'],
+      manifestSrc: ["'self'"],
       objectSrc: ["'none'"],
       baseUri: ["'self'"],
       formAction: ["'self'"],
@@ -89,6 +112,35 @@ export const cspAndSecurityHeaders = helmet({
   },
   referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
 });
+
+export function cspAndSecurityHeaders(req, res, next) {
+  // Permissions-Policy: allow same-origin geolocation for Career Center map finder; block sensitive hardware APIs
+  res.setHeader(
+    'Permissions-Policy',
+    'geolocation=(self), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), browsing-topics=()'
+  );
+  res.setHeader('X-Permitted-Cross-Domain-Policies', 'none');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+
+  // Smart X-Frame-Options clickjacking defense:
+  // - Admin API endpoints always enforce DENY
+  // - Direct production domain (springboardsfcd.org / firebase hosting) enforces SAMEORIGIN
+  // - Cloud Run preview iframe uses CSP frame-ancestors allowlist so AI Studio preview continues working
+  const host = String(req.headers.host || '').toLowerCase();
+  const secFetchDest = String(req.headers['sec-fetch-dest'] || '').toLowerCase();
+  if (req.path && req.path.startsWith('/api/admin/')) {
+    res.setHeader('X-Frame-Options', 'DENY');
+  } else if (
+    host.includes('springboardsfcd.org') ||
+    host.endsWith('.web.app') ||
+    host.endsWith('.firebaseapp.com') ||
+    (secFetchDest !== 'iframe' && !host.endsWith('.run.app'))
+  ) {
+    res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  }
+
+  return baseHelmetMiddleware(req, res, next);
+}
 
 // 1B. Domain Referrer Restriction Validator for Google Maps Platform API Key & Proxy
 export function isAllowedMapsReferrer(req) {

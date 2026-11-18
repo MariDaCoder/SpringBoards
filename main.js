@@ -103,7 +103,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  window.addEventListener("scroll", updateActiveLink, { passive: true });
+  let scrollTicking = false;
+  function onScrollUpdateActiveLink() {
+    if (!scrollTicking) {
+      scrollTicking = true;
+      window.requestAnimationFrame(() => {
+        updateActiveLink();
+        scrollTicking = false;
+      });
+    }
+  }
+
+  window.addEventListener("scroll", onScrollUpdateActiveLink, { passive: true });
   updateActiveLink();
 
   // MODAL FOCUS TRAPPING & ACCESSIBILITY MANAGEMENT

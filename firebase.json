@@ -14,6 +14,7 @@
       "package-lock.json",
       "bun.lock",
       "**/.*",
+      "!/.well-known/**",
       "**/node_modules/**",
       "src/**",
       "scripts/**",
@@ -243,6 +244,21 @@
         "type": 301
       },
       {
+        "source": "/programs/pathways/hvac-mechanical-systems",
+        "destination": "/programs/pathways/hvac-mechanical",
+        "type": 301
+      },
+      {
+        "source": "/programs/pathways/osha-jobsite-safety",
+        "destination": "/programs/pathways/jobsite-safety-osha",
+        "type": 301
+      },
+      {
+        "source": "/programs/pathways/carpentry-structural-framing",
+        "destination": "/programs/pathways/carpentry-framing",
+        "type": 301
+      },
+      {
         "source": "/career-centers/**",
         "destination": "/programs/eligibility",
         "type": 301
@@ -276,7 +292,7 @@
     ],
     "headers": [
       {
-        "source": "**/*.@(webp|jpg|jpeg|png|svg|ico|woff2)",
+        "source": "**/*.@(avif|webp|jpg|jpeg|png|svg|ico|woff2)",
         "headers": [
           {
             "key": "Cache-Control",
@@ -285,6 +301,61 @@
           {
             "key": "Access-Control-Allow-Origin",
             "value": "*"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "/.well-known/apple-app-site-association",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json; charset=utf-8"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=3600"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "/.well-known/assetlinks.json",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json; charset=utf-8"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=3600"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          }
+        ]
+      },
+      {
+        "source": "/.well-known/security.txt",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "text/plain; charset=utf-8"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=3600"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
           }
         ]
       },
@@ -348,6 +419,22 @@
           {
             "key": "Referrer-Policy",
             "value": "strict-origin-when-cross-origin"
+          },
+          {
+            "key": "Permissions-Policy",
+            "value": "geolocation=(self), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), browsing-topics=()"
+          },
+          {
+            "key": "X-Permitted-Cross-Domain-Policies",
+            "value": "none"
+          },
+          {
+            "key": "Cross-Origin-Opener-Policy",
+            "value": "same-origin-allow-popups"
+          },
+          {
+            "key": "Content-Security-Policy",
+            "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://apis.google.com https://accounts.google.com https://www.gstatic.com https://maps.googleapis.com https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https:; media-src 'self' data: blob:; frame-src 'self' https://www.google.com https://maps.google.com https://accounts.google.com https://*.firebaseapp.com https://*.web.app https://*.hosted.app; frame-ancestors 'self' https://springboardsfcd.org https://*.springboardsfcd.org https://*.run.app https://*.web.app https://*.firebaseapp.com https://*.hosted.app https://*.ai.studio https://aistudio.google.com https://*.google.com; connect-src 'self' https://firestore.googleapis.com https://*.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.gstatic.com https://maps.gstatic.com https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://nominatim.openstreetmap.org; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
           }
         ]
       }

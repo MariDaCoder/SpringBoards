@@ -1085,19 +1085,19 @@
     {
       stageId: 'stage_1_schema_validation',
       stepNumber: '01',
-      ownerRole: 'Technical Publisher / Content Author (Marilynn Ward)',
-      title: 'Schema, Field & Relational Integrity Check',
+      ownerRole: 'Marilynn Ward (Lead Site Designer, Developer & Content Manager) + Domain Contributors',
+      title: 'Stage 1: Design, Code, Content & Schema Authoring',
       checklist: [
-        'All required Collection fields (id, slug, localized title/summary, category) pass schema validation.',
-        'Multi-reference links between tradePrograms, careerCenters, and partnerDirectory resolve with zero orphan IDs.',
+        'Marilynn Ward oversees UI/UX design, full-stack architecture, and content authoring across all 14 routes and 6 CMS Collections.',
+        'All required Collection fields (id, slug, localized title/summary, category) and multi-reference links pass schema validation.',
         'Clean folder URL slug matches firebase.json cleanUrls hierarchy with zero root duplicate HTML files.'
       ]
     },
     {
       stageId: 'stage_2_localization_seo',
       stepNumber: '02',
-      ownerRole: 'Localization & SEO Specialist (Giselle Campos / Marilynn Ward)',
-      title: 'Translation, Asset Localization & SEO Metadata Audit',
+      ownerRole: 'Marilynn Ward (Principal Reviewer) + Giselle Campos (Curriculum Advisor)',
+      title: 'Stage 2: Translation, Asset Localization & SEO Metadata Review',
       checklist: [
         'English (en-US) and Spanish (es-US) strings are populated with statutory WIOA/OSHA acronyms preserved.',
         'Page <title> (30–60 chars), <meta name="description"> (120–160 chars), canonical URL, and hreflang tags are verified.',
@@ -1107,23 +1107,23 @@
     {
       stageId: 'stage_3_compliance_review',
       stepNumber: '03',
-      ownerRole: 'WIOA Compliance & Policy Custodian (Shamia Morgan / Rasheeda Abdullah)',
-      title: 'WIOA Section 188 Equal Opportunity & 501(c)(3) Compliance Gate',
+      ownerRole: 'Marilynn Ward (Principal Change Reviewer) + Board & WIOA Compliance Advisors',
+      title: 'Stage 3: WIOA Section 188, Governance & 501(c)(3) Approval Gate',
       checklist: [
-        'Confirm WIOA Activity 220 (390-hour cap / 195-hour classroom milestone) accuracy.',
-        'Verify Section 188 Equal Opportunity & Nondiscrimination notice accessibility in English and Spanish.',
-        'Confirm 501(c)(3) tax-receipt disclosures and eastern time zone (Mon–Thu 8 AM–4 PM EST) accuracy.'
+        'Marilynn Ward reviews and signs off all changes with advisory input from Marvin Thompson, Melvin M.L. Ward, Krisse Pollard Story, and Shamia Morgan.',
+        'Confirm WIOA Activity 220 (390-hour cap / 195-hour classroom milestone) and Section 188 Equal Opportunity notice accuracy.',
+        'Confirm 501(c)(3) tax-receipt disclosures and Eastern Time Zone (America/New_York · Mon–Thu 8 AM–4 PM EST) accuracy.'
       ]
     },
     {
       stageId: 'stage_4_executive_publish',
       stepNumber: '04',
-      ownerRole: 'Executive Director Approver (Marvin Thompson)',
-      title: 'Executive Sign-Off & Firebase Hosting Production Rollout',
+      ownerRole: 'Marilynn Ward (Sole Production Publisher & Release Authority)',
+      title: 'Stage 4: Technical Build, Private Staging Promotion & Production Publishing',
       checklist: [
-        'Run automated build & lint audit (npm run build && npm run lint) with zero warnings.',
-        'Verify all utility pages (/utility/search, /utility/password, /utility/privacy-terms, /404.html) respond cleanly.',
-        'Deploy static bundle and Firestore security rules via firebase deploy --only hosting,firestore:rules.'
+        'Verify changes on Private Staging Domain (private staging enabled; staging domain indexing disabled via X-Robots-Tag: noindex).',
+        'Run automated build & lint audit (npm run build && npm run lint) with zero errors or duplicate records.',
+        'Marilynn Ward promotes verified build and Firestore security rules to production (https://springboardsfcd.org) and logs the release.'
       ]
     }
   ];
@@ -1772,7 +1772,12 @@
     var ctaHref = el.getAttribute('data-prop-cta-href');
 
     el.querySelectorAll('.nav-logo').forEach(function (logoImg) {
-      logoImg.setAttribute('src', '/assets/aistudio/springboards_logo_white_text.png?v=20261114-clean');
+      logoImg.setAttribute('src', '/assets/aistudio/springboards_logo_white_text.webp?v=20261118-opt');
+      logoImg.setAttribute('width', logoImg.getAttribute('width') || '260');
+      logoImg.setAttribute('height', logoImg.getAttribute('height') || '52');
+      logoImg.setAttribute('loading', 'eager');
+      logoImg.setAttribute('fetchpriority', 'high');
+      logoImg.setAttribute('decoding', 'async');
       var currentAlt = (logoImg.getAttribute('alt') || '').trim();
       if (!currentAlt || currentAlt === 'Springboards Logo') {
         logoImg.setAttribute('alt', 'Springboards for Community Development — Home');
@@ -2842,7 +2847,11 @@
       oldH4.parentNode.replaceChild(newH3, oldH4);
     });
     el.querySelectorAll('.footer-logo').forEach(function (footerLogo) {
-      footerLogo.setAttribute('src', '/assets/aistudio/springboards_logo_icon.png?v=20261114-clean');
+      footerLogo.setAttribute('src', '/assets/aistudio/springboards_logo_icon.webp?v=20261118-opt');
+      footerLogo.setAttribute('width', footerLogo.getAttribute('width') || '116');
+      footerLogo.setAttribute('height', footerLogo.getAttribute('height') || '100');
+      footerLogo.setAttribute('loading', 'lazy');
+      footerLogo.setAttribute('decoding', 'async');
       if (!footerLogo.getAttribute('alt')) {
         footerLogo.setAttribute('alt', 'Springboards for Community Development emblem');
       }

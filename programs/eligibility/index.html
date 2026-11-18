@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US" data-timezone="America/New_York">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -87,7 +87,13 @@
   <a class="skip-link" href="#wizardContent">Skip to main content</a>
   <div class="wizard-page">
     <header class="wizard-topbar">
-      <a href="/" aria-label="Springboards for Community Development — Home"><img class="wizard-logo" src="/assets/aistudio/springboards_logo_white_text.png?v=20261114-wordmark" alt="Springboards for Community Development — Home" width="216" height="56" decoding="async"></a>
+      <a href="/" aria-label="Springboards for Community Development — Home">
+        <picture>
+          <source srcset="/assets/aistudio/springboards_logo_white_text.avif" type="image/avif">
+          <source srcset="/assets/aistudio/springboards_logo_white_text.webp?v=20261118-opt" type="image/webp">
+          <img class="wizard-logo" src="/assets/aistudio/springboards_logo_white_text.webp?v=20261118-opt" alt="Springboards for Community Development — Home" width="216" height="56" loading="eager" fetchpriority="high" decoding="async">
+        </picture>
+      </a>
       <a class="wizard-home-link" href="/#our-programs">← Back to programs</a>
     </header>
 
@@ -98,7 +104,11 @@
         <p class="c-section-header__desc">Answer a few quick questions to see if paid work experience and hands-on skill-building could be a fit. No judgment—just a clear next step.</p>
       </div>
       <div class="wizard-hero-image">
-        <img src="/04_hero_photo_clean.webp" alt="A Springboards trainee learning hands-on carpentry with a team" width="1710" height="1493" fetchpriority="high" decoding="async">
+        <picture>
+          <source srcset="/04_hero_photo_clean.avif" type="image/avif">
+          <source srcset="/04_hero_photo_clean.webp" type="image/webp">
+          <img src="/04_hero_photo_clean.webp" alt="A Springboards trainee learning hands-on carpentry with a team" width="1280" height="1118" loading="eager" fetchpriority="high" decoding="async">
+        </picture>
         <span class="wizard-hero-caption">Real skills. Real work. Your next chapter.</span>
       </div>
     </section>

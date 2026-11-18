@@ -1,0 +1,31 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "6519641896.org.springboardsfcd.app"
+        ],
+        "components": [
+          {
+            "/": "/programs/*",
+            "comment": "Deep link to Springboards career pathways, training enrollment, and eligibility verification"
+          },
+          {
+            "/": "/community/*",
+            "comment": "Deep link to volunteer, employer partner, and donation portals"
+          },
+          {
+            "/": "/utility/password",
+            "exclude": true,
+            "comment": "Exclude restricted staff password gate from universal app handoff"
+          }
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "6519641896.org.springboardsfcd.app"
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+# Springboards for Community Development (East Alabama & West Georgia)
+
+> Official 501(c)(3) workforce development and paid construction/mechanical trade readiness organization headquartered at 2269 15th Ave. S.W., Lanett, AL 36863. Phone: 731.388.WORK | (334) 756-0123 | Email: info@springboardsfcd.org | Canonical Domain: https://springboardsfcd.org
+
+Springboards for Community Development bridges the gap between unemployed or underemployed adults and high-demand construction and mechanical trade employers across East Alabama (Chambers, Lee, Russell, Macon, and Tallapoosa Counties) and West Georgia (Troup County). All training is 100% tuition-free ($0 cost to participants) and pairs classroom/shop instruction with paid WIOA Activity 220 Transitional Jobs and On-the-Job Training (OJT).
+
+## Key Visitor Questions & Verified Direct Answers (AEO Canonical Reference)
+
+- **Cost & Tuition Policy**: $0 — 100% tuition-free for all eligible participants. All safety gear (PPE), hand tools, and NCCER/OSHA testing materials are provided at no cost.
+- **How to Enroll (Mandatory Step 1)**: Candidates must first obtain a WIOA eligibility determination and referral from a partner American Job Center / Alabama Career Center (Opelika Career Center, Valley/Shawmut Workforce Intake Hub, or WorkSource Three Rivers in LaGrange, GA). Use the 2-minute eligibility tool at https://springboardsfcd.org/programs/eligibility to generate your Career Center Fast-Track Pass.
+- **Paid Training Hours & Schedule**: Up to 390 maximum paid hours under WIOA Activity 220 Transitional Jobs (195 hours classroom/lab + 195 hours supervised worksite experience), scheduled Monday–Thursday for up to 32 hours per week (8:00 AM – 4:30 PM EST).
+- **Employer of Record & Payroll**: Sirius Workforce serves as the Employer of Record during Transitional Jobs placements, handling weekly W-2 wages, payroll taxes, and workers' compensation insurance.
+- **Education & Experience Requirements**: No minimum education (no high school diploma or GED required) and no prior construction experience required to begin entry-level helper training.
+- **Employer OJT Wage Reimbursement**: Partner contractors and host worksites qualify for 50% to 75% wage reimbursement under Alabama WIOA On-the-Job Training (OJT) contracts upon written agency approval.
+- **Compliance & Public Claim Guardrails**: Individual Training Account (ITA) tuition vouchers and Eligible Training Provider List (ETPL) standalone credentials are not publicly promoted prior to formal state agency written sign-off.
+
+## Core Public Pages & Canonical URLs
+
+- [Homepage — Paid Trade Training & Workforce Readiness](https://springboardsfcd.org/): Overview of the 4-step enrollment journey, program benefits, community impact, and FAQ.
+- [Trade Training Overview & Curriculum Schedule](https://springboardsfcd.org/programs/train): Detailed breakdown of the 390-hour curriculum (195h shop + 195h field), daily Mon–Thu schedule, PPE provided, and trainee FAQs.
+- [WIOA Eligibility Wizard & Career Center Finder](https://springboardsfcd.org/programs/eligibility): Interactive 5-step WIOA Activity 220 eligibility checker, required document checklist, and Opelika/Valley/LaGrange Career Center directory.
+- [All Trade Pathways Directory](https://springboardsfcd.org/programs/pathways): Bilingual (`en-US` & `es-US`) catalog of all 7 published construction, mechanical, and jobsite safety pathways.
+- [Employer & Host Worksite Partnerships](https://springboardsfcd.org/community/partner): Information for contractors and businesses on hosting pre-screened helpers, Sirius Workforce payroll coverage, and WIOA OJT reimbursement.
+- [Community Volunteer Opportunities](https://springboardsfcd.org/community/volunteer): Mentor sign-up for skilled tradespeople, mock interviewers, and transportation/workshop volunteers.
+- [501(c)(3) Donations & Tool Sponsorships](https://springboardsfcd.org/community/donate): Tax-deductible sponsorships for trainee PPE kits ($150), trade toolkits ($350), and transitional wage stipends.
+- [Privacy Policy, Terms & WIOA EEO Notice](https://springboardsfcd.org/utility/privacy-terms): Equal Opportunity ("equal opportunity employer/program") and WIOA Section 188 accessibility/nondiscrimination disclosures.
+
+## Published Trade Pathway Collection Pages
+
+- [Carpentry & Structural Framing (Pathway 01)](https://springboardsfcd.org/programs/pathways/carpentry-framing): NCCER Carpentry Level 1 + OSHA-10, blueprint reading, wood/metal stud framing, and roof truss layout.
+- [Electrical Fundamentals & Wiring (Pathway 02)](https://springboardsfcd.org/programs/pathways/electrical-fundamentals): NCCER Electrical Level 1 + NFPA 70E, NEC code basics, conduit bending, and residential/commercial branch circuits.
+- [Plumbing & Pipefitting Basics (Pathway 03)](https://springboardsfcd.org/programs/pathways/plumbing-pipefitting): NCCER Plumbing Level 1 + OSHA-10, copper/PEX/PVC piping, DWV drainage systems, and fixture installation.
+- [HVAC & Mechanical Systems (Pathway 04)](https://springboardsfcd.org/programs/pathways/hvac-mechanical): EPA Section 608 Universal + NCCER HVAC Level 1, airflow diagnostics, ductwork installation, and refrigerant safety.
+- [OSHA-10 & Jobsite Safety Readiness (Pathway 05)](https://springboardsfcd.org/programs/pathways/jobsite-safety-osha): Federal OSHA 10-Hour Construction Card + First Aid/CPR, fall protection, trenching/excavation, and PPE compliance.
+- [Work Readiness & OJT Transition (Pathway 06)](https://springboardsfcd.org/programs/pathways/work-readiness-ojt): Alabama Certified Worker + WIOA Activity 220/OJT Placement, construction math, timekeeping, and employer interview prep.
+- [Masonry & Concrete Foundations (Pathway 07)](https://springboardsfcd.org/programs/pathways/masonry-concrete-foundations): NCCER Masonry Level 1 + OSHA-10, concrete form setting, structural block laying, and mortar finishing.

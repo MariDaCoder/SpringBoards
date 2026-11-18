@@ -1,0 +1,89 @@
+{
+  "version": "2026.04.20",
+  "project": "springboards-community-dev",
+  "projectNumber": "651964189612",
+  "canonicalOrigin": "https://springboardsfcd.org",
+  "googleDriveSourceFolder": {
+    "folderName": "Springboards Pre-Launch Verification, Security & Deep-Linking Assets",
+    "folderQuery": "name contains 'Springboards' or name contains 'security.txt' or name contains 'assetlinks.json'",
+    "owner": "marilynnlward@gmail.com",
+    "syncMethod": "Google Drive API v3 (https://www.googleapis.com/auth/drive.readonly)"
+  },
+  "verifiedFiles": [
+    {
+      "id": "gsc-domain-verification",
+      "path": "/google651964189612fcd.html",
+      "service": "Google Search Console HTML File Ownership Verification",
+      "contentType": "text/html; charset=utf-8",
+      "expectedContent": "google-site-verification: google651964189612fcd.html",
+      "status": "verified"
+    },
+    {
+      "id": "rfc9116-security-txt",
+      "path": "/.well-known/security.txt",
+      "aliasPath": "/security.txt",
+      "service": "RFC 9116 Vulnerability Disclosure & Security Policy",
+      "contentType": "text/plain; charset=utf-8",
+      "requiredDirectives": ["Contact", "Expires", "Preferred-Languages", "Canonical", "Policy"],
+      "status": "verified"
+    },
+    {
+      "id": "android-assetlinks",
+      "path": "/.well-known/assetlinks.json",
+      "service": "Android Digital Asset Links (App Links & Trusted Web Activity Deep-Linking)",
+      "contentType": "application/json; charset=utf-8",
+      "packageName": "org.springboardsfcd.twa",
+      "status": "verified"
+    },
+    {
+      "id": "ios-universal-links",
+      "path": "/.well-known/apple-app-site-association",
+      "aliasPath": "/apple-app-site-association",
+      "service": "Apple Universal Links & Shared Web Credentials (AASA)",
+      "contentType": "application/json; charset=utf-8",
+      "appID": "6519641896.org.springboardsfcd.app",
+      "status": "verified"
+    },
+    {
+      "id": "global-privacy-control",
+      "path": "/.well-known/gpc.json",
+      "service": "W3C Global Privacy Control (GPC) Signal Support",
+      "contentType": "application/json; charset=utf-8",
+      "status": "verified"
+    },
+    {
+      "id": "pwa-web-manifest",
+      "path": "/manifest.json",
+      "service": "W3C Web Application Manifest & Deep-Link Shortcuts",
+      "contentType": "application/manifest+json; charset=utf-8",
+      "status": "verified"
+    }
+  ],
+  "browserImageSupportMatrix": {
+    "webp": {
+      "mimeType": "image/webp",
+      "globalSupportPercentage": "97.8%",
+      "minimumBrowserVersions": {
+        "chrome": "32+",
+        "safari": "14+ (iOS 14+ / macOS 11 Big Sur+)",
+        "firefox": "65+",
+        "edge": "18+",
+        "opera": "19+",
+        "androidBrowser": "4.2+"
+      }
+    },
+    "avif": {
+      "mimeType": "image/avif",
+      "globalSupportPercentage": "93.8%",
+      "minimumBrowserVersions": {
+        "chrome": "85+",
+        "safari": "16.4+ (iOS 16.4+ / macOS Ventura 13.3+)",
+        "firefox": "93+",
+        "edge": "121+",
+        "opera": "71+",
+        "samsungInternet": "14.0+"
+      },
+      "fallbackStrategy": "Progressive <picture> element with <source type=\"image/avif\"> -> <source type=\"image/webp\"> -> <img src=\"*.webp\" or \"*.png\">"
+    }
+  }
+}

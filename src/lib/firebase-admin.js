@@ -70,8 +70,14 @@ export function getAdminFirestore() {
   }
 }
 
-export function getFirebaseConnectionStatus() {
-  const dbInstance = getAdminFirestore();
+let cachedHostingMeta = null;
+let cachedHostingMetaAt = 0;
+
+function getCachedHostingMeta() {
+  const now = Date.now();
+  if (cachedHostingMeta && now - cachedHostingMetaAt < 60000) {
+    return cachedHostingMeta;
+  }
   let firebaseHostingConfigured = false;
   let cleanUrlsEnabled = false;
   try {
@@ -84,6 +90,19 @@ export function getFirebaseConnectionStatus() {
   } catch {
     firebaseHostingConfigured = false;
   }
+  cachedHostingMeta = {
+    firebaseHostingConfigured,
+    cleanUrlsEnabled,
+    apphostingRemoved: !fs.existsSync(path.resolve(__dirname, '../../apphosting.yaml')),
+    qaGateWorkflowRemoved: !fs.existsSync(path.resolve(__dirname, '../../.github/workflows/ci-qa.yml'))
+  };
+  cachedHostingMetaAt = now;
+  return cachedHostingMeta;
+}
+
+export function getFirebaseConnectionStatus() {
+  const dbInstance = getAdminFirestore();
+  const meta = getCachedHostingMeta();
 
   return {
     connected: true,
@@ -92,6 +111,8 @@ export function getFirebaseConnectionStatus() {
     messagingSenderId: firebaseProjectNumber,
     appId: firebaseAppId,
     firestoreDatabaseId,
+    apphostingBackendId,
+    region: apphostingRegion,
     authDomain: FIREBASE_AUTH_DOMAIN,
     storageBucket: FIREBASE_STORAGE_BUCKET,
     oAuthClientId: GOOGLE_OAUTH_CLIENT_ID,
@@ -99,14 +120,14 @@ export function getFirebaseConnectionStatus() {
     domains: ['springboardsfcd.org', 'springboards-community-dev.web.app'],
     adminSdkInitialized: Boolean(getOrInitAdminApp()),
     firestoreInstanceReady: Boolean(dbInstance),
-    firebaseHostingVerified: firebaseHostingConfigured,
-    cleanUrlsEnabled,
+    firebaseHostingVerified: meta.firebaseHostingConfigured,
+    cleanUrlsEnabled: meta.cleanUrlsEnabled,
     deploymentHealth: {
       nodeEngineRange: '>=20.0.0',
       forcedNode24Removed: true,
-      apphostingRemoved: !fs.existsSync(path.resolve(__dirname, '../../apphosting.yaml')),
+      apphostingRemoved: meta.apphostingRemoved,
       lockfileSyncedWithPackageJson: true,
-      qaGateWorkflowRemoved: !fs.existsSync(path.resolve(__dirname, '../../.github/workflows/ci-qa.yml')),
+      qaGateWorkflowRemoved: meta.qaGateWorkflowRemoved,
       deploymentPipeline: 'Firebase Hosting (firebase.json cleanUrls + folder hierarchy) + firebase-deploy.yml'
     }
   };

@@ -1376,6 +1376,40 @@ export async function discoverGovernanceDriveFiles() {
   return files;
 }
 
+export async function syncVerificationFilesFromGoogleDrive() {
+  const token = getCachedToken();
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+  let driveFiles = [];
+
+  if (token) {
+    const query = encodeURIComponent(
+      "(name = 'security.txt' or name = 'assetlinks.json' or name = 'apple-app-site-association' or name = 'gpc.json' or name contains 'google651964189612fcd') and trashed = false"
+    );
+    try {
+      const res = await fetch(
+        `https://www.googleapis.com/drive/v3/files?q=${query}&pageSize=15&fields=files(id,name,mimeType,size,md5Checksum,modifiedTime,webViewLink)`,
+        { headers }
+      );
+      if (res.ok) {
+        const data = await res.json();
+        driveFiles = data.files || [];
+      }
+    } catch {
+      // Fall back to manifest verification if offline or token not active
+    }
+  }
+
+  const auditRes = await fetch('/api/prelaunch/readiness-audit', {
+    headers: { Accept: 'application/json' }
+  }).then(r => (r.ok ? r.json() : null)).catch(() => null);
+
+  return {
+    driveFilesFound: driveFiles.length,
+    driveFiles,
+    readinessAudit: auditRes
+  };
+}
+
 // Global window attachment for non-module scripts
 window.SpringboardsWorkspace = {
   SCOPES,
@@ -1416,6 +1450,7 @@ window.SpringboardsWorkspace = {
   sendChatCohortMessage,
   createMeetIntakeSpace,
   getMeetSpace,
-  discoverGovernanceDriveFiles
+  discoverGovernanceDriveFiles,
+  syncVerificationFilesFromGoogleDrive
 };
 

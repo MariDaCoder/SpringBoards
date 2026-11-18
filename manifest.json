@@ -1,8 +1,10 @@
 {
   "id": "/",
-  "name": "Springboards for Community Development",
-  "short_name": "Springboards",
-  "description": "Tuition-free skilled trade training, WIOA Transitional Jobs, and career placement support in East Alabama.",
+  "name": "Springboards for Community Development — East Alabama WIOA Trade Training & Career Platform (springboardsfcd.org)",
+  "short_name": "Springboards FCD",
+  "description": "Tuition-free skilled trade training, WIOA Transitional Jobs, and career placement support in East Alabama (Phenix City, Russell County, Lee County, and Macon County).",
+  "lang": "en-US",
+  "dir": "ltr",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US" data-timezone="America/New_York">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -193,8 +193,9 @@
   ]
   </script>
 
-  <!-- Self-Hosted Custom Font Preload (Plus Jakarta Sans WOFF2 Variable) -->
+  <!-- Self-Hosted Custom Font & Above-the-Fold Hero Image Preload -->
   <link rel="preload" href="/assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" as="image" href="/04_hero_photo_clean.webp" imagesrcset="/04_hero_photo_clean.avif 1280w, /04_hero_photo_clean.webp 1280w" imagesizes="100vw" fetchpriority="high">
   <link rel="stylesheet" href="/styles.css">
   <script src="/components.js" defer></script>
 </head>
@@ -208,7 +209,11 @@
       <!-- Left: Oversized Logo -->
       <div class="nav-left">
         <a href="#top" class="nav-logo-link" aria-label="Springboards Home">
-          <img src="/assets/aistudio/springboards_logo_white_text.png?v=20261114-clean" alt="Springboards for Community Development logo" class="nav-logo oversized-logo" width="260" height="52" fetchpriority="high" decoding="async">
+          <picture>
+            <source srcset="/assets/aistudio/springboards_logo_white_text.avif" type="image/avif">
+            <source srcset="/assets/aistudio/springboards_logo_white_text.webp?v=20261118-opt" type="image/webp">
+            <img src="/assets/aistudio/springboards_logo_white_text.webp?v=20261118-opt" alt="Springboards for Community Development logo" class="nav-logo oversized-logo" width="260" height="52" loading="eager" fetchpriority="high" decoding="async">
+          </picture>
         </a>
       </div>
 
@@ -446,7 +451,11 @@
           </div>
 
           <aside class="mission-feature trust-founder-card" aria-label="Founder and Executive Director">
-            <img src="director-marvin-thompson.webp" alt="Marvin Thompson, Executive Director of Springboards for Community Development, standing on site" class="mission-image" width="600" height="450" loading="lazy" decoding="async">
+            <picture>
+              <source srcset="/director-marvin-thompson.avif" type="image/avif">
+              <source srcset="/director-marvin-thompson.webp" type="image/webp">
+              <img src="/director-marvin-thompson.webp" alt="Marvin Thompson, Executive Director of Springboards for Community Development, standing on site" class="mission-image" width="600" height="450" loading="lazy" decoding="async">
+            </picture>
             <div class="guide-introduction">
               <span class="section-eyebrow guide-eyebrow">FOUNDER &amp; EXECUTIVE DIRECTOR</span>
               <h3 class="guide-name">Marvin Thompson</h3>
@@ -655,15 +664,27 @@
 
         <div class="outcome-gallery-grid" role="list" aria-label="Hands-on training in action">
           <figure class="outcome-gallery-card" role="listitem">
-            <img src="hands-on-training.webp" alt="Instructor and trainees building a timber frame foundation outdoors" width="600" height="360" loading="lazy" decoding="async">
+            <picture>
+              <source srcset="/hands-on-training.avif" type="image/avif">
+              <source srcset="/hands-on-training.webp" type="image/webp">
+              <img src="/hands-on-training.webp" alt="Instructor and trainees building a timber frame foundation outdoors" width="600" height="360" loading="lazy" decoding="async">
+            </picture>
             <figcaption>Practical Construction Training</figcaption>
           </figure>
           <figure class="outcome-gallery-card" role="listitem">
-            <img src="trades-team.webp" alt="Springboards trainees collaborating on an electrical panel installation" width="600" height="360" loading="lazy" decoding="async">
+            <picture>
+              <source srcset="/trades-team.avif" type="image/avif">
+              <source srcset="/trades-team.webp" type="image/webp">
+              <img src="/trades-team.webp" alt="Springboards trainees collaborating on an electrical panel installation" width="600" height="360" loading="lazy" decoding="async">
+            </picture>
             <figcaption>Learning Together</figcaption>
           </figure>
           <figure class="outcome-gallery-card" role="listitem">
-            <img src="electrical-training.webp" alt="Hands-on electrical circuitry and diagnostic tool practice" width="600" height="360" loading="lazy" decoding="async">
+            <picture>
+              <source srcset="/electrical-training.avif" type="image/avif">
+              <source srcset="/electrical-training.webp" type="image/webp">
+              <img src="/electrical-training.webp" alt="Hands-on electrical circuitry and diagnostic tool practice" width="600" height="360" loading="lazy" decoding="async">
+            </picture>
             <figcaption>Skills in Practice</figcaption>
           </figure>
         </div>
@@ -744,7 +765,7 @@
               <svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </summary>
             <div class="faq-answer">
-              <p>You will learn hands-on <a href="/programs/pathways/carpentry-framing">Carpentry and Construction Basics</a>, <a href="/programs/pathways/electrical-fundamentals">Electrical Fundamentals</a>, <a href="/programs/pathways/plumbing-pipefitting">Plumbing and Pipefitting</a>, <a href="/programs/pathways/hvac-mechanical-systems">HVAC and Mechanical Systems</a>, <a href="/programs/pathways/osha-jobsite-safety">OSHA Jobsite Safety and NCCER Credentials</a>, and <a href="/programs/pathways/work-readiness-ojt">Teamwork, Discipline and Transitional Jobs</a>. You can also <a href="/programs/pathways">browse all 7 published trade pathway curricula</a>.</p>
+              <p>You will learn hands-on <a href="/programs/pathways/carpentry-framing">Carpentry and Construction Basics</a>, <a href="/programs/pathways/electrical-fundamentals">Electrical Fundamentals</a>, <a href="/programs/pathways/plumbing-pipefitting">Plumbing and Pipefitting</a>, <a href="/programs/pathways/hvac-mechanical">HVAC and Mechanical Systems</a>, <a href="/programs/pathways/jobsite-safety-osha">OSHA Jobsite Safety and NCCER Credentials</a>, and <a href="/programs/pathways/work-readiness-ojt">Teamwork, Discipline and Transitional Jobs</a>. You can also <a href="/programs/pathways">browse all 7 published trade pathway curricula</a>.</p>
             </div>
           </details>
 
@@ -868,7 +889,11 @@
       <div class="footer-col footer-brand">
         <a href="#top" class="footer-brand-lockup" aria-label="Springboards for Community Development — Back to top">
           <span class="footer-logo-emblem-wrap">
-            <img src="/assets/aistudio/springboards_logo_icon.png?v=20261114-clean" alt="Springboards for Community Development emblem" class="footer-logo" width="116" height="100" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+            <picture>
+              <source srcset="/assets/aistudio/springboards_logo_icon.avif" type="image/avif">
+              <source srcset="/assets/aistudio/springboards_logo_icon.webp?v=20261118-opt" type="image/webp">
+              <img src="/assets/aistudio/springboards_logo_icon.webp?v=20261118-opt" alt="Springboards for Community Development emblem" class="footer-logo" width="116" height="100" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+            </picture>
           </span>
         </a>
         <div class="footer-brand-content">
@@ -1594,7 +1619,7 @@
       <div id="docPreviewContainer" class="u-mt-6 doc-preview-panel">
         <h3 id="docPreviewTitle" class="t-h4 u-color-primary u-mb-2">Document Preview</h3>
         <div class="document-preview-modal-body">
-          <img id="docPreviewImg" src="/springboards-community-flyer.webp" alt="Springboards Community Flyer Preview" class="document-preview-image" width="1200" height="2150" loading="lazy" decoding="async">
+          <img id="docPreviewImg" src="/springboards-community-flyer.webp" alt="Springboards Community Flyer Preview" class="document-preview-image" width="1080" height="1935" loading="lazy" decoding="async">
           <div class="ds-cluster u-mt-3">
             <a id="docPreviewDownloadBtn" href="/springboards-community-flyer.webp" download="Springboards_Community_Flyer.webp" class="btn-cta">Download Full High-Resolution File ↓</a>
             <button type="button" id="closeDocPreviewBtn" class="btn-cta is-navy">Close Preview</button>
@@ -1817,7 +1842,7 @@
   <!-- Interactive Feedback Toast -->
   <div id="toastNotification" class="toast-notification" role="status" aria-live="polite" hidden>Link copied to clipboard!</div>
 
-  <script src="main.js?v=20261003-deck-final" defer></script>
-  <script src="analytics.js" defer></script>
+  <script src="/main.js" defer></script>
+  <script src="/analytics.js" defer></script>
 </body>
 </html>
