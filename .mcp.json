@@ -20,7 +20,8 @@
         "design_system_audit_compliance",
         "pages_list_and_inspect",
         "pages_scaffold_component",
-        "content_workflow_manage"
+        "content_workflow_manage",
+        "cms_import_and_publishing_manage"
       ],
       "permissions": {
         "mcp:design_system": [

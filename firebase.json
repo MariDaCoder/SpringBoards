@@ -261,6 +261,11 @@
         "source": "/utility-pages/**",
         "destination": "/resources/cms-workflows",
         "type": 301
+      },
+      {
+        "source": "/evidence-docs/**",
+        "destination": "/resources/cms-workflows",
+        "type": 301
       }
     ],
     "rewrites": [
@@ -305,7 +310,7 @@
         ]
       },
       {
-        "source": "/assets/cms/*.json",
+        "source": "/assets/cms/**/*.@(json|csv)",
         "headers": [
           {
             "key": "Cache-Control",

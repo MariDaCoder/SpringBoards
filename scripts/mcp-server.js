@@ -203,19 +203,32 @@ export const MCP_TOOLS = [
   },
   {
     name: 'cms_import_and_publishing_manage',
-    description: 'Prepares dynamic CMS content for import (mapping CSV/JSON/API sources to schema), audits Collection template page publishing settings (disabling empty/internal/reference collection templates), and verifies logical dynamic folder URL structures (/programs/pathways/{slug}).',
+    description: 'Prepares dynamic CMS content for import (mapping CSV/JSON/API/Google Workspace sources to schema), audits Collection template page publishing settings (disabling empty/internal/reference collection templates), and verifies logical dynamic folder URL structures (/programs/pathways/{slug}).',
     requiredPermission: 'mcp:content_workflow',
     inputSchema: {
       type: 'object',
       properties: {
         operation: {
           type: 'string',
-          enum: ['inspect_manifest', 'map_and_validate_import', 'audit_template_publishing'],
-          description: 'CMS import or template publishing operation to execute.'
+          enum: [
+            'inspect_manifest',
+            'search_workspace_sources',
+            'import_csv_source',
+            'map_and_validate_import',
+            'audit_template_publishing'
+          ],
+          description: 'CMS import, Google Workspace source discovery, or template publishing operation to execute.'
         },
         collectionId: {
           type: 'string',
-          enum: ['tradePrograms', 'careerCenters', 'partnerDirectory', 'faqItems', 'utilityPages'],
+          enum: [
+            'tradePrograms',
+            'careerCenters',
+            'partnerDirectory',
+            'faqItems',
+            'utilityPages',
+            'programEvidenceDocs'
+          ],
           description: 'Target CMS Collection ID.'
         },
         records: {
@@ -227,6 +240,30 @@ export const MCP_TOOLS = [
     }
   }
 ];
+
+function splitCsvRow(line) {
+  const out = [];
+  let cur = '';
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i += 1) {
+    const ch = line[i];
+    if (ch === '"') {
+      if (inQuotes && line[i + 1] === '"') {
+        cur += '"';
+        i += 1;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (ch === ',' && !inQuotes) {
+      out.push(cur.trim());
+      cur = '';
+    } else {
+      cur += ch;
+    }
+  }
+  out.push(cur.trim());
+  return out;
+}
 
 export function executeMcpTool(toolName, args = {}) {
   const stylesPath = path.join(ROOT, 'styles.css');
@@ -474,9 +511,72 @@ export function executeMcpTool(toolName, args = {}) {
     const manifestPath = path.join(ROOT, 'assets', 'cms', 'collections-import.json');
     const manifest = fs.existsSync(manifestPath)
       ? JSON.parse(fs.readFileSync(manifestPath, 'utf8'))
-      : { importSources: [], collectionPublishingSettings: {} };
+      : { googleWorkspaceSources: {}, importSources: [], collectionPublishingSettings: {} };
     const operation = args.operation || 'inspect_manifest';
     const collectionId = args.collectionId || 'tradePrograms';
+
+    if (operation === 'search_workspace_sources') {
+      const refDocsPath = path.join(ROOT, 'reference_documents');
+      const refText = fs.existsSync(refDocsPath) ? fs.readFileSync(refDocsPath, 'utf8') : '';
+      const readinessDir = path.join(ROOT, 'program-readiness');
+      const readinessFiles = fs.existsSync(readinessDir)
+        ? fs.readdirSync(readinessDir).filter((f) => f.endsWith('.md'))
+        : [];
+      return {
+        server: MCP_SERVER_INFO.name,
+        tool: toolName,
+        operation,
+        googleWorkspaceSources: manifest.googleWorkspaceSources || {},
+        importSources: manifest.importSources || [],
+        readinessSpecs: readinessFiles.map((f) => `/program-readiness/${f}`),
+        referenceDocumentsLoaded: Boolean(refText.trim())
+      };
+    }
+
+    if (operation === 'import_csv_source') {
+      const sourceDef = (manifest.importSources || []).find((s) => s.targetCollection === collectionId);
+      if (!sourceDef || !sourceDef.csvSourcePath) {
+        throw new Error(`No CSV import source configured for collection "${collectionId}".`);
+      }
+      const csvDiskPath = path.join(ROOT, sourceDef.csvSourcePath.replace(/^\/+/, ''));
+      if (!fs.existsSync(csvDiskPath)) {
+        throw new Error(`CSV file not found on disk: ${sourceDef.csvSourcePath}`);
+      }
+      const csvContent = fs.readFileSync(csvDiskPath, 'utf8');
+      const lines = csvContent
+        .split(/\r?\n/)
+        .map((l) => l.trim())
+        .filter(Boolean);
+      const headers = lines.length > 0 ? splitCsvRow(lines[0]) : [];
+      const fieldMap = sourceDef.fieldMap || {};
+      const mappedRecords = lines.slice(1).map((line) => {
+        const vals = splitCsvRow(line);
+        const mapped = {};
+        headers.forEach((h, i) => {
+          const targetPath = fieldMap[h] || h;
+          const rawVal = vals[i] !== undefined ? vals[i] : '';
+          mapped[targetPath] = rawVal;
+        });
+        return mapped;
+      });
+      const publishedRecords = mappedRecords.filter(
+        (r) => r.status === 'published' && String(r.isInternal).toLowerCase() !== 'true'
+      );
+      const blockedRecords = mappedRecords.filter(
+        (r) => r.status !== 'published' || String(r.isInternal).toLowerCase() === 'true'
+      );
+      return {
+        server: MCP_SERVER_INFO.name,
+        tool: toolName,
+        operation,
+        collectionId,
+        csvSourcePath: sourceDef.csvSourcePath,
+        totalRowsParsed: mappedRecords.length,
+        publishedCount: publishedRecords.length,
+        blockedInternalOrDraftCount: blockedRecords.length,
+        records: mappedRecords
+      };
+    }
 
     if (operation === 'audit_template_publishing') {
       const settings = manifest.collectionPublishingSettings || {};
@@ -489,7 +589,9 @@ export function executeMcpTool(toolName, args = {}) {
         enabledTemplateCollections: enabledCollections.map((c) => ({
           collectionId: c.collectionId,
           urlPattern: c.urlPattern,
-          folderPrefix: c.folderPrefix
+          folderPrefix: c.folderPrefix,
+          publishedSlugs: c.publishedSlugs || [],
+          blockedSlugs: c.blockedSlugs || []
         })),
         disabledTemplateCollections: disabledCollections.map((c) => ({
           collectionId: c.collectionId,
@@ -531,6 +633,7 @@ export function executeMcpTool(toolName, args = {}) {
       tool: toolName,
       operation: 'inspect_manifest',
       manifestVersion: manifest.manifestVersion,
+      googleWorkspaceSources: manifest.googleWorkspaceSources || {},
       importSources: manifest.importSources,
       collectionPublishingSettings: manifest.collectionPublishingSettings
     };

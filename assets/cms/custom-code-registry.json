@@ -1,6 +1,6 @@
 {
-  "registryVersion": "3.2.0",
-  "updatedAt": "2026-11-14T12:00:00Z",
+  "registryVersion": "3.3.0",
+  "updatedAt": "2026-11-16T05:00:00Z",
   "repositoryGovernance": {
     "provider": "GitHub Controlled Version Repository",
     "defaultBranch": "main",
@@ -12,7 +12,7 @@
         "role": "Lead Designer, Developer & Technical Publisher",
         "owner": "Marilynn Ward (@MariDaCoder)",
         "email": "marilynnlward@gmail.com",
-        "scope": "Custom CSS (/styles.css), Custom JS (/components.js, /main.js, /eligibility.js, /analytics.js), HTML Templates, Firebase Hosting & Tag Management"
+        "scope": "Custom CSS (/styles.css), Custom JS (/components.js, /main.js, /eligibility.js, /analytics.js, /workspace-sheets.js), HTML Templates, Firebase Hosting & Tag Management"
       },
       {
         "role": "Executive Approver",
@@ -73,11 +73,11 @@
     {
       "id": "code-styles-css",
       "path": "/styles.css",
-      "version": "3.2.0",
+      "version": "3.3.0",
       "type": "text/css",
       "owner": "@MariDaCoder",
-      "stagingUrl": "https://springboards-community-dev--staging.web.app/styles.css?v=3.2.0",
-      "productionUrl": "https://springboardsfcd.org/styles.css?v=3.2.0",
+      "stagingUrl": "https://springboards-community-dev--staging.web.app/styles.css?v=3.3.0",
+      "productionUrl": "https://springboardsfcd.org/styles.css?v=3.3.0",
       "cacheControl": "public, max-age=3600, stale-while-revalidate=86400",
       "corsEnabled": true,
       "description": "Consolidated 3-tier custom CSS design system (primitive palette, semantic tokens, reusable layout & component classes)."
@@ -85,11 +85,11 @@
     {
       "id": "code-components-js",
       "path": "/components.js",
-      "version": "3.2.0",
+      "version": "3.3.0",
       "type": "application/javascript",
       "owner": "@MariDaCoder",
-      "stagingUrl": "https://springboards-community-dev--staging.web.app/components.js?v=3.2.0",
-      "productionUrl": "https://springboardsfcd.org/components.js?v=3.2.0",
+      "stagingUrl": "https://springboards-community-dev--staging.web.app/components.js?v=3.3.0",
+      "productionUrl": "https://springboardsfcd.org/components.js?v=3.3.0",
       "cacheControl": "public, max-age=3600, stale-while-revalidate=86400",
       "corsEnabled": true,
       "description": "Declarative UI component runtime, relational CMS schema engine, bilingual i18n switcher, and custom code host resolver."
@@ -97,11 +97,11 @@
     {
       "id": "code-main-js",
       "path": "/main.js",
-      "version": "3.2.0",
+      "version": "3.3.0",
       "type": "application/javascript",
       "owner": "@MariDaCoder",
-      "stagingUrl": "https://springboards-community-dev--staging.web.app/main.js?v=3.2.0",
-      "productionUrl": "https://springboardsfcd.org/main.js?v=3.2.0",
+      "stagingUrl": "https://springboards-community-dev--staging.web.app/main.js?v=3.3.0",
+      "productionUrl": "https://springboardsfcd.org/main.js?v=3.3.0",
       "cacheControl": "public, max-age=3600, stale-while-revalidate=86400",
       "corsEnabled": true,
       "description": "Interactive navigation, accessible modal dialogs, form validation states, and smart phone call/modal routing."
@@ -109,11 +109,11 @@
     {
       "id": "code-eligibility-js",
       "path": "/eligibility.js",
-      "version": "3.2.0",
+      "version": "3.3.0",
       "type": "application/javascript",
       "owner": "@MariDaCoder",
-      "stagingUrl": "https://springboards-community-dev--staging.web.app/eligibility.js?v=3.2.0",
-      "productionUrl": "https://springboardsfcd.org/eligibility.js?v=3.2.0",
+      "stagingUrl": "https://springboards-community-dev--staging.web.app/eligibility.js?v=3.3.0",
+      "productionUrl": "https://springboardsfcd.org/eligibility.js?v=3.3.0",
       "cacheControl": "public, max-age=3600, stale-while-revalidate=86400",
       "corsEnabled": true,
       "description": "WIOA Activity Code 220 & OJT multi-step eligibility wizard, Career Center matcher, and verification pass generator."
@@ -121,20 +121,33 @@
     {
       "id": "code-analytics-tms-js",
       "path": "/analytics.js",
-      "version": "3.2.0",
+      "version": "3.3.0",
       "type": "application/javascript",
       "owner": "@MariDaCoder",
-      "stagingUrl": "https://springboards-community-dev--staging.web.app/analytics.js?v=3.2.0",
-      "productionUrl": "https://springboardsfcd.org/analytics.js?v=3.2.0",
+      "stagingUrl": "https://springboards-community-dev--staging.web.app/analytics.js?v=3.3.0",
+      "productionUrl": "https://springboardsfcd.org/analytics.js?v=3.3.0",
       "cacheControl": "public, max-age=3600, stale-while-revalidate=86400",
       "corsEnabled": true,
-      "description": "Centralized Tag Management System (GTM-SBFCD26 / window.dataLayer), Consent Mode v2 controller, Core Web Vitals, and conversion funnel telemetry."
+      "description": "Centralized Tag Management System (GTM-SBFCD26 / window.dataLayer), Firebase + GA4 bridge, Consent Mode v2 controller, Core Web Vitals, and conversion funnel telemetry."
+    },
+    {
+      "id": "code-workspace-sheets-js",
+      "path": "/workspace-sheets.js",
+      "version": "3.3.0",
+      "type": "application/javascript",
+      "owner": "@MariDaCoder",
+      "stagingUrl": "https://springboards-community-dev--staging.web.app/workspace-sheets.js?v=3.3.0",
+      "productionUrl": "https://springboardsfcd.org/workspace-sheets.js?v=3.3.0",
+      "cacheControl": "public, max-age=3600, stale-while-revalidate=86400",
+      "corsEnabled": true,
+      "description": "Client-side Google Workspace OAuth 2.0 Bearer token integration for syncing 10-column Master Candidate & Intake Tracker sheets."
     }
   ],
   "tagManagementSystem": {
-    "platform": "Google Tag Manager (GTM) & Springboards Centralized Tag Orchestrator",
+    "platform": "Google Tag Manager (GTM) & Firebase Unified Analytics Orchestrator",
     "containerId": "GTM-SBFCD26",
     "ga4MeasurementId": "G-SBFCD2026",
+    "firebaseProjectId": "springboards-community-dev",
     "metaPixelId": "849203194618204",
     "dataLayerObject": "window.dataLayer",
     "consentModeVersion": "v2",

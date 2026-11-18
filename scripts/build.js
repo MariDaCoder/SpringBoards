@@ -278,7 +278,7 @@ for (const fw of forbiddenCssFrameworks) {
   }
 }
 
-// Verify consolidated external stylesheet linkage & zero inline <style> blocks across all HTML files
+// Verify consolidated external stylesheet linkage, zero inline <style> blocks, Search Console ownership, and zero duplicate tracking scripts across all HTML files
 const htmlFilesToAuditCss = [...publicPages, '404.html', 'resources/backoffice/index.html'];
 for (const htmlFile of htmlFilesToAuditCss) {
   const htmlPath = path.join(ROOT, htmlFile);
@@ -290,6 +290,18 @@ for (const htmlFile of htmlFilesToAuditCss) {
   }
   if (!/<link[^>]+rel=["']stylesheet["'][^>]+href=["'](?:https:\/\/springboardsfcd\.org)?\/styles\.css["']/i.test(htmlSource)) {
     console.error(`[CSS ARCHITECTURE AUDIT FAIL] ${htmlFile} is missing standardized external stylesheet link to /styles.css.`);
+    hasErrors = true;
+  }
+  if (htmlFile !== 'resources/backoffice/index.html') {
+    if (!/<meta[^>]+name=["']google-site-verification["'][^>]+content=["']google-site-verification-springboards-fcd-2026["']/i.test(htmlSource)) {
+      console.error(`[SEARCH CONSOLE AUDIT FAIL] ${htmlFile} is missing <meta name="google-site-verification" content="google-site-verification-springboards-fcd-2026">.`);
+      hasErrors = true;
+    }
+  }
+  const analyticsScriptMatches = htmlSource.match(/<script[^>]+src=["'][^"']*analytics\.js["'][^>]*>/gi) || [];
+  const gtagScriptMatches = htmlSource.match(/<script[^>]+src=["'][^"']*googletagmanager\.com\/(?:gtag|gtm)\.js[^"']*["'][^>]*>/gi) || [];
+  if (analyticsScriptMatches.length > 1 || gtagScriptMatches.length > 1) {
+    console.error(`[DUPLICATE TAG AUDIT FAIL] ${htmlFile} contains duplicate tracking script tags (analytics.js: ${analyticsScriptMatches.length}, gtag/gtm: ${gtagScriptMatches.length}).`);
     hasErrors = true;
   }
 }

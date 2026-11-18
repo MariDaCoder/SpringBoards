@@ -676,6 +676,7 @@
       mapButton.type = "button";
       mapButton.className = "wizard-button secondary";
       mapButton.textContent = "Show on map";
+      mapButton.setAttribute("aria-label", `Show ${center.name} on map`);
       mapButton.setAttribute("aria-pressed", String(center.name === selectedCareerCenter.name));
       mapButton.addEventListener("click", () => {
         showCenterOnMap(center);
@@ -689,7 +690,8 @@
       const phoneLink = document.createElement("a");
       phoneLink.className = "wizard-button secondary";
       phoneLink.href = center.callLink;
-      phoneLink.textContent = "Call center";
+      phoneLink.textContent = `Call ${center.phone}`;
+      phoneLink.setAttribute("aria-label", `Call ${center.name} at ${center.phone}`);
       actions.append(phoneLink);
 
       if (directionsOrigin) {
@@ -699,6 +701,7 @@
         directionsLink.target = "_blank";
         directionsLink.rel = "noopener noreferrer";
         directionsLink.textContent = "Get directions →";
+        directionsLink.setAttribute("aria-label", `Get Google Maps directions to ${center.name}`);
         actions.append(directionsLink);
       }
 
@@ -765,7 +768,7 @@
       desc.style.margin = "0.25rem 0 0.65rem";
       desc.style.fontSize = "0.88rem";
       desc.style.color = "var(--wizard-muted)";
-      desc.textContent = `Pick one of the weekday dates above to view sample morning and afternoon visit times at ${selectedCareerCenter.name}, or jump straight to the earliest available weekday.`;
+      desc.textContent = `Pick one of the weekday dates in the "Choose a visit time" calendar to view sample morning and afternoon visit times at ${selectedCareerCenter.name}, or jump straight to the earliest available weekday.`;
       const pickFirstBtn = document.createElement("button");
       pickFirstBtn.type = "button";
       pickFirstBtn.className = "wizard-button secondary";
@@ -809,7 +812,7 @@
     const percentage = Math.round(((questionIndex + 1) / questionCount) * 100);
     progressValue.style.width = `${percentage}%`;
     progressTrack.setAttribute("aria-valuenow", String(percentage));
-    nextButton.hidden = !isMultiChoice(question);
+    nextButton.hidden = false;
     backButton.hidden = questionIndex === 0;
     nextButton.textContent = questionIndex === questionCount - 1 ? "See my profile & next step →" : "Continue →";
   };
@@ -936,6 +939,18 @@
     fieldset.append(options);
     questionMount.append(fieldset);
 
+    let isKeyboardArrowNav = false;
+    fieldset.addEventListener("keydown", (event) => {
+      if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)) {
+        isKeyboardArrowNav = true;
+      } else {
+        isKeyboardArrowNav = false;
+      }
+    });
+    fieldset.addEventListener("pointerdown", () => {
+      isKeyboardArrowNav = false;
+    });
+
     fieldset.addEventListener("change", (event) => {
       const input = event.target;
       if (!(input instanceof HTMLInputElement)) return;
@@ -958,6 +973,14 @@
         youthWorkHistoryApplies = input.value === "18-24";
         if (previousAge !== input.value) delete answers.youthWbl;
       }
+
+      // If the user is cycling through radio options with keyboard arrow keys,
+      // record the selection and let them press Enter or click Continue to advance.
+      if (isKeyboardArrowNav) {
+        isKeyboardArrowNav = false;
+        return;
+      }
+
       if (question.name === "age" && input.value === "under-18") {
         showResult("not-eligible", "Age is the only thing holding this path back right now.", "Transitional Jobs is for adults 18 and older. You can still talk with Springboards about other ways to learn a trade and build your future.");
         return;
@@ -1127,7 +1150,7 @@
       readyItem.style.marginLeft = "-1.25rem";
       readyItem.style.color = "#166534";
       readyItem.style.fontWeight = "700";
-      readyItem.textContent = "No missing documents—proceed to locate your nearest Career Center or submit your application below.";
+      readyItem.textContent = "No missing documents—use the action buttons in this section to locate your nearest Career Center or submit your application.";
       missingDocuments.append(readyItem);
       return;
     }
@@ -1211,7 +1234,43 @@
   questionForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const question = getQuestions()[currentQuestion];
-    if (!isMultiChoice(question)) return;
+    if (!isMultiChoice(question)) {
+      const selectedInput = questionForm.querySelector(`input[name="${question.name}"]:checked`);
+      if (!(selectedInput instanceof HTMLInputElement)) {
+        questionError.setAttribute("role", "alert");
+        questionError.textContent = "⚠ Action Required: Please select an option that fits your situation to continue.";
+        questionForm.querySelector("input")?.focus();
+        return;
+      }
+      questionError.textContent = "";
+      const value = selectedInput.value;
+      const previousAge = answers.age;
+      answers[question.name] = value;
+      if (question.name === "age") {
+        youthWorkHistoryApplies = value === "18-24";
+        if (previousAge !== value) delete answers.youthWbl;
+      }
+      if (question.name === "age" && value === "under-18") {
+        showResult("not-eligible", "Age is the only thing holding this path back right now.", "Transitional Jobs is for adults 18 and older. You can still talk with Springboards about other ways to learn a trade and build your future.");
+        return;
+      }
+      if (question.name === "apprentice" && value === "yes") {
+        showResult("not-eligible", "You’re already on an apprenticeship path.", "Apprentices are not eligible for Transitional Jobs. Keep building on the path you’re on, and reach out if you want to explore other Springboards support.");
+        return;
+      }
+      if (question.name === "youthWbl" && value === "yes") {
+        showResult("not-eligible", "This Transitional Jobs path may not be the right fit today.", "Young people who have already taken part in work-based learning are not eligible for this program. Your skills still matter—our team can help you explore another next step.");
+        return;
+      }
+      const latestQuestions = getQuestions();
+      if (currentQuestion < latestQuestions.length - 1) {
+        currentQuestion += 1;
+        renderQuestion();
+      } else {
+        evaluateAnswers();
+      }
+      return;
+    }
     const selected = Array.from(questionForm.querySelectorAll(`input[name="${question.name}"]:checked`)).map((input) => input.value);
     if (!selected.length) {
       questionError.setAttribute("role", "alert");
@@ -1305,7 +1364,7 @@
         showCenterOnMap(nearest.center);
         addressSearchStatus.classList.remove("is-error");
         addressSearchStatus.classList.add("is-success");
-        addressSearchStatus.textContent = `✓ Closest Match Found: ${nearest.center.name} (approx. ${nearest.miles.toFixed(1)} miles from ${payload.formattedAddress || address}). Choose a sample visit time below or open turn-by-turn Google Maps directions.`;
+        addressSearchStatus.textContent = `✓ Closest Match Found: ${nearest.center.name} (approx. ${nearest.miles.toFixed(1)} miles from ${payload.formattedAddress || address}). Choose a sample visit time in the appointment calendar or open turn-by-turn Google Maps directions.`;
         renderCareerCenters();
         renderAppointmentCalendar();
       })
@@ -1314,7 +1373,7 @@
         addressSearchStatus.classList.remove("is-success");
         addressSearchStatus.classList.add("is-error");
         addressSearchStatus.setAttribute("role", "alert");
-        addressSearchStatus.textContent = `⚠ ${error.message} Try entering a 5-digit ZIP code or city name (e.g., Valley, Lanett, Opelika, Phenix City), or select any Career Center directly from the list below.`;
+        addressSearchStatus.textContent = `⚠ ${error.message} Try entering a 5-digit ZIP code or city name (e.g., Valley, Lanett, Opelika, Phenix City), or select any Career Center directly from the Career Center directory.`;
         renderCareerCenters();
       })
       .finally(() => {

@@ -17,7 +17,17 @@
 
   var GTM_CONTAINER_ID = 'GTM-SBFCD26';
   var GA_MEASUREMENT_ID = 'G-SBFCD2026';
+  var FIREBASE_PROJECT_ID = 'springboards-community-dev';
   var META_PIXEL_ID = '849203194618204';
+  var FIREBASE_ANALYTICS_CONFIG = {
+    projectId: FIREBASE_PROJECT_ID,
+    projectNumber: '651964189612',
+    siteId: 'springboards-community-dev',
+    measurementId: GA_MEASUREMENT_ID,
+    gtmContainerId: GTM_CONTAINER_ID,
+    integrationApproach: 'firebase_and_gtm_unified_deduplicated'
+  };
+  window.__SPRINGBOARDS_FIREBASE_ANALYTICS__ = FIREBASE_ANALYTICS_CONFIG;
 
   // Strict Singleton & Anti-Duplication Guard:
   // Prevents double initialization if /analytics.js is loaded more than once or if an inline
@@ -104,6 +114,7 @@
   // so consent preferences never break forms, eligibility checks, Career Center maps, or i18n.
   var defaultConsent = {
     analytics_storage: 'granted',
+    personalization_storage: 'granted',
     functionality_storage: 'granted',
     security_storage: 'granted',
     ad_storage: 'denied',
@@ -142,7 +153,7 @@
     });
   }
 
-  // Connect Google Analytics 4 (GA4) via single centralized integration:
+  // Connect Google Analytics 4 (GA4) via single centralized Firebase + GTM integration:
   // send_page_view is set to false here so our unified sendEvent('page_view') dispatches
   // exactly ONE deduplicated page_view event per navigation (zero double-counting).
   if (!window.__SPRINGBOARDS_GA4_INITIALIZED__) {
@@ -151,6 +162,7 @@
       send_page_view: false,
       anonymize_ip: true,
       cookie_flags: 'SameSite=Lax;Secure',
+      firebase_project_id: FIREBASE_PROJECT_ID,
       custom_map: {
         dimension1: 'wioa_activity_code',
         dimension2: 'career_center_id',
@@ -164,10 +176,11 @@
     event: 'gtm.js',
     containerId: GTM_CONTAINER_ID,
     gaMeasurementId: GA_MEASUREMENT_ID,
+    firebaseProjectId: FIREBASE_PROJECT_ID,
     metaPixelId: META_PIXEL_ID,
-    gaIntegrationMode: 'centralized_tms_deduplicated',
+    gaIntegrationMode: 'firebase_and_gtm_unified_deduplicated',
     metaPixelIntegrationMode: 'consent_gated_event_id_deduplicated',
-    siteVersion: '3.2.0'
+    siteVersion: '3.3.0'
   });
 
   // Managed Tag Registry defining granular WHEN and WHERE rules
@@ -493,21 +506,34 @@
     reportClientError('unhandled_rejection', reason);
   });
 
+  function getSearchConsoleVerificationStatus() {
+    const metaEl = document.querySelector('meta[name="google-site-verification"]');
+    const canonicalEl = document.querySelector('link[rel="canonical"]');
+    return {
+      verifiedInDom: Boolean(metaEl && metaEl.getAttribute('content')),
+      metaTagContent: metaEl ? metaEl.getAttribute('content') : null,
+      htmlVerificationFile: '/google651964189612fcd.html',
+      canonicalHref: canonicalEl ? canonicalEl.getAttribute('href') : null,
+      sitemapUrl: 'https://springboardsfcd.org/sitemap.xml'
+    };
+  }
+
   function getGa4IntegrationStatus() {
     pruneDuplicateTrackingScripts();
-    const analyticsScriptTags = document.querySelectorAll('script[src*="/analytics.js"]').length;
+    const analyticsScriptTags = document.querySelectorAll('script[src*="analytics.js"]').length;
     const inlineGtagTags = document.querySelectorAll('script[src*="googletagmanager.com/gtag/js"]').length;
     return {
       connected: true,
       measurementId: GA_MEASUREMENT_ID,
+      firebaseProjectId: FIREBASE_PROJECT_ID,
       containerId: GTM_CONTAINER_ID,
-      integrationMethod: 'Centralized Tag Management System (GTM-SBFCD26 -> GA4 G-SBFCD2026)',
+      integrationMethod: 'Unified Firebase Integration + Google Tag Manager (GTM-SBFCD26 -> GA4 G-SBFCD2026)',
       singletonLockActive: Boolean(window.__SPRINGBOARDS_GA4_INITIALIZED__),
       sendPageViewDeduplicated: true,
       activeAnalyticsScriptsInDom: analyticsScriptTags,
       redundantInlineGtagScripts: inlineGtagTags,
       duplicateTagsPreventedCount: window.__SPRINGBOARDS_DUPLICATE_TAG_BLOCKED_COUNT__ || 0,
-      statusLabel: 'Connected (Zero Duplicate Tags)'
+      statusLabel: 'Connected via Firebase & GTM (Zero Duplicate Tags)'
     };
   }
 
@@ -518,17 +544,37 @@
       connected: true,
       pixelId: META_PIXEL_ID,
       containerId: GTM_CONTAINER_ID,
+      integrationMethod: 'Tag Management System (GTM-SBFCD26) + Consent Mode v2 Bridge',
       singletonLockActive: Boolean(window.__SPRINGBOARDS_META_PIXEL_INITIALIZED__),
-      disablePushStateDuplicateGuard: true,
+      disablePushStateDuplicateGuard: Boolean(window.fbq && window.fbq.disablePushState),
       eventIdDeduplicationActive: true,
       consentMode: activeConsent.ad_storage === 'granted' ? 'grant' : 'revoke',
       redundantInlineFbScripts: inlineFbScripts,
       uniqueEventsDispatchedCount: dispatchedMetaPixelEventIds.size,
+      duplicateEventsBlockedCount: window.__SPRINGBOARDS_DUPLICATE_TAG_BLOCKED_COUNT__ || 0,
       recentEvents: metaPixelEventLog.slice(0, 10),
       statusLabel:
         activeConsent.ad_storage === 'granted'
           ? 'Active & Deduplicated (Consent Granted)'
           : 'Configured & Consent-Gated (Standby until Marketing Consent Granted)'
+    };
+  }
+
+  function verifyMetaPixelIntegration() {
+    const testEventId = 'evt_qa_meta_verify_dedupe_v1';
+    const firstAttempt = dispatchDeduplicatedMetaPixelEvent('form_submit_success', window.location.pathname || '/', testEventId, {
+      formId: 'programInquiries'
+    });
+    const duplicateAttempt = dispatchDeduplicatedMetaPixelEvent('form_submit_success', window.location.pathname || '/', testEventId, {
+      formId: 'programInquiries'
+    });
+    return {
+      ...getMetaPixelStatus(),
+      qaDeduplicationCheck: {
+        testEventId,
+        firstDispatch: firstAttempt,
+        secondDispatchBlockedAsDuplicate: Boolean(duplicateAttempt && duplicateAttempt.deduplicated)
+      }
     };
   }
 
@@ -549,41 +595,42 @@
         <div class="sb-consent-banner__copy">
           <strong class="sb-consent-banner__title">Privacy &amp; Cookie Consent Preferences</strong>
           <p class="sb-consent-banner__desc">
-            We use essential security storage so WIOA eligibility checks, Career Center maps, and intake forms always work reliably. With your permission, we also coordinate deduplicated <strong>Google Analytics 4</strong> and <strong>Meta Pixel</strong> outreach measurement.
+            We use essential security storage so WIOA eligibility checks, Career Center maps, and intake forms always work reliably. With your permission, we coordinate deduplicated <strong>Google Analytics 4</strong>, <strong>Google Optimize</strong> experience settings, and <strong>Meta Pixel</strong> outreach measurement.
           </p>
         </div>
         <div class="sb-consent-banner__actions">
-          <button type="button" class="btn-cta sb-consent-btn" id="sbConsentAcceptAllBtn">Accept All</button>
-          <button type="button" class="btn-outline-dark sb-consent-btn" id="sbConsentEssentialOnlyBtn">Essential Only</button>
-          <button type="button" class="btn-outline-dark sb-consent-btn" id="sbConsentCustomizeBtn" aria-expanded="false" aria-controls="sbConsentPreferencesDrawer">Customize</button>
+          <button type="button" class="sb-consent-btn sb-consent-btn--primary" id="sbConsentAcceptAllBtn">✓ Accept All</button>
+          <button type="button" class="sb-consent-btn sb-consent-btn--secondary" id="sbConsentEssentialOnlyBtn">Essential Only</button>
+          <button type="button" class="sb-consent-btn sb-consent-btn--ghost" id="sbConsentCustomizeBtn" aria-expanded="false" aria-controls="sbConsentPreferencesDrawer">⚙ Customize</button>
         </div>
       </div>
       <div class="sb-consent-drawer" id="sbConsentPreferencesDrawer" hidden>
         <div class="sb-consent-drawer__grid">
           <label class="sb-consent-option">
-            <input type="checkbox" checked disabled>
+            <input type="checkbox" checked disabled aria-label="Strictly Necessary and Essential Functionality (Always Active)">
             <span>
-              <strong>Strictly Necessary &amp; Essential Functionality (Always Active)</strong>
-              <small>Required for WIOA Activity 220 eligibility checks, form submissions, Google Maps Career Center directions, and bilingual (EN/ES) switching.</small>
+              <strong>✓ Strictly Necessary &amp; Essential Functionality [Always Active]</strong>
+              <small>Required for WIOA Activity 220 eligibility checks, form submissions, Google Maps Career Center directions, and bilingual (EN/ES) switching (<code>functionality_storage</code> &amp; <code>security_storage</code>).</small>
             </span>
           </label>
           <label class="sb-consent-option">
             <input type="checkbox" id="sbConsentToggleAnalytics" ${activeConsent.analytics_storage === 'granted' ? 'checked' : ''}>
             <span>
-              <strong>Google Analytics 4 &amp; Performance Telemetry (<code>analytics_storage</code>)</strong>
-              <small>Measures anonymous pageviews, form conversion rates, and Core Web Vitals via single deduplicated tag (<code>${GA_MEASUREMENT_ID}</code>).</small>
+              <strong>Google Analytics 4 &amp; Google Optimize [Optional]</strong>
+              <small>Coordinates anonymous pageviews, Core Web Vitals, and site optimization via <code>${GA_MEASUREMENT_ID}</code> (<code>analytics_storage</code> &amp; <code>personalization_storage</code>).</small>
             </span>
           </label>
           <label class="sb-consent-option">
             <input type="checkbox" id="sbConsentToggleMarketing" ${activeConsent.ad_storage === 'granted' ? 'checked' : ''}>
             <span>
-              <strong>Meta Pixel &amp; Community Outreach Tags (<code>ad_storage</code>)</strong>
-              <small>Enables event-ID deduplicated Meta Pixel (<code>${META_PIXEL_ID}</code>) conversion measurement for community recruitment campaigns.</small>
+              <strong>Meta Pixel &amp; Community Outreach Tags [Optional]</strong>
+              <small>Enables event-ID deduplicated Meta Pixel (<code>${META_PIXEL_ID}</code>) conversion measurement for community recruitment campaigns (<code>ad_storage</code> &amp; <code>ad_personalization</code>).</small>
             </span>
           </label>
         </div>
         <div class="sb-consent-drawer__footer">
-          <button type="button" class="btn-cta sb-consent-btn" id="sbConsentSaveCustomBtn">Save My Preferences</button>
+          <a href="/utility/privacy-terms" class="sb-consent-link">View Privacy &amp; WIOA Governance Notice</a>
+          <button type="button" class="sb-consent-btn sb-consent-btn--primary" id="sbConsentSaveCustomBtn">✓ Save My Preferences</button>
         </div>
       </div>
     `;
@@ -601,6 +648,7 @@
     acceptAllBtn?.addEventListener('click', () => {
       updateConsentState({
         analytics_storage: 'granted',
+        personalization_storage: 'granted',
         ad_storage: 'granted',
         ad_user_data: 'granted',
         ad_personalization: 'granted'
@@ -613,6 +661,7 @@
     essentialOnlyBtn?.addEventListener('click', () => {
       updateConsentState({
         analytics_storage: 'denied',
+        personalization_storage: 'denied',
         ad_storage: 'denied',
         ad_user_data: 'denied',
         ad_personalization: 'denied'
@@ -627,6 +676,18 @@
       const isHidden = drawer.hidden;
       drawer.hidden = !isHidden;
       customizeBtn.setAttribute('aria-expanded', String(isHidden));
+      if (isHidden && toggleAnalytics) {
+        window.setTimeout(() => toggleAnalytics.focus(), 40);
+      }
+    });
+
+    banner.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Escape' && drawer && !drawer.hidden) {
+        ev.preventDefault();
+        drawer.hidden = true;
+        customizeBtn?.setAttribute('aria-expanded', 'false');
+        customizeBtn?.focus();
+      }
     });
 
     saveCustomBtn?.addEventListener('click', () => {
@@ -634,6 +695,7 @@
       const marketingChoice = toggleMarketing && toggleMarketing.checked ? 'granted' : 'denied';
       updateConsentState({
         analytics_storage: analyticsChoice,
+        personalization_storage: analyticsChoice,
         ad_storage: marketingChoice,
         ad_user_data: marketingChoice,
         ad_personalization: marketingChoice
@@ -647,13 +709,27 @@
     const banner = document.getElementById('sbConsentBanner');
     const drawer = document.getElementById('sbConsentPreferencesDrawer');
     const customizeBtn = document.getElementById('sbConsentCustomizeBtn');
+    const toggleAnalytics = document.getElementById('sbConsentToggleAnalytics');
     if (banner) {
       banner.hidden = false;
       if (drawer) drawer.hidden = false;
       if (customizeBtn) customizeBtn.setAttribute('aria-expanded', 'true');
       banner.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      if (toggleAnalytics) {
+        window.setTimeout(() => toggleAnalytics.focus(), 80);
+      } else if (customizeBtn) {
+        window.setTimeout(() => customizeBtn.focus(), 80);
+      }
     }
   }
+
+  document.addEventListener('click', (ev) => {
+    const trigger = ev.target && ev.target.closest ? ev.target.closest('[data-open-consent-preferences], #footerConsentPreferencesBtn') : null;
+    if (trigger) {
+      ev.preventDefault();
+      openConsentPreferences();
+    }
+  });
 
   window.SpringboardsCMP = {
     getConsentState: () => Object.assign({}, activeConsent),
@@ -662,6 +738,7 @@
     acceptAll: () =>
       updateConsentState({
         analytics_storage: 'granted',
+        personalization_storage: 'granted',
         ad_storage: 'granted',
         ad_user_data: 'granted',
         ad_personalization: 'granted'
@@ -669,6 +746,7 @@
     rejectOptional: () =>
       updateConsentState({
         analytics_storage: 'denied',
+        personalization_storage: 'denied',
         ad_storage: 'denied',
         ad_user_data: 'denied',
         ad_personalization: 'denied'
@@ -687,6 +765,7 @@
   window.SpringboardsTMS = {
     containerId: GTM_CONTAINER_ID,
     gaMeasurementId: GA_MEASUREMENT_ID,
+    firebaseProjectId: FIREBASE_PROJECT_ID,
     metaPixelId: META_PIXEL_ID,
     getManagedTags: () => MANAGED_TAGS.slice(),
     getConsentState: () => Object.assign({}, activeConsent),
@@ -694,16 +773,21 @@
     shouldRunTag: shouldRunTag,
     getDataLayer: () => window.dataLayer.slice(-25),
     getGa4IntegrationStatus: getGa4IntegrationStatus,
+    getSearchConsoleStatus: getSearchConsoleVerificationStatus,
     getMetaPixelStatus: getMetaPixelStatus,
+    verifyMetaPixelIntegration: verifyMetaPixelIntegration,
     cmp: window.SpringboardsCMP,
     pushEvent: (eventName, params = {}) => sendEvent(eventName, params.label || eventName, params)
   };
 
   window.SpringboardsAnalytics = {
     gaMeasurementId: GA_MEASUREMENT_ID,
+    firebaseProjectId: FIREBASE_PROJECT_ID,
     metaPixelId: META_PIXEL_ID,
     getGa4Status: getGa4IntegrationStatus,
+    getSearchConsoleStatus: getSearchConsoleVerificationStatus,
     getMetaPixelStatus: getMetaPixelStatus,
+    verifyMetaPixelIntegration: verifyMetaPixelIntegration,
     trackEvent: sendEvent,
     trackFormStart: (formId) => sendEvent('form_start', `Form Start: ${formId}`, { formId }),
     trackFormSuccess: (formId, extra = {}) => sendEvent('form_submit_success', `Form Completed: ${formId}`, { formId, ...extra }),

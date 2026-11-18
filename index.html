@@ -151,6 +151,17 @@
     },
     {
       "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Springboards for Community Development",
+      "url": "https://springboardsfcd.org",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://springboardsfcd.org/utility/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       "itemListElement": [
         {
@@ -503,7 +514,7 @@
           </div>
           <div class="collection-filter-search-wrap">
             <input type="search" id="skillsSearchInput" class="collection-filter-search" placeholder="Filter skills (e.g. OSHA, wiring, blueprint)..." aria-label="Search trade skills">
-            <button type="button" id="skillsSearchClear" class="collection-filter-clear" aria-label="Clear skills search" hidden>×</button>
+            <button type="button" id="skillsSearchClear" class="collection-filter-clear" aria-label="Clear skills search" hidden><span aria-hidden="true">×</span></button>
           </div>
         </div>
 
@@ -657,13 +668,18 @@
           </figure>
         </div>
 
-        <div class="outcome-gallery-dots" aria-hidden="true">
-          <span class="outcome-dot is-active"></span>
-          <span class="outcome-dot"></span>
-          <span class="outcome-dot"></span>
-          <span class="outcome-dot"></span>
-          <span class="outcome-dot"></span>
-        </div>
+        <details class="prequal-transcript-drawer u-mt-4">
+          <summary class="prequal-transcript-summary">
+            <span>View Photo Descriptions &amp; Hands-On Training Lab Transcript</span>
+          </summary>
+          <div class="prequal-transcript-body">
+            <ul class="prequal-transcript-list">
+              <li><strong>Practical Construction Training:</strong> Instructor and trainees wearing high-visibility safety vests and hard hats measuring and squaring a residential timber frame foundation outdoors at the Shawmut Training Center.</li>
+              <li><strong>Learning Together:</strong> Two Springboards trainees collaborating on a commercial electrical breaker panel installation, practicing NEC conduit routing and wire termination under mentor supervision.</li>
+              <li><strong>Skills in Practice:</strong> Close-up of hands-on electrical circuitry diagnostics using digital multimeters, insulated hand tools, and copper wiring boards during the 195-hour foundational lab block.</li>
+            </ul>
+          </div>
+        </details>
 
         <div class="outcome-section-rule" aria-hidden="true"></div>
       </div>
@@ -687,7 +703,7 @@
           </div>
           <div class="collection-filter-search-wrap">
             <input type="search" id="faqSearchInput" class="collection-filter-search" placeholder="Search questions (e.g. free, experience, hours)..." aria-label="Search frequently asked questions">
-            <button type="button" id="faqSearchClear" class="collection-filter-clear" aria-label="Clear FAQ search" hidden>×</button>
+            <button type="button" id="faqSearchClear" class="collection-filter-clear" aria-label="Clear FAQ search" hidden><span aria-hidden="true">×</span></button>
           </div>
         </div>
 
@@ -698,7 +714,7 @@
               <svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </summary>
             <div class="faq-answer">
-              <p><strong>Yes. Every Springboards training pathway is 100% tuition-free for participants.</strong> Instruction, tools, personal protective equipment (PPE), and certification testing are covered through workforce grants, community partners, and donors.</p>
+              <p><strong>Yes. Every Springboards training pathway is 100% tuition-free for participants.</strong> Instruction, hand and power tools, personal protective equipment (PPE), and OSHA-10 / NCCER certification testing are covered through WIOA Activity Code 220 workforce grants, <a href="/community/partner">regional employer partnerships</a>, and <a href="/community/donate">501(c)(3) community sponsorships</a>.</p>
             </div>
           </details>
 
@@ -708,7 +724,7 @@
               <svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </summary>
             <div class="faq-answer">
-              <p>We serve young adults (ages 18–24), jobseekers, returning citizens, and underemployed adults across Shawmut, Lanett, Valley, and East Alabama who are ready to show up, learn a skilled trade, and move toward stable employment.</p>
+              <p>We serve young adults (ages 18–24), jobseekers, returning citizens, and underemployed adults across Shawmut, Lanett, Valley, Opelika, and East Alabama who are ready to show up, learn a skilled trade, and move toward stable employment. You can <a href="/programs/eligibility">complete the 2-minute WIOA Eligibility Check</a> to see how your background matches local Career Center criteria.</p>
             </div>
           </details>
 
@@ -718,7 +734,7 @@
               <svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </summary>
             <div class="faq-answer">
-              <p>No prior trade or construction experience is required. We start with the fundamentals—tool safety, measuring, and core trade skills—and guide you step by step.</p>
+              <p>No prior trade or construction experience is required. We start with the fundamentals—tool safety, tape-measure precision, blueprint basics, and core trade skills during our 195-hour foundational lab block—and guide you step by step. <a href="/programs/train">Watch the 10-slide Transitional Jobs orientation</a> to preview how day-one training works.</p>
             </div>
           </details>
 
@@ -728,7 +744,7 @@
               <svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </summary>
             <div class="faq-answer">
-              <p>You will learn hands-on carpentry and construction basics, electrical fundamentals, plumbing and pipefitting, HVAC and mechanical systems, OSHA jobsite safety and NCCER certifications, and professional work readiness.</p>
+              <p>You will learn hands-on <a href="/programs/pathways/carpentry-framing">Carpentry and Construction Basics</a>, <a href="/programs/pathways/electrical-fundamentals">Electrical Fundamentals</a>, <a href="/programs/pathways/plumbing-pipefitting">Plumbing and Pipefitting</a>, <a href="/programs/pathways/hvac-mechanical-systems">HVAC and Mechanical Systems</a>, <a href="/programs/pathways/osha-jobsite-safety">OSHA Jobsite Safety and NCCER Credentials</a>, and <a href="/programs/pathways/work-readiness-ojt">Teamwork, Discipline and Transitional Jobs</a>. You can also <a href="/programs/pathways">browse all 7 published trade pathway curricula</a>.</p>
             </div>
           </details>
 
@@ -738,7 +754,7 @@
               <svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </summary>
             <div class="faq-answer">
-              <p>Training is held at the <strong>Springboards Community Center</strong>, located at <strong>2269 15th Ave. S.W., Lanett, AL 36863</strong> (Shawmut). Training sessions and project blocks run Monday through Thursday from 8:00 AM to 4:00 PM EST (Eastern Standard Time).</p>
+              <p>Training is held at the <strong>Springboards Community Center</strong>, located at <strong>2269 15th Ave. S.W., Lanett, AL 36863</strong> (historic Shawmut village). Training sessions and supervised field blocks run Monday through Thursday from 8:00 AM to 4:00 PM EST (32 hours per week). Residents desiring to serve alongside our cohorts can also <a href="/community/volunteer">sign up for weekday volunteer work blocks</a>.</p>
             </div>
           </details>
 
@@ -748,7 +764,7 @@
               <svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </summary>
             <div class="faq-answer">
-              <p>Click <strong>Apply for Training</strong> on this page and complete the brief candidate form. An advisor will contact you within 1–2 business days to discuss your goals and help you complete any needed Alabama Career Center steps.</p>
+              <p>Select <strong>Apply for Training</strong> on this page or <a href="/programs/eligibility">start the WIOA Eligibility &amp; Career Center Wizard</a> to generate your Dual Career Center Verification Pass. An advisor will contact you within 1–2 business days to review your goals and help you complete verification at the Opelika Career Center, Valley Workforce Hub, or WorkSource Three Rivers.</p>
             </div>
           </details>
 
@@ -758,10 +774,32 @@
               <svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </summary>
             <div class="faq-answer">
-              <p>Graduates receive guided support into WIOA Transitional Jobs, On-the-Job Training (OJT), apprenticeship pathways, and referrals to local construction and trade employers across East Alabama.</p>
+              <p>Graduates transition from up to 390 hours of WIOA Activity 220 paid Transitional Jobs directly into full-time On-the-Job Training (OJT), apprenticeship pathways, and contractor placements across East Alabama. Local contractors can <a href="/community/partner">explore WIOA OJT employer wage reimbursement partnerships</a>.</p>
             </div>
           </details>
         </div>
+
+        <nav class="related-internal-links-card u-mt-6" aria-label="Related program and community pathways">
+          <h3 class="related-internal-links-title">Explore Connected Pages &amp; Next Steps</h3>
+          <div class="related-internal-links-grid">
+            <a href="/programs/train" class="related-internal-link-item">
+              <strong>10-Slide Transitional Jobs Orientation</strong>
+              <span>Review how paid 390-hour WIOA Activity 220 training and OJT placement work</span>
+            </a>
+            <a href="/programs/eligibility" class="related-internal-link-item">
+              <strong>WIOA Eligibility Wizard &amp; Career Centers</strong>
+              <span>Check your eligibility in 2 minutes and find your nearest Career Center</span>
+            </a>
+            <a href="/programs/pathways" class="related-internal-link-item">
+              <strong>All 7 Published Trade Pathway Curricula</strong>
+              <span>Compare Carpentry, Electrical, Plumbing, HVAC, Demolition, and OSHA tracks</span>
+            </a>
+            <a href="/utility/search" class="related-internal-link-item">
+              <strong>Site Search &amp; Topic Directory</strong>
+              <span>Search all indexed trade pathways, Career Centers, partner tracks, and FAQs</span>
+            </a>
+          </div>
+        </nav>
 
         <div class="collection-empty-state" id="faqEmptyState" role="status" aria-live="polite" hidden>
           <div class="collection-empty-icon" aria-hidden="true">
@@ -824,22 +862,31 @@
   </main>
 
   <!-- SECTION 10: FOOTER & CONTACT (No empty spacer element; uses .u-scroll-mt-nav) -->
-  <footer class="footer-section u-scroll-mt-nav" id="footer" data-flow-step="10" data-flow-section="footer">
+  <footer class="footer-section u-scroll-mt-nav" id="footer" aria-labelledby="footerHeading" data-flow-step="10" data-flow-section="footer">
+    <h2 id="footerHeading" class="sr-only">Site Footer Navigation and Contact Information</h2>
     <div id="contact" class="container footer-grid u-scroll-mt-nav">
       <div class="footer-col footer-brand">
-        <a href="#top" class="footer-brand-lockup" aria-label="Springboards for Community Development">
-          <span class="footer-logo-emblem-wrap" aria-hidden="true">
-            <img src="/assets/aistudio/springboards_logo_icon.png?v=20261114-clean" alt="" class="footer-logo" width="102" height="88" loading="lazy" decoding="async">
+        <a href="#top" class="footer-brand-lockup" aria-label="Springboards for Community Development — Back to top">
+          <span class="footer-logo-emblem-wrap">
+            <img src="/assets/aistudio/springboards_logo_icon.png?v=20261114-clean" alt="Springboards for Community Development emblem" class="footer-logo" width="116" height="100" loading="lazy" decoding="async" referrerpolicy="no-referrer">
           </span>
-          <div class="footer-wordmark-group">
-            <img src="/assets/aistudio/springboards_logo_white_text.png?v=20261114-clean" alt="Springboards for Community Development" class="footer-wordmark-img" width="228" height="70" loading="lazy" decoding="async">
-          </div>
         </a>
-        <p class="footer-desc">Springboards helps people who lack access to clear training and stable work opportunities by giving them practical, free trade education, community support, and a real path toward skilled employment.</p>
+        <div class="footer-brand-content">
+          <p class="footer-brand-eyebrow">SPRINGBOARDS FOR COMMUNITY DEVELOPMENT</p>
+          <p class="footer-brand-headline">Free Trade Training That Opens Real Career Paths</p>
+          <p class="footer-desc">A paid, tuition-free opportunity for adults 18 and over to learn construction and skilled trades in East Alabama—combining hands-on training, community support, and a clear path toward stable employment.</p>
+          <p class="footer-brand-pillars" aria-label="Core program commitments">
+            <span>Tuition-free</span>
+            <span class="footer-brand-sep" aria-hidden="true">&middot;</span>
+            <span>Hands-on learning</span>
+            <span class="footer-brand-sep" aria-hidden="true">&middot;</span>
+            <span>East Alabama</span>
+          </p>
+        </div>
       </div>
 
       <div class="footer-col">
-        <h4>TRAINING &amp; PATHWAYS</h4>
+        <h3>TRAINING &amp; PATHWAYS</h3>
         <ul class="footer-nav-list">
           <li><a href="#top">Home</a></li>
           <li><a href="#our-mission">Mission</a></li>
@@ -853,31 +900,138 @@
       </div>
 
       <div class="footer-col footer-contact-col">
-        <h4>CONTACT INFO</h4>
+        <h3>CONTACT INFO</h3>
         <ul class="footer-contact-list">
           <li class="footer-address-item">
             <a
-              href="https://www.google.com/maps/dir/?api=1&amp;destination=2269+15th+Ave+SW,+Lanett,+AL+36863"
+              href="https://www.google.com/maps/search/?api=1&amp;query=2269+15th+Ave+SW,+Lanett,+AL+36863"
               target="_blank"
               rel="noopener noreferrer"
               class="map-link"
-              aria-label="Get Google Maps directions to 2269 15th Ave. S.W., Lanett, AL 36863">
+              id="footerSpringboardsAddressLink"
+              aria-label="Open Google Maps Place details for Springboards at 2269 15th Ave. S.W., Lanett, AL 36863">
               2269 15th Ave. S.W.<br>Lanett, AL 36863
             </a>
-            <a
-              href="https://maps.google.com/?q=2269+15th+Ave+SW,+Lanett,+AL+36863"
-              target="_blank"
-              rel="noopener noreferrer"
+            <div
               class="footer-map-card"
-              aria-label="Open 2269 15th Ave. S.W., Lanett, AL 36863 in Google Maps">
-              <iframe
-                class="footer-map"
-                title="Map showing 2269 15th Ave. S.W., Lanett, AL 36863"
-                src="https://maps.google.com/maps?q=2269%2015th%20Ave%20SW,%20Lanett,%20AL%2036863&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade">
-              </iframe>
-            </a>
+              id="footerInteractiveMapCard"
+              role="region"
+              data-map-project="springboards-community-dev"
+              data-map-style="retro"
+              data-map-zoom="15"
+              data-map-lat="32.8529"
+              data-map-lng="-85.2045"
+              data-address-open="false"
+              data-autocomplete-fields="displayName,formattedAddress,location,viewport,nationalPhoneNumber,googleMapsURI"
+              aria-label="Interactive Springboards map and regional Career Center locator">
+              <div class="footer-map-search-bar" id="footerMapSearchBar" aria-hidden="true" hidden>
+                <div class="footer-map-autocomplete-wrap" id="footerMapAutocompleteWrap">
+                  <input
+                    type="search"
+                    class="footer-map-autocomplete-input"
+                    id="footerMapAutocompleteInput"
+                    placeholder="Enter address or POI..."
+                    autocomplete="off"
+                    data-fields="displayName,formattedAddress,location,viewport,nationalPhoneNumber,googleMapsURI"
+                    aria-label="Enter address or point of interest with Autocomplete"
+                    aria-autocomplete="list"
+                    aria-controls="footerMapAutocompleteList"
+                    aria-expanded="false" />
+                  <button type="button" class="footer-map-geocode-btn" id="footerMapGeocodeBtn" data-map-action="geocode-input" aria-label="Geocode address and pin marker to map" title="Geocode address and add marker to map">
+                    Pin
+                  </button>
+                  <button type="button" class="footer-map-locate-btn" id="footerMapLocateUserBtn" data-map-action="locate-user" aria-label="Use my current geographic location on the map" title="Display your geographic location">
+                    <span aria-hidden="true">📍</span><span class="sr-only">Locate Me</span>
+                  </button>
+                </div>
+                <div id="footerMapGmpAutocompleteHost" class="footer-map-gmp-autocomplete-host" hidden></div>
+                <ul class="footer-map-autocomplete-list" id="footerMapAutocompleteList" role="listbox" aria-label="Suggested points of interest and addresses" hidden></ul>
+                <div class="footer-map-markers-bar" role="tablist" aria-label="Geocoded Springboards locations and markers">
+                  <button type="button" role="tab" class="footer-map-marker-chip is-active" data-map-marker-id="springboards-lanett-hq" aria-selected="true" tabindex="0" title="2269 15th Ave. S.W., Lanett, AL 36863">Lanett HQ</button>
+                  <button type="button" role="tab" class="footer-map-marker-chip" data-map-marker-id="springboards-valley-site" aria-selected="false" tabindex="-1" title="2900 20th Ave., Valley, AL 36854">Valley Lab</button>
+                  <button type="button" role="tab" class="footer-map-marker-chip" data-map-marker-id="opelika-wioa-center" aria-selected="false" tabindex="-1" title="2300 Frederick Rd., Opelika, AL 36801">Opelika WIOA</button>
+                  <button type="button" role="tab" class="footer-map-marker-chip" data-map-marker-id="lagrange-partner-hub" aria-selected="false" tabindex="-1" title="1002 Longley Ave., LaGrange, GA 30240">LaGrange</button>
+                </div>
+              </div>
+              <div class="footer-map-viewport" id="map">
+                <div id="style-selector-control" class="map-control" aria-label="Map style">
+                  <select id="style-selector" class="selector-control" aria-label="Select map style">
+                    <option value="default">Default</option>
+                    <option value="silver">Silver</option>
+                    <option value="night">Night mode</option>
+                    <option value="retro" selected="selected">Retro</option>
+                    <option value="hiding">Hide features</option>
+                  </select>
+                </div>
+                <button
+                  type="button"
+                  class="footer-map-address-trigger"
+                  id="footerMapAddressTrigger"
+                  data-map-action="toggle-address-entry"
+                  aria-expanded="false"
+                  aria-controls="footerMapSearchBar"
+                  title="Click to enter an address or search points of interest">
+                  Enter Address
+                </button>
+                <iframe
+                  class="footer-map"
+                  id="footerInteractiveMapFrame"
+                  title="Interactive Google Map showing 2269 15th Ave. S.W., Lanett, AL 36863"
+                  src="https://maps.google.com/maps?q=2269%2015th%20Ave%20SW,%20Lanett,%20AL%2036863&amp;ll=32.8529,-85.2045&amp;t=m&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
+                  loading="lazy"
+                  allowfullscreen
+                  referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+                <div class="footer-map-js-canvas" id="footerMapJsCanvas" hidden></div>
+              </div>
+              <div class="footer-map-place-details" id="footerMapPlaceDetails" aria-live="polite">
+                <div class="footer-map-detail-header">
+                  <span class="footer-map-detail-badge" id="footerMapDetailCategory">Primary Workforce &amp; Housing Hub</span>
+                  <span class="footer-map-detail-distance" id="footerMapDetailDistance" hidden></span>
+                </div>
+                <strong class="footer-map-detail-title" id="footerMapDetailTitle">Springboards for Community Development HQ</strong>
+                <span class="footer-map-detail-coords" id="footerMapDetailCoords">32.8529° N, 85.2045° W · Mon–Fri 8am–5pm</span>
+                <p class="footer-map-detail-services" id="footerMapDetailServices" hidden>Paid Up-Skilling (Up to 350 Hrs), Transitional Housing Rehab &amp; WIOA Intake</p>
+                <div class="footer-map-detail-links">
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&amp;query=2269+15th+Ave+SW,+Lanett,+AL+36863"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="footer-map-detail-link"
+                    id="footerMapDetailAddressLink"
+                    title="View place details and address on Google Maps">
+                    <span aria-hidden="true">📍</span> <span id="footerMapDetailAddressText">2269 15th Ave. S.W., Lanett, AL 36863</span>
+                  </a>
+                  <div class="footer-map-detail-contact-row">
+                    <a
+                      href="tel:731.388.WORK"
+                      class="footer-map-detail-link"
+                      id="footerMapDetailPhoneLink"
+                      title="Call Springboards phone number">
+                      <span aria-hidden="true">📞</span> <span id="footerMapDetailPhoneText">731.388.WORK</span>
+                    </a>
+                    <button
+                      type="button"
+                      class="footer-map-detail-link is-address-btn"
+                      data-map-action="toggle-address-entry"
+                      aria-expanded="false"
+                      aria-controls="footerMapSearchBar"
+                      title="Click to enter your address or search locations">
+                      Search Address
+                    </button>
+                    <a
+                      href="https://www.google.com/maps/dir/?api=1&amp;destination=2269+15th+Ave+SW,+Lanett,+AL+36863"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="footer-map-detail-link is-directions"
+                      id="footerMapDetailDirectionsLink"
+                      title="Open turn-by-turn directions in Google Maps">
+                      Directions <span aria-hidden="true">↗</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </li>
           <li class="footer-phone-item">
             <a
@@ -899,7 +1053,7 @@
       </div>
 
       <div class="footer-col footer-connect">
-        <h4>COMMUNITY</h4>
+        <h3>COMMUNITY</h3>
         <ul class="footer-secondary-actions">
           <li>
             <a class="footer-action-link" href="/community/volunteer">Volunteer</a>
@@ -938,6 +1092,7 @@
         <div class="footer-legal-group">
           <a href="/utility/privacy-terms" class="footer-legal-link">Privacy, WIOA &amp; Accessibility</a>
           <button type="button" class="footer-legal-link" id="openPrivacyModal">Quick Legal Notice</button>
+          <button type="button" class="footer-legal-link" id="footerConsentPreferencesBtn" data-open-consent-preferences>Cookie &amp; Consent Preferences</button>
           <button type="button" class="btn-share-page" id="sharePageButton" aria-label="Share Springboards">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <circle cx="18" cy="5" r="3"></circle>
@@ -957,25 +1112,26 @@
   <div class="inquiry-modal" id="volunteerSignupModal" hidden>
     <div class="inquiry-modal-backdrop" data-volunteer-close></div>
     <div class="inquiry-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="volunteerSignupTitle">
-      <button type="button" class="inquiry-modal-close" data-volunteer-close aria-label="Close volunteer signup form">×</button>
+      <button type="button" class="inquiry-modal-close" data-volunteer-close aria-label="Close volunteer signup form"><span aria-hidden="true">×</span></button>
       <div class="modal-form-view" id="volunteerFormView">
         <span class="section-eyebrow">Volunteer interest</span>
         <h2 id="volunteerSignupTitle">Express Volunteer Interest</h2>
         <p id="volunteerSignupDescription">Volunteer dates and hourly signup blocks will be posted when confirmed. Share your availability and interests so we can reach out as upcoming projects open.</p>
+        <p class="form-instructions t-caption c-text-secondary u-mb-2">Fields marked with <span class="form-required">* (Required)</span> are required. Provide either a phone number or an email address so our coordinator can reach you.</p>
         <form class="program-inquiry-form" id="volunteerSignupForm" novalidate>
           <input type="hidden" name="event" value="General Volunteer Interest">
           <input type="hidden" name="location" value="Springboards Community Center">
           <input type="text" name="website_url" class="sr-only-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" aria-label="Leave this field blank">
-          <label>Name
+          <label>Name <span class="form-required">* (Required)</span>
             <input name="name" type="text" autocomplete="name" placeholder="Your full name" minlength="2" maxlength="80" required>
           </label>
           <label>Organization or Group
             <input name="organization" type="text" autocomplete="organization" placeholder="Church, employer, or civic group name">
           </label>
-          <label>Phone <span>optional if email is provided</span>
+          <label>Phone <span>(optional if email is provided · e.g. 334-556-0000)</span>
             <input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="334-556-0000" pattern="^(\+?1[-.\s]?)?[0-9]{3}[-.\s]?[0-9]{3}[-.\s]?[0-9]{4}$" title="Please enter a valid 10-digit phone number, e.g. 334-556-0000">
           </label>
-          <label>Email <span>optional if phone is provided</span>
+          <label>Email <span>(optional if phone is provided · e.g. you@example.com)</span>
             <input name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$" title="Please enter a valid email address with a domain, e.g. you@example.com">
           </label>
           <label>Availability preference
@@ -1018,21 +1174,22 @@
   <div class="inquiry-modal" id="inquiryModal" hidden>
     <div class="inquiry-modal-backdrop" data-inquiry-close></div>
     <div class="inquiry-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="inquiryModalTitle">
-      <button type="button" class="inquiry-modal-close" data-inquiry-close aria-label="Close inquiry form">×</button>
+      <button type="button" class="inquiry-modal-close" data-inquiry-close aria-label="Close inquiry form"><span aria-hidden="true">×</span></button>
       <div class="modal-form-view" id="inquiryFormView">
         <span class="section-eyebrow">Connect with us</span>
         <h2 id="inquiryModalTitle">Program inquiry</h2>
         <p id="inquiryModalDescription">Share your contact information and we will follow up about this pathway.</p>
+        <p class="form-instructions t-caption c-text-secondary u-mb-2">Fields marked with <span class="form-required">* (Required)</span> are required. Provide either a phone number or an email address.</p>
         <form class="program-inquiry-form" id="programInquiryForm" novalidate>
           <input type="hidden" name="program">
           <input type="text" name="website_url" class="sr-only-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" aria-label="Leave this field blank">
-          <label>Name
+          <label>Name <span class="form-required">* (Required)</span>
             <input name="name" type="text" autocomplete="name" placeholder="Your full name" minlength="2" maxlength="80" required>
           </label>
-          <label>Phone <span>optional if email is provided</span>
+          <label>Phone <span>(optional if email is provided · e.g. 334-556-0000)</span>
             <input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="334-556-0000" pattern="^(\+?1[-.\s]?)?[0-9]{3}[-.\s]?[0-9]{3}[-.\s]?[0-9]{4}$" title="Please enter a valid 10-digit phone number, e.g. 334-556-0000">
           </label>
-          <label>Email <span>optional if phone is provided</span>
+          <label>Email <span>(optional if phone is provided · e.g. you@example.com)</span>
             <input name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$" title="Please enter a valid email address with a domain, e.g. you@example.com">
           </label>
           <button type="submit" class="btn-cta program-submit">Send inquiry</button>
@@ -1061,23 +1218,23 @@
   <div class="inquiry-modal" id="privacyModal" hidden>
     <div class="inquiry-modal-backdrop" data-privacy-close></div>
     <div class="inquiry-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="privacyModalTitle">
-      <button type="button" class="inquiry-modal-close" data-privacy-close aria-label="Close privacy notice">×</button>
+      <button type="button" class="inquiry-modal-close" data-privacy-close aria-label="Close privacy notice"><span aria-hidden="true">×</span></button>
       <span class="section-eyebrow">Legal &amp; Transparency</span>
       <h2 id="privacyModalTitle">Privacy Policy &amp; Terms</h2>
       <div class="privacy-modal-body privacy-modal-scroll u-text-sm u-color-primary">
         <p><strong>Effective Date:</strong> September 2026</p>
         <p>Springboards for Community Development is dedicated to protecting the privacy of prospective students, participants, volunteers, and donors.</p>
         
-        <h4 class="u-color-primary u-mt-4 u-mb-1">1. Information We Collect</h4>
+        <h3 class="t-h4 u-color-primary u-mt-4 u-mb-1">1. Information We Collect</h3>
         <p>We only collect personal information that you voluntarily submit through our program inquiry, volunteer signup, donation, or direct contact triggers, including your name, telephone number, email address, availability, and trade preferences.</p>
 
-        <h4 class="u-color-primary u-mt-4 u-mb-1">2. How Information Is Used</h4>
+        <h3 class="t-h4 u-color-primary u-mt-4 u-mb-1">2. How Information Is Used</h3>
         <p>Submitted information is used exclusively to contact you regarding vocational training enrollment, volunteer project scheduling, partner inquiries, or deductible donation receipts. We never sell, rent, trade, or distribute your personal details to external advertisers or telemarketers.</p>
 
-        <h4 class="u-color-primary u-mt-4 u-mb-1">3. Equal Opportunity &amp; Equality</h4>
+        <h3 class="t-h4 u-color-primary u-mt-4 u-mb-1">3. Equal Opportunity &amp; Equality</h3>
         <p>Springboards provides training and career services regardless of race, color, religion, sex, national origin, age, disability, or background, in accordance with applicable federal and state guidelines.</p>
 
-        <h4 class="u-color-primary u-mt-4 u-mb-1">4. Your Rights &amp; Contact</h4>
+        <h3 class="t-h4 u-color-primary u-mt-4 u-mb-1">4. Your Rights &amp; Contact</h3>
         <p>You may request to view, modify, or delete your contact records from our database at any time by emailing <a href="mailto:info@springboardsfcd.org" class="u-color-success u-weight-bold">info@springboardsfcd.org</a> or calling <a href="tel:731.388.WORK" class="u-color-success u-weight-bold">731.388.WORK</a>.</p>
       </div>
       <button type="button" class="btn-cta u-w-full u-mt-4" data-privacy-close>Close Notice</button>
@@ -1088,14 +1245,15 @@
   <div class="inquiry-modal" id="candidateModal" hidden>
     <div class="inquiry-modal-backdrop" data-candidate-close></div>
     <div class="inquiry-modal-dialog modal-large" role="dialog" aria-modal="true" aria-labelledby="candidateModalTitle">
-      <button type="button" class="inquiry-modal-close" data-candidate-close aria-label="Close candidate application">×</button>
+      <button type="button" class="inquiry-modal-close" data-candidate-close aria-label="Close candidate application"><span aria-hidden="true">×</span></button>
       <div class="modal-form-view" id="candidateFormView">
         <span class="section-eyebrow">Second Chances • Real Wages • Zero Debt</span>
         <h2 id="candidateModalTitle">Trade Training Candidate Application</h2>
         <p class="modal-subtext">Apply for tuition-free construction trade training with direct pathways into high-demand careers.</p>
+        <p class="form-instructions t-caption c-text-secondary u-mb-2">Fields marked with <span class="form-required">* (Required)</span> are required. Provide either a phone number or an email address so an advisor can contact you.</p>
         <form class="program-inquiry-form" id="candidateApplicationForm" novalidate>
           <input type="text" name="website_url" class="sr-only-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" aria-label="Leave this field blank">
-          <label>Full Legal Name
+          <label>Full Legal Name <span class="form-required">* (Required)</span>
             <input name="name" type="text" autocomplete="name" placeholder="First and last name" minlength="2" maxlength="80" required>
           </label>
           <div class="form-grid-row">
@@ -1176,26 +1334,27 @@
   <div class="inquiry-modal" id="partnerModal" hidden>
     <div class="inquiry-modal-backdrop" data-partner-close></div>
     <div class="inquiry-modal-dialog modal-large" role="dialog" aria-modal="true" aria-labelledby="partnerModalTitle">
-      <button type="button" class="inquiry-modal-close" data-partner-close aria-label="Close partnership form">×</button>
+      <button type="button" class="inquiry-modal-close" data-partner-close aria-label="Close partnership form"><span aria-hidden="true">×</span></button>
       <div class="modal-form-view" id="partnerFormView">
         <span class="section-eyebrow">Workforce Collaboration</span>
         <h2 id="partnerModalTitle">Partner With Springboards</h2>
         <p class="modal-subtext">Partner with us by contributing building materials, donating commercial tools and equipment, or providing guest trade mentorship.</p>
+        <p class="form-instructions t-caption c-text-secondary u-mb-2">Fields marked with <span class="form-required">* (Required)</span> are required.</p>
         <form class="program-inquiry-form" id="partnerApplicationForm" novalidate>
           <input type="text" name="website_url" class="sr-only-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" aria-label="Leave this field blank">
           <div class="form-grid-row">
-            <label>Company / Organization Name
+            <label>Company / Organization Name <span class="form-required">* (Required)</span>
               <input name="companyName" type="text" autocomplete="organization" placeholder="e.g. Valley Framing Contractors" minlength="2" maxlength="100" required>
             </label>
-            <label>Contact Person &amp; Title
+            <label>Contact Person &amp; Title <span class="form-required">* (Required)</span>
               <input name="contactName" type="text" autocomplete="name" placeholder="e.g. John Miller, Operations Manager" minlength="2" maxlength="80" required>
             </label>
           </div>
           <div class="form-grid-row">
-            <label>Business Phone
+            <label>Business Phone <span class="form-required">* (Required)</span>
               <input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="334-556-0000" pattern="^(\+?1[-.\s]?)?[0-9]{3}[-.\s]?[0-9]{3}[-.\s]?[0-9]{4}$" title="Please enter a valid 10-digit phone number, e.g. 334-556-0000" required>
             </label>
-            <label>Business Email
+            <label>Business Email <span class="form-required">* (Required)</span>
               <input name="email" type="email" autocomplete="email" inputmode="email" placeholder="contact@company.com" pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$" title="Please enter a valid business email address" required>
             </label>
           </div>
@@ -1250,7 +1409,7 @@
   <div class="inquiry-modal" id="donateModal" hidden>
     <div class="inquiry-modal-backdrop" data-donate-close></div>
     <div class="inquiry-modal-dialog modal-large" role="dialog" aria-modal="true" aria-labelledby="donateModalTitle">
-      <button type="button" class="inquiry-modal-close" data-donate-close aria-label="Close donation guide">×</button>
+      <button type="button" class="inquiry-modal-close" data-donate-close aria-label="Close donation guide"><span aria-hidden="true">×</span></button>
       <div class="modal-form-view" id="donateFormView">
         <span class="section-eyebrow">Empower A Trainee</span>
         <h2 id="donateModalTitle">Invest in Second Chances &amp; Community Growth</h2>
@@ -1280,7 +1439,7 @@
         </div>
 
         <div class="giving-methods-box">
-          <h4>Ways to Contribute</h4>
+          <h3>Ways to Contribute</h3>
           <div class="giving-method-list">
             <div class="giving-method-item">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
@@ -1307,11 +1466,12 @@
           </div>
         </div>
 
-        <h4 class="c-text-brand u-mt-6 u-mb-2">Pledge Support / Request Donation Receipt</h4>
+        <h3 class="t-h4 c-text-brand u-mt-6 u-mb-2">Pledge Support / Request Donation Receipt</h3>
+        <p class="form-instructions t-caption c-text-secondary u-mb-2">Fields marked with <span class="form-required">* (Required)</span> are required for issuing your 501(c)(3) donation acknowledgment.</p>
         <form class="program-inquiry-form" id="donationPledgeForm" novalidate>
           <input type="text" name="website_url" class="sr-only-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" aria-label="Leave this field blank">
           <div class="form-grid-row">
-            <label>Your Name / Business Name
+            <label>Your Name / Business Name <span class="form-required">* (Required)</span>
               <input name="donorName" type="text" autocomplete="name" placeholder="Your name or organization" minlength="2" maxlength="100" required>
             </label>
             <label>Phone Number
@@ -1319,7 +1479,7 @@
             </label>
           </div>
           <div class="form-grid-row">
-            <label>Email Address
+            <label>Email Address <span class="form-required">* (Required)</span>
               <input name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$" required>
             </label>
             <label>Donation / Pledge Type
@@ -1370,7 +1530,7 @@
   <div class="inquiry-modal" id="documentModal" hidden>
     <div class="inquiry-modal-backdrop" data-doc-close></div>
     <div class="inquiry-modal-dialog modal-large" role="dialog" aria-modal="true" aria-labelledby="documentModalTitle">
-      <button type="button" class="inquiry-modal-close" data-doc-close aria-label="Close document center">×</button>
+      <button type="button" class="inquiry-modal-close" data-doc-close aria-label="Close document center"><span aria-hidden="true">×</span></button>
       <span class="section-eyebrow">Official Resources</span>
       <h2 id="documentModalTitle">Program Documents &amp; Downloads</h2>
       <p class="modal-subtext">Official overview documents, worksite guides, volunteer schedule flyers, and candidate requirements for download and printing.</p>
@@ -1388,7 +1548,7 @@
         <div class="document-item-card" role="listitem" data-doc-category="community">
           <div class="document-info">
             <span class="document-badge">Community Flyer</span>
-            <h4>Springboards Community Flyer &amp; Volunteer Schedule</h4>
+            <h3>Springboards Community Flyer &amp; Volunteer Schedule</h3>
             <p>Official community center flyer outlining Monday–Thursday work block hours (8:00 AM – 4:00 PM EST), dress code, tool prep, and civic service opportunities.</p>
             <span class="u-text-xs c-text-muted">Optimized Web Asset (270 KB) • Original High-Res (2.3 MB)</span>
           </div>
@@ -1401,7 +1561,7 @@
         <div class="document-item-card" role="listitem" data-doc-category="candidate">
           <div class="document-info">
             <span class="document-badge">Checklist</span>
-            <h4>Trainee Intake Checklist &amp; Required Documents</h4>
+            <h3>Trainee Intake Checklist &amp; Required Documents</h3>
             <p>Everything you need to bring to your enrollment session: Valid Government Photo ID, Social Security Card or Work Authorization, and Career Center registration.</p>
             <span class="u-text-xs c-text-muted">Digital Intake Guide</span>
           </div>
@@ -1421,7 +1581,7 @@
         <p class="collection-empty-eyebrow">ONBOARDING PACKET REQUIRED</p>
         <h3 class="collection-empty-title">No public downloads in this category</h3>
         <p class="collection-empty-desc">
-          Host Worksite Agreements and WIOA payroll packets are issued directly during employer partnership setup or participant onboarding. Submit a partnership request or view all public documents below.
+          Host Worksite Agreements and WIOA payroll packets are issued directly during employer partnership setup or participant onboarding. Submit a partnership request or select <strong>Show All Public Documents</strong> in this dialog.
         </p>
         <div class="collection-empty-actions">
           <button type="button" class="btn-cta btn-trainee-portal-trigger" id="openProtectedWorksiteGateBtn">Enter Worksite Passcode</button>
@@ -1432,7 +1592,7 @@
 
       <!-- Document Preview Sub-Panel -->
       <div id="docPreviewContainer" class="u-mt-6 doc-preview-panel">
-        <h4 id="docPreviewTitle" class="u-color-primary u-mb-2">Document Preview</h4>
+        <h3 id="docPreviewTitle" class="t-h4 u-color-primary u-mb-2">Document Preview</h3>
         <div class="document-preview-modal-body">
           <img id="docPreviewImg" src="/springboards-community-flyer.webp" alt="Springboards Community Flyer Preview" class="document-preview-image" width="1200" height="2150" loading="lazy" decoding="async">
           <div class="ds-cluster u-mt-3">
@@ -1448,7 +1608,7 @@
   <div class="inquiry-modal" id="traineePortalModal" hidden>
     <div class="inquiry-modal-backdrop" data-trainee-portal-close></div>
     <div class="inquiry-modal-dialog modal-large" role="dialog" aria-modal="true" aria-labelledby="traineePortalModalTitle">
-      <button type="button" class="inquiry-modal-close" data-trainee-portal-close aria-label="Close trainee portal">×</button>
+      <button type="button" class="inquiry-modal-close" data-trainee-portal-close aria-label="Close trainee portal"><span aria-hidden="true">×</span></button>
 
       <div id="traineePortalAuthView">
         <div class="protected-gate-banner">
@@ -1475,7 +1635,7 @@
         <form id="traineePortalAuthForm" class="program-inquiry-form" novalidate>
           <div class="form-group u-text-left u-mb-4">
             <label for="traineePortalPasscodeInput" class="form-label">
-              Worksite Passcode or Staff PIN <span class="form-required" aria-hidden="true">*</span>
+              Worksite Passcode or Staff PIN <span class="form-required">* (Required)</span>
             </label>
             <div class="protected-input-wrap">
               <input
@@ -1548,7 +1708,7 @@
   <div class="inquiry-modal" id="siteSearchModal" hidden>
     <div class="inquiry-modal-backdrop" data-site-search-close></div>
     <div class="inquiry-modal-dialog modal-large" role="dialog" aria-modal="true" aria-labelledby="siteSearchModalTitle">
-      <button type="button" class="inquiry-modal-close" data-site-search-close aria-label="Close site search">×</button>
+      <button type="button" class="inquiry-modal-close" data-site-search-close aria-label="Close site search"><span aria-hidden="true">×</span></button>
       <span class="section-eyebrow">Site-Wide Directory &amp; Instant Finder</span>
       <h2 id="siteSearchModalTitle" class="u-mb-1">Search Springboards Programs, FAQs &amp; Resources</h2>
       <p class="modal-subtext u-mb-4">Search trade pathways, WIOA eligibility rules, Career Center locations, transitional jobs, or downloadable forms.</p>
@@ -1600,7 +1760,7 @@
           </div>
           <div>
             <h3 id="siteSearchEmptyTitle" class="search-empty-title">No matching results found</h3>
-            <p id="siteSearchEmptyDesc" class="search-empty-desc">We couldn’t find any pages, trade modules, or FAQs matching that exact phrase. Try one of the suggested topics below or adjust your search terms.</p>
+            <p id="siteSearchEmptyDesc" class="search-empty-desc">We couldn’t find any pages, trade modules, or FAQs matching that exact phrase. Try one of the suggested topic buttons or adjust your search terms.</p>
           </div>
         </div>
 
@@ -1609,7 +1769,7 @@
           <ul class="search-tips-list">
             <li>Check for spelling typos or try a shorter keyword (for example, search <strong>“carpentry”</strong>, <strong>“HVAC”</strong>, <strong>“paid”</strong>, or <strong>“OSHA”</strong>).</li>
             <li>If you are looking for enrollment requirements, try searching <strong>“eligibility”</strong>, <strong>“returning citizen”</strong>, or <strong>“Career Center”</strong>.</li>
-            <li>Switch the category filter above back to <strong>All Results</strong> to search across every section of the site.</li>
+            <li>Switch the category filter tabs to <strong>All Results</strong> to search across every section of the site.</li>
           </ul>
         </div>
 

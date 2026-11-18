@@ -3,8 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Executive Admin Portal | Springboards for Community Development</title>
+  <title>Executive &amp; Workforce Staff Portal | Springboards for Community Development</title>
+  <meta name="description" content="Authorized staff and executive backoffice portal for Springboards for Community Development—managing candidate intake, WIOA/ETPL compliance evidence, and board governance workflows.">
   <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://springboardsfcd.org/resources/backoffice">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Executive & Workforce Staff Portal",
+    "url": "https://springboardsfcd.org/resources/backoffice",
+    "description": "Authorized staff and board governance portal for Springboards for Community Development."
+  }
+  </script>
   <meta name="theme-color" content="#0B192C">
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" media="(prefers-color-scheme: light)">
@@ -21,12 +32,13 @@
   <script type="module" src="/workspace-sheets.js"></script>
 </head>
 <body class="is-admin-page">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- Top Sticky Header -->
   <header class="admin-header">
     <div class="admin-header-inner">
-      <a href="/" class="admin-brand">
-        <img src="/assets/aistudio/springboards_logo_white_text.png?v=20261114-wordmark" alt="Springboards Logo" class="admin-logo" width="160" height="42" decoding="async">
+      <a href="/" class="admin-brand" aria-label="Springboards for Community Development — Home">
+        <img src="/assets/aistudio/springboards_logo_white_text.png?v=20261114-wordmark" alt="Springboards for Community Development — Home" class="admin-logo" width="160" height="42" decoding="async">
         <div>
           <div style="font-weight: 800; font-size: 1.05rem; letter-spacing: -0.02em;">SPRINGBOARDS</div>
           <div style="font-size: 0.72rem; color: #94A3B8; font-weight: 600;">Executive Administrator Portal</div>
@@ -47,16 +59,17 @@
   </header>
 
   <!-- Branded Password-Protected Gate (when unauthenticated) -->
+  <div id="main-content" tabindex="-1"></div>
   <div id="section-auth" class="login-wrapper">
     <div class="login-card" style="max-width: 520px; width: 100%; padding: 2rem;">
-      <img src="/assets/aistudio/springboards_logo_white_text.png?v=20261114-wordmark" alt="Springboards Logo" class="login-logo" width="198" height="52" decoding="async" style="margin-bottom: 1rem;">
+      <img src="/assets/aistudio/springboards_logo_white_text.png?v=20261114-wordmark" alt="" aria-hidden="true" class="login-logo" width="198" height="52" decoding="async" style="margin-bottom: 1rem;">
 
       <div class="protected-gate-banner">
         <span class="protected-gate-badge">
           <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           Password-Protected Portal • WIOA &amp; Board Governance
         </span>
-        <h1 style="color: #ffffff; font-size: 1.45rem; font-weight: 800; margin: 0 0 0.35rem;">Executive &amp; Workforce Staff Gate</h1>
+        <h1 class="c-text-inverse t-h2 u-mt-1 u-mb-1">Executive &amp; Workforce Staff Gate</h1>
         <p>This protected area contains confidential candidate intake records, WIOA/ETPL compliance evidence, and board governance workflows.</p>
       </div>
 
@@ -106,7 +119,7 @@
       <form id="form-auth-passcode" onsubmit="loginWithPasscode(event)" novalidate>
         <div class="u-text-left u-mb-4">
           <label class="u-text-xs u-weight-bold u-color-primary u-mb-1" style="display: block;" for="input-passcode">
-            Executive Passcode <span class="u-color-danger" aria-hidden="true">*</span>
+            Executive Passcode <span class="u-color-danger">* (Required)</span>
           </label>
           <div class="protected-input-wrap">
             <input type="password" id="input-passcode" class="form-input u-w-full" autocomplete="current-password" placeholder="Enter authorized passcode" required aria-describedby="passcode-help-hint auth-error-alert" style="padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: var(--radius-sm); font-size: 1rem;">
@@ -125,13 +138,13 @@
       <form id="form-auth-staff" onsubmit="loginWithStaffPin(event)" novalidate hidden>
         <div class="u-text-left u-mb-3">
           <label class="u-text-xs u-weight-bold u-color-primary u-mb-1" style="display: block;" for="input-staff-phone">
-            Registered Mobile Phone <span class="u-color-danger" aria-hidden="true">*</span>
+            Registered Mobile Phone <span class="u-color-danger">* (Required)</span>
           </label>
           <input type="tel" id="input-staff-phone" class="form-input u-w-full" autocomplete="tel" inputmode="tel" placeholder="(334) 556-0000" required style="padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: var(--radius-sm); font-size: 1rem;">
         </div>
         <div class="u-text-left u-mb-4">
           <label class="u-text-xs u-weight-bold u-color-primary u-mb-1" style="display: block;" for="input-staff-pin">
-            4-Digit Staff PIN <span class="u-color-danger" aria-hidden="true">*</span>
+            4-Digit Staff PIN <span class="u-color-danger">* (Required)</span>
           </label>
           <div class="protected-input-wrap">
             <input type="password" id="input-staff-pin" class="form-input u-w-full" inputmode="numeric" maxlength="8" autocomplete="one-time-code" placeholder="Enter 4-digit PIN" required style="padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: var(--radius-sm); font-size: 1rem;">

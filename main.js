@@ -461,8 +461,8 @@ document.addEventListener("DOMContentLoaded", () => {
       // 2. Validate at least one contact method
       if (!phone && !email) {
         setFormError(status, "Please provide either a phone number or email address.", [inquiryForm.elements.phone, inquiryForm.elements.email], {
-          phone: "Add a 10-digit phone number or enter an email address below.",
-          email: "Add an email address or enter a 10-digit phone number above."
+          phone: "Add a 10-digit phone number or provide an email address in the Email field.",
+          email: "Add an email address or provide a 10-digit phone number in the Phone field."
         });
         return;
       }
@@ -616,8 +616,8 @@ document.addEventListener("DOMContentLoaded", () => {
       // 2. Validate at least one contact method
       if (!phone && !email) {
         setFormError(status, "Please provide either a phone number or email address.", [volunteerSignupForm.elements.phone, volunteerSignupForm.elements.email], {
-          phone: "Add a 10-digit phone number or enter an email address below.",
-          email: "Add an email address or enter a 10-digit phone number above."
+          phone: "Add a 10-digit phone number or provide an email address in the Email field.",
+          email: "Add an email address or provide a 10-digit phone number in the Phone field."
         });
         return;
       }
@@ -1203,7 +1203,8 @@ document.addEventListener("DOMContentLoaded", () => {
       docPreviewDownloadBtn.download = asset.filename;
     }
     docPreviewContainer.style.display = "block";
-    docPreviewContainer.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    const prefersReducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    docPreviewContainer.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "nearest" });
   };
 
   document.querySelectorAll(".btn-doc-trigger").forEach((btn) => {
@@ -1248,7 +1249,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { passive: true });
 
     backToTopBtn.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      const prefersReducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
     });
   }
 
@@ -1553,7 +1555,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "Please enter your assigned worksite passcode or staff PIN before submitting.",
         [
           "Check your Career Center orientation packet or employer onboarding email for your passcode.",
-          "New candidates can click Apply for Tuition-Free Training below."
+          "New candidates can select Apply for Tuition-Free Training in this dialog."
         ]
       );
       return;

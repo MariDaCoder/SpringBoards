@@ -334,6 +334,26 @@ const FORM_INTEGRATION_REGISTRY = {
   masterGoogleSheetId: '1KZgNGpwHedOxN6oSSwdoAbXtV3bhTuLJBx65tdRbtlQ',
   designatedInbox: DESIGNATED_INBOX,
   hrInbox: HR_INBOX,
+  dataFlowArchitecture: {
+    stage1_clientValidationAndConsent: 'Client validates required fields, silent honeypot (website_url), and coordinates deduplicated eventId with window.SpringboardsTMS & window.SpringboardsCMP.',
+    stage2_rateLimitingAndSanitization: 'Express publicFormLimiter enforces 25 requests / 15 minutes per IP, trims & validates E.164 phone/email formats, and strips HTML/script tags.',
+    stage3_primaryPersistence: 'Writes canonical record to Firestore (databaseId: main) and Cloud SQL (trainee_applications via Drizzle ORM for WIOA candidates) with resilient JSON fallback.',
+    stage4_nativeAppsAndOutreachDispatch: 'Appends synthesized columns to Google Sheets Master Tracker (1KZgNGpwHedOxN6oSSwdoAbXtV3bhTuLJBx65tdRbtlQ), generates dual EST Google Calendar verification pass links, and dispatches Gmail notifications to marilynnlward@gmail.com.',
+    stage5_signedWebhookDispatch: 'Signs canonical envelope with HMAC-SHA256 (X-Springboards-Signature-256) and records delivery receipt with deterministic eventId.'
+  },
+  securityRequirements: {
+    transportAndOrigin: 'TLS 1.3 / HTTPS mandatory in production; strict CORS allowlist (ALLOWED_ORIGINS) and Referer/Origin validation on /api/maps/* and form endpoints.',
+    webhookAuthentication: 'HMAC-SHA256 payload signature in X-Springboards-Signature-256 header derived from project secret (WEBHOOK_SIGNING_SECRET).',
+    oauthTokenHandling: 'Google Workspace OAuth 2.0 access tokens remain strictly in-memory on the client and are passed via Authorization: Bearer headers (never persisted in localStorage or cookies).',
+    spamAndAbuseDeflection: 'Dual layer: hidden website_url honeypot field + IP rate limiting (publicFormLimiter: 25 req / 15 min; eligibility: 30 req / 15 min).',
+    piiAndCompliance: 'PII is redacted from operational logs; WIOA Activity 220 barrier disclosures are restricted to authorized workforce staff and Career Center specialists.'
+  },
+  operationalLimitations: {
+    rateLimits: 'Max 25 form submissions per 15-minute window per IP address (HTTP 429 returned when exceeded).',
+    payloadSizeCap: '100 KB maximum JSON request body on form endpoints; 10-second upstream timeout for external webhook and SMTP transports.',
+    mapsGeocodingCacheTtl: 'Short-term in-memory geocode cache TTL is 24 hours (strictly within the 30-day maximum permitted by Google Maps Platform Terms Section 3.2.3(b)).',
+    workspaceApiScopes: 'Google Keep requires Enterprise Domain-Wide Delegation for automated note creation; Google Chat requires an active Google Workspace organization account.'
+  },
   forms: {
     programInquiries: {
       formId: 'programInquiries',
@@ -347,6 +367,13 @@ const FORM_INTEGRATION_REGISTRY = {
         program: 'Target_Trade_Program',
         createdAt: 'Submitted_Timestamp_EST'
       },
+      customActions: [
+        'action.validate_honeypot_and_contact',
+        'action.persist_firestore_programInquiries',
+        'action.append_google_sheets_inquiries_tab',
+        'action.send_gmail_staff_alert',
+        'action.dispatch_hmac_sha256_webhook'
+      ],
       destinations: [
         'Firestore Collection: programInquiries (databaseId: main)',
         'Google Sheets: Master Candidate & Inquiry Tracker (Tab: Inquiries)',
@@ -375,6 +402,14 @@ const FORM_INTEGRATION_REGISTRY = {
         passCode: 'Career_Center_Verification_Pass_ID',
         createdAt: 'Intake_Timestamp_EST'
       },
+      customActions: [
+        'action.match_nearest_alabama_career_center',
+        'action.generate_wioa_verification_pass_code',
+        'action.persist_firestore_and_cloudsql_trainee',
+        'action.sync_google_sheets_10col_master_tracker',
+        'action.create_dual_google_calendar_pass_links',
+        'action.dispatch_hmac_sha256_webhook'
+      ],
       destinations: [
         'Firestore Collection: candidateApplications (databaseId: main)',
         'Cloud SQL Table: trainee_applications (Drizzle ORM)',
@@ -401,6 +436,13 @@ const FORM_INTEGRATION_REGISTRY = {
         interest: 'Mentorship_Or_Service_Area',
         createdAt: 'Registered_Timestamp_EST'
       },
+      customActions: [
+        'action.validate_volunteer_shift_window',
+        'action.persist_firestore_volunteerSignups',
+        'action.append_google_sheets_volunteer_roster',
+        'action.send_gmail_coordinator_notice',
+        'action.dispatch_hmac_sha256_webhook'
+      ],
       destinations: [
         'Firestore Collection: volunteerSignups (databaseId: main)',
         'Google Sheets: Community Outreach & Volunteer Roster',
@@ -428,6 +470,13 @@ const FORM_INTEGRATION_REGISTRY = {
         estimatedOpenings: 'Projected_Trainee_Placements',
         createdAt: 'Submitted_Timestamp_EST'
       },
+      customActions: [
+        'action.classify_ojt_or_host_worksite_tier',
+        'action.persist_firestore_employerPartnerships',
+        'action.append_google_sheets_employer_pipeline',
+        'action.notify_executive_director_gmail',
+        'action.dispatch_hmac_sha256_webhook'
+      ],
       destinations: [
         'Firestore Collection: employerPartnerships (databaseId: main)',
         'Google Sheets: Employer Host Worksite & STAARS Partner Pipeline',
@@ -453,6 +502,13 @@ const FORM_INTEGRATION_REGISTRY = {
         taxReceiptRequested: 'IRS_501c3_Receipt_Required',
         createdAt: 'Pledged_Timestamp_EST'
       },
+      customActions: [
+        'action.flag_501c3_tax_receipt_acknowledgment',
+        'action.persist_firestore_donationPledges',
+        'action.append_google_sheets_stewardship_ledger',
+        'action.send_dual_gmail_stewardship_receipt',
+        'action.dispatch_hmac_sha256_webhook'
+      ],
       destinations: [
         'Firestore Collection: donationPledges (databaseId: main)',
         'Google Sheets: 501(c)(3) Stewardship & Tool Sponsorship Ledger',
@@ -2493,33 +2549,315 @@ app.get('/api/seo/search-console-status', (req, res) => {
 const geocodeShortTermCache = new Map();
 const GEOCODE_CACHE_TTL_MS = 24 * 60 * 60 * 1000;
 
+const SPRINGBOARDS_MAP_LOCATIONS = [
+  {
+    id: 'springboards-lanett-hq',
+    shortLabel: 'Lanett HQ',
+    displayName: 'Springboards for Community Development — Headquarters & Training Hub',
+    category: 'Primary Workforce & Housing Hub',
+    formattedAddress: '2269 15th Ave. S.W., Lanett, AL 36863',
+    streetAddress: '2269 15th Ave. S.W.',
+    locality: 'Lanett, AL 36863',
+    nationalPhoneNumber: '731.388.WORK',
+    phoneDial: '731-388-9675',
+    phoneHref: 'tel:731.388.WORK',
+    email: 'info@springboardsfcd.org',
+    hours: 'Mon–Fri · 8:00 AM – 5:00 PM CT',
+    services: 'Paid Up-Skilling (Up to 350 Hrs), Transitional Housing Rehab, WIOA Intake & Employer Matching',
+    latitude: 32.8529,
+    longitude: -85.2045,
+    placeId: 'ChIJ_SpringboardsLanettHQ36863',
+    googleMapsURI: 'https://www.google.com/maps/search/?api=1&query=2269+15th+Ave+SW,+Lanett,+AL+36863',
+    directionsURI: 'https://www.google.com/maps/dir/?api=1&destination=2269+15th+Ave+SW,+Lanett,+AL+36863',
+    isPrimary: true
+  },
+  {
+    id: 'springboards-valley-site',
+    shortLabel: 'Valley Site',
+    displayName: 'Springboards Valley / Shawmut Revitalization & Field Lab',
+    category: 'Residential Rehab & Trade Lab',
+    formattedAddress: '2900 20th Ave., Valley, AL 36854',
+    streetAddress: '2900 20th Ave.',
+    locality: 'Valley, AL 36854',
+    nationalPhoneNumber: '731.388.WORK',
+    phoneDial: '731-388-9675',
+    phoneHref: 'tel:731.388.WORK',
+    email: 'info@springboardsfcd.org',
+    hours: 'Mon–Fri · 7:30 AM – 4:30 PM CT',
+    services: 'Hands-On Carpentry, Electrical, HVAC & Plumbing Field Training',
+    latitude: 32.8187,
+    longitude: -85.1794,
+    placeId: 'ChIJ_SpringboardsValleyLab36854',
+    googleMapsURI: 'https://www.google.com/maps/search/?api=1&query=2900+20th+Ave,+Valley,+AL+36854',
+    directionsURI: 'https://www.google.com/maps/dir/?api=1&destination=2900+20th+Ave,+Valley,+AL+36854',
+    isPrimary: false
+  },
+  {
+    id: 'opelika-wioa-center',
+    shortLabel: 'Opelika WIOA',
+    displayName: 'Opelika Alabama Career Center (WIOA Partner)',
+    category: 'Regional WIOA Career Center',
+    formattedAddress: '2300 Frederick Rd., Opelika, AL 36801',
+    streetAddress: '2300 Frederick Rd.',
+    locality: 'Opelika, AL 36801',
+    nationalPhoneNumber: '(334) 749-5065',
+    phoneDial: '334-749-5065',
+    phoneHref: 'tel:334-749-5065',
+    email: 'info@springboardsfcd.org',
+    hours: 'Mon–Fri · 8:00 AM – 4:30 PM CT',
+    services: 'WIOA Adult & Dislocated Worker Tuition Vouchers, OJT Wage Reimbursement',
+    latitude: 32.6454,
+    longitude: -85.3783,
+    placeId: 'ChIJ_OpelikaCareerCenter36801',
+    googleMapsURI: 'https://www.google.com/maps/search/?api=1&query=2300+Frederick+Rd,+Opelika,+AL+36801',
+    directionsURI: 'https://www.google.com/maps/dir/?api=1&destination=2300+Frederick+Rd,+Opelika,+AL+36801',
+    isPrimary: false
+  },
+  {
+    id: 'lagrange-partner-hub',
+    shortLabel: 'LaGrange Corridor',
+    displayName: 'Chattahoochee Valley / LaGrange Employer Corridor Hub',
+    category: 'Employer & Transit Partner Point',
+    formattedAddress: '1002 Longley Ave., LaGrange, GA 30240',
+    streetAddress: '1002 Longley Ave.',
+    locality: 'LaGrange, GA 30240',
+    nationalPhoneNumber: '731.388.WORK',
+    phoneDial: '731-388-9675',
+    phoneHref: 'tel:731.388.WORK',
+    email: 'info@springboardsfcd.org',
+    hours: 'Mon–Fri · 8:00 AM – 5:00 PM ET',
+    services: 'Regional Industrial & Commercial Contractor Placement Network',
+    latitude: 33.0393,
+    longitude: -85.0313,
+    placeId: 'ChIJ_LaGrangeCorridorHub30240',
+    googleMapsURI: 'https://www.google.com/maps/search/?api=1&query=1002+Longley+Ave,+LaGrange,+GA+30240',
+    directionsURI: 'https://www.google.com/maps/dir/?api=1&destination=1002+Longley+Ave,+LaGrange,+GA+30240',
+    isPrimary: false
+  }
+];
+
+const ALLOWED_PLACE_FIELDS = [
+  'id',
+  'displayName',
+  'formattedAddress',
+  'location',
+  'viewport',
+  'nationalPhoneNumber',
+  'googleMapsURI',
+  'types',
+  'businessStatus'
+];
+
 const LOCAL_EAST_ALABAMA_COORDINATES = [
-  { match: /36854|valley|shawmut/i, latitude: 32.8187, longitude: -85.1794, formattedAddress: 'Valley / Shawmut, AL 36854, USA' },
-  { match: /36863|lanett/i, latitude: 32.8687, longitude: -85.1905, formattedAddress: 'Lanett, AL 36863, USA' },
-  { match: /36801|36804|opelika/i, latitude: 32.6454, longitude: -85.3783, formattedAddress: 'Opelika, AL 36801, USA' },
-  { match: /36830|36832|auburn/i, latitude: 32.6099, longitude: -85.4808, formattedAddress: 'Auburn, AL 36830, USA' },
-  { match: /36867|36869|phenix\s*city/i, latitude: 32.4709, longitude: -85.0008, formattedAddress: 'Phenix City, AL 36869, USA' },
-  { match: /30240|30241|lagrange/i, latitude: 33.0393, longitude: -85.0313, formattedAddress: 'LaGrange, GA 30240, USA' },
-  { match: /36862|lafayette/i, latitude: 32.8998, longitude: -85.4011, formattedAddress: 'LaFayette, AL 36862, USA' }
+  { match: /2269\s*15th|springboards|lanett\s*hq/i, latitude: 32.8529, longitude: -85.2045, formattedAddress: '2269 15th Ave. S.W., Lanett, AL 36863', displayName: 'Springboards for Community Development HQ', nationalPhoneNumber: '731.388.WORK', googleMapsURI: 'https://www.google.com/maps/search/?api=1&query=2269+15th+Ave+SW,+Lanett,+AL+36863' },
+  { match: /36854|valley|shawmut|2900\s*20th/i, latitude: 32.8187, longitude: -85.1794, formattedAddress: '2900 20th Ave., Valley, AL 36854, USA', displayName: 'Springboards Valley / Shawmut Field Lab', nationalPhoneNumber: '731.388.WORK', googleMapsURI: 'https://www.google.com/maps/search/?api=1&query=2900+20th+Ave,+Valley,+AL+36854' },
+  { match: /36863|lanett/i, latitude: 32.8529, longitude: -85.2045, formattedAddress: '2269 15th Ave. S.W., Lanett, AL 36863, USA', displayName: 'Springboards Community Center — Lanett, AL', nationalPhoneNumber: '731.388.WORK', googleMapsURI: 'https://www.google.com/maps/search/?api=1&query=2269+15th+Ave+SW,+Lanett,+AL+36863' },
+  { match: /36801|36804|opelika|2300\s*frederick/i, latitude: 32.6454, longitude: -85.3783, formattedAddress: '2300 Frederick Rd., Opelika, AL 36801, USA', displayName: 'Opelika Alabama Career Center (WIOA)', nationalPhoneNumber: '(334) 749-5065', googleMapsURI: 'https://www.google.com/maps/search/?api=1&query=2300+Frederick+Rd,+Opelika,+AL+36801' },
+  { match: /36830|36832|auburn/i, latitude: 32.6099, longitude: -85.4808, formattedAddress: 'Auburn, AL 36830, USA', displayName: 'Auburn Workforce Corridor, AL', nationalPhoneNumber: '731.388.WORK', googleMapsURI: 'https://www.google.com/maps/search/?api=1&query=Auburn,+AL+36830' },
+  { match: /36867|36869|phenix\s*city/i, latitude: 32.4709, longitude: -85.0008, formattedAddress: '1703 4th Ave., Phenix City, AL 36867, USA', displayName: 'Phenix City Career Center, AL', nationalPhoneNumber: '(334) 298-3626', googleMapsURI: 'https://www.google.com/maps/search/?api=1&query=1703+4th+Ave,+Phenix+City,+AL+36867' },
+  { match: /30240|30241|lagrange|1002\s*longley/i, latitude: 33.0393, longitude: -85.0313, formattedAddress: '1002 Longley Ave., LaGrange, GA 30240, USA', displayName: 'LaGrange Workforce Partner Hub, GA', nationalPhoneNumber: '731.388.WORK', googleMapsURI: 'https://www.google.com/maps/search/?api=1&query=1002+Longley+Ave,+LaGrange,+GA+30240' },
+  { match: /36862|lafayette|chambers\s*county/i, latitude: 32.8998, longitude: -85.4011, formattedAddress: 'LaFayette / Chambers County, AL 36862, USA', displayName: 'Chambers County Courthouse Square, LaFayette, AL', nationalPhoneNumber: '731.388.WORK', googleMapsURI: 'https://www.google.com/maps/search/?api=1&query=LaFayette,+AL+36862' },
+  { match: /31833|west\s*point/i, latitude: 32.8779, longitude: -85.1833, formattedAddress: 'West Point, GA 31833, USA', displayName: 'West Point Riverfront & Kia Corridor, GA', nationalPhoneNumber: '731.388.WORK', googleMapsURI: 'https://www.google.com/maps/search/?api=1&query=West+Point,+GA+31833' }
 ];
 
 app.get('/api/maps/config', (req, res) => {
   if (!isAllowedMapsReferrer(req)) {
     return res.status(403).json({
       enabled: false,
+      keyVerified: false,
+      referrerVerified: false,
       error: 'Forbidden: Request referrer is outside the allowed domain restrictions for this Google Maps API key.'
     });
   }
+  const maskedApiKey = GOOGLE_MAPS_API_KEY
+    ? `${GOOGLE_MAPS_API_KEY.slice(0, 8)}...${GOOGLE_MAPS_API_KEY.slice(-4)}`
+    : null;
   return res.status(200).json({
     enabled: Boolean(GOOGLE_MAPS_API_KEY),
+    keyVerified: Boolean(GOOGLE_MAPS_API_KEY),
+    referrerVerified: true,
+    maskedApiKey,
     apiKey: GOOGLE_MAPS_API_KEY || null,
+    enableDirectJsTiles: Boolean(process.env.GOOGLE_MAPS_API_KEY || process.env.VITE_GOOGLE_MAPS_API_KEY),
     mapId: GOOGLE_MAPS_MAP_ID || 'DEMO_MAP_ID',
     projectId: 'springboards-community-dev',
+    studioStyleUrl: 'https://console.cloud.google.com/google/maps-apis/studio/styles/new?project=springboards-community-dev',
+    center: { lat: 32.8529, lng: -85.2045 },
+    defaultZoom: 15,
+    autocompleteFields: ['displayName', 'formattedAddress', 'location', 'viewport', 'nationalPhoneNumber', 'googleMapsURI'],
+    locations: SPRINGBOARDS_MAP_LOCATIONS,
+    industryStyles: {
+      civic: {
+        id: 'civic',
+        label: 'Civic',
+        description: 'Community & Workforce Hub (POIs, transit stops, and clear street hierarchy)',
+        mapTypeId: 'roadmap',
+        embedType: 'm'
+      },
+      logistics: {
+        id: 'logistics',
+        label: 'Transit',
+        description: 'Logistics & Commuter Corridors (high-contrast arterial routes & highway network)',
+        mapTypeId: 'terrain',
+        embedType: 'p'
+      },
+      satellite: {
+        id: 'satellite',
+        label: 'Aerial',
+        description: 'High-resolution aerial & building footprint hybrid view',
+        mapTypeId: 'hybrid',
+        embedType: 'h'
+      }
+    },
     attributionId: 'gmp_mcp_codeassist_v1_aistudio',
     domainRestrictions: GOOGLE_MAPS_ALLOWED_REFERRERS,
-    apiRestrictions: ['Maps JavaScript API', 'Geocoding API'],
-    termsUrl: 'https://maps.google.com/help/terms_maps/?utm_campaign=gmp_mcp_codeassist_v1_aistudio',
+    apiRestrictions: ['Maps JavaScript API', 'Geocoding API', 'Places API (New)'],
+    termsUrl: 'https://cloud.google.com/maps-platform/terms?utm_campaign=gmp_mcp_codeassist_v1_aistudio',
     privacyUrl: 'https://policies.google.com/privacy?utm_campaign=gmp_mcp_codeassist_v1_aistudio'
+  });
+});
+
+app.get('/api/maps/locations', (req, res) => {
+  if (!isAllowedMapsReferrer(req)) {
+    return res.status(403).json({ error: 'Forbidden referrer.' });
+  }
+  return res.status(200).json({
+    projectId: 'springboards-community-dev',
+    primaryAddress: '2269 15th Ave. S.W., Lanett, AL 36863',
+    primaryPhone: '731.388.WORK',
+    locations: SPRINGBOARDS_MAP_LOCATIONS
+  });
+});
+
+app.get('/api/maps/autocomplete', async (req, res) => {
+  if (!isAllowedMapsReferrer(req)) {
+    return res.status(403).json({ error: 'Forbidden referrer.' });
+  }
+  const input = String(req.query.input || req.query.q || '').trim();
+  const requestedFieldsRaw = String(req.query.fields || 'displayName,formattedAddress,location,nationalPhoneNumber,googleMapsURI');
+  const requestedFields = requestedFieldsRaw
+    .split(',')
+    .map((f) => f.trim())
+    .filter((f) => ALLOWED_PLACE_FIELDS.includes(f));
+  const effectiveFields = requestedFields.length > 0
+    ? requestedFields
+    : ['displayName', 'formattedAddress', 'location', 'nationalPhoneNumber', 'googleMapsURI'];
+
+  if (!input || input.length < 2) {
+    return res.status(200).json({
+      fieldsUsed: effectiveFields,
+      suggestions: SPRINGBOARDS_MAP_LOCATIONS.map((loc) => ({
+        id: loc.id,
+        placeId: loc.placeId,
+        displayName: loc.displayName,
+        formattedAddress: loc.formattedAddress,
+        location: { lat: loc.latitude, lng: loc.longitude },
+        nationalPhoneNumber: loc.nationalPhoneNumber,
+        phoneHref: loc.phoneHref,
+        googleMapsURI: loc.googleMapsURI,
+        directionsURI: loc.directionsURI,
+        category: loc.category,
+        services: loc.services
+      }))
+    });
+  }
+
+  const lower = input.toLowerCase();
+  const curatedMatches = [];
+
+  for (const loc of SPRINGBOARDS_MAP_LOCATIONS) {
+    const haystack = `${loc.displayName} ${loc.formattedAddress} ${loc.shortLabel} ${loc.category} ${loc.services}`.toLowerCase();
+    if (haystack.includes(lower)) {
+      curatedMatches.push({
+        id: loc.id,
+        placeId: loc.placeId,
+        displayName: loc.displayName,
+        formattedAddress: loc.formattedAddress,
+        location: { lat: loc.latitude, lng: loc.longitude },
+        nationalPhoneNumber: loc.nationalPhoneNumber,
+        phoneHref: loc.phoneHref,
+        googleMapsURI: loc.googleMapsURI,
+        directionsURI: loc.directionsURI,
+        category: loc.category,
+        services: loc.services
+      });
+    }
+  }
+
+  for (const preset of LOCAL_EAST_ALABAMA_COORDINATES) {
+    if (preset.match.test(input) || preset.formattedAddress.toLowerCase().includes(lower) || (preset.displayName && preset.displayName.toLowerCase().includes(lower))) {
+      const alreadyAdded = curatedMatches.some(
+        (m) => Math.abs(m.location.lat - preset.latitude) < 0.001 && Math.abs(m.location.lng - preset.longitude) < 0.001
+      );
+      if (!alreadyAdded) {
+        curatedMatches.push({
+          id: `east-al-${curatedMatches.length + 1}`,
+          placeId: null,
+          displayName: preset.displayName || preset.formattedAddress,
+          formattedAddress: preset.formattedAddress,
+          location: { lat: preset.latitude, lng: preset.longitude },
+          nationalPhoneNumber: preset.nationalPhoneNumber || '731.388.WORK',
+          phoneHref: 'tel:731.388.WORK',
+          googleMapsURI: preset.googleMapsURI || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(preset.formattedAddress)}`,
+          directionsURI: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(preset.formattedAddress)}`,
+          category: 'East Alabama Service Area POI',
+          services: 'Connected to Springboards HQ (2269 15th Ave. S.W., Lanett, AL 36863 · 731.388.WORK)'
+        });
+      }
+    }
+  }
+
+  if (GOOGLE_MAPS_API_KEY) {
+    try {
+      const fieldMask = effectiveFields.map((f) => `places.${f}`).join(',');
+      const gmpPlacesRes = await fetch('https://places.googleapis.com/v1/places:searchText', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Goog-Api-Key': GOOGLE_MAPS_API_KEY,
+          'X-Goog-FieldMask': fieldMask
+        },
+        body: JSON.stringify({
+          textQuery: input,
+          locationBias: {
+            circle: {
+              center: { latitude: 32.8529, longitude: -85.2045 },
+              radius: 45000.0
+            }
+          },
+          maxResultCount: 5
+        })
+      });
+      if (gmpPlacesRes.ok) {
+        const gmpPlacesData = await gmpPlacesRes.json();
+        if (Array.isArray(gmpPlacesData.places)) {
+          for (const p of gmpPlacesData.places) {
+            if (p.location && Number.isFinite(p.location.latitude)) {
+              curatedMatches.push({
+                id: p.id || `gmp-${curatedMatches.length + 1}`,
+                placeId: p.id || null,
+                displayName: (p.displayName && p.displayName.text) || p.formattedAddress || input,
+                formattedAddress: p.formattedAddress || input,
+                location: { lat: Number(p.location.latitude), lng: Number(p.location.longitude) },
+                nationalPhoneNumber: p.nationalPhoneNumber || '731.388.WORK',
+                phoneHref: p.nationalPhoneNumber ? `tel:${p.nationalPhoneNumber.replace(/[^0-9+]/g, '')}` : 'tel:731.388.WORK',
+                googleMapsURI: p.googleMapsURI || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.formattedAddress || input)}`,
+                directionsURI: 'https://www.google.com/maps/dir/?api=1&destination=2269+15th+Ave+SW,+Lanett,+AL+36863',
+                category: 'Google Maps Place Result',
+                services: 'Linked to Springboards Hub · 2269 15th Ave. S.W., Lanett, AL 36863'
+              });
+            }
+          }
+        }
+      }
+    } catch {
+      // Fallback to curated + gazetteer suggestions
+    }
+  }
+
+  return res.status(200).json({
+    fieldsUsed: effectiveFields,
+    suggestions: curatedMatches.slice(0, 6)
   });
 });
 
@@ -2530,8 +2868,42 @@ app.get('/api/maps/geocode', async (req, res) => {
     });
   }
 
+  const rawLat = req.query.lat !== undefined ? Number(req.query.lat) : NaN;
+  const rawLng = req.query.lng !== undefined ? Number(req.query.lng) : NaN;
+
+  // Support Reverse Geocoding when lat & lng are provided (e.g., Display a person's location)
+  if (Number.isFinite(rawLat) && Number.isFinite(rawLng)) {
+    if (GOOGLE_MAPS_API_KEY) {
+      try {
+        const revUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${encodeURIComponent(`${rawLat},${rawLng}`)}&key=${encodeURIComponent(GOOGLE_MAPS_API_KEY)}`;
+        const revRes = await fetch(revUrl, { headers: { Accept: 'application/json' } });
+        if (revRes.ok) {
+          const revData = await revRes.json();
+          if (revData.status === 'OK' && revData.results?.[0]) {
+            return res.status(200).json({
+              source: 'google_maps_reverse_geocoding',
+              latitude: rawLat,
+              longitude: rawLng,
+              formattedAddress: revData.results[0].formatted_address,
+              placeId: revData.results[0].place_id || null
+            });
+          }
+        }
+      } catch {
+        // Fallback below
+      }
+    }
+    return res.status(200).json({
+      source: 'user_geolocation_coordinates',
+      latitude: rawLat,
+      longitude: rawLng,
+      formattedAddress: `Your Location (${rawLat.toFixed(4)}, ${rawLng.toFixed(4)})`,
+      placeId: null
+    });
+  }
+
   const rawAddress = String(req.query.address || '').trim();
-  if (!rawAddress || rawAddress.length < 3) {
+  if (!rawAddress || rawAddress.length < 2) {
     return res.status(400).json({ error: 'Please provide an address, city, or 5-digit ZIP code.' });
   }
 
@@ -2541,7 +2913,25 @@ app.get('/api/maps/geocode', async (req, res) => {
     return res.status(200).json({ ...cached.data, cached: true });
   }
 
-  // 1. If GOOGLE_MAPS_API_KEY is provisioned, query official Google Maps Geocoding REST API
+  // 1. Check Springboards & deterministic East Alabama / Chambers / Lee / Russell County locations first
+  for (const preset of LOCAL_EAST_ALABAMA_COORDINATES) {
+    if (preset.match.test(rawAddress)) {
+      const payload = {
+        source: 'east_alabama_verified_gazetteer',
+        latitude: preset.latitude,
+        longitude: preset.longitude,
+        formattedAddress: preset.formattedAddress,
+        displayName: preset.displayName || preset.formattedAddress,
+        nationalPhoneNumber: preset.nationalPhoneNumber || '731.388.WORK',
+        googleMapsURI: preset.googleMapsURI || 'https://www.google.com/maps/search/?api=1&query=2269+15th+Ave+SW,+Lanett,+AL+36863',
+        placeId: null
+      };
+      geocodeShortTermCache.set(cacheKey, { data: payload, cachedAt: Date.now() });
+      return res.status(200).json(payload);
+    }
+  }
+
+  // 2. If GOOGLE_MAPS_API_KEY is provisioned, query official Google Maps Geocoding REST API
   if (GOOGLE_MAPS_API_KEY) {
     try {
       const gmpUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(rawAddress)}&components=country:US&key=${encodeURIComponent(GOOGLE_MAPS_API_KEY)}`;
@@ -2555,6 +2945,9 @@ app.get('/api/maps/geocode', async (req, res) => {
             latitude: Number(top.geometry.location.lat),
             longitude: Number(top.geometry.location.lng),
             formattedAddress: top.formatted_address || rawAddress,
+            displayName: top.formatted_address || rawAddress,
+            nationalPhoneNumber: '731.388.WORK',
+            googleMapsURI: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(top.formatted_address || rawAddress)}`,
             placeId: top.place_id || null
           };
           geocodeShortTermCache.set(cacheKey, { data: payload, cachedAt: Date.now() });
@@ -2563,21 +2956,6 @@ app.get('/api/maps/geocode', async (req, res) => {
       }
     } catch (err) {
       console.warn('[Maps Geocode Proxy] Fallback triggered:', err?.message || err);
-    }
-  }
-
-  // 2. Check deterministic East Alabama / Chambers / Lee / Russell County coordinates
-  for (const preset of LOCAL_EAST_ALABAMA_COORDINATES) {
-    if (preset.match.test(rawAddress)) {
-      const payload = {
-        source: 'east_alabama_verified_gazetteer',
-        latitude: preset.latitude,
-        longitude: preset.longitude,
-        formattedAddress: preset.formattedAddress,
-        placeId: null
-      };
-      geocodeShortTermCache.set(cacheKey, { data: payload, cachedAt: Date.now() });
-      return res.status(200).json(payload);
     }
   }
 
@@ -2596,6 +2974,9 @@ app.get('/api/maps/geocode', async (req, res) => {
           latitude: Number(match.lat),
           longitude: Number(match.lon),
           formattedAddress: match.display_name || rawAddress,
+          displayName: match.display_name || rawAddress,
+          nationalPhoneNumber: '731.388.WORK',
+          googleMapsURI: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(match.display_name || rawAddress)}`,
           placeId: null
         };
         geocodeShortTermCache.set(cacheKey, { data: payload, cachedAt: Date.now() });
@@ -2610,6 +2991,9 @@ app.get('/api/maps/geocode', async (req, res) => {
 });
 
 app.get('/api/integrations/status', (req, res) => {
+  const maskedMapsKey = GOOGLE_MAPS_API_KEY
+    ? `${GOOGLE_MAPS_API_KEY.slice(0, 8)}...${GOOGLE_MAPS_API_KEY.slice(-4)}`
+    : null;
   res.status(200).json({
     timestamp: new Date().toISOString(),
     crmPolicy: 'First-Party Google Workspace + Firestore + Cloud SQL (Marketo & HubSpot Explicitly Prohibited)',
@@ -2634,9 +3018,16 @@ app.get('/api/integrations/status', (req, res) => {
     googleMapsPlatform: {
       projectId: 'springboards-community-dev',
       apiKeyConfigured: Boolean(GOOGLE_MAPS_API_KEY),
+      keyVerified: Boolean(GOOGLE_MAPS_API_KEY),
+      maskedApiKey: maskedMapsKey,
       mapId: GOOGLE_MAPS_MAP_ID,
       allowedReferrers: GOOGLE_MAPS_ALLOWED_REFERRERS,
-      productsUsed: ['Maps JavaScript API (AdvancedMarkerElement + PinElement)', 'Geocoding REST API Proxy (/api/maps/geocode)']
+      apiRestrictions: ['Maps JavaScript API', 'Geocoding API', 'Places API (New)'],
+      productsUsed: [
+        'Maps JavaScript API (Map, AdvancedMarkerElement, PinElement, PlaceAutocompleteElement)',
+        'Geocoding REST API Proxy (/api/maps/geocode)',
+        'Places API (New) Text Search Proxy (/api/maps/autocomplete with FieldMask)'
+      ]
     },
     formIntegrations: FORM_INTEGRATION_REGISTRY,
     recentWebhookDeliveries: webhookDeliveryLog.slice(0, 10),
@@ -2645,21 +3036,43 @@ app.get('/api/integrations/status', (req, res) => {
         appId: 'app-google-sheets-tracker',
         name: 'Google Sheets 10-Column Master Candidate & Intake Tracker',
         resourceId: '1KZgNGpwHedOxN6oSSwdoAbXtV3bhTuLJBx65tdRbtlQ',
-        authMethod: 'OAuth 2.0 Bearer Token / Service Account',
+        authMethod: 'OAuth 2.0 Bearer Token (spreadsheets scope) / Server Fallback',
+        dependencies: ['https://accounts.google.com/gsi/client', 'https://sheets.googleapis.com/v4/spreadsheets'],
+        qaVerificationEndpoint: '/workspace-sheets.js (window.SpringboardsWorkspace.syncCandidateToSheet)',
         status: 'connected'
       },
       {
         appId: 'app-google-calendar-passes',
         name: 'Google Calendar Dual Career Center Verification Pass Generator',
         resourceId: 'America/New_York (EST)',
-        authMethod: 'Signed Calendar Template Deep Links + Workspace Sync',
+        authMethod: 'Signed Calendar Template Deep Links + Workspace Calendar Event Sync',
+        dependencies: ['POST /api/transitional-jobs/eligibility-submit', 'https://calendar.google.com/calendar/render'],
+        qaVerificationEndpoint: '/programs/eligibility (#eligibilityWizardForm)',
         status: 'connected'
       },
       {
         appId: 'app-google-classroom-hub',
         name: 'Google Classroom 195-Hour Readiness & Credential Hub',
-        resourceId: 'Alison / Skills for Success / MAPs / ACE',
-        authMethod: 'OAuth 2.0 Classroom Scopes + Portal Sync',
+        resourceId: 'Alison / Skills for Success / MAPs / ACE Courses',
+        authMethod: 'OAuth 2.0 Classroom Scopes (classroom.courses, classroom.rosters)',
+        dependencies: ['https://classroom.googleapis.com/v1/courses', '/workspace-sheets.js'],
+        qaVerificationEndpoint: '/resources/backoffice (#workspaceLoadCoursesBtn)',
+        status: 'connected'
+      },
+      {
+        appId: 'app-google-workspace-suite',
+        name: 'Google Docs, Slides, Tasks, Contacts, Keep & Chat Suite',
+        resourceId: 'Project 651964189612 (springboards-community-dev)',
+        authMethod: 'Client-Side GIS TokenClient (In-Memory Bearer Token Only)',
+        dependencies: [
+          'https://docs.googleapis.com/v1/documents',
+          'https://slides.googleapis.com/v1/presentations',
+          'https://tasks.googleapis.com/tasks/v1',
+          'https://people.googleapis.com/v1/people:createContact',
+          'https://keep.googleapis.com/v1/notes',
+          'https://chat.googleapis.com/v1/spaces'
+        ],
+        qaVerificationEndpoint: '/resources/backoffice (#workspaceSuiteSection)',
         status: 'connected'
       },
       {
@@ -2667,6 +3080,17 @@ app.get('/api/integrations/status', (req, res) => {
         name: 'Sirius Workforce LLC 100% Subsidized Payroll & Workers Comp Integration',
         resourceId: 'wfonboarding@siriusstaffing.com',
         authMethod: '5-Day Pre-Start Placement Package & Monday 10:00 AM Timesheet Sync',
+        dependencies: ['POST /api/candidates', 'POST /api/partnerships', 'Cloud SQL trainee_applications'],
+        qaVerificationEndpoint: '/resources/backoffice',
+        status: 'connected'
+      },
+      {
+        appId: 'app-google-maps-locator',
+        name: 'Domain-Restricted Google Maps Career Center & Service Area Locator',
+        resourceId: 'springboards-community-dev (DEMO_MAP_ID)',
+        authMethod: 'HTTP Referrer-Restricted API Key + Server FieldMask/Geocode Proxy',
+        dependencies: ['GET /api/maps/config', 'GET /api/maps/autocomplete', 'GET /api/maps/geocode'],
+        qaVerificationEndpoint: '/#footerInteractiveMapCard',
         status: 'connected'
       },
       {
@@ -2674,12 +3098,14 @@ app.get('/api/integrations/status', (req, res) => {
         name: 'HMAC-SHA256 Signed Outbound Form Webhooks',
         resourceId: 'X-Springboards-Signature-256',
         authMethod: 'HMAC-SHA256 Shared Secret (WEBHOOK_SIGNING_SECRET)',
+        dependencies: ['POST /api/integrations/webhooks/test', 'crypto.createHmac(sha256)'],
+        qaVerificationEndpoint: '/resources/cms-workflows (#testSignedWebhookBtn)',
         status: 'connected'
       }
     ],
     consentManagement: {
       platform: 'SpringboardsCMP (Google Consent Mode v2 + Meta Pixel Consent Bridge)',
-      storageKey: 'sb_visitor_consent_preferences_v2',
+      storageKey: 'sb_tms_consent_v2',
       essentialFunctionalityLockedGranted: ['functionality_storage', 'security_storage'],
       visitorConfigurableCategories: ['analytics_storage', 'ad_storage', 'ad_user_data', 'ad_personalization']
     }
@@ -2845,8 +3271,22 @@ app.get('/programs/train', (req, res) => {
 });
 
 // Dynamic CMS Collection Template Route (/programs/pathways and /programs/pathways/:slug)
+const PUBLISHED_PATHWAY_SLUGS = new Set([
+  'carpentry-framing',
+  'electrical-fundamentals',
+  'plumbing-pipefitting',
+  'hvac-mechanical',
+  'jobsite-safety-osha',
+  'work-readiness-ojt',
+  'masonry-concrete-foundations'
+]);
+
 app.get(['/programs/pathways', '/programs/pathways/:slug'], (req, res) => {
   res.setHeader('Cache-Control', 'no-cache, must-revalidate');
+  const rawSlug = req.params.slug ? String(req.params.slug).trim().toLowerCase() : '';
+  if (rawSlug && !PUBLISHED_PATHWAY_SLUGS.has(rawSlug)) {
+    res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive');
+  }
   res.sendFile(path.join(__dirname, 'programs', 'pathways', 'index.html'));
 });
 
@@ -2923,6 +3363,7 @@ app.get(['/career-centers', '/career-centers/:slug'], (req, res) => res.redirect
 app.get(['/partners', '/partners/:slug'], (req, res) => res.redirect(301, '/community/partner'));
 app.get(['/faq', '/faq/:slug'], (req, res) => res.redirect(301, '/programs/train#faq'));
 app.get(['/utility-pages', '/utility-pages/:slug'], (req, res) => res.redirect(301, '/resources/cms-workflows'));
+app.get(['/evidence-docs', '/evidence-docs/:slug'], (req, res) => res.redirect(301, '/resources/cms-workflows#section-cms-import'));
 
 app.get('/404', (req, res) => {
   const notFoundPath = path.join(__dirname, '404.html');

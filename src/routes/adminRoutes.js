@@ -157,6 +157,36 @@ export function createAdminRouter({
     }
   });
 
+  router.get('/cms/sources', (req, res) => {
+    try {
+      const result = executeMcpTool('cms_import_and_publishing_manage', {
+        operation: 'search_workspace_sources'
+      });
+      return res.status(200).json({
+        success: true,
+        ...result
+      });
+    } catch (err) {
+      return res.status(500).json({ error: err.message || 'Failed to discover Google Workspace CMS sources.' });
+    }
+  });
+
+  router.post('/cms/import-csv', (req, res) => {
+    try {
+      const { collectionId = 'tradePrograms' } = req.body || {};
+      const result = executeMcpTool('cms_import_and_publishing_manage', {
+        operation: 'import_csv_source',
+        collectionId
+      });
+      return res.status(200).json({
+        success: true,
+        ...result
+      });
+    } catch (err) {
+      return res.status(400).json({ error: err.message || 'CSV source import failed.' });
+    }
+  });
+
   router.post('/cms/import', (req, res) => {
     try {
       const { collectionId = 'tradePrograms', records = [] } = req.body || {};

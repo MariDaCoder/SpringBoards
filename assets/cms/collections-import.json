@@ -1,13 +1,130 @@
 {
-  "manifestVersion": "3.1.0",
-  "generatedAt": "2026-11-14T12:00:00Z",
+  "manifestVersion": "3.3.0",
+  "generatedAt": "2026-11-15T21:25:00Z",
   "canonicalDomain": "https://springboardsfcd.org",
+  "googleWorkspaceSources": [
+    {
+      "docId": "doc-master-tracker",
+      "title": "Springboards Workforce Programs Tracker",
+      "workspaceApp": "Google Sheets",
+      "driveFileId": "1KZgNGpwHedOxN6oSSwdoAbXtV3bhTuLJBx65tdRbtlQ",
+      "driveUrl": "https://drive.google.com/open?id=1KZgNGpwHedOxN6oSSwdoAbXtV3bhTuLJBx65tdRbtlQ",
+      "localMarkdownMirror": "/program-readiness/MASTER-TRACKER.md",
+      "targetCollections": ["tradePrograms", "programEvidenceDocs"],
+      "owner": "Marilynn Ward & Marvin Thompson",
+      "launchStatus": "In Preparation",
+      "publicTemplateAllowed": false
+    },
+    {
+      "docId": "doc-worksite-agreement",
+      "title": "Worksite Agreement — Springboards (End Date 2027-06-30)",
+      "workspaceApp": "Google Docs / PDF",
+      "driveFileId": "1hRsffn1SSBwSy4sI-_l6igpqDyCgVsbE",
+      "driveUrl": "https://drive.google.com/open?id=1hRsffn1SSBwSy4sI-_l6igpqDyCgVsbE",
+      "localFile": "/Worksite Agreement_Springboards.pdf",
+      "targetCollections": ["tradePrograms", "partnerDirectory", "programEvidenceDocs"],
+      "owner": "Julie Wood & Coretta Bozeman",
+      "launchStatus": "Evidence Ready/Submitted",
+      "publicTemplateAllowed": false
+    },
+    {
+      "docId": "doc-master-execution-pkg",
+      "title": "Springboards Master Execution Package.pdf",
+      "workspaceApp": "Google Drive PDF",
+      "driveFileId": "1uMFzOdeoIIrFkXK03Qydy3_8zEzoBD-l",
+      "driveUrl": "https://drive.google.com/open?id=1uMFzOdeoIIrFkXK03Qydy3_8zEzoBD-l",
+      "localMarkdownMirror": "/program-readiness/OJT.md",
+      "targetCollections": ["tradePrograms", "partnerDirectory", "programEvidenceDocs"],
+      "owner": "Marvin Thompson",
+      "launchStatus": "In Preparation",
+      "publicTemplateAllowed": false
+    },
+    {
+      "docId": "doc-job-descriptions",
+      "title": "Job Descriptions — Springboards Entry-Level Non-Supervisory Roles",
+      "workspaceApp": "Google Docs",
+      "driveFileId": "1rbPPzLyPEeCMlia-ixjSm1U0WWqig99W",
+      "driveUrl": "https://drive.google.com/open?id=1rbPPzLyPEeCMlia-ixjSm1U0WWqig99W",
+      "localMarkdownMirror": "/program-readiness/TRANSITIONAL-JOBS.md",
+      "targetCollections": ["tradePrograms", "programEvidenceDocs"],
+      "owner": "Marvin Thompson",
+      "launchStatus": "Requirement Identified",
+      "publicTemplateAllowed": false
+    },
+    {
+      "docId": "doc-etpl-provider-guide",
+      "title": "New-WIOA-Training-Provider-Guide Jill Grant.pdf",
+      "workspaceApp": "Google Drive PDF",
+      "driveFileId": "1lWF5EKMNB8J96-mGaImG7-NIB8WMMNH-",
+      "driveUrl": "https://drive.google.com/open?id=1lWF5EKMNB8J96-mGaImG7-NIB8WMMNH-",
+      "localMarkdownMirror": "/program-readiness/ITA-ETPL.md",
+      "targetCollections": ["tradePrograms", "programEvidenceDocs"],
+      "owner": "Marilynn Ward & Jill Grant",
+      "launchStatus": "Evidence Ready/Submitted",
+      "publicTemplateAllowed": false
+    },
+    {
+      "docId": "doc-transitional-jobs-guide",
+      "title": "Guidelines - 2025-13 Transitional Jobs Accessible GWID.pdf",
+      "workspaceApp": "Google Drive PDF",
+      "driveFileId": "1OF-StQe79K1dzMBdt-Fk8NrQSLVo-5Gr",
+      "driveUrl": "https://drive.google.com/open?id=1OF-StQe79K1dzMBdt-Fk8NrQSLVo-5Gr",
+      "localMarkdownMirror": "/program-readiness/TRANSITIONAL-JOBS.md",
+      "targetCollections": ["tradePrograms", "careerCenters", "programEvidenceDocs"],
+      "owner": "Alabama Works! / GWID",
+      "launchStatus": "Approved Policy Reference",
+      "publicTemplateAllowed": false
+    },
+    {
+      "docId": "doc-ita-guidelines-2025",
+      "title": "AD-Policy-PY-2025-11-ITA-Guidelines.pdf",
+      "workspaceApp": "Google Drive PDF",
+      "driveFileId": "1M2TPY2r17YRB4rv63cejGgTr6nR4BP4X",
+      "driveUrl": "https://drive.google.com/open?id=1M2TPY2r17YRB4rv63cejGgTr6nR4BP4X",
+      "localMarkdownMirror": "/program-readiness/ITA-ETPL.md",
+      "targetCollections": ["tradePrograms", "programEvidenceDocs"],
+      "owner": "Jill Grant",
+      "launchStatus": "Approved Policy Reference",
+      "publicTemplateAllowed": false
+    },
+    {
+      "docId": "doc-ad-policy-2024-04",
+      "title": "AD-Policy-PY2024-04.pdf",
+      "workspaceApp": "Google Drive PDF",
+      "driveFileId": "1fUuxMYwkY7EqFBNIhKaUNgDmnqLgZ3a-",
+      "driveUrl": "https://drive.google.com/open?id=1fUuxMYwkY7EqFBNIhKaUNgDmnqLgZ3a-",
+      "localMarkdownMirror": "/program-readiness/MASTER-TRACKER.md",
+      "targetCollections": ["programEvidenceDocs"],
+      "owner": "Shamia Morgan",
+      "launchStatus": "Approved Policy Reference",
+      "publicTemplateAllowed": false
+    },
+    {
+      "docId": "doc-general-provisions",
+      "title": "General-Provisions-B1-B19.pdf",
+      "workspaceApp": "Google Drive PDF",
+      "driveFileId": "12vyqltnx3TOJ_jx8glCAulI6SFaN0Mw6",
+      "driveUrl": "https://drive.google.com/open?id=12vyqltnx3TOJ_jx8glCAulI6SFaN0Mw6",
+      "localMarkdownMirror": "/program-readiness/STAARS.md",
+      "targetCollections": ["utilityPages", "programEvidenceDocs"],
+      "owner": "Shamia Morgan & Alicia Ford",
+      "launchStatus": "Approved Policy Reference",
+      "publicTemplateAllowed": false
+    }
+  ],
   "importSources": [
     {
       "sourceId": "src-wioa-curriculum-csv",
-      "name": "WIOA Activity 220 Curriculum & NCCER Syllabus Export (CSV / JSON)",
+      "name": "WIOA Activity 220 Curriculum, NCCER Syllabus & Master Tracker Export",
+      "csvPath": "/assets/cms/imports/trade-programs.csv",
+      "workspaceSourceId": "1KZgNGpwHedOxN6oSSwdoAbXtV3bhTuLJBx65tdRbtlQ",
       "targetCollection": "tradePrograms",
-      "supportedProtocols": ["CSV Import", "JSON Manifest", "REST API (/api/cms/import)", "MCP (cms_import_and_publishing_manage)"],
+      "supportedProtocols": [
+        "CSV Import (/assets/cms/imports/trade-programs.csv)",
+        "Google Sheets & Drive API (/workspace-sheets.js)",
+        "REST API (POST /api/cms/import)",
+        "MCP Tool (cms_import_and_publishing_manage)"
+      ],
       "fieldMap": {
         "Program_ID": "id",
         "URL_Slug": "slug",
@@ -22,6 +139,7 @@
         "Tuition_Policy": "tuitionCost",
         "Career_Center_Refs": "careerCenterIds",
         "Partner_Refs": "partnerTrackIds",
+        "Evidence_Doc_Refs": "evidenceDocIds",
         "Publish_Status": "status",
         "Is_Internal_Only": "isInternal"
       }
@@ -29,8 +147,15 @@
     {
       "sourceId": "src-alabama-works-directory",
       "name": "Alabama Works! & WorkSource Georgia Regional Career Center Feed",
+      "csvPath": "/assets/cms/imports/career-centers.csv",
+      "workspaceSourceId": "1OF-StQe79K1dzMBdt-Fk8NrQSLVo-5Gr",
       "targetCollection": "careerCenters",
-      "supportedProtocols": ["JSON Manifest", "REST API (/api/cms/import)", "MCP (cms_import_and_publishing_manage)"],
+      "supportedProtocols": [
+        "CSV Import (/assets/cms/imports/career-centers.csv)",
+        "Google Maps Places & Geocoding API (/api/maps/locations)",
+        "REST API (POST /api/cms/import)",
+        "MCP Tool (cms_import_and_publishing_manage)"
+      ],
       "fieldMap": {
         "Center_ID": "id",
         "Center_Slug": "slug",
@@ -46,9 +171,16 @@
     },
     {
       "sourceId": "src-employer-partner-tracks",
-      "name": "East Alabama Contractor & OJT Host Partner Tracks",
+      "name": "East Alabama Contractor, Worksite Agreement & OJT Host Partner Tracks",
+      "csvPath": "/assets/cms/imports/partner-directory.csv",
+      "workspaceSourceId": "1hRsffn1SSBwSy4sI-_l6igpqDyCgVsbE",
       "targetCollection": "partnerDirectory",
-      "supportedProtocols": ["CSV Import", "JSON Manifest", "REST API (/api/cms/import)", "MCP (cms_import_and_publishing_manage)"],
+      "supportedProtocols": [
+        "CSV Import (/assets/cms/imports/partner-directory.csv)",
+        "Google Docs & Drive API (/workspace-sheets.js)",
+        "REST API (POST /api/cms/import)",
+        "MCP Tool (cms_import_and_publishing_manage)"
+      ],
       "fieldMap": {
         "Track_ID": "id",
         "Track_Slug": "slug",
@@ -59,6 +191,34 @@
         "Value_Prop_EN": "summary.en-US",
         "Value_Prop_ES": "summary.es-US",
         "Supported_Program_IDs": "tradeProgramIds"
+      }
+    },
+    {
+      "sourceId": "src-workspace-evidence-docs",
+      "name": "Google Workspace & WIOA Compliance Evidence Packets (9 Drive Docs)",
+      "csvPath": "/assets/cms/imports/workspace-evidence-documents.csv",
+      "workspaceSourceId": "1KZgNGpwHedOxN6oSSwdoAbXtV3bhTuLJBx65tdRbtlQ",
+      "targetCollection": "programEvidenceDocs",
+      "supportedProtocols": [
+        "CSV Import (/assets/cms/imports/workspace-evidence-documents.csv)",
+        "Google Drive, Docs & Sheets API (/workspace-sheets.js)",
+        "REST API (POST /api/cms/import)",
+        "MCP Tool (cms_import_and_publishing_manage)"
+      ],
+      "fieldMap": {
+        "Doc_ID": "id",
+        "Doc_Slug": "slug",
+        "Title_EN": "title.en-US",
+        "Title_ES": "title.es-US",
+        "Workspace_App": "workspaceApp",
+        "Drive_File_ID": "driveFileId",
+        "Drive_URL": "driveUrl",
+        "Local_Path": "localPath",
+        "Program_Area": "programArea",
+        "Owner_Contact": "ownerContact",
+        "Launch_Status": "launchStatus",
+        "Publish_Status": "status",
+        "Is_Internal_Only": "isInternal"
       }
     }
   ],
@@ -73,7 +233,22 @@
       "indexableBySearch": true,
       "blockDraftsAndInternal": true,
       "blockEmptyContent": true,
-      "governanceNote": "Public Collection template pages enabled under /programs/pathways/{slug} for published, non-empty trade curricula only."
+      "publishedSlugs": [
+        "carpentry-framing",
+        "electrical-fundamentals",
+        "plumbing-pipefitting",
+        "hvac-mechanical",
+        "jobsite-safety-osha",
+        "work-readiness-ojt",
+        "masonry-concrete-foundations"
+      ],
+      "blockedSlugs": [
+        "industrial-welding-draft",
+        "ita-etpl-provider-track",
+        "registered-apprenticeship-future",
+        "staars-vendor-activation"
+      ],
+      "governanceNote": "Public Collection template pages enabled under /programs/pathways/{slug} strictly for published, non-empty trade curricula. Internal drafts, ETPL/ITA in-preparation items, future apprenticeship concepts, and STAARS dependencies are blocked from public indexing."
     },
     "careerCenters": {
       "collectionId": "careerCenters",
@@ -122,9 +297,21 @@
       "blockDraftsAndInternal": true,
       "blockEmptyContent": true,
       "governanceNote": "Collection template publishing DISABLED. Utility items reference dedicated static routes (/utility/search, /utility/password, /404.html) rather than dynamic CMS templates."
+    },
+    "programEvidenceDocs": {
+      "collectionId": "programEvidenceDocs",
+      "label": "Google Workspace & WIOA Evidence Documents",
+      "publishTemplatePages": false,
+      "folderPrefix": null,
+      "urlPattern": "/resources/cms-workflows#section-cms-import",
+      "canonicalParent": "/resources/cms-workflows",
+      "indexableBySearch": false,
+      "blockDraftsAndInternal": true,
+      "blockEmptyContent": true,
+      "governanceNote": "Collection template publishing DISABLED. Google Workspace Drive/Sheets/Docs evidence packets are internal governance records and never publish standalone public template URLs."
     }
   },
   "sampleImportPayloads": {
-    "tradeProgramsCsv": "Program_ID,URL_Slug,Curriculum_Code,Trade_Cluster,Program_Title_EN,Program_Title_ES,Summary_EN,Summary_ES,Cert_Credential,Max_WIOA_Hours,Tuition_Policy,Career_Center_Refs,Partner_Refs,Publish_Status,Is_Internal_Only\nprog-masonry,masonry-concrete-foundations,07,construction,Masonry & Concrete Foundations,Albañilería y Cimientos de Concreto,Hands-on concrete form setting and structural block laying for commercial builds.,Instalación práctica de moldes de concreto y colocación de bloques estructurales.,NCCER Masonry Level 1 + OSHA-10,390,$0 (100% Tuition-Free),cc-opelika|cc-valley,part-ojt-host|part-materials-tools,published,false\nprog-industrial-welding-draft,industrial-welding-draft,08,mechanical,Industrial Pipe Welding (Internal Syllabus Draft),Soldadura Industrial de Tuberías (Borrador Interno),Internal curriculum draft pending workshop ventilation inspection.,Borrador interno pendiente de inspección de taller.,AWS Entry Welder (Pending),390,$0 (100% Tuition-Free),cc-opelika,part-ojt-host,draft,true"
+    "tradeProgramsCsv": "Program_ID,URL_Slug,Curriculum_Code,Trade_Cluster,Program_Title_EN,Program_Title_ES,Summary_EN,Summary_ES,Cert_Credential,Max_WIOA_Hours,Tuition_Policy,Career_Center_Refs,Partner_Refs,Evidence_Doc_Refs,Publish_Status,Is_Internal_Only\nprog-masonry,masonry-concrete-foundations,07,construction,Masonry & Concrete Foundations,Albañilería y Cimientos de Concreto,Hands-on concrete form setting and structural block laying for commercial builds.,Instalación práctica de moldes de concreto y colocación de bloques estructurales.,NCCER Masonry Level 1 + OSHA-10,390,$0 (100% Tuition-Free),cc-opelika|cc-valley,part-ojt-host|part-materials-tools,doc-worksite-agreement|doc-master-execution-pkg,published,false\nprog-industrial-welding-draft,industrial-welding-draft,08,mechanical,Industrial Pipe Welding (Internal Syllabus Draft),Soldadura Industrial de Tuberías (Borrador Interno),Internal curriculum draft pending workshop ventilation inspection.,Borrador interno pendiente de inspección de taller.,AWS Entry Welder (Pending),390,$0 (100% Tuition-Free),cc-opelika,part-ojt-host,doc-master-tracker,draft,true\nprog-ita-etpl-prep,ita-etpl-provider-track,09,readiness,ITA / ETPL Eligible Training Provider Track (In Preparation),Proveedor Elegible ITA / ETPL (En Preparación),Internal ETPL provider application track coordinated with Jill Grant—blocked from public template publishing.,Solicitud interna de proveedor ETPL coordinada con Jill Grant—bloqueada para publicación pública.,ETPL Provider Listing (Pending Agency Approval),390,$0 (100% Tuition-Free),cc-opelika|cc-valley,part-ojt-host,doc-etpl-provider-guide|doc-ita-guidelines-2025,draft,true"
   }
 }
