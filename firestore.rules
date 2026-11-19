@@ -33,13 +33,19 @@ service cloud.firestore {
       return val is timestamp || (val is string && val.size() >= 1 && val.size() <= 64);
     }
 
+    function hasPhoneOrEmail(data) {
+      return ('phone' in data && data.phone is string && data.phone.size() >= 7 && data.phone.size() <= 40) ||
+             ('email' in data && data.email is string && data.email.size() >= 3 && data.email.size() <= 120);
+    }
+
     function isValidInquiry(data) {
       return data.keys().hasAll(['name', 'program', 'createdAt']) &&
              data.keys().hasOnly(['name', 'phone', 'email', 'program', 'tag', 'deliveredTo', 'createdAt']) &&
              data.name is string && data.name.size() >= 2 && data.name.size() <= 100 &&
              data.program is string && data.program.size() >= 1 && data.program.size() <= 100 &&
              isValidTimestampOrIso(data.createdAt) &&
-             (!('tag' in data) || (data.tag is string && data.tag.size() <= 120)) &&
+             hasPhoneOrEmail(data) &&
+             (!('tag' in data) || (data.tag is string && data.tag.size() <= 1500)) &&
              (!('phone' in data) || (data.phone is string && data.phone.size() <= 40)) &&
              (!('email' in data) || (data.email is string && data.email.size() <= 120)) &&
              (!('deliveredTo' in data) || (data.deliveredTo is string && data.deliveredTo.size() <= 120));
@@ -51,6 +57,7 @@ service cloud.firestore {
              data.name is string && data.name.size() >= 2 && data.name.size() <= 100 &&
              data.trade is string && data.trade.size() >= 2 && data.trade.size() <= 120 &&
              isValidTimestampOrIso(data.createdAt) &&
+             hasPhoneOrEmail(data) &&
              (!('phone' in data) || (data.phone is string && data.phone.size() <= 40)) &&
              (!('email' in data) || (data.email is string && data.email.size() <= 120)) &&
              (!('backgroundStatus' in data) || (data.backgroundStatus is string && data.backgroundStatus.size() <= 120)) &&
@@ -66,6 +73,7 @@ service cloud.firestore {
              data.availability is string && data.availability.size() <= 60 &&
              data.interest is string && data.interest.size() <= 80 &&
              isValidTimestampOrIso(data.createdAt) &&
+             hasPhoneOrEmail(data) &&
              (!('phone' in data) || (data.phone is string && data.phone.size() <= 40)) &&
              (!('email' in data) || (data.email is string && data.email.size() <= 120)) &&
              (!('location' in data) || (data.location is string && data.location.size() <= 160)) &&
@@ -79,6 +87,7 @@ service cloud.firestore {
              data.companyName is string && data.companyName.size() >= 2 && data.companyName.size() <= 120 &&
              data.contactName is string && data.contactName.size() >= 2 && data.contactName.size() <= 100 &&
              isValidTimestampOrIso(data.createdAt) &&
+             hasPhoneOrEmail(data) &&
              (!('phone' in data) || (data.phone is string && data.phone.size() <= 40)) &&
              (!('email' in data) || (data.email is string && data.email.size() <= 120)) &&
              (!('partnershipType' in data) || (data.partnershipType is string && data.partnershipType.size() <= 120)) &&
@@ -91,6 +100,7 @@ service cloud.firestore {
              data.keys().hasOnly(['donorName', 'phone', 'email', 'donationType', 'pledgeAmount', 'taxReceiptRequested', 'message', 'createdAt']) &&
              data.donorName is string && data.donorName.size() >= 2 && data.donorName.size() <= 120 &&
              isValidTimestampOrIso(data.createdAt) &&
+             hasPhoneOrEmail(data) &&
              (!('phone' in data) || (data.phone is string && data.phone.size() <= 40)) &&
              (!('email' in data) || (data.email is string && data.email.size() <= 120)) &&
              (!('donationType' in data) || (data.donationType is string && data.donationType.size() <= 100)) &&
